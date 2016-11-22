@@ -1,0 +1,23 @@
+<?php return [
+    'settings' => [
+        'count_per_page' => 'Count elements per page',
+        'number_validation' => 'You must enter the number',
+        'pagination_limit' => 'Max count buttons',
+        'active_class' => 'Class for active button',
+        'button_list' => 'Button list',
+        'button_list_description' => 'main,first,first-more,prev,prev-more,next,next-more,last,last-more',
+        'button_name' => 'Button name',
+        'button_limit' => 'Show button after page',
+        'button_number' => 'Show number button name',
+        'button_class' => 'CSS class',
+        'last_button' => '"Last" button',
+        'last-more_button' => '"More" (before "Last")',
+        'next_button' => '"Next" button',
+        'next-more_button' => '"More" (before "Next")',
+        'prev_button' => '"Prev" button',
+        'prev-more_button' => '"More" (after "Prev")',
+        'first_button' => '"First" button',
+        'first-more_button' => '"More" (after "First")',
+        'main_button' => '"Main" button',
+    ],
+];

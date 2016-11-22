@@ -1,0 +1,19 @@
+{
+  "require": {
+    "kharanenka/php-result-store": "1.0.*",
+    "kharanenka/laravel-scope-active": "1.0.*",
+    "kharanenka/oc-pagination": "1.0.*",
+    "kharanenka/laravel-cache-helper": "1.0.*",
+    "kharanenka/laravel-scope-category-belongs-to": "1.0.*",
+    "kharanenka/laravel-scope-code": "1.0.*",
+    "kharanenka/laravel-scope-date": "1.0.*",
+    "kharanenka/laravel-scope-external-id": "1.0.*",
+    "kharanenka/laravel-scope-name": "1.0.*",
+    "kharanenka/laravel-scope-publish": "1.0.*",
+    "kharanenka/laravel-scope-slug": "1.0.*",
+    "kharanenka/laravel-scope-user-belongs-to": "1.0.*",
+    "kharanenka/oc-data-file-model": "1.0.*",
+    "kharanenka/laravel-scope-moderation": "1.0.*",
+    "kharanenka/oc-model-custom-validation-message": "1.0.*"
+  }
+}
