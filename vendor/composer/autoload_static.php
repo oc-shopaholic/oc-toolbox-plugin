@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitfe0445c124f769211943e81aad2f7854
+class ComposerStaticInit60394d4a4e8936092a19afbed703f937
 {
     public static $prefixesPsr0 = array (
         'K' => 
@@ -28,10 +28,10 @@ class ComposerStaticInitfe0445c124f769211943e81aad2f7854
             ),
             'Kharanenka\\Helper\\' => 
             array (
-                0 => __DIR__ . '/..' . '/kharanenka/php-pagination/src',
-                1 => __DIR__ . '/..' . '/kharanenka/oc-pagination/src',
-                2 => __DIR__ . '/..' . '/kharanenka/oc-data-file-model/src',
-                3 => __DIR__ . '/..' . '/kharanenka/oc-model-custom-validation-message/src',
+                0 => __DIR__ . '/..' . '/kharanenka/oc-data-file-model/src',
+                1 => __DIR__ . '/..' . '/kharanenka/oc-model-custom-validation-message/src',
+                2 => __DIR__ . '/..' . '/kharanenka/php-pagination/src',
+                3 => __DIR__ . '/..' . '/kharanenka/oc-pagination/src',
                 4 => __DIR__ . '/..' . '/kharanenka/laravel-cache-helper/src',
             ),
         ),
@@ -60,8 +60,8 @@ class ComposerStaticInitfe0445c124f769211943e81aad2f7854
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixesPsr0 = ComposerStaticInitfe0445c124f769211943e81aad2f7854::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitfe0445c124f769211943e81aad2f7854::$classMap;
+            $loader->prefixesPsr0 = ComposerStaticInit60394d4a4e8936092a19afbed703f937::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit60394d4a4e8936092a19afbed703f937::$classMap;
 
         }, null, ClassLoader::class);
     }

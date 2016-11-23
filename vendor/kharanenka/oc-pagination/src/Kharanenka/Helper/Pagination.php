@@ -37,9 +37,8 @@ class Pagination extends PaginationHelper {
             ],
             'button_list' => [
                 'title'             => 'lovata.'.$sPluginName.'::lang.settings.button_list',
-                'description'             => 'lovata.'.$sPluginName.'::lang.settings.button_list_description',
+                'description'       => 'lovata.'.$sPluginName.'::lang.settings.button_list_description',
                 'type'              => 'string',
-                'default'           => self::$arSettings['active_class'],
             ],
 
             //First button
@@ -266,6 +265,6 @@ class Pagination extends PaginationHelper {
         }
 
 
-        parent::get($iCurrentPage, $iTotalCount, $arSettings);
+        return parent::get($iCurrentPage, $iTotalCount, $arSettings);
     }
 }

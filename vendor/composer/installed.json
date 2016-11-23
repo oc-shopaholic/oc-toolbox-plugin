@@ -1,96 +1,5 @@
 [
     {
-        "name": "kharanenka/php-pagination",
-        "version": "2.0.0",
-        "version_normalized": "2.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/kharanenka/php-pagination.git",
-            "reference": "0f63ee88025c92e4c3cca433b2a13b81f2274370"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/kharanenka/php-pagination/zipball/0f63ee88025c92e4c3cca433b2a13b81f2274370",
-            "reference": "0f63ee88025c92e4c3cca433b2a13b81f2274370",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.6"
-        },
-        "time": "2016-11-17 18:39:20",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/Kharanenka/Helper"
-            ],
-            "psr-0": {
-                "Kharanenka\\Helper\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-3.0"
-        ],
-        "authors": [
-            {
-                "name": "Andrey Kharanenka",
-                "email": "kharanenka@gmail.com"
-            }
-        ],
-        "description": "Get pagination elements",
-        "keywords": [
-            "pagination",
-            "php"
-        ]
-    },
-    {
-        "name": "kharanenka/oc-pagination",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/kharanenka/oc-pagination.git",
-            "reference": "d9b703e5eb2afb334d8a2d4fb9c147c7324cec5f"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/kharanenka/oc-pagination/zipball/d9b703e5eb2afb334d8a2d4fb9c147c7324cec5f",
-            "reference": "d9b703e5eb2afb334d8a2d4fb9c147c7324cec5f",
-            "shasum": ""
-        },
-        "require": {
-            "kharanenka/php-pagination": "2.0.*",
-            "php": ">=5.6"
-        },
-        "time": "2016-11-22 19:12:29",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/Kharanenka/Helper"
-            ],
-            "psr-0": {
-                "Kharanenka\\Helper\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-3.0"
-        ],
-        "authors": [
-            {
-                "name": "Andrey Kharanenka",
-                "email": "kharanenka@gmail.com"
-            }
-        ],
-        "description": "Get pagination elements for OctoberCMS",
-        "keywords": [
-            "pagination",
-            "php"
-        ]
-    },
-    {
         "name": "kharanenka/laravel-scope-category-belongs-to",
         "version": "1.0.0",
         "version_normalized": "1.0.0.0",
@@ -731,6 +640,97 @@
             "octobercms",
             "php",
             "scope"
+        ]
+    },
+    {
+        "name": "kharanenka/php-pagination",
+        "version": "2.0.0",
+        "version_normalized": "2.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kharanenka/php-pagination.git",
+            "reference": "0f63ee88025c92e4c3cca433b2a13b81f2274370"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kharanenka/php-pagination/zipball/0f63ee88025c92e4c3cca433b2a13b81f2274370",
+            "reference": "0f63ee88025c92e4c3cca433b2a13b81f2274370",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6"
+        },
+        "time": "2016-11-17 18:39:20",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/Kharanenka/Helper"
+            ],
+            "psr-0": {
+                "Kharanenka\\Helper\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Andrey Kharanenka",
+                "email": "kharanenka@gmail.com"
+            }
+        ],
+        "description": "Get pagination elements",
+        "keywords": [
+            "pagination",
+            "php"
+        ]
+    },
+    {
+        "name": "kharanenka/oc-pagination",
+        "version": "1.0.1",
+        "version_normalized": "1.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kharanenka/oc-pagination.git",
+            "reference": "2a4aa8f684745a1007b8c5fc938de3bbe9f1b737"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kharanenka/oc-pagination/zipball/2a4aa8f684745a1007b8c5fc938de3bbe9f1b737",
+            "reference": "2a4aa8f684745a1007b8c5fc938de3bbe9f1b737",
+            "shasum": ""
+        },
+        "require": {
+            "kharanenka/php-pagination": "2.0.*",
+            "php": ">=5.6"
+        },
+        "time": "2016-11-23 16:50:20",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/Kharanenka/Helper"
+            ],
+            "psr-0": {
+                "Kharanenka\\Helper\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Andrey Kharanenka",
+                "email": "kharanenka@gmail.com"
+            }
+        ],
+        "description": "Get pagination elements for OctoberCMS",
+        "keywords": [
+            "pagination",
+            "php"
         ]
     },
     {
