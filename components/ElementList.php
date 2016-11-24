@@ -1,10 +1,8 @@
 <?php namespace Lovata\Toolbox\Components;
 
-use Lang;
 use Input;
 use Cms\Classes\ComponentBase;
 use Lovata\Toolbox\Plugin;
-use System\Classes\PluginManager;
 use Kharanenka\Helper\CCache;
 use Kharanenka\Helper\Pagination;
 use Lovata\Toolbox\Models\ExampleModel;
@@ -19,6 +17,9 @@ class ElementList extends ComponentBase {
     protected $iElementOnPage = 10;
     protected $arResult = [];
 
+    /**
+     * @return array
+     */
     public function componentDetails() {
         return [
             'name'        => 'lovata.toolbox::lang.component.element_list',
@@ -26,6 +27,9 @@ class ElementList extends ComponentBase {
         ];
     }
 
+    /**
+     * @return array
+     */
     public function defineProperties() {
 
         $arProperties = [];

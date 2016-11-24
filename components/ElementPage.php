@@ -15,6 +15,9 @@ class ElementPage extends ComponentBase {
     /** @var ExampleModel */
     protected $obElement;
 
+    /**
+     * @return array
+     */
     public function componentDetails() {
         return [
             'name'        => 'lovata.toolbox::lang.component.element_page',
@@ -22,16 +25,19 @@ class ElementPage extends ComponentBase {
         ];
     }
 
+    /**
+     * @return array
+     */
     public function defineProperties() {
         return [
             'error_404' => [
-                'title' => Lang::get('lovata.toolbox::lang.component.property_name_error_404'),
-                'description' => Lang::get('lovata.toolbox::lang.component.property_description_error_404'),
-                'default' => 'on',
-                'type' => 'dropdown',
+                'title'             => Lang::get('lovata.toolbox::lang.component.property_name_error_404'),
+                'description'       => Lang::get('lovata.toolbox::lang.component.property_description_error_404'),
+                'default'           => 'on',
+                'type'              => 'dropdown',
                 'options' => [
-                    'on' => Lang::get('lovata.toolbox::lang.component.property_value_on'),
-                    'off' => Lang::get('lovata.toolbox::lang.component.property_value_off'),
+                    'on'        => Lang::get('lovata.toolbox::lang.component.property_value_on'),
+                    'off'       => Lang::get('lovata.toolbox::lang.component.property_value_off'),
                 ],
             ],
             'slug' => [

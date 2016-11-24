@@ -1,6 +1,5 @@
 <?php namespace Lovata\Toolbox\Models;
 
-use Lang;
 use Carbon\Carbon;
 use Model;
 use Lovata\Toolbox\Plugin;

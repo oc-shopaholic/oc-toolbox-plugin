@@ -12,6 +12,9 @@ use Lovata\Toolbox\Plugin;
  */
 class FullElementList extends ComponentBase {
 
+    /**
+     * @return array
+     */
     public function componentDetails() {
         return [
             'name'        => 'lovata.toolbox::lang.component.full_element_list',
