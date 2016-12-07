@@ -30,9 +30,9 @@ class ComposerStaticInit60394d4a4e8936092a19afbed703f937
             array (
                 0 => __DIR__ . '/..' . '/kharanenka/oc-data-file-model/src',
                 1 => __DIR__ . '/..' . '/kharanenka/oc-model-custom-validation-message/src',
-                2 => __DIR__ . '/..' . '/kharanenka/php-pagination/src',
-                3 => __DIR__ . '/..' . '/kharanenka/oc-pagination/src',
-                4 => __DIR__ . '/..' . '/kharanenka/laravel-cache-helper/src',
+                2 => __DIR__ . '/..' . '/kharanenka/oc-pagination/src',
+                3 => __DIR__ . '/..' . '/kharanenka/laravel-cache-helper/src',
+                4 => __DIR__ . '/..' . '/kharanenka/php-pagination/src',
             ),
         ),
     );

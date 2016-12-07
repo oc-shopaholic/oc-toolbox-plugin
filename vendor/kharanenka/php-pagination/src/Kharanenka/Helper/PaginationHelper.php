@@ -88,6 +88,8 @@ class PaginationHelper {
      */
     public static function get($iCurrentPage, $iTotalCount, $arSettings = []) {
 
+        self::$arResult = [];
+
         self::$iCurrentPage = $iCurrentPage;
         self::initSettings($arSettings);
         if(empty(self::$arSettings['button_list'])) {

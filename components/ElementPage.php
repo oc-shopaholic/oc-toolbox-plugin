@@ -1,8 +1,7 @@
 <?php namespace Lovata\Toolbox\Components;
 
-use Lang;
+use Lovata\Toolbox\Classes\ComponentTraitNotFoundResponse;
 use Lovata\Toolbox\Models\ExampleModel;
-use Response;
 use Cms\Classes\ComponentBase;
 
 /**
@@ -11,6 +10,8 @@ use Cms\Classes\ComponentBase;
  * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class ElementPage extends ComponentBase {
+
+    use ComponentTraitNotFoundResponse;
 
     /** @var ExampleModel */
     protected $obElement;
@@ -28,24 +29,10 @@ class ElementPage extends ComponentBase {
     /**
      * @return array
      */
-    public function defineProperties() {
-        return [
-            'error_404' => [
-                'title'             => Lang::get('lovata.toolbox::lang.component.property_name_error_404'),
-                'description'       => Lang::get('lovata.toolbox::lang.component.property_description_error_404'),
-                'default'           => 'on',
-                'type'              => 'dropdown',
-                'options' => [
-                    'on'        => Lang::get('lovata.toolbox::lang.component.property_value_on'),
-                    'off'       => Lang::get('lovata.toolbox::lang.component.property_value_off'),
-                ],
-            ],
-            'slug' => [
-                'title'             => Lang::get('lovata.toolbox::lang.component.property_slug'),
-                'type'              => 'string',
-                'default'           => '{{ :slug }}',
-            ],
-        ];
+    public function defineProperties()
+    {
+        $arProperties = $this->getElementPageProperties();
+        return $arProperties;
     }
 
     /**
@@ -59,24 +46,14 @@ class ElementPage extends ComponentBase {
         //Get element slug
         $sElementSlug = $this->property('slug');
         if(empty($sElementSlug)) {
-
-            if(!$bDisplayError404) {
-                return;
-            }
-
-            return Response::make($this->controller->run('404')->getContent(), 404);
+            return $this->getErrorResponse($bDisplayError404);
         }
 
         //Get element by slug
         /** @var ExampleModel $obElement */
         $obElement = ExampleModel::getBySlug($sElementSlug)->first();
         if(empty($obElement)) {
-
-            if(!$bDisplayError404) {
-                return;
-            }
-
-            return Response::make($this->controller->run('404')->getContent(), 404);
+            return $this->getErrorResponse($bDisplayError404);
         }
 
         $this->obElement = $obElement;

@@ -671,16 +671,16 @@
         },
         {
             "name": "kharanenka/php-pagination",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kharanenka/php-pagination.git",
-                "reference": "0f63ee88025c92e4c3cca433b2a13b81f2274370"
+                "reference": "1dd72a45bdc7d20f9c4d0754f9666e4e0d2ca489"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kharanenka/php-pagination/zipball/0f63ee88025c92e4c3cca433b2a13b81f2274370",
-                "reference": "0f63ee88025c92e4c3cca433b2a13b81f2274370",
+                "url": "https://api.github.com/repos/kharanenka/php-pagination/zipball/1dd72a45bdc7d20f9c4d0754f9666e4e0d2ca489",
+                "reference": "1dd72a45bdc7d20f9c4d0754f9666e4e0d2ca489",
                 "shasum": ""
             },
             "require": {
@@ -710,7 +710,7 @@
                 "pagination",
                 "php"
             ],
-            "time": "2016-11-17 18:39:20"
+            "time": "2016-12-07 17:47:57"
         },
         {
             "name": "kharanenka/php-result-store",

@@ -65,10 +65,10 @@
     ],
     'tab' => [],
     'component' => [
-        'property_name_error_404' => 'Отображать 404 страницу',
+        'property_name_error_404' => 'View 404 page',
         'property_description_error_404' => '',
-        'property_value_on' => 'Да',
-        'property_value_off' => 'Нет',
+        'property_value_on' => 'Yes',
+        'property_value_off' => 'No',
         'property_slug' => 'Slug',
     ],
     'message' => [],
