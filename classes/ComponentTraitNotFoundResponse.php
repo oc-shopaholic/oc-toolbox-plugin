@@ -18,17 +18,17 @@ trait ComponentTraitNotFoundResponse {
     {
         return [
             'error_404' => [
-                'title' => Lang::get('lovata.toolbox::lang.component.property_name_error_404'),
-                'description' => Lang::get('lovata.toolbox::lang.component.property_description_error_404'),
-                'default' => 'on',
-                'type' => 'dropdown',
+                'title'         => 'lovata.toolbox::lang.component.property_name_error_404',
+                'description'   => 'lovata.toolbox::lang.component.property_description_error_404',
+                'default'       => 'on',
+                'type'          => 'dropdown',
                 'options' => [
-                    'on' => Lang::get('lovata.toolbox::lang.component.property_value_on'),
-                    'off' => Lang::get('lovata.toolbox::lang.component.property_value_off'),
+                    'on'    => Lang::get('lovata.toolbox::lang.component.property_value_on'),
+                    'off'   => Lang::get('lovata.toolbox::lang.component.property_value_off'),
                 ],
             ],
             'slug' => [
-                'title'             => Lang::get('lovata.toolbox::lang.component.property_slug'),
+                'title'             => 'lovata.toolbox::lang.component.property_slug',
                 'type'              => 'string',
                 'default'           => '{{ :slug }}',
             ],
