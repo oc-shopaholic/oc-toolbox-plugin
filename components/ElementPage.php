@@ -9,8 +9,8 @@ use Cms\Classes\ComponentBase;
  * @package Lovata\Toolbox\Components
  * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class ElementPage extends ComponentBase {
-
+class ElementPage extends ComponentBase
+{
     use ComponentTraitNotFoundResponse;
 
     /** @var ExampleModel */
@@ -19,7 +19,8 @@ class ElementPage extends ComponentBase {
     /**
      * @return array
      */
-    public function componentDetails() {
+    public function componentDetails()
+    {
         return [
             'name'        => 'lovata.toolbox::lang.component.element_page',
             'description' => 'lovata.toolbox::lang.component.element_page_desc'
@@ -39,8 +40,8 @@ class ElementPage extends ComponentBase {
      * Get element object
      * @return \Illuminate\Http\Response|void
      */
-    public function onRun() {
-
+    public function onRun()
+    {
         $bDisplayError404 = $this->property('error_404') == 'on' ? true : false;
 
         //Get element slug
@@ -64,8 +65,8 @@ class ElementPage extends ComponentBase {
      * Get element data
      * @return array|null
      */
-    public function get() {
-
+    public function get()
+    {
         if(empty($this->obElement)) {
             return null;
         }

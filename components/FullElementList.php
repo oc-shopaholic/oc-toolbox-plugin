@@ -10,12 +10,13 @@ use Lovata\Toolbox\Plugin;
  * @package Lovata\Toolbox\Components
  * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class FullElementList extends ComponentBase {
-
+class FullElementList extends ComponentBase
+{
     /**
      * @return array
      */
-    public function componentDetails() {
+    public function componentDetails()
+    {
         return [
             'name'        => 'lovata.toolbox::lang.component.full_element_list',
             'description' => 'lovata.toolbox::lang.component.full_element_list_desc'
@@ -26,8 +27,8 @@ class FullElementList extends ComponentBase {
      * Get element list
      * @return array|null
      */
-    public function get() {
-
+    public function get()
+    {
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, ExampleModel::CACHE_TAG_LIST];
         $sCacheKey = ExampleModel::CACHE_TAG_LIST;

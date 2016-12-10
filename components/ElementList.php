@@ -12,15 +12,16 @@ use Lovata\Toolbox\Models\ExampleModel;
  * @package Lovata\Toolbox\Components
  * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class ElementList extends ComponentBase {
-
+class ElementList extends ComponentBase
+{
     protected $iElementOnPage = 10;
     protected $arResult = [];
 
     /**
      * @return array
      */
-    public function componentDetails() {
+    public function componentDetails()
+    {
         return [
             'name'        => 'lovata.toolbox::lang.component.element_list',
             'description' => 'lovata.toolbox::lang.component.element_list_desc'
@@ -30,8 +31,8 @@ class ElementList extends ComponentBase {
     /**
      * @return array
      */
-    public function defineProperties() {
-
+    public function defineProperties()
+    {
         $arProperties = [];
         $arProperties = array_merge($arProperties, Pagination::getProperties(Plugin::NAME));
         return $arProperties;
@@ -45,8 +46,8 @@ class ElementList extends ComponentBase {
     /**
      * Init start data
      */
-    protected function initData() {
-
+    protected function initData()
+    {
         $iElementOnPage = $this->property('count_per_page');
         if($iElementOnPage > 0) {
             $this->iElementOnPage = $iElementOnPage;
@@ -58,8 +59,8 @@ class ElementList extends ComponentBase {
      * @param int $iPage
      * @return array
      */
-    public function get($iPage = 1) {
-
+    public function get($iPage = 1)
+    {
         $arResult = [
             'list' => [],
             'pagination' => [],
@@ -122,8 +123,8 @@ class ElementList extends ComponentBase {
      * Get ajax element list
      * @return string
      */
-    public function onAjaxRequest() {
-
+    public function onAjaxRequest()
+    {
         $this->initData();
         return;
     }
@@ -133,8 +134,8 @@ class ElementList extends ComponentBase {
      * @param int $iPage
      * @return array|mixed
      */
-    public function getPagination($iPage = 1) {
-
+    public function getPagination($iPage = 1)
+    {
         $arResult = $this->get($iPage);
         if(isset($arResult['pagination'])) {
             return $arResult['pagination'];
@@ -148,8 +149,8 @@ class ElementList extends ComponentBase {
      * @param int $iPage
      * @return array|mixed
      */
-    public function getCount($iPage = 1) {
-
+    public function getCount($iPage = 1)
+    {
         $arResult = $this->get($iPage);
         if(isset($arResult['count'])) {
             return $arResult['count'];

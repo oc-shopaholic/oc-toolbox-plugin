@@ -35,8 +35,13 @@ class ExampleModel extends Model
     public $customMessages = [];
     public $attributeNames = [];
     protected $dates = ['created_at', 'updated_at'];
-    
-    public function __construct(array $attributes = []) {
+
+    /**
+     * ExampleModel constructor.
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
         parent::__construct($attributes);
     }
 
@@ -68,7 +73,6 @@ class ExampleModel extends Model
      */
     public function getData()
     {
-
         $arResult = [
             'id' => $this->id,
         ];
@@ -93,23 +97,23 @@ class ExampleModel extends Model
         $sCacheKey = $iElementID;
 
         $arResult = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arResult)) {
-            return $arResult;
+        if(empty($arResult)) {
+
+            //Get element object
+            if(empty($obElement)) {
+                $obElement = self::find($iElementID);
+            }
+
+            if(empty($obElement)) {
+                return null;
+            }
+
+            $arResult = $obElement->getData();
+
+            //Set cache data
+            CCache::forever($arCacheTags, $sCacheKey, $arResult);
         }
 
-        //Get element object
-        if(empty($obElement)) {
-            $obElement = self::find($iElementID);
-        }
-
-        if(empty($obElement)) {
-            return null;
-        }
-
-        $arResult = $obElement->getData();
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arResult);
         return $arResult;
     }
 }

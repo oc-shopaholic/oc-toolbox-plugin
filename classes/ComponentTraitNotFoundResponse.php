@@ -14,7 +14,8 @@ trait ComponentTraitNotFoundResponse {
      * Get component properties for element page
      * @return array
      */
-    public function getElementPageProperties() {
+    public function getElementPageProperties()
+    {
         return [
             'error_404' => [
                 'title' => Lang::get('lovata.toolbox::lang.component.property_name_error_404'),
@@ -39,8 +40,8 @@ trait ComponentTraitNotFoundResponse {
      * @param bool $bDisplayError404
      * @return \Illuminate\Http\Response|void
      */
-    protected function getErrorResponse($bDisplayError404) {
-
+    protected function getErrorResponse($bDisplayError404)
+    {
         if(!$bDisplayError404) {
             return;
         }
