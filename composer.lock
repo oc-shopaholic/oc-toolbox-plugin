@@ -627,16 +627,16 @@
         },
         {
             "name": "kharanenka/oc-pagination",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kharanenka/oc-pagination.git",
-                "reference": "2a4aa8f684745a1007b8c5fc938de3bbe9f1b737"
+                "reference": "0a26015df60c7a3194dbdabe1f882efa287affd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kharanenka/oc-pagination/zipball/2a4aa8f684745a1007b8c5fc938de3bbe9f1b737",
-                "reference": "2a4aa8f684745a1007b8c5fc938de3bbe9f1b737",
+                "url": "https://api.github.com/repos/kharanenka/oc-pagination/zipball/0a26015df60c7a3194dbdabe1f882efa287affd3",
+                "reference": "0a26015df60c7a3194dbdabe1f882efa287affd3",
                 "shasum": ""
             },
             "require": {
@@ -667,7 +667,7 @@
                 "pagination",
                 "php"
             ],
-            "time": "2016-11-23 16:50:20"
+            "time": "2016-12-10 18:40:39"
         },
         {
             "name": "kharanenka/php-pagination",

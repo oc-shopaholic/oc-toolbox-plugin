@@ -1,6 +1,6 @@
 <?php namespace Kharanenka\Helper;
 
-use Kharanenka\Helper\PaginationHelper;
+use Lang;
 
 /**
  * Class Pagination
@@ -20,14 +20,14 @@ class Pagination extends PaginationHelper {
                 'title'             => 'lovata.'.$sPluginName.'::lang.settings.count_per_page',
                 'type'              => 'string',
                 'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'lovata.'.$sPluginName.'::lang.settings.number_validation',
+                'validationMessage' => Lang::get('lovata.'.$sPluginName.'::lang.settings.number_validation'),
                 'default'           => self::$arSettings['count_per_page'],
             ],
             'pagination_limit' => [
                 'title'             => 'lovata.'.$sPluginName.'::lang.settings.pagination_limit',
                 'type'              => 'string',
                 'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'lovata.'.$sPluginName.'::lang.settings.number_validation',
+                'validationMessage' => Lang::get('lovata.'.$sPluginName.'::lang.settings.number_validation'),
                 'default'           => self::$arSettings['pagination_limit'],
             ],
             'active_class' => [
@@ -52,7 +52,7 @@ class Pagination extends PaginationHelper {
                 'title'             => 'lovata.'.$sPluginName.'::lang.settings.button_limit',
                 'type'              => 'string',
                 'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'lovata.'.$sPluginName.'::lang.settings.number_validation',
+                'validationMessage' => Lang::get('lovata.'.$sPluginName.'::lang.settings.number_validation'),
                 'default'           => self::$arSettings['first_button_limit'],
                 'group'             => 'lovata.'.$sPluginName.'::lang.settings.first_button',
             ],
@@ -80,7 +80,7 @@ class Pagination extends PaginationHelper {
                 'title'             => 'lovata.'.$sPluginName.'::lang.settings.button_limit',
                 'type'              => 'string',
                 'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'lovata.'.$sPluginName.'::lang.settings.number_validation',
+                'validationMessage' => Lang::get('lovata.'.$sPluginName.'::lang.settings.number_validation'),
                 'default'           => self::$arSettings['first-more_button_limit'],
                 'group'             => 'lovata.'.$sPluginName.'::lang.settings.first-more_button',
             ],
@@ -102,7 +102,7 @@ class Pagination extends PaginationHelper {
                 'title'             => 'lovata.'.$sPluginName.'::lang.settings.button_limit',
                 'type'              => 'string',
                 'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'lovata.'.$sPluginName.'::lang.settings.number_validation',
+                'validationMessage' => Lang::get('lovata.'.$sPluginName.'::lang.settings.number_validation'),
                 'default'           => self::$arSettings['prev_button_limit'],
                 'group'             => 'lovata.'.$sPluginName.'::lang.settings.prev_button',
             ],
@@ -130,7 +130,7 @@ class Pagination extends PaginationHelper {
                 'title'             => 'lovata.'.$sPluginName.'::lang.settings.button_limit',
                 'type'              => 'string',
                 'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'lovata.'.$sPluginName.'::lang.settings.number_validation',
+                'validationMessage' => Lang::get('lovata.'.$sPluginName.'::lang.settings.number_validation'),
                 'default'           => self::$arSettings['prev-more_button_limit'],
                 'group'             => 'lovata.'.$sPluginName.'::lang.settings.prev-more_button',
             ],
@@ -160,7 +160,7 @@ class Pagination extends PaginationHelper {
                 'title'             => 'lovata.'.$sPluginName.'::lang.settings.button_limit',
                 'type'              => 'string',
                 'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'lovata.'.$sPluginName.'::lang.settings.number_validation',
+                'validationMessage' => Lang::get('lovata.'.$sPluginName.'::lang.settings.number_validation'),
                 'default'           => self::$arSettings['next-more_button_limit'],
                 'group'             => 'lovata.'.$sPluginName.'::lang.settings.next-more_button',
             ],
@@ -182,7 +182,7 @@ class Pagination extends PaginationHelper {
                 'title'             => 'lovata.'.$sPluginName.'::lang.settings.button_limit',
                 'type'              => 'string',
                 'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'lovata.'.$sPluginName.'::lang.settings.number_validation',
+                'validationMessage' => Lang::get('lovata.'.$sPluginName.'::lang.settings.number_validation'),
                 'default'           => self::$arSettings['next_button_limit'],
                 'group'             => 'lovata.'.$sPluginName.'::lang.settings.next_button',
             ],
@@ -210,7 +210,7 @@ class Pagination extends PaginationHelper {
                 'title'             => 'lovata.'.$sPluginName.'::lang.settings.button_limit',
                 'type'              => 'string',
                 'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'lovata.'.$sPluginName.'::lang.settings.number_validation',
+                'validationMessage' => Lang::get('lovata.'.$sPluginName.'::lang.settings.number_validation'),
                 'default'           => self::$arSettings['last-more_button_limit'],
                 'group'             => 'lovata.'.$sPluginName.'::lang.settings.last-more_button',
             ],
@@ -232,7 +232,7 @@ class Pagination extends PaginationHelper {
                 'title'             => 'lovata.'.$sPluginName.'::lang.settings.button_limit',
                 'type'              => 'string',
                 'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'lovata.'.$sPluginName.'::lang.settings.number_validation',
+                'validationMessage' => Lang::get('lovata.'.$sPluginName.'::lang.settings.number_validation'),
                 'default'           => self::$arSettings['last_button_limit'],
                 'group'             => 'lovata.'.$sPluginName.'::lang.settings.last_button',
             ],
