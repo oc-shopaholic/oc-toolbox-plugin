@@ -6,7 +6,6 @@
     'field' => [
         'id'                                => 'ID',
         'name'                              => 'Название',
-        'title'                             => 'Заголовок',
         'active'                            => 'Активность',
         'code'                              => 'Код',
         'slug'                              => 'URL',
@@ -93,11 +92,10 @@
         'description'           => 'Описание',
     ],
     'component' => [
-        'property_name_error_404' => 'View 404 page',
-        'property_description_error_404' => '',
-        'property_value_on' => 'Yes',
-        'property_value_off' => 'No',
-        'property_slug' => 'Slug',
+        'property_name_error_404'           => 'View 404 page',
+        'property_value_on'                 => 'Yes',
+        'property_value_off'                => 'No',
+        'property_slug'                     => 'Slug',
     ],
     'button' => [
         'restore' => 'Восстановить',
