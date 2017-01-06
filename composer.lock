@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "kharanenka/laravel-cache-helper",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kharanenka/laravel-cache-helper.git",
-                "reference": "d0096e286fac30b6eeab6206cef8b7fd9a666378"
+                "reference": "5423eed6830ade6f7af8b02eb6ad33a97db7b848"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kharanenka/laravel-cache-helper/zipball/d0096e286fac30b6eeab6206cef8b7fd9a666378",
-                "reference": "d0096e286fac30b6eeab6206cef8b7fd9a666378",
+                "url": "https://api.github.com/repos/kharanenka/laravel-cache-helper/zipball/5423eed6830ade6f7af8b02eb6ad33a97db7b848",
+                "reference": "5423eed6830ade6f7af8b02eb6ad33a97db7b848",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
                 "octobercms",
                 "php"
             ],
-            "time": "2016-11-12 19:37:47"
+            "time": "2017-01-06 17:53:00"
         },
         {
             "name": "kharanenka/laravel-scope-active",

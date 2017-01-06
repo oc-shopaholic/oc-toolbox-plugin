@@ -8,5 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'Kharanenka\\Scope\\' => array($vendorDir . '/kharanenka/laravel-scope-category-belongs-to/src', $vendorDir . '/kharanenka/laravel-scope-code/src', $vendorDir . '/kharanenka/laravel-scope-date/src', $vendorDir . '/kharanenka/laravel-scope-external-id/src', $vendorDir . '/kharanenka/laravel-scope-name/src', $vendorDir . '/kharanenka/laravel-scope-publish/src', $vendorDir . '/kharanenka/laravel-scope-slug/src', $vendorDir . '/kharanenka/laravel-scope-user-belongs-to/src', $vendorDir . '/kharanenka/laravel-scope-moderation/src', $vendorDir . '/kharanenka/laravel-scope-active/src'),
     'Kharanenka\\Result\\' => array($vendorDir . '/kharanenka/php-result-store/src'),
-    'Kharanenka\\Helper\\' => array($vendorDir . '/kharanenka/oc-data-file-model/src', $vendorDir . '/kharanenka/oc-model-custom-validation-message/src', $vendorDir . '/kharanenka/laravel-cache-helper/src', $vendorDir . '/kharanenka/php-pagination/src', $vendorDir . '/kharanenka/oc-pagination/src'),
+    'Kharanenka\\Helper\\' => array($vendorDir . '/kharanenka/oc-data-file-model/src', $vendorDir . '/kharanenka/oc-model-custom-validation-message/src', $vendorDir . '/kharanenka/php-pagination/src', $vendorDir . '/kharanenka/oc-pagination/src', $vendorDir . '/kharanenka/laravel-cache-helper/src'),
 );

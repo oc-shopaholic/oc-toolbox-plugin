@@ -38,7 +38,7 @@ class ElementPage extends ComponentBase
 
     /**
      * Get element object
-     * @return \Illuminate\Http\Response|void
+     * @return \Illuminate\Http\Response|null
      */
     public function onRun()
     {
@@ -58,7 +58,7 @@ class ElementPage extends ComponentBase
         }
 
         $this->obElement = $obElement;
-        return;
+        return null;
     }
 
     /**

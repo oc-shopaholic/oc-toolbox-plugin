@@ -643,53 +643,6 @@
         ]
     },
     {
-        "name": "kharanenka/laravel-cache-helper",
-        "version": "1.0.1",
-        "version_normalized": "1.0.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/kharanenka/laravel-cache-helper.git",
-            "reference": "d0096e286fac30b6eeab6206cef8b7fd9a666378"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/kharanenka/laravel-cache-helper/zipball/d0096e286fac30b6eeab6206cef8b7fd9a666378",
-            "reference": "d0096e286fac30b6eeab6206cef8b7fd9a666378",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.6"
-        },
-        "time": "2016-11-12 19:37:47",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/Kharanenka/Helper"
-            ],
-            "psr-0": {
-                "Kharanenka\\Helper\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-3.0"
-        ],
-        "authors": [
-            {
-                "name": "Andrey Kharanenka",
-                "email": "kharanenka@gmail.com"
-            }
-        ],
-        "description": "Cache helper for default laravel cache class",
-        "keywords": [
-            "cache",
-            "laravel",
-            "octobercms",
-            "php"
-        ]
-    },
-    {
         "name": "kharanenka/php-pagination",
         "version": "2.0.1",
         "version_normalized": "2.0.1.0",
@@ -777,6 +730,53 @@
         "description": "Get pagination elements for OctoberCMS",
         "keywords": [
             "pagination",
+            "php"
+        ]
+    },
+    {
+        "name": "kharanenka/laravel-cache-helper",
+        "version": "1.0.2",
+        "version_normalized": "1.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kharanenka/laravel-cache-helper.git",
+            "reference": "5423eed6830ade6f7af8b02eb6ad33a97db7b848"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kharanenka/laravel-cache-helper/zipball/5423eed6830ade6f7af8b02eb6ad33a97db7b848",
+            "reference": "5423eed6830ade6f7af8b02eb6ad33a97db7b848",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6"
+        },
+        "time": "2017-01-06 17:53:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/Kharanenka/Helper"
+            ],
+            "psr-0": {
+                "Kharanenka\\Helper\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Andrey Kharanenka",
+                "email": "kharanenka@gmail.com"
+            }
+        ],
+        "description": "Cache helper for default laravel cache class",
+        "keywords": [
+            "cache",
+            "laravel",
+            "octobercms",
             "php"
         ]
     }

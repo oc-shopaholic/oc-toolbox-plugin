@@ -38,7 +38,7 @@ trait ComponentTraitNotFoundResponse {
     /**
      * Get error response for 404 page
      * @param bool $bDisplayError404
-     * @return \Illuminate\Http\Response|void
+     * @return \Illuminate\Http\Response|null
      */
     protected function getErrorResponse($bDisplayError404)
     {

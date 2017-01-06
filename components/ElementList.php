@@ -59,7 +59,7 @@ class ElementList extends ComponentBase
      * @param int $iPage
      * @return array
      */
-    public function get($iPage = 1)
+    public function getData($iPage = 1)
     {
         $arResult = [
             'list' => [],
@@ -130,13 +130,28 @@ class ElementList extends ComponentBase
     }
 
     /**
+     * Get element list
+     * @param int $iPage
+     * @return array|mixed
+     */
+    public function get($iPage = 1)
+    {
+        $arResult = $this->getData($iPage);
+        if(isset($arResult['list'])) {
+            return $arResult['list'];
+        }
+
+        return [];
+    }
+
+    /**
      * Get pagination data
      * @param int $iPage
      * @return array|mixed
      */
     public function getPagination($iPage = 1)
     {
-        $arResult = $this->get($iPage);
+        $arResult = $this->getData($iPage);
         if(isset($arResult['pagination'])) {
             return $arResult['pagination'];
         }
@@ -151,7 +166,7 @@ class ElementList extends ComponentBase
      */
     public function getCount($iPage = 1)
     {
-        $arResult = $this->get($iPage);
+        $arResult = $this->getData($iPage);
         if(isset($arResult['count'])) {
             return $arResult['count'];
         }

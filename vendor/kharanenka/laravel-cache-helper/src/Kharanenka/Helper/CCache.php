@@ -10,16 +10,16 @@ use Carbon\Carbon;
  *
  */
 
-class CCache {
-
+class CCache
+{
     /**
      * Get cache value
      * @param array $arTags
      * @param string $sKeys
-     * @return string|null
+     * @return mixed
      */
-    public static function get($arTags, $sKeys) {
-
+    public static function get($arTags, $sKeys)
+    {
         $sCacheDriver = config('cache.default');
         if(!empty($arTags)) {
             if($sCacheDriver == 'redis') {
@@ -38,8 +38,8 @@ class CCache {
      * @param string $sKeys
      * @return string|null
      */
-    public static function has($arTags, $sKeys) {
-
+    public static function has($arTags, $sKeys)
+    {
         $sCacheDriver = config('cache.default');
         if(!empty($arTags)) {
             if($sCacheDriver == 'redis') {
@@ -59,8 +59,8 @@ class CCache {
      * @param mixed $arValue
      * @param int $iMinute
      */
-    public static function put($arTags, $sKeys, &$arValue, $iMinute) {
-
+    public static function put($arTags, $sKeys, &$arValue, $iMinute)
+    {
         $obDate = Carbon::now()->addMinute($iMinute);
 
         $sCacheDriver = config('cache.default');
@@ -82,8 +82,8 @@ class CCache {
      * @param string $sKeys
      * @param mixed $arValue
      */
-    public static function forever($arTags, $sKeys, &$arValue) {
-
+    public static function forever($arTags, $sKeys, &$arValue)
+    {
         $sCacheDriver = config('cache.default');
         if(!empty($arTags)) {
             if($sCacheDriver == 'redis') {
