@@ -11,7 +11,4 @@ class Plugin extends PluginBase
 {
     const NAME = 'toolbox';
     const CACHE_TAG = 'toolbox';
-    
-    public function registerComponents() {}
-    public function registerSettings() {}
 }

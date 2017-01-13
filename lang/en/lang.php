@@ -17,6 +17,11 @@
         'images'                            => 'Images (gallery)',
         'description'                       => 'Description',
         'category'                          => 'Category',
+        'email'                             => 'Email',
+        'phone'                             => 'Phone',
+        'moderation'                        => 'Moderation',
+        'status'                            => 'Status',
+        'type'                              => 'Type',
 
         'sort_order'                        => 'Sorting',
         'created_at'                        => 'Created',
@@ -107,6 +112,7 @@
         'delete_success'                    => 'Delete :name was successfully',
         'restore_confirm'                   => 'Do you want to restore selected items?',
         'restore_success'                   => 'Restore elements was successfully',
+        'e_not_correct_request'             => 'Request is not correct',
     ],
     'settings' => [
         'count_per_page'            => 'Count elements per page',

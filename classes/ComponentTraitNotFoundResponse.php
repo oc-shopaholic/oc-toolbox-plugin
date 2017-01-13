@@ -8,8 +8,8 @@ use Response;
  * @package Lovata\Toolbox\Classes
  * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  */
-trait ComponentTraitNotFoundResponse {
-
+trait ComponentTraitNotFoundResponse
+{
     /**
      * Get component properties for element page
      * @return array
@@ -43,7 +43,7 @@ trait ComponentTraitNotFoundResponse {
     protected function getErrorResponse($bDisplayError404)
     {
         if(!$bDisplayError404) {
-            return;
+            return null;
         }
 
         return Response::make($this->controller->run('404')->getContent(), 404);
