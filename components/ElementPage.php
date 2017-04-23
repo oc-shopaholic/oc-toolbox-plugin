@@ -1,6 +1,6 @@
 <?php namespace Lovata\Toolbox\Components;
 
-use Lovata\Toolbox\Classes\ComponentTraitNotFoundResponse;
+use Lovata\Toolbox\Traits\Helpers\TraitComponentNotFoundResponse;
 use Lovata\Toolbox\Models\ExampleModel;
 use Cms\Classes\ComponentBase;
 
@@ -11,7 +11,7 @@ use Cms\Classes\ComponentBase;
  */
 class ElementPage extends ComponentBase
 {
-    use ComponentTraitNotFoundResponse;
+    use TraitComponentNotFoundResponse;
 
     /** @var ExampleModel */
     protected $obElement;
@@ -42,19 +42,17 @@ class ElementPage extends ComponentBase
      */
     public function onRun()
     {
-        $bDisplayError404 = $this->property('error_404') == 'on' ? true : false;
-
         //Get element slug
         $sElementSlug = $this->property('slug');
         if(empty($sElementSlug)) {
-            return $this->getErrorResponse($bDisplayError404);
+            return $this->getErrorResponse();
         }
 
         //Get element by slug
         /** @var ExampleModel $obElement */
         $obElement = ExampleModel::getBySlug($sElementSlug)->first();
         if(empty($obElement)) {
-            return $this->getErrorResponse($bDisplayError404);
+            return $this->getErrorResponse();
         }
 
         $this->obElement = $obElement;

@@ -3,7 +3,6 @@
 use Carbon\Carbon;
 use Model;
 use Lovata\Toolbox\Plugin;
-use October\Rain\Database\Builder;
 use Kharanenka\Helper\CCache;
 
 /**
@@ -11,7 +10,7 @@ use Kharanenka\Helper\CCache;
  * @package Lovata\Toolbox\Models
  * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @mixin Builder
+ * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  *
  * @property int $id
@@ -63,8 +62,6 @@ class ExampleModel extends Model
         //Clear cached data
         CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT], $this->id);
         CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG_LIST], self::CACHE_TAG_LIST);
-
-        CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG_LIST]);
     }
 
     /**

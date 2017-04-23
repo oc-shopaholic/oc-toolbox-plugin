@@ -99,8 +99,6 @@
     ],
     'component' => [
         'property_name_error_404'           => 'View 404 page',
-        'property_value_on'                 => 'Yes',
-        'property_value_off'                => 'No',
         'property_slug'                     => 'Slug',
     ],
     'button' => [

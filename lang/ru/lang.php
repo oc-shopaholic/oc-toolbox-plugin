@@ -22,6 +22,15 @@
         'moderation'                        => 'Модерация',
         'status'                            => 'Статус',
         'type'                              => 'Тип',
+        'avatar'                            => 'Аватар',
+        'property'                          => 'Свойство',
+        'property_list_value'               => 'Допустимые значения свойства',
+        'key'                               => 'Ключ',
+        'value'                             => 'Значение',
+        'date'                              => 'Дата',
+        'datetime'                          => 'Дата и время',
+        'time'                              => 'Время',
+        'file'                              => 'Файл',
 
         'sort_order'                        => 'Сортировка',
         'created_at'                        => 'Создано',
@@ -99,8 +108,6 @@
     ],
     'component' => [
         'property_name_error_404'           => 'Отображать 404 страницу',
-        'property_value_on'                 => 'Да',
-        'property_value_off'                => 'Нет',
         'property_slug'                     => 'Slug',
     ],
     'button' => [

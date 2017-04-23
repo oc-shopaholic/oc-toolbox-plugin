@@ -38,15 +38,10 @@ class ElementList extends ComponentBase
         return $arProperties;
     }
 
-    public function onRun()
-    {
-        $this->initData();
-    }
-
     /**
      * Init start data
      */
-    protected function initData()
+    public function init()
     {
         $iElementOnPage = $this->property('count_per_page');
         if($iElementOnPage > 0) {
@@ -62,10 +57,10 @@ class ElementList extends ComponentBase
     public function getData($iPage = 1)
     {
         $arResult = [
-            'list' => [],
+            'list'       => [],
             'pagination' => [],
-            'page' => $iPage,
-            'count' => 0,
+            'page'       => $iPage,
+            'count'      => 0,
         ];
 
         $iRequestPage = (int) Input::get('page');
@@ -125,8 +120,7 @@ class ElementList extends ComponentBase
      */
     public function onAjaxRequest()
     {
-        $this->initData();
-        return;
+        return true;
     }
 
     /**
