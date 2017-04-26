@@ -10,25 +10,25 @@ trait TraitClassExtension
     /**
      * @var array
      */
-    public static $arExtensionMethodResult = [];
+    protected static $arExtensionMethodResult = [];
 
     /**
-     * @param string $sMethodName
+     * @param string $sMainMethodName
      * @param array $arResult
      * @param array $arData
      */
-    protected static function extendMethodResult($sMethodName, $arResult, $arData = [])
+    protected static function extendMethodResult($sMainMethodName, &$arResult, $arData = [])
     {
-        if(empty(static::$arExtensionMethodResult) || empty($sMethodName)) {
+        if(empty(static::$arExtensionMethodResult) || empty($sMainMethodName)) {
             return;
         }
 
         //Get method list
-        if(!isset(static::$arExtensionMethodResult[$sMethodName]) || empty(static::$arExtensionMethodResult[$sMethodName])) {
+        if(!isset(static::$arExtensionMethodResult[$sMainMethodName]) || empty(static::$arExtensionMethodResult[$sMainMethodName])) {
             return;
         }
 
-        $arMethodList = static::$arExtensionMethodResult[$sMethodName];
+        $arMethodList = static::$arExtensionMethodResult[$sMainMethodName];
         foreach($arMethodList as $arMethodData) {
 
             //Check method data
@@ -55,5 +55,37 @@ trait TraitClassExtension
             //Call method
             $arResult = call_user_func_array([$sClassName, $sMethodName], $arMethodParams);
         }
+    }
+
+    /**
+     * Add extend method to list
+     * @param string $sMainMethodName
+     * @param string $sClassName
+     * @param string $sMethodName
+     */
+    public static function addExtendResultMethod($sMainMethodName, $sClassName, $sMethodName)
+    {
+        //Check params
+        if(empty($sMainMethodName) || empty($sClassName) || empty($sMethodName)) {
+            return;
+        }
+
+        //Create for main method data array
+        if(empty(static::$arExtensionMethodResult) || !isset(static::$arExtensionMethodResult[$sMainMethodName])) {
+            static::$arExtensionMethodResult[$sMainMethodName] = [];
+        }
+
+        //Check method on duplicate
+        foreach(static::$arExtensionMethodResult[$sMainMethodName] as $arMethodData) {
+            if($arMethodData['class'] == $sClassName && $arMethodData['method'] == $sMethodName) {
+                return;
+            }
+        }
+
+        //Add method data on list
+        static::$arExtensionMethodResult[$sMainMethodName][] = [
+            'class' => $sClassName,
+            'method' => $sMethodName,
+        ];
     }
 }
