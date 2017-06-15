@@ -1,6 +1,6 @@
 language: php
 php:
-  - '5.5'
+  - 5.5
 script:
     - NAME="oc-toolbox-plugin"
     - zip -r $NAME ./ -x .gitignore -x .travis.yml
