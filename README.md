@@ -1,10 +1,10 @@
 # Toolbox
 
-A set of third-party dependencies for the plugins by [LOVATA](http://lovata.com) for October CMS.
-
 [![Build Status](https://travis-ci.org/lovata/oc-toolbox-plugin.svg?branch=master)](https://travis-ci.org/lovata/oc-toolbox-plugin) [![Code Climate](https://codeclimate.com/github/lovata/oc-toolbox-plugin/badges/gpa.svg)](https://codeclimate.com/github/lovata/oc-toolbox-plugin)
 
 ## Description
+
+A set of third-party dependencies for the plugins by [LOVATA](http://lovata.com) for October CMS.
 
 ### Package list
 
