@@ -110,9 +110,6 @@
         'property_name_error_404'           => 'Отображать 404 страницу',
         'property_slug'                     => 'Slug',
     ],
-    'button' => [
-        'restore' => 'Восстановить',
-    ],
     'message' => [
         'create_success'                    => 'Создание :name было успешно выполнено',
         'update_success'                    => 'Редактирование :name было успешно выполнено',
@@ -141,5 +138,14 @@
         'first_button'              => '"Первая"',
         'first-more_button'         => '"Еще" (после "Первая")',
         'main_button'               => '"Основная"',
+    ],
+    'type' => [
+        'input'         => 'Текстовое поле (input)',
+        'textarea'      => 'Текстовое поле (textarea)',
+        'checkbox'      => 'Множественный выбор из списка (checkbox)',
+        'select'        => 'Выбор из списка (select)',
+        'date'          => 'Поле выбора даты и времени (datetime)',
+        'colorpicker'   => 'Поле выбора цвета (colorpicker)',
+        'mediafinder'   => 'Файл',
     ],
 ];

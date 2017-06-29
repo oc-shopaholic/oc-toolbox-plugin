@@ -1,0 +1,44 @@
+columns:
+    name:
+        label: 'lovata.toolbox::lang.field.name'
+        type: text
+        searchable: true
+        sortable: true
+    active:
+        label: 'lovata.toolbox::lang.field.active'
+        type: switch
+    type_name:
+        label: 'lovata.toolbox::lang.field.type'
+        type: text
+        sortable: false
+    measure:
+        label: 'lovata.propertiesshopaholic::lang.field.measure'
+        relation: measure
+        select: name
+        sortable: false
+    id:
+        label: 'lovata.toolbox::lang.field.id'
+        type: number
+        sortable: true
+        searchable: true
+        width: 100px
+    external_id:
+        label: 'lovata.toolbox::lang.field.external_id'
+        type: number
+        searchable: true
+        sortable: true
+    sort_order:
+        label: 'lovata.toolbox::lang.field.sort_order'
+        type: number
+        sortable: true
+        width: 150px
+    created_at:
+        label: 'lovata.toolbox::lang.field.created_at'
+        type: timetense
+        invisible: true
+        sortable: true
+    updated_at:
+        label: 'lovata.toolbox::lang.field.updated_at'
+        type: timetense
+        invisible: true
+        sortable: true

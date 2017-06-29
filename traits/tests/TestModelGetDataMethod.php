@@ -14,7 +14,7 @@ trait TestModelGetDataMethod
         $sModelClass = self::MODEL_NAME;
 
         //Create new object
-        $obModel = $sModelClass::create($this->arModelData);
+        $obModel = $sModelClass::create($this->arCreateModelData);
 
         self::assertNotEmpty($obModel, $sModelClass.' creating error');
 
