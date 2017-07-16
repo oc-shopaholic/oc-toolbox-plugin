@@ -14,13 +14,12 @@ trait TestModelHasImages
      */
     public function testHasImages()
     {
-        $sModelClass = self::MODEL_NAME;
-        $sErrorMessage = $sModelClass.' model has not correct images config';
+        $sErrorMessage = $this->sModelClass.' model has not correct images config';
 
         /** @var \Model $obModel */
-        $obModel = new $sModelClass();
+        $obModel = new $this->sModelClass();
         self::assertNotEmpty($obModel->attachMany, $sErrorMessage);
         self::assertArrayHasKey('images', $obModel->attachMany, $sErrorMessage);
-        self::assertEquals($obModel->attachMany['images'], 'System\Models\File', $sErrorMessage);
+        self::assertEquals('System\Models\File', $obModel->attachMany['images'], $sErrorMessage);
     }
 }

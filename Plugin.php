@@ -1,6 +1,9 @@
 <?php namespace Lovata\Toolbox;
 
+use Lovata\Toolbox\Classes\Collection\CollectionStore;
 use System\Classes\PluginBase;
+use Lovata\Toolbox\Classes\Item\TestItem;
+use Lovata\Toolbox\Classes\Collection\TestCollection;
 
 /**
  * Class Plugin
@@ -11,4 +14,15 @@ class Plugin extends PluginBase
 {
     const NAME = 'toolbox';
     const CACHE_TAG = 'toolbox';
+
+    /**
+     * Plugin boot method
+     */
+    public function boot()
+    {
+        if(env('APP_ENV') == 'testing') {
+            $this->app->bind(TestItem::class, TestItem::class);
+            $this->app->bind(TestCollection::class, TestCollection::class);
+        }
+    }
 }

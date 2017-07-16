@@ -14,13 +14,12 @@ trait TestModelHasPreviewImage
      */
     public function testHasPreviewImage()
     {
-        $sModelClass = self::MODEL_NAME;
-        $sErrorMessage = $sModelClass.' model has not correct preview image config';
+        $sErrorMessage = $this->sModelClass.' model has not correct preview image config';
 
         /** @var \Model $obModel */
-        $obModel = new $sModelClass();
+        $obModel = new $this->sModelClass();
         self::assertNotEmpty($obModel->attachOne, $sErrorMessage);
         self::assertArrayHasKey('preview_image', $obModel->attachOne, $sErrorMessage);
-        self::assertEquals($obModel->attachOne['preview_image'], 'System\Models\File', $sErrorMessage);
+        self::assertEquals('System\Models\File', $obModel->attachOne['preview_image'], $sErrorMessage);
     }
 }

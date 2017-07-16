@@ -14,22 +14,19 @@ trait TestModelValidationNameField
      */
     public function testHasValidationNameField()
     {
-        $sModelClass = self::MODEL_NAME;
-
         //Create model object
         /** @var \Model $obModel */
-        $obModel = new $sModelClass();
+        $obModel = new $this->sModelClass();
 
         //Get validation rules array and check it
         $arValidationRules = $obModel->rules;
-        self::assertNotEmpty($arValidationRules, self::MODEL_NAME.' model has empty validation rules array');
+        self::assertNotEmpty($arValidationRules, $this->sModelClass.' model has empty validation rules array');
 
         //Check rules for "name" field
-        self::assertArrayHasKey('name', $arValidationRules, self::MODEL_NAME.' model not has validation rules for field "name"');
-        self::assertNotEmpty($arValidationRules['name'], self::MODEL_NAME.' model not has validation rules for field "name"');
+        self::assertArrayHasKey('name', $arValidationRules, $this->sModelClass.' model not has validation rules for field "name"');
+        self::assertNotEmpty($arValidationRules['name'], $this->sModelClass.' model not has validation rules for field "name"');
 
         $arValidationCondition = explode('|', $arValidationRules['name']);
-        self::assertContains('required', $arValidationCondition,self::MODEL_NAME.' model not has validation rule "required" for field "name"');
-
+        self::assertContains('required', $arValidationCondition,$this->sModelClass.' model not has validation rule "required" for field "name"');
     }
 }
