@@ -1,10 +1,10 @@
-<?php namespace Lovata\Toolbox\Components;
+<?php namespace Lovata\Toolbox\Classes\Component;
 
 use Input;
 
 /**
  * Class SortingElementList
- * @package Lovata\Toolbox\Components
+ * @package Lovata\Toolbox\Classes\Component
  * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  */
 abstract class SortingElementList extends ElementList

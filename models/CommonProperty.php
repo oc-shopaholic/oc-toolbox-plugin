@@ -35,6 +35,8 @@ use Kharanenka\Helper\CustomValidationMessage;
  */
 class CommonProperty extends Model
 {
+    const NAME = 'property';
+
     use Validation;
     use Sortable;
     use ActiveField;

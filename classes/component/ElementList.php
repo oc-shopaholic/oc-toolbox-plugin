@@ -1,4 +1,4 @@
-<?php namespace Lovata\Toolbox\Components;
+<?php namespace Lovata\Toolbox\Classes\Component;
 
 use Input;
 use Cms\Classes\ComponentBase;
@@ -8,7 +8,7 @@ use Kharanenka\Helper\Pagination;
 
 /**
  * Class ElementList
- * @package Lovata\Toolbox\Components
+ * @package Lovata\Toolbox\Classes\Component
  * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  */
 abstract class ElementList extends ComponentBase

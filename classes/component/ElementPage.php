@@ -1,11 +1,11 @@
-<?php namespace Lovata\Toolbox\Components;
+<?php namespace Lovata\Toolbox\Classes\Component;
 
 use Lovata\Toolbox\Traits\Helpers\TraitComponentNotFoundResponse;
 use Cms\Classes\ComponentBase;
 
 /**
  * Class ElementPage
- * @package Lovata\Toolbox\Components
+ * @package Lovata\Toolbox\Classes\Component
  * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  */
 abstract class ElementPage extends ComponentBase
