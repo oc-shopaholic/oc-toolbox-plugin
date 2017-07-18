@@ -1,4 +1,4 @@
-<?php namespace Lovata\PropertiesShopaholic\Models;
+<?php namespace Lovata\Toolbox\Models;
 
 use Lang;
 use Model;
@@ -23,7 +23,6 @@ use Kharanenka\Helper\CustomValidationMessage;
  * 
  * @property $id
  * @property bool $active
- * @property string $plugin
  * @property string $name
  * @property string $code
  * @property string $type (input, textarea, select, checkbox)
@@ -66,24 +65,6 @@ class CommonProperty extends Model
         $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'unique']);
         $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'code']);
         parent::__construct($attributes);
-    }
-
-    /**
-     * Get property data
-     * @return array
-     */
-    public function getData()
-    {
-        $arResult = [
-            'id'            => $this->id,
-            'name'          => $this->name,
-            'code'          => $this->code,
-            'type'          => $this->type,
-            'description'   => $this->description,
-        ];
-
-        //TODO: Добавить расширение \Lovata\FilterShopaholic\Classes\CFilter::getFilterData($this);
-        return $arResult;
     }
 
     /**
