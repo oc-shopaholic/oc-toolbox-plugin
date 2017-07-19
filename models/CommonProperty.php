@@ -64,8 +64,8 @@ class CommonProperty extends Model
      */
     public function __construct(array $attributes = [])
     {
-        $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'unique']);
-        $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'code']);
+        $this->setCustomMessage(ToolboxPlugin::NAME, ['required']);
+        $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name']);
         parent::__construct($attributes);
     }
 
