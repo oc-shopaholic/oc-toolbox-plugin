@@ -44,7 +44,7 @@ abstract class ElementCollection extends Extendable
 
     /**
      * Return new clone collection
-     * @return ElementCollection
+     * @return $this
      */
     protected function returnClone()
     {
