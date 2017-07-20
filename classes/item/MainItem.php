@@ -96,6 +96,16 @@ abstract class MainItem
     }
 
     /**
+     * @param string $sName
+     * @return bool
+     */
+    public function __isset($sName)
+    {
+        $sValue = $this->getAttribute($sName);
+        return !empty($sValue);
+    }
+
+    /**
      * Get "Has one" item object or get "Has many" collection object
      * @param array $arRelationData
      *

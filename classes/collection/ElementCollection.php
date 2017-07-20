@@ -7,14 +7,24 @@ use October\Rain\Extension\Extendable;
  * @package Lovata\Toolbox\Classes\Collection
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-abstract class ElementCollection extends Extendable
+abstract class ElementCollection extends Extendable  implements \Iterator
 {
+    protected $iPosition = 0;
+    
     /** @var array */
     protected $arElementIDList = null;
 
     /** @var int Skip element count, used in "take" method */
     protected $iSkip = 0;
 
+    /**
+     * ElementCollection constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     /**
      * Make new list store
      * @param $arElementIDList
@@ -90,6 +100,20 @@ abstract class ElementCollection extends Extendable
         }
 
         return in_array($iElementID, $this->arElementIDList);
+    }
+
+    /**
+     * Get element item with ID
+     * @param int $iElementID
+     * @return \Lovata\Toolbox\Classes\Item\ElementItem
+     */
+    public function find($iElementID)
+    {
+        if(!$this->has($iElementID)) {
+            return null;
+        }
+        
+        return $this->makeItem($iElementID);
     }
 
     /**
@@ -328,5 +352,63 @@ abstract class ElementCollection extends Extendable
         }
 
         return clone $obCollection;
+    }
+
+    /**
+     * Iterator method rewind
+     */
+    public function rewind()
+    {
+        $this->iPosition = 0;
+    }
+
+    /**
+     * Iterator method current
+     * @return \Lovata\Toolbox\Classes\Item\ElementItem
+     */
+    public function current()
+    {
+        if($this->isEmpty()) {
+            return null;
+        }
+        
+        $arElementIDList = array_values($this->arElementIDList);
+        if(!isset($arElementIDList[$this->iPosition])) {
+            return null;
+        }
+        
+        return $this->makeItem($arElementIDList[$this->iPosition]);
+    }
+
+    /**
+     * Iterator method key
+     * @return string
+     */
+    public function key()
+    {
+        $arElementIDList = array_values($this->arElementIDList);
+        if(!isset($arElementIDList[$this->iPosition])) {
+            return null;
+        }
+        
+        return $arElementIDList[$this->iPosition];
+    }
+
+    /**
+     * Iterator method next
+     */
+    public function next()
+    {
+        $this->iPosition++;
+    }
+
+    /**
+     * Iterator method valid
+     * @return string
+     */
+    public function valid()
+    {
+        $arElementIDList = array_values($this->arElementIDList);
+        return isset($arElementIDList[$this->iPosition]);
     }
 }
