@@ -1,4 +1,4 @@
-<?php namespace Lovata\Shopaholic\Tests\Unit;
+<?php namespace Lovata\Toolbox\Tests\Unit;
 
 include_once __DIR__.'/../../../toolbox/vendor/autoload.php';
 include_once __DIR__.'/../../../../../tests/PluginTestCase.php';
@@ -8,7 +8,7 @@ use PluginTestCase;
 
 /**
  * Class Collection
- * @package Lovata\Shopaholic\Tests\Unit
+ * @package Lovata\Toolbox\Tests\Unit
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @mixin \PHPUnit\Framework\Assert

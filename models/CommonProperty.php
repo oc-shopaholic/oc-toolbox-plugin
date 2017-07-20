@@ -55,6 +55,10 @@ class CommonProperty extends Model
 
     public $table = null;
 
+    public $rules = [];
+    public $customMessages = [];
+    public $attributeNames = [];
+
     public $dates = ['created_at', 'updated_at'];
     public $jsonable = ['settings'];
 
