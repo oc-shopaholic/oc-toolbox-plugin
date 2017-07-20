@@ -194,4 +194,29 @@ class Collection extends PluginTestCase
         $iElementID = array_shift($this->arElementIDList);
         self::assertEquals(true, $obCollection->has($iElementID), $sMessage);
     }
+
+    /**
+     * Test find method in item collection class
+     */
+    public function testFindMethod()
+    {
+        $sMessage = 'Error in "find" collection method';
+        $obCollection = TestCollection::make($this->arElementIDList);
+
+        $obItem = $obCollection->find($this->arElementIDList[0]);
+        self::assertEquals($this->arElementIDList[0], $obItem->id, $sMessage);
+    }
+
+    /**
+     * Test iterator interface in item collection class
+     */
+    public function testIteratorInterface()
+    {
+        $sMessage = 'Error in iteration collection';
+        $obCollection = TestCollection::make($this->arElementIDList);
+
+        foreach ($obCollection as $iKey => $obItem) {
+            self::assertEquals(array_shift($this->arElementIDList), $obItem->id, $sMessage);
+        }
+    }
 }

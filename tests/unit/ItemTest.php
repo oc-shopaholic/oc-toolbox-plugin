@@ -22,6 +22,7 @@ class ItemTest extends PluginTestCase
     {
         $obItem = TestItem::make(1);
         self::assertEquals(1, $obItem->id, 'Error in "make" item method');
+        self::assertEquals(false, empty($obItem->id), 'Error in "__isset" item method');
 
         $obItem = TestItem::makeNoCache(1);
         self::assertEquals(1, $obItem->id, 'Error in "makeNoCache" item method');
