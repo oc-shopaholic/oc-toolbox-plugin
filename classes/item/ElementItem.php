@@ -75,13 +75,13 @@ abstract class ElementItem extends MainItem
             'obElement'  => $obElement,
         ];
 
-        /** @var ElementItem $obStore */
-        $obStore = app()->make(static::class, $arParamList);
+        /** @var ElementItem $obItem */
+        $obItem = app()->make(static::class, $arParamList);
 
         //Init cached array model data
-        $obStore->setCachedData();
+        $obItem->setCachedData();
 
-        return $obStore;
+        return $obItem;
     }
 
     /**
@@ -98,13 +98,13 @@ abstract class ElementItem extends MainItem
             'obElement'  => $obElement,
         ];
 
-        /** @var ElementItem $obStore */
-        $obStore = app()->make(static::class, $arParamList);
+        /** @var ElementItem $obItem */
+        $obItem = app()->make(static::class, $arParamList);
 
         //Init array model data (no cache)
-        $obStore->setData();
+        $obItem->setData();
 
-        return $obStore;
+        return $obItem;
     }
 
     /**
@@ -192,7 +192,7 @@ abstract class ElementItem extends MainItem
 
         //Apply extend methods
         foreach ($this->arExtendResult as $sMethodName) {
-            if(empty($sMethodName) || !method_exists($this, $sMethodName)) {
+            if(empty($sMethodName) || !(method_exists($this, $sMethodName) || $this->methodExists($sMethodName))) {
                 continue;
             }
 

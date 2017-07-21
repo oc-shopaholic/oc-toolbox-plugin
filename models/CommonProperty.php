@@ -25,6 +25,7 @@ use Kharanenka\Helper\CustomValidationMessage;
  * @property bool $active
  * @property string $name
  * @property string $code
+ * @property string $slug
  * @property string $type (input, textarea, select, checkbox)
  * @property array $settings
  * @property string $description

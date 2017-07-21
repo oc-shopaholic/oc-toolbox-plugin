@@ -34,9 +34,9 @@ abstract class MainItem
 
         //Get relation field value
         if(!empty($this->arRelationList) && isset($this->arRelationList[$sName])) {
-            return $this->getRelationField($this->arRelationList[$sName]);
+            return $this->getRelationField($sName, $this->arRelationList[$sName]);
         }
-
+        
         $sMethodName = 'get'.studly_case($sName).'Attribute';
         if(method_exists(static::class, $sMethodName) || $this->methodExists($sMethodName)) {
             return $this->$sMethodName();
@@ -109,14 +109,15 @@ abstract class MainItem
 
     /**
      * Get "Has one" item object or get "Has many" collection object
+     * @param string $sName
      * @param array $arRelationData
      *
      * @return null|ElementItem|\Lovata\Toolbox\Classes\Collection\ElementCollection
      */
-    protected function getRelationField($arRelationData)
+    protected function getRelationField($sName, $arRelationData)
     {
         //Check relation config data
-        if(empty($arRelationData) || !is_array($arRelationData)) {
+        if(empty($sName) || empty($arRelationData) || !is_array($arRelationData)) {
             return null;
         }
 
@@ -136,8 +137,8 @@ abstract class MainItem
         if(!empty($obValue) && $obValue instanceof $sClassName) {
             return $obValue;
         }
-
-        $this->$sFieldName = $sClassName::make($this->$sFieldName);
-        return $this->getAttribute($sFieldName);
+        
+        $this->setAttribute($sName, $sClassName::make($this->$sFieldName));
+        return $this->getAttribute($sName);
     }
 }
