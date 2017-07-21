@@ -4,6 +4,8 @@
  * Class MainItem
  * @package Lovata\Toolbox\Classes\Item
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * 
+ * @mixin \October\Rain\Extension\ExtendableTrait
  */
 abstract class MainItem
 {
@@ -35,8 +37,8 @@ abstract class MainItem
             return $this->getRelationField($this->arRelationList[$sName]);
         }
 
-        $sMethodName = 'get'.camel_case($sName).'Attribute';
-        if(method_exists(static::class, $sMethodName)) {
+        $sMethodName = 'get'.studly_case($sName).'Attribute';
+        if(method_exists(static::class, $sMethodName) || $this->methodExists($sMethodName)) {
             return $this->$sMethodName();
         }
 
