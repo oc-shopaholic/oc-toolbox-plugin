@@ -61,7 +61,7 @@ abstract class ElementList extends ComponentBase
             return $this;
         }
 
-        call_user_func_array($this->obItemCollection->$sName, $arParamList);
+        call_user_func_array([$this->obItemCollection, $sName], $arParamList);
         return $this;
     }
 
@@ -101,6 +101,24 @@ abstract class ElementList extends ComponentBase
         }
 
         return ceil($this->obItemCollection->count() / $this->iElementOnPage);
+    }
+
+    /**
+     * Apply pagination for item collection
+     * @param $iPage
+     *
+     * @return array|\Lovata\Toolbox\Classes\Item\ElementItem[]|null
+     */
+    public function applyPagination($iPage)
+    {
+        $iPage = (int) trim($iPage);
+
+        //Check page value
+        if($iPage < 1) {
+            $iPage = 1;
+        }
+        
+        return $this->obItemCollection->skip(($iPage - 1) * $this->iElementOnPage)->take($this->iElementOnPage);
     }
 
     /**
