@@ -33,16 +33,16 @@ abstract class ModelHandler
         $sModelClass = $this->getModelClass();
         $sModelClass::extend(function ($obElement) {
             
-            $this->obElement = $obElement;
-            
             /** @var \Model $obElement */
             $obElement->bindEvent('model.afterSave', function () use($obElement) {
-                $this->afterSave($obElement);
+                $this->obElement = $obElement;
+                $this->afterSave();
             });
 
             /** @var \Model $obElement */
             $obElement->bindEvent('model.afterDelete', function () use($obElement) {
-                $this->afterDelete($obElement);
+                $this->obElement = $obElement;
+                $this->afterDelete();
             });
         });
     }
