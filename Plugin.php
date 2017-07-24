@@ -1,6 +1,5 @@
 <?php namespace Lovata\Toolbox;
 
-use Lovata\Toolbox\Classes\Collection\CollectionStore;
 use System\Classes\PluginBase;
 use Lovata\Toolbox\Classes\Item\TestItem;
 use Lovata\Toolbox\Classes\Collection\TestCollection;
@@ -14,6 +13,16 @@ class Plugin extends PluginBase
 {
     const NAME = 'toolbox';
     const CACHE_TAG = 'toolbox';
+
+    /**
+     * @return array
+     */
+    public function registerComponents()
+    {
+        return [
+            'Lovata\Toolbox\Components\Pagination'  => 'Pagination',
+        ];
+    }
 
     /**
      * Plugin boot method

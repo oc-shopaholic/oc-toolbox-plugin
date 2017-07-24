@@ -121,6 +121,25 @@ class Collection extends PluginTestCase
     }
 
     /**
+     * Test page method in item collection class
+     */
+    public function testPageMethod()
+    {
+        $sMessage = 'Error in "page" collection method';
+        $obCollection = TestCollection::make($this->arElementIDList);
+
+        $arElementIDList = $this->arElementIDList;
+        $arResult = $obCollection->page(2, 1);
+
+        self::assertEquals(1, count($arResult), $sMessage);
+
+        array_shift($arElementIDList);
+        foreach ($arResult as $iKey => $obItem) {
+            self::assertEquals(array_shift($arElementIDList), $obItem->id, $sMessage);
+        }
+    }
+
+    /**
      * Test first method in item collection class
      */
     public function testFirstMethod()

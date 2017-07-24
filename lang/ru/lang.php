@@ -109,6 +109,8 @@
     'component' => [
         'property_name_error_404'           => 'Отображать 404 страницу',
         'property_slug'                     => 'Slug',
+        'pagination'                        => 'Пагинация',
+        'pagination_desc'                   => 'Вывод кнопок пагинации8',
     ],
     'message' => [
         'create_success'                    => 'Создание :name было успешно выполнено',

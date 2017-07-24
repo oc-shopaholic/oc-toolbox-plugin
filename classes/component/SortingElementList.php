@@ -1,13 +1,14 @@
 <?php namespace Lovata\Toolbox\Classes\Component;
 
 use Input;
+use Cms\Classes\ComponentBase;
 
 /**
  * Class SortingElementList
  * @package Lovata\Toolbox\Classes\Component
  * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  */
-abstract class SortingElementList extends ElementList
+abstract class SortingElementList extends ComponentBase
 {
     /** @var string Active sorting value */
     protected $sSorting;

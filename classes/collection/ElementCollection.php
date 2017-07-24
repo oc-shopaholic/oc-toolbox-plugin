@@ -9,6 +9,8 @@ use October\Rain\Extension\Extendable;
  */
 abstract class ElementCollection extends Extendable  implements \Iterator
 {
+    const COUNT_PER_PAGE = 10;
+
     protected $iPosition = 0;
     
     /** @var array */
@@ -58,7 +60,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     protected function returnClone()
     {
-        return $this;
+        return clone $this;
     }
     
     /**
@@ -251,6 +253,29 @@ abstract class ElementCollection extends Extendable  implements \Iterator
         }
 
         return $arResult;
+    }
+
+    /**
+     * Apply pagination for item collection
+     * @param int $iPage
+     * @param int $iElementOnPage
+     *
+     * @return array|\Lovata\Toolbox\Classes\Item\ElementItem[]|null
+     */
+    public function page($iPage, $iElementOnPage = 10)
+    {
+        $iPage = (int) trim($iPage);
+
+        //Check page value
+        if($iPage < 1) {
+            $iPage = 1;
+        }
+
+        if($iElementOnPage < 1) {
+            $iElementOnPage = self::COUNT_PER_PAGE;
+        }
+
+        return $this->skip(($iPage - 1) * $iElementOnPage)->take($iElementOnPage);
     }
 
     /**
