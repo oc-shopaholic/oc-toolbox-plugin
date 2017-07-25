@@ -411,6 +411,10 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function key()
     {
+        if($this->isEmpty()) {
+            return null;
+        }
+
         $arElementIDList = array_values($this->arElementIDList);
         if(!isset($arElementIDList[$this->iPosition])) {
             return null;
@@ -433,6 +437,10 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function valid()
     {
+        if($this->isEmpty()) {
+            return null;
+        }
+
         $arElementIDList = array_values($this->arElementIDList);
         return isset($arElementIDList[$this->iPosition]);
     }
