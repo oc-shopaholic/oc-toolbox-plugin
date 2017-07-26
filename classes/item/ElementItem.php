@@ -140,6 +140,15 @@ abstract class ElementItem extends MainItem
     }
 
     /**
+     * Check model data is not empty
+     * @return bool
+     */
+    public function isNotEmpty()
+    {
+        return !$this->isEmpty();
+    }
+
+    /**
      * Get model data
      * @return array
      */

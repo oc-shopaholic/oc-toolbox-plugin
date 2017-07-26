@@ -71,6 +71,15 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     {
         return empty($this->arElementIDList);
     }
+    
+    /**
+     * Check list is not empty
+     * @return bool
+     */
+    public function isNotEmpty()
+    {
+        return !empty($this->arElementIDList);
+    }
 
     /**
      * Check list is clear
