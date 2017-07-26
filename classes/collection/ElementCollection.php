@@ -121,7 +121,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     public function find($iElementID)
     {
         if(!$this->has($iElementID)) {
-            return null;
+            return $this->makeItem(null);
         }
         
         return $this->makeItem($iElementID);
@@ -294,7 +294,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     public function first()
     {
         if(empty($this->arElementIDList)) {
-            return null;
+            return $this->makeItem(null);
         }
 
         $arElementIDList = array_values($this->arElementIDList);
@@ -310,7 +310,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     public function last()
     {
         if(empty($this->arElementIDList)) {
-            return null;
+            return $this->makeItem(null);
         }
 
         $arElementIDList = array_values($this->arElementIDList);
@@ -327,7 +327,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     public function shift()
     {
         if(empty($this->arElementIDList)) {
-            return null;
+            return $this->makeItem(null);
         }
 
         $iElementID = array_shift($this->arElementIDList);
@@ -341,7 +341,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     public function pop()
     {
         if(empty($this->arElementIDList)) {
-            return null;
+            return $this->makeItem(null);
         }
 
         $iElementID = array_pop($this->arElementIDList);
