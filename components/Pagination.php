@@ -66,6 +66,15 @@ class Pagination extends ComponentBase
     }
 
     /**
+     * Get count element per page
+     * @return int
+     */
+    public function getCountPerPage()
+    {
+        return $this->iElementOnPage;
+    }
+    
+    /**
      * Get max page value
      * @param int $iCount
      * @return int
