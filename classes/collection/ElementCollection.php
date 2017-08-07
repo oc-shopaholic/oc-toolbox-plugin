@@ -71,7 +71,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     {
         return empty($this->arElementIDList);
     }
-    
+
     /**
      * Check list is not empty
      * @return bool
@@ -244,7 +244,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
         if($this->isEmpty()) {
             return null;
         }
-        
+
         if(empty($iCount)) {
             $iCount = null;
         }
