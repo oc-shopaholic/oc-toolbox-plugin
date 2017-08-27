@@ -16,7 +16,8 @@ class CollectionStore
 
     /**
      * Save item collection
-     * @param string $sKey
+     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testSaveMethod()
+     * @param string            $sKey
      * @param ElementCollection $obCollection
      */
     public function save($sKey, $obCollection)
@@ -30,6 +31,7 @@ class CollectionStore
 
     /**
      * Get saved element collection
+     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testSaveMethod()
      * @param string $sKey
      * @return ElementCollection
      */

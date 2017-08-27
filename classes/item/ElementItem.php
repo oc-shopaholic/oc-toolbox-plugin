@@ -8,17 +8,19 @@ use October\Rain\Extension\ExtendableTrait;
  * Class ElementItem
  * @package Lovata\Toolbox\Classes\Item
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ *
+ * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem
  */
 abstract class ElementItem extends MainItem
 {
-    use ExtendableTrait;
-    
-    public $implement = [];
-    
-    /** @var int */
-    protected $iElementID = null;
+        use ExtendableTrait;
 
-    /** @var \Model */
+        public $implement = [];
+
+        /** @var int */
+        protected $iElementID = null;
+
+        /** @var \Model */
     protected $obElement = null;
 
     /** @var array */
@@ -60,11 +62,12 @@ abstract class ElementItem extends MainItem
      */
     protected static abstract function getCacheTag();
 
-
     /**
      * Make new element item
-     * @param int|string       $iElementID
-     * @param \Model           $obElement
+     * @see \Lovata\Toolbox\Tests\Unit\ItemTest::testItem()
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#makeielementid-obelement--null
+     * @param int|string $iElementID
+     * @param \Model     $obElement
      *
      * @return $this
      */
@@ -86,8 +89,10 @@ abstract class ElementItem extends MainItem
 
     /**
      * Make new element item (no cache)
-     * @param int              $iElementID
-     * @param \Model           $obElement
+     * @see \Lovata\Toolbox\Tests\Unit\ItemTest::testItem()
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#makenocacheielementid-obelement--null
+     * @param int    $iElementID
+     * @param \Model $obElement
      *
      * @return $this
      */
@@ -109,6 +114,7 @@ abstract class ElementItem extends MainItem
 
     /**
      * Remove model data from cache
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#clearcacheielementid
      * @param int $iElementID
      */
     public static function clearCache($iElementID)
@@ -122,6 +128,7 @@ abstract class ElementItem extends MainItem
 
     /**
      * Check model data is empty
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#isempty
      * @return bool
      */
     public function isEmpty()
@@ -131,6 +138,7 @@ abstract class ElementItem extends MainItem
 
     /**
      * Check model data is not empty
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#isnotempty
      * @return bool
      */
     public function isNotEmpty()
@@ -140,6 +148,7 @@ abstract class ElementItem extends MainItem
 
     /**
      * Get model data
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#toarray
      * @return array
      */
     public function toArray()
@@ -149,6 +158,7 @@ abstract class ElementItem extends MainItem
 
     /**
      * Get model data in JSON string
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#tojson
      * @return string
      */
     public function toJSON()
@@ -158,6 +168,7 @@ abstract class ElementItem extends MainItem
 
     /**
      * Get model object
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#getobject
      *
      * @return \Model
      */

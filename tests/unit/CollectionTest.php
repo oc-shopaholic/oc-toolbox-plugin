@@ -7,13 +7,13 @@ use PluginTestCase;
 use Lovata\Toolbox\Classes\Collection\TestCollection;
 
 /**
- * Class Collection
+ * Class CollectionTest
  * @package Lovata\Toolbox\Tests\Unit
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @mixin \PHPUnit\Framework\Assert
  */
-class Collection extends PluginTestCase
+class CollectionTest extends PluginTestCase
 {
     protected $arElementIDList = [1,2,3,4,5];
     protected $arIntersectIDList = [3,4,5,8];
@@ -142,6 +142,22 @@ class Collection extends PluginTestCase
         foreach ($arResult as $iKey => $obItem) {
             self::assertEquals(array_shift($arElementIDList), $obItem->id, $sMessage);
         }
+    }
+    /**
+     * Test exclude method in item collection class
+     */
+    public function testExcludeMethod()
+    {
+        $sMessage = 'Error in "exclude" collection method';
+        $obCollection = TestCollection::make($this->arElementIDList);
+
+        $obItem = $obCollection->find(3);
+        self::assertEquals(true, $obItem->isNotEmpty(), $sMessage);
+
+        $obCollection->exclude(3);
+
+        $obItem = $obCollection->find(3);
+        self::assertEquals(true, $obItem->isEmpty(), $sMessage);
     }
 
     /**

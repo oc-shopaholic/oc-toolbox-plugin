@@ -1,7 +1,6 @@
 <?php namespace Lovata\Toolbox\Classes\Component;
 
 use Input;
-use Request;
 use Cms\Classes\ComponentBase;
 
 /**
@@ -49,10 +48,11 @@ abstract class ElementData extends ComponentBase
 
     /**
      * Ajax listener
+     * @return bool
      */
     public function onAjaxRequest()
     {
-        $this->iElementID = Input::get('element_id');
+        return true;
     }
 
     /**
@@ -60,12 +60,8 @@ abstract class ElementData extends ComponentBase
      * @param int $iElementID
      * @return \Lovata\Toolbox\Classes\Item\ElementItem
      */
-    public function get($iElementID = null)
+    public function get($iElementID)
     {
-        if(Request::ajax() && empty($iElementID)) {
-            $iElementID = $this->iElementID;
-        }
-
         $obElementItem = $this->makeItem($iElementID);
         return $obElementItem;
     }
