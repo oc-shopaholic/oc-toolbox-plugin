@@ -7,6 +7,6 @@ Require this package in your `composer.json` and update composer.
  
 ```php
 
-"kharanenka/oc-data-file-model": "1.0.*"
+"kharanenka/oc-data-file-model": "1.*"
 
 ```

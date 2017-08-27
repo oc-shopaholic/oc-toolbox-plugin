@@ -1,5 +1,7 @@
 <?php namespace Lovata\Toolbox\Classes\Item;
 
+use Lovata\Toolbox\Classes\Collection\ElementCollection;
+
 /**
  * Class MainItem
  * @package Lovata\Toolbox\Classes\Item
@@ -22,16 +24,6 @@ abstract class MainItem
      */
     public function __get($sName)
     {
-        //Check active flag, if item has trait TraitCheckItemActive
-        if(method_exists($this, 'isActive') && !$this->isActive()) {
-            return null;
-        }
-
-        //Check trashed flag, if item has trait TraitCheckItemTrashed
-        if(method_exists($this, 'isTrashed') && $this->isTrashed()) {
-            return null;
-        }
-
         //Get relation field value
         if(!empty($this->arRelationList) && isset($this->arRelationList[$sName])) {
             return $this->getRelationField($sName, $this->arRelationList[$sName]);
@@ -137,8 +129,13 @@ abstract class MainItem
         if(!empty($obValue) && $obValue instanceof $sClassName) {
             return $obValue;
         }
+
+        $obValue = $sClassName::make($this->$sFieldName);
+        if($obValue instanceof ElementCollection && empty($this->$sFieldName)) {
+            $obValue->intersect($this->$sFieldName);
+        }
         
-        $this->setAttribute($sName, $sClassName::make($this->$sFieldName));
+        $this->setAttribute($sName, $obValue);
         return $this->getAttribute($sName);
     }
 }

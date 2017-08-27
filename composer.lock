@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0ef4e8ad4791b71fea117a1d944a7759",
-    "content-hash": "7e29f66c3e7ae004f7a736f244d006d6",
+    "hash": "e60107d96ea85268d08d893d363718ab",
+    "content-hash": "0760230e3ce20d59363237e963ba5312",
     "packages": [
         {
             "name": "kharanenka/laravel-cache-helper",
@@ -487,16 +487,16 @@
         },
         {
             "name": "kharanenka/oc-data-file-model",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kharanenka/oc-data-file-model.git",
-                "reference": "9504caca17d645303349f747b1a3ca2370567fb1"
+                "reference": "5b457ef9a619ff08377b56bfbde5337070359f8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kharanenka/oc-data-file-model/zipball/9504caca17d645303349f747b1a3ca2370567fb1",
-                "reference": "9504caca17d645303349f747b1a3ca2370567fb1",
+                "url": "https://api.github.com/repos/kharanenka/oc-data-file-model/zipball/5b457ef9a619ff08377b56bfbde5337070359f8a",
+                "reference": "5b457ef9a619ff08377b56bfbde5337070359f8a",
                 "shasum": ""
             },
             "require": {
@@ -529,7 +529,7 @@
                 "octobercms",
                 "php"
             ],
-            "time": "2016-11-12 18:55:26"
+            "time": "2017-08-27 15:11:45"
         },
         {
             "name": "kharanenka/oc-pagination",

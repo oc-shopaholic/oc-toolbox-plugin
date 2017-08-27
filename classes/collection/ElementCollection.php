@@ -55,7 +55,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     protected abstract function makeItem($iElementID, $obElement = null);
 
     /**
-     * Return new clone collection
+     * Return this collection
      * @return $this
      */
     public function returnThis()
@@ -71,7 +71,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     {
         return empty($this->arElementIDList);
     }
-
+    
     /**
      * Check list is not empty
      * @return bool
@@ -244,7 +244,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
         if($this->isEmpty()) {
             return null;
         }
-
+        
         if(empty($iCount)) {
             $iCount = null;
         }
@@ -257,6 +257,66 @@ abstract class ElementCollection extends Extendable  implements \Iterator
         $arResult = [];
         foreach ($arElementIDList as $iElementID) {
 
+            $obElementItem = $this->makeItem($iElementID, null);
+            if($obElementItem->isEmpty()) {
+                continue;
+            }
+
+            $arResult[$iElementID] = $obElementItem;
+        }
+
+        return $arResult;
+    }
+
+    /**
+     * Exclude element id from collection
+     * @param int $iElementID
+     * @return $this
+     */
+    public function exclude($iElementID = null)
+    {
+        if (empty($iElementID)) {
+            return $this->returnThis();
+        }
+
+        $iElementIDKey = array_search($iElementID, $this->arElementIDList);
+        if($iElementIDKey === false) {
+            return $this->returnThis();
+        }
+
+        unset($this->arElementIDList[$iElementIDKey]);
+
+        return $this->returnThis();
+    }
+
+    /**
+     * Take array with random element items
+     * @param int $iCount
+     * @return array|null|\Lovata\Toolbox\Classes\Item\ElementItem[]
+     */
+    public function random($iCount = 1)
+    {
+        $iCount = (int) trim($iCount);
+        if($this->isEmpty()) {
+            return null;
+        }
+
+        if($iCount < 1) {
+            $iCount = 1;
+        }
+
+        if (count($this->arElementIDList) < $iCount) {
+            $iCount = count($this->arElementIDList);
+        }
+
+        $arElementKeyList = array_rand($this->arElementIDList, $iCount);
+        if(empty($arElementKeyList)) {
+            return null;
+        }
+
+        $arResult = [];
+        foreach ($arElementKeyList as $iElementKey) {
+            $iElementID = $this->arElementIDList[$iElementKey];
             $obElementItem = $this->makeItem($iElementID, null);
             if($obElementItem->isEmpty()) {
                 continue;

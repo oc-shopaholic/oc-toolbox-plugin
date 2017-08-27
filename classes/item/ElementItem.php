@@ -63,7 +63,7 @@ abstract class ElementItem extends MainItem
 
     /**
      * Make new element item
-     * @param int              $iElementID
+     * @param int|string       $iElementID
      * @param \Model           $obElement
      *
      * @return $this
@@ -126,16 +126,6 @@ abstract class ElementItem extends MainItem
      */
     public function isEmpty()
     {
-        //Check active flag, if item has trait TraitCheckItemActive
-        if(method_exists($this, 'isActive') && !$this->isActive()) {
-            return true;
-        }
-
-        //Check trashed flag, if item has trait TraitCheckItemTrashed
-        if(method_exists($this, 'isTrashed') && $this->isTrashed()) {
-            return true;
-        }
-
         return empty($this->arModelData);
     }
 

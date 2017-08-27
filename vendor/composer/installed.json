@@ -351,54 +351,6 @@
         ]
     },
     {
-        "name": "kharanenka/oc-data-file-model",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/kharanenka/oc-data-file-model.git",
-            "reference": "9504caca17d645303349f747b1a3ca2370567fb1"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/kharanenka/oc-data-file-model/zipball/9504caca17d645303349f747b1a3ca2370567fb1",
-            "reference": "9504caca17d645303349f747b1a3ca2370567fb1",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.6"
-        },
-        "time": "2016-11-12 18:55:26",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/Kharanenka/Helper"
-            ],
-            "psr-0": {
-                "Kharanenka\\Helper\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-3.0"
-        ],
-        "authors": [
-            {
-                "name": "Andrey Kharanenka",
-                "email": "kharanenka@gmail.com"
-            }
-        ],
-        "description": "Trait helps to get attached to the model file data",
-        "keywords": [
-            "attache",
-            "file",
-            "model",
-            "octobercms",
-            "php"
-        ]
-    },
-    {
         "name": "kharanenka/laravel-scope-moderation",
         "version": "1.0.1",
         "version_normalized": "1.0.1.0",
@@ -680,6 +632,54 @@
             "php",
             "result",
             "store"
+        ]
+    },
+    {
+        "name": "kharanenka/oc-data-file-model",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kharanenka/oc-data-file-model.git",
+            "reference": "5b457ef9a619ff08377b56bfbde5337070359f8a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kharanenka/oc-data-file-model/zipball/5b457ef9a619ff08377b56bfbde5337070359f8a",
+            "reference": "5b457ef9a619ff08377b56bfbde5337070359f8a",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6"
+        },
+        "time": "2017-08-27 15:11:45",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/Kharanenka/Helper"
+            ],
+            "psr-0": {
+                "Kharanenka\\Helper\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Andrey Kharanenka",
+                "email": "kharanenka@gmail.com"
+            }
+        ],
+        "description": "Trait helps to get attached to the model file data",
+        "keywords": [
+            "attache",
+            "file",
+            "model",
+            "octobercms",
+            "php"
         ]
     }
 ]

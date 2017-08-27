@@ -1,5 +1,7 @@
 <?php namespace Lovata\Toolbox;
 
+use Lang;
+use Lovata\Toolbox\Components\Pagination;
 use System\Classes\PluginBase;
 use Lovata\Toolbox\Classes\Item\TestItem;
 use Lovata\Toolbox\Classes\Collection\TestCollection;
@@ -20,7 +22,7 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            'Lovata\Toolbox\Components\Pagination'  => 'Pagination',
+            Pagination::class    => 'Pagination',
         ];
     }
 

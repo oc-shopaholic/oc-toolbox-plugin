@@ -1,7 +1,8 @@
 <?php namespace Kharanenka\Helper;
 
-use October\Rain\Database\Collection;
+use Config;
 use System\Models\File;
+use October\Rain\Database\Collection;
 
 /**
  * Class DataFileModel
@@ -40,11 +41,14 @@ trait DataFileModel {
         if(empty($obFile) || !$obFile instanceof File) {
             return null;
         }
-        
+
+        $sUploadFolder = Config::get('cms.storage.uploads.path', '/storage/app/uploads');
+
         return [
-            'path' => $obFile->getPath(),
-            'title' => $obFile->getAttribute('title'),
-            'alt' => $obFile->getAttribute('description'),
+            'full_path' => $obFile->getPath(),
+            'path'      => $sUploadFolder . str_replace('uploads', '', $obFile->getDiskPath()),
+            'title'     => $obFile->getAttribute('title'),
+            'alt'       => $obFile->getAttribute('description'),
         ];
     }
 

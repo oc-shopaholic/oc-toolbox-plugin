@@ -1,6 +1,0 @@
-plugin:
-    name: 'lovata.toolbox::lang.plugin.name'
-    description: 'lovata.toolbox::lang.plugin.description'
-    author: Lovata
-    icon: oc-icon-star
-    homepage: 'https://github.com/lovata/oc-toolbox-plugin'
