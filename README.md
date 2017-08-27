@@ -14,13 +14,11 @@ A set of third-party dependencies for the plugins by [LOVATA](http://lovata.com)
 2. OctoberCMS
     1. [kharanenka/oc-pagination](https://packagist.org/packages/kharanenka/oc-pagination)
     2. [kharanenka/oc-data-file-model](https://packagist.org/packages/kharanenka/oc-data-file-model)
-    3. [kharanenka/oc-model-custom-validation-message](https://packagist.org/packages/kharanenka/oc-model-custom-validation-message)
 
 3. Laravel
     1. [kharanenka/laravel-cache-helper](https://packagist.org/packages/kharanenka/laravel-cache-helper)
     2. [kharanenka/laravel-scope-active](https://packagist.org/packages/kharanenka/laravel-scope-active)
     3. [kharanenka/laravel-scope-moderation](https://packagist.org/packages/kharanenka/laravel-scope-moderation)
-    4. [kharanenka/laravel-scope-publish](https://packagist.org/packages/kharanenka/laravel-scope-publish)
     5. [kharanenka/laravel-scope-name](https://packagist.org/packages/kharanenka/laravel-scope-name)
     6. [kharanenka/laravel-scope-slug](https://packagist.org/packages/kharanenka/laravel-scope-slug)
     7. [kharanenka/laravel-scope-code](https://packagist.org/packages/kharanenka/laravel-scope-code)
@@ -33,4 +31,4 @@ A set of third-party dependencies for the plugins by [LOVATA](http://lovata.com)
 
 © 2016, [LOVATA Group, LLC](http://lovata.com) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
 
-Develped by [Andrey Kharanenka](https://github.com/kharanenka).
+Developed by [Andrey Kharanenka](https://github.com/kharanenka).

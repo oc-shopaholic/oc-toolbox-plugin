@@ -13,14 +13,14 @@ use October\Rain\Extension\ExtendableTrait;
  */
 abstract class ElementItem extends MainItem
 {
-        use ExtendableTrait;
+    use ExtendableTrait;
 
-        public $implement = [];
+    public $implement = [];
 
-        /** @var int */
-        protected $iElementID = null;
+    /** @var int */
+    protected $iElementID = null;
 
-        /** @var \Model */
+    /** @var \Model */
     protected $obElement = null;
 
     /** @var array */
