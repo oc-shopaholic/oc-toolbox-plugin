@@ -1,10 +1,10 @@
 # Toolbox
 
-[![Build Status](https://travis-ci.org/lovata/oc-toolbox-plugin.svg?branch=master)](https://travis-ci.org/lovata/oc-toolbox-plugin) [![Code Climate](https://codeclimate.com/github/lovata/oc-toolbox-plugin/badges/gpa.svg)](https://codeclimate.com/github/lovata/oc-toolbox-plugin)
-
 ## Description
 
-A set of third-party dependencies for the plugins by [LOVATA](http://lovata.com) for October CMS.
+A set of third-party dependencies for the plugins by [LOVATA](https://lovata.com) for October CMS.
+Plugin include tools for caching of single element data ([ElementItem](https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem) class)
+and working with cached lists of model elements ([ElementCollection](https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection) class).
 
 ### Package list
 
@@ -29,6 +29,6 @@ A set of third-party dependencies for the plugins by [LOVATA](http://lovata.com)
 
 ## License
 
-© 2016, [LOVATA Group, LLC](http://lovata.com) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
+© 2016, [LOVATA Group, LLC](https://lovata.com) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
 
 Developed by [Andrey Kharanenka](https://github.com/kharanenka).
