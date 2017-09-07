@@ -28,3 +28,9 @@ component for render pagination buttons.
     9. [kharanenka/laravel-scope-external-id](https://packagist.org/packages/kharanenka/laravel-scope-external-id)
     10. [kharanenka/laravel-scope-category-belongs-to](https://packagist.org/packages/kharanenka/laravel-scope-category-belongs-to)
     11. [kharanenka/laravel-scope-user-belongs-to](https://packagist.org/packages/kharanenka/laravel-scope-user-belongs-to)
+
+## License
+
+© 2016, [LOVATA Group, LLC](http://lovata.com) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
+
+Develped by [Andrey Kharanenka](https://github.com/kharanenka).

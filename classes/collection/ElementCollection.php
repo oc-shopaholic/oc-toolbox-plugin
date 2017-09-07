@@ -326,10 +326,6 @@ abstract class ElementCollection extends Extendable  implements \Iterator
         }
 
         $iCount = (int) trim($iCount);
-        if($this->isEmpty()) {
-            return null;
-        }
-
         if($iCount < 1) {
             $iCount = 1;
         }
