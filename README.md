@@ -5,6 +5,8 @@
 A set of third-party dependencies for the plugins by [LOVATA](https://lovata.com) for October CMS.
 Plugin include tools for caching of single element data ([ElementItem](https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem) class)
 and working with cached lists of model elements ([ElementCollection](https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection) class).
+Plugin has [Pagination](https://github.com/lovata/oc-toolbox-plugin/wiki/Components#pagination) component. It's universal
+component for render pagination buttons.
 
 ### Package list
 
@@ -26,9 +28,3 @@ and working with cached lists of model elements ([ElementCollection](https://git
     9. [kharanenka/laravel-scope-external-id](https://packagist.org/packages/kharanenka/laravel-scope-external-id)
     10. [kharanenka/laravel-scope-category-belongs-to](https://packagist.org/packages/kharanenka/laravel-scope-category-belongs-to)
     11. [kharanenka/laravel-scope-user-belongs-to](https://packagist.org/packages/kharanenka/laravel-scope-user-belongs-to)
-
-## License
-
-© 2016, [LOVATA Group, LLC](https://lovata.com) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
-
-Developed by [Andrey Kharanenka](https://github.com/kharanenka).
