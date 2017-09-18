@@ -30,6 +30,7 @@
         'avatar'              => 'Avatar',
         'property'            => 'Property',
         'property_list_value' => 'Available property values',
+        'property_mode'       => 'Property mode',
         'key'                 => 'Key',
         'value'               => 'Value',
         'date'                => 'Date',
@@ -87,6 +88,9 @@
         'first_button'            => '"First" button',
         'first-more_button'       => '"More" (after "First")',
         'main_button'             => '"Main" button',
+    ],
+    'button' => [
+        'add_property_value'    => 'Add property value',
     ],
     'type'      => [
         'input'       => 'Text field (input)',

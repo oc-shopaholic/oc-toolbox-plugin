@@ -30,6 +30,7 @@
         'avatar'              => 'Аватар',
         'property'            => 'Свойство',
         'property_list_value' => 'Допустимые значения свойства',
+        'property_mode'       => 'Вид свойства',
         'key'                 => 'Ключ',
         'value'               => 'Значение',
         'date'                => 'Дата',
@@ -87,6 +88,9 @@
         'first_button'            => '"Первая"',
         'first-more_button'       => '"Еще" (после "Первая")',
         'main_button'             => '"Основная"',
+    ],
+    'button' => [
+        'add_property_value'    => 'Добавить значение свойства',
     ],
     'type' => [
         'input'       => 'Текстовое поле (input)',
