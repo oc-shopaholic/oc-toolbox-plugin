@@ -1,36 +1,34 @@
 # Toolbox
 
-## Description
+[![Build Status](https://travis-ci.org/lovata/oc-toolbox-plugin.svg?branch=master)](https://travis-ci.org/lovata/oc-toolbox-plugin)
+[![Coverage Status](https://coveralls.io/repos/github/lovata/oc-toolbox-plugin/badge.svg?branch=master)](https://coveralls.io/github/lovata/oc-toolbox-plugin?branch=master)
+[![Code Climate](https://codeclimate.com/github/lovata/oc-toolbox-plugin/badges/gpa.svg)](https://codeclimate.com/github/lovata/oc-toolbox-plugin)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-A set of third-party dependencies for the plugins by [LOVATA](https://lovata.com) for October CMS.
-Plugin include tools for caching of single element data ([ElementItem](https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem) class)
-and working with cached lists of model elements ([ElementCollection](https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection) class).
-Plugin has [Pagination](https://github.com/lovata/oc-toolbox-plugin/wiki/Components#pagination) component. It's universal
-component for render pagination buttons.
 
-### Package list
+Toolbox is a set of helpers for faster development for [October CMS](https://github.com/octobercms/october). It includes universal component for rendering pagination navigation controls, a set of tools for caching of objects and lists. Also it includes a list of most common language strings for using in third party plugins: name, title, description etc.
 
-1. Common
-    1. [kharanenka/php-result-store](https://packagist.org/packages/kharanenka/php-result-store)
+## Features
 
-2. OctoberCMS
-    1. [kharanenka/oc-pagination](https://packagist.org/packages/kharanenka/oc-pagination)
-    2. [kharanenka/oc-data-file-model](https://packagist.org/packages/kharanenka/oc-data-file-model)
+* Components
+    * Pagination is used to get a list of pagination buttons and provides flexible settings.
+* Classes
+    * `ElementCollection` provides a flexible tool for working with cached lists of model elements.
+    * `ElementData` is an abstract class for components that returns object of `ElementItem` class for model.
+    * `ElementItem` provides a flexible tool for single element data caching.
+    * etc.
+    
+[Read more…](https://github.com/lovata/oc-toolbox-plugin/wiki)
 
-3. Laravel
-    1. [kharanenka/laravel-cache-helper](https://packagist.org/packages/kharanenka/laravel-cache-helper)
-    2. [kharanenka/laravel-scope-active](https://packagist.org/packages/kharanenka/laravel-scope-active)
-    3. [kharanenka/laravel-scope-moderation](https://packagist.org/packages/kharanenka/laravel-scope-moderation)
-    5. [kharanenka/laravel-scope-name](https://packagist.org/packages/kharanenka/laravel-scope-name)
-    6. [kharanenka/laravel-scope-slug](https://packagist.org/packages/kharanenka/laravel-scope-slug)
-    7. [kharanenka/laravel-scope-code](https://packagist.org/packages/kharanenka/laravel-scope-code)
-    8. [kharanenka/laravel-scope-date](https://packagist.org/packages/kharanenka/laravel-scope-date)
-    9. [kharanenka/laravel-scope-external-id](https://packagist.org/packages/kharanenka/laravel-scope-external-id)
-    10. [kharanenka/laravel-scope-category-belongs-to](https://packagist.org/packages/kharanenka/laravel-scope-category-belongs-to)
-    11. [kharanenka/laravel-scope-user-belongs-to](https://packagist.org/packages/kharanenka/laravel-scope-user-belongs-to)
+## Development assistance
+
+If you're interested in improvement of this project you can help in the following ways:
+* bug reporting and new feature requesting by creating issues on plugin [GitHub page](https://github.com/lovata/oc-toolbox-plugin/issues);
+* contribution to a project following these [instructions](https://github.com/lovata/oc-toolbox-plugin/blob/master/CONTRIBUTING.md);
+* localization to your language using [Crowdin](https://crowdin.com/project/toolbox-plugin-for-october-cms) service.
 
 ## License
 
-© 2017, [LOVATA Group, LLC](http://lovata.com) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
+© 2017, [LOVATA Group, LLC](https://github.com/lovata) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
 
 Develped by [Andrey Kharanenka](https://github.com/kharanenka).
