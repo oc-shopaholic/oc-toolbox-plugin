@@ -20,7 +20,7 @@ Toolbox is a set of helpers for faster development for [October CMS](https://git
     
 [Read more…](https://github.com/lovata/oc-toolbox-plugin/wiki)
 
-## Development assistance
+## Get involved
 
 If you're interested in improvement of this project you can help in the following ways:
 * bug reporting and new feature requesting by creating issues on plugin [GitHub page](https://github.com/lovata/oc-toolbox-plugin/issues);
