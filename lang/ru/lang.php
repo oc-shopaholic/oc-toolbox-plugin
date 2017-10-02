@@ -1,9 +1,9 @@
 <?php return [
-    'plugin' => [
+    'plugin'    => [
         'name'        => 'Toolbox',
         'description' => '',
     ],
-    'field'  => [
+    'field'     => [
         'id'                  => 'ID',
         'name'                => 'Название',
         'title'               => 'Заголовок',
@@ -46,7 +46,7 @@
         'empty'      => 'Не выбрано',
         'password'   => 'Пароль',
     ],
-    'tab' => [
+    'tab'       => [
         'preview_content' => 'Превью-контент',
         'full_content'    => 'Полный контент',
         'images'          => 'Изображения',
@@ -60,7 +60,7 @@
         'pagination'              => 'Пагинация',
         'pagination_desc'         => 'Вывод кнопок пагинации',
     ],
-    'message' => [
+    'message'   => [
         'create_success'        => 'Создание :name было успешно выполнено',
         'update_success'        => 'Редактирование :name было успешно выполнено',
         'delete_success'        => 'Удаление :name было успешно выполнено',
@@ -68,7 +68,7 @@
         'restore_success'       => 'Элементы восстановлены',
         'e_not_correct_request' => 'Некорректный запрос',
     ],
-    'settings' => [
+    'settings'  => [
         'count_per_page'          => 'Количество элементов на странице',
         'number_validation'       => 'Необходимо ввести число',
         'pagination_limit'        => 'Максимальное количество кнопок пагинации',
@@ -92,7 +92,7 @@
     'button' => [
         'add_property_value'    => 'Добавить значение свойства',
     ],
-    'type' => [
+    'type'      => [
         'input'       => 'Текстовое поле (input)',
         'textarea'    => 'Текстовое поле (textarea)',
         'checkbox'    => 'Множественный выбор из списка (checkbox)',

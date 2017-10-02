@@ -1,22 +1,34 @@
 language: php
+
 php:
-  - 5.5
-script:
-    - NAME="oc-toolbox-plugin"
-    - zip -r $NAME ./ -x .gitignore -x .travis.yml
-before_deploy:
-    - TAG=$(git symbolic-ref -q --short HEAD || git describe --tags --exact-match 2>/dev/null)
-    - FILE="./$NAME.zip"
-    - if [[ -e $FILE ]]; then
-        NEW_NAME="$NAME-$TAG";
-        mv $NAME.zip $NEW_NAME.zip;
-      fi
-deploy:
-  - provider: releases
-    api_key:
-        secure: gKjpVk8AvAZQyVarNxJZg1AinDpOYXWGnl5zlHqknk6CTOvH9+rNU6OBAnxdl3PQP16x6aAZnJTvj6u8zHfdQvxNCnxDWy5YrbBg8k/Aq2po0oI0j/9O/AmMEmzMqGq8rjUeHHv7gHArwuVSORJgYxzws9UTQlDraxLXLqN1xMP6njDJtKTJYuqZuoDRZFqWVzfNpQ6AUfV9q0H1KVcNEkg4/mscBtv3PMZoGAjpfAYUpIxbq3Acr+zaCqdLSn8np5n9zz1lb7pFvMMbfLBHFPRFH/yI6P55iEXZ5Wj/GI8eOjHJE6Exsz7nW6ApVYMs8x1yKHw4ZIVpXwItQ9U3C5eziZAx1x7Ystj5ZcSjlRCJqa2WZ18Uf4xPEiswDJuWGfi9drPNnP4jYLUloEEZfUL1M8dPM3RloxBrBUdzLWDJkYiosjQvXu27/7Uo5OZgFdM4QhMtjMOscIW7/hrLEzKezIzFKjzNWpvjigJ+IKRPdQpB9phXDoH6fgKAKrqoYyEF8IuaW1nIZLTTOeo4qrEnpdqi5FRPD2BLDhVezPsxpUObif9K57cqZvvCkqGl2GSfPszjy0oQ+KH6LwYvK87OQN0uJCdw8JFVEjffL6lB+Mvhw6N63E+aPEyXlooKN/8QEh07S/o6zjGE+ggoz7B+LwpP2Ux8QmAANrRz8vw=
-    file: "$NEW_NAME.zip"
-    skip_cleanup: true
-    on:
-        tags: true
-        repo: lovata/oc-toolbox-plugin
+  - 7.0
+  - 7.1
+  - nightly
+
+matrix:
+  allow_failures:
+    - php: nightly
+
+sudo: false
+
+install:
+  - composer require satooshi/php-coveralls:~0.6@stable
+
+before_script:
+  - mkdir -p build/logs
+  - git clone https://github.com/octobercms/october.git
+  - mkdir -p ./october/plugins/lovata/toolbox
+  - mv !(october) october/plugins/lovata/toolbox
+  - cd october
+  - composer self-update
+  - travis_retry composer install --no-interaction --prefer-source
+  - cd plugins/lovata/toolbox
+
+install:
+  - composer require satooshi/php-coveralls:~0.6@stable
+
+script: 
+  - ../../../vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+after_success:
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;'
