@@ -89,6 +89,40 @@ class Pagination extends ComponentBase
     }
 
     /**
+     * Get element count for next page
+     * @param int $iPage
+     * @param int $iCount
+     *
+     * @return int
+     */
+    public function getCountForNextPage($iPage, $iCount)
+    {
+        if($iCount < 1) {
+            return 0;
+        }
+
+        $iPage = (int) trim($iPage);
+
+        //Check page value
+        if($iPage < 1) {
+            $iPage = 1;
+        }
+
+        //Get max page value
+        $iMaxPage = $this->getMaxPage($iCount);
+        if($iMaxPage <= $iPage) {
+            return 0;
+        }
+
+        $iNextCount = $iCount - $this->iElementOnPage * $iPage;
+        if($iNextCount > $this->iElementOnPage) {
+            $iNextCount = $this->iElementOnPage;
+        }
+
+        return $iNextCount;
+    }
+
+    /**
      * Get pagination data
      * @param int $iPage
      * @param int $iCount

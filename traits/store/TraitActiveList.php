@@ -1,7 +1,7 @@
 <?php namespace Lovata\Toolbox\Traits\Store;
 
 use Kharanenka\Helper\CCache;
-use Lovata\Shopaholic\Plugin;
+use Lovata\Toolbox\Plugin;
 
 /**
  * Trait TraitActiveList
