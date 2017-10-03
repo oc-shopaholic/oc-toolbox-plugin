@@ -13,7 +13,7 @@ use System\Classes\PluginManager;
  *
  * @mixin \PHPUnit\Framework\Assert
  */
-class CommonTest extends PluginTestCase
+abstract class CommonTest extends PluginTestCase
 {
     /**
      * Set up test method
