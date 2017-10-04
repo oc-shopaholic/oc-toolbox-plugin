@@ -46,18 +46,34 @@ abstract class ElementPage extends ComponentBase
             return $this->getErrorResponse();
         }
 
+        if(empty($this->obElement)) {
+            return $this->getErrorResponse();
+        }
+
+        return null;
+    }
+
+    /**
+     * Init plugin method
+     */
+    public function init()
+    {
+        //Get element slug
+        $sElementSlug = $this->property('slug');
+        if(empty($sElementSlug)) {
+            return;
+        }
+
         //Get element by slug
         $obElement = $this->getElementObject($sElementSlug);
         if(empty($obElement)) {
-            return $this->getErrorResponse();
+            return;
         }
 
         $this->obElement = $obElement;
 
         //Get element item
         $this->obElementItem = $this->makeItem($obElement->id, $obElement);
-
-        return null;
     }
 
     /**
