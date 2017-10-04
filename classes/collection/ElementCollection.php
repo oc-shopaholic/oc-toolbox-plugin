@@ -448,6 +448,61 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     }
 
     /**
+     * Get array with item field value
+     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testPluckMethod()
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#plucksfieldname
+     * @param string $sFieldName
+     *
+     * @return array|null
+     */
+    public function pluck($sFieldName)
+    {
+        if(empty($sFieldName) || $this->isEmpty()) {
+            return null;
+        }
+
+        //Get all items
+        $arItemList = $this->all();
+
+        $arResult = [];
+        foreach($arItemList as $obItem) {
+
+            if($obItem->isEmpty()) {
+                continue;
+            }
+
+            $arResult[] = $obItem->$sFieldName;
+        }
+
+        return $arResult;
+    }
+
+    /**
+     * Get implode string with item field value
+     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testImplodeMethod()
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#implodesfieldname-sdelimiter---
+     * @param string $sFieldName
+     * @param string $sDelimiter
+     *
+     * @return null
+     */
+    public function implode($sFieldName, $sDelimiter = ', ')
+    {
+        if(empty($sFieldName) || $this->isEmpty()) {
+            return null;
+        }
+
+        //Get filed value array
+        $arFieldValue = $this->pluck($sFieldName);
+        if(empty($arFieldValue)) {
+            return null;
+        }
+
+        $sResult = implode($sDelimiter, $arFieldValue);
+        return $sResult;
+    }
+
+    /**
      * Save item collection in store
      * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testSaveMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#saveskeysavedskey

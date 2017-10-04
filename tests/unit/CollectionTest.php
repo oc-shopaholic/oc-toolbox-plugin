@@ -230,6 +230,33 @@ class CollectionTest extends PluginTestCase
     }
 
     /**
+     * Test pluck method in item collection class
+     */
+    public function testPluckMethod()
+    {
+        $sMessage = 'Error in "pluck" collection method';
+        $obCollection = TestCollection::make($this->arElementIDList);
+
+        $arResult = $obCollection->pluck('id');
+        self::assertEquals($this->arElementIDList, $arResult, $sMessage);
+    }
+
+    /**
+     * Test implode method in item collection class
+     */
+    public function testImplodeMethod()
+    {
+        $sMessage = 'Error in "implode" collection method';
+        $obCollection = TestCollection::make($this->arElementIDList);
+
+        $sResult = $obCollection->implode('id');
+        self::assertEquals(implode(', ', $this->arElementIDList), $sResult, $sMessage);
+
+        $sResult = $obCollection->implode('id', '-');
+        self::assertEquals(implode('-', $this->arElementIDList), $sResult, $sMessage);
+    }
+
+    /**
      * Test save/saved method in item collection class
      */
     public function testSaveMethod()
