@@ -6,7 +6,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 
-Toolbox is a set of helpers for faster development for [October CMS](https://github.com/octobercms/october). It includes universal component for rendering pagination navigation controls, a set of tools for caching of objects and lists. Also it includes a list of most common language strings for using in third party plugins: name, title, description etc.
+Toolbox is a set of helpers for faster development for [October CMS](https://github.com/octobercms/october). It includes a universal component for rendering pagination navigation controls, a set of tools for caching of objects and lists. Also, it includes a list of most common language strings for using in third-party plugins: name, title, description etc.
 
 ## Features
 
@@ -22,7 +22,7 @@ Toolbox is a set of helpers for faster development for [October CMS](https://git
 
 ## Get involved
 
-If you're interested in improvement of this project you can help in the following ways:
+If you're interested in the improvement of this project you can help in the following ways:
 * bug reporting and new feature requesting by creating issues on plugin [GitHub page](https://github.com/lovata/oc-toolbox-plugin/issues);
 * contribution to a project following these [instructions](https://github.com/lovata/oc-toolbox-plugin/blob/master/CONTRIBUTING.md);
 * localization to your language using [Crowdin](https://crowdin.com/project/toolbox-plugin-for-october-cms) service.
