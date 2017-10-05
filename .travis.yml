@@ -1,5 +1,9 @@
 language: php
 
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
 php:
   - 7.0
   - 7.1
@@ -12,20 +16,50 @@ matrix:
 sudo: false
 
 install:
-  - composer require satooshi/php-coveralls:~0.6@stable
+  - composer install
+  - if [[ "$BUILD" != true ]]; then
+      composer require satooshi/php-coveralls:~0.6@stable;
+    fi
 
 before_script:
-  - mkdir -p build/logs
-  - git clone https://github.com/octobercms/october.git
-  - mkdir -p ./october/plugins/lovata/toolbox
-  - mv !(october) october/plugins/lovata/toolbox
-  - cd october
-  - composer self-update
-  - travis_retry composer install --no-interaction --prefer-source
-  - cd plugins/lovata/toolbox
+  - if [[ "$BUILD" != true ]]; then
+      mkdir -p build/logs;
+      git clone https://github.com/octobercms/october.git;
+      mkdir -p ./october/plugins/lovata/toolbox;
+      mv !(october) october/plugins/lovata/toolbox;
+      cd october;
+      composer self-update;
+      travis_retry composer install --no-interaction --prefer-dist;
+      cd plugins/lovata/toolbox;
+    fi
 
-script: 
+script:
   - ../../../vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-
 after_success:
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;'
+  - if [[ "$BUILD" != true ]]; then
+      sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;'
+    fi
+
+jobs:
+  include:
+    - stage: Release
+      env:
+        - BUILD=true
+      script:
+        - NAME="toolbox"
+        - zip -r $NAME ./ -x .git/\* -x .gitignore -x .travis.yml -x crowdin.yml -x .editorconfig -x tests/\* -x phpunit.xml
+        - TAG=$(git describe --tags)
+        - FILE="./$NAME.zip"
+        - if [[ -e $FILE ]]; then
+            NEW_NAME="$NAME-$TAG";
+            mv $NAME.zip $NEW_NAME.zip;
+          fi
+      deploy:
+        provider: releases
+        api_key:
+          secure: eCTtgt5DtMjdN9Si6DoSJ6TW80wvsZNgqH72y/V6qFz1Eoh7pVXsrJdBnvW/IOV5VgcsjkPCQYGDjX1dqPXkjMvTmKUsmq3z26RREI6TsSrECysdRTEJReHB5QFCEF5tWXzFgAcjS/xmu1Fw0Xpw03+emCC2wfSjBjac7s6r9K6ISTH5uJJEmJwbuGv2jE/koydA11CrdN4xAJifA/Jmvmo7te6KM7RipiyXvgzZLb04RovmdcieNx2VKlwHmxJPCylkqAWbuQk0Z1TWpebjSE9So/F945qluvnziffchV9OwPJE4bSKd9nu5HwJGNjDn6k1Aohj4LdYKPve0X/0gsDPTSiRb79q9JXhiBtUWj00OItroZ+oMhApyrIWymlfD2JlL+nSr4hsvw2fnOYtJtqjCOkXvUCwsju6ksA5Zy5PrdQLSdzPyPRrqTNGGeB4CYrElZPdZ9UBodhKlEwtUyUvWi3b2KnP5zltrzohxCYmSjv1lP6uXOOQgHb26XzRuiunG9Ko6E1WKm2+tS73GRTqgRWbVzqCOoIWn8p//QN0P9kMjKZdx2JadAb+qwuCK2+9/9wCFKGuMGaOYIvfIIJU20DX3rsYZ4XzSf0uF/Z3I9X8OegfrRSnYswhafrASm9gnxbr8xDa9CGTzlsjNuGb0ZrBUAIGww6xkfwjvH0=
+        file: "$NEW_NAME.zip"
+        skip_cleanup: true
+        on:
+          tags: true
+          repo: lovata/oc-toolbox-plugin
