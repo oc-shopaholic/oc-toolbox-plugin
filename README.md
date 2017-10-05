@@ -1,10 +1,11 @@
 # Toolbox
 
 [![Build Status](https://travis-ci.org/lovata/oc-toolbox-plugin.svg?branch=master)](https://travis-ci.org/lovata/oc-toolbox-plugin)
+[![Dependency Status](https://www.versioneye.com/user/projects/59d504fc2de28c002c1882b5/badge.svg)](https://www.versioneye.com/user/projects/59d504fc2de28c002c1882b5)
 [![Coverage Status](https://coveralls.io/repos/github/lovata/oc-toolbox-plugin/badge.svg?branch=master)](https://coveralls.io/github/lovata/oc-toolbox-plugin?branch=master)
 [![Code Climate](https://codeclimate.com/github/lovata/oc-toolbox-plugin/badges/gpa.svg)](https://codeclimate.com/github/lovata/oc-toolbox-plugin)
+[![License: GPL v3](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-
 
 Toolbox is a set of helpers for faster development for [October CMS](https://github.com/octobercms/october). It includes a universal component for rendering pagination navigation controls, a set of tools for caching of objects and lists. Also, it includes a list of most common language strings for using in third-party plugins: name, title, description etc.
 
