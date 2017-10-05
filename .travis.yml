@@ -51,7 +51,7 @@ jobs:
         - TAG=$(git describe --tags)
         - FILE="./$NAME.zip"
         - if [[ -e $FILE ]]; then
-            NEW_NAME="$NAME-$TAG";
+            NEW_NAME="$NAME-$TAG.$TRAVIS_JOB_ID";
             mv $NAME.zip $NEW_NAME.zip;
           fi
       deploy:
