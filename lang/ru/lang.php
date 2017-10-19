@@ -59,6 +59,13 @@
         'property_slug_required'  => 'Параметр slug обязательный',
         'pagination'              => 'Пагинация',
         'pagination_desc'         => 'Вывод кнопок пагинации',
+
+        'property_redirect_page' => 'Redirect page',
+        'property_redirect_on'   => 'Redirect ON',
+        'property_flash_on'      => 'Flash ON',
+        'property_mode'          => 'Component mode',
+        'mode_submit'            => 'Form submit',
+        'mode_ajax'              => 'Ajax',
     ],
     'message'   => [
         'create_success'        => 'Создание :name было успешно выполнено',

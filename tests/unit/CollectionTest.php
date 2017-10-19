@@ -26,6 +26,10 @@ class CollectionTest extends PluginTestCase
         $sMessage = 'Error in "getIDList" collection method';
         $obCollection = TestCollection::make($this->arElementIDList);
         self::assertEquals($this->arElementIDList, $obCollection->getIDList(), $sMessage);
+
+        $sMessage = 'Error in "make" collection method';
+        self::assertEquals(true, $obCollection->isNotEmpty(), $sMessage);
+        self::assertEquals(false, $obCollection->isEmpty(), $sMessage);
     }
 
     /**
@@ -38,6 +42,7 @@ class CollectionTest extends PluginTestCase
 
         $iElementID = array_shift($this->arElementIDList);
         self::assertEquals(true, $obCollection->has($iElementID), $sMessage);
+        self::assertEquals(false, $obCollection->has(null), $sMessage);
     }
 
     /**
@@ -72,6 +77,9 @@ class CollectionTest extends PluginTestCase
         $sMessage = 'Error in "count" collection method';
         $obCollection = TestCollection::make($this->arElementIDList);
         self::assertEquals(count($this->arElementIDList), $obCollection->count(), $sMessage);
+
+        $obCollection = TestCollection::make();
+        self::assertEquals(0, $obCollection->count(), $sMessage);
     }
 
     /**
@@ -86,6 +94,23 @@ class CollectionTest extends PluginTestCase
         $arResult = array_intersect($this->arElementIDList, $this->arIntersectIDList);
 
         self::assertEquals($arResult, $obCollection->getIDList(), $sMessage);
+
+        //Test intersect with empty array
+        $obCollection = TestCollection::make($this->arElementIDList);
+        $obCollection->intersect(null);
+
+        self::assertEquals([], $obCollection->getIDList(), $sMessage);
+
+        //Test intersect with clear collection
+        $obCollection = TestCollection::make();
+        $obCollection->intersect($this->arIntersectIDList);
+
+        self::assertEquals($this->arIntersectIDList, $obCollection->getIDList(), $sMessage);
+
+        $obCollection = TestCollection::make()->intersect(null);
+        $obCollection->intersect($this->arIntersectIDList);
+
+        self::assertEquals([], $obCollection->getIDList(), $sMessage);
     }
 
     /**
@@ -101,6 +126,44 @@ class CollectionTest extends PluginTestCase
         $arResult = array_unique($arResult);
 
         self::assertEquals($arResult, $obCollection->getIDList(), $sMessage);
+
+        //test merge with empty array
+        $obCollection = TestCollection::make($this->arElementIDList);
+        $obCollection->merge(null);
+
+        self::assertEquals($this->arElementIDList, $obCollection->getIDList(), $sMessage);
+
+        //test merge with empty collection
+        $obCollection = TestCollection::make();
+        $obCollection->merge($this->arIntersectIDList);
+
+        self::assertEquals($this->arIntersectIDList, $obCollection->getIDList(), $sMessage);
+    }
+
+    /**
+     * Test diff method in item collection class
+     */
+    public function testDiffMethod()
+    {
+        $sMessage = 'Error in "diff" collection method';
+        $obCollection = TestCollection::make($this->arElementIDList);
+        $obCollection->diff($this->arIntersectIDList);
+
+        $arResult = array_diff($this->arElementIDList, $this->arIntersectIDList);
+
+        self::assertEquals($arResult, $obCollection->getIDList(), $sMessage);
+
+        //Test method with empty array
+        $obCollection = TestCollection::make($this->arElementIDList);
+        $obCollection->diff(null);
+
+        self::assertEquals($this->arElementIDList, $obCollection->getIDList(), $sMessage);
+
+        //Test method empty diff result
+        $obCollection = TestCollection::make($this->arElementIDList);
+        $obCollection->diff($this->arElementIDList);
+
+        self::assertEquals([], $obCollection->getIDList(), $sMessage);
     }
 
     /**
@@ -116,6 +179,11 @@ class CollectionTest extends PluginTestCase
         foreach ($arResult as $iKey => $obItem) {
             self::assertEquals(array_shift($arElementIDList), $obItem->id, $sMessage);
         }
+
+        $obCollection = TestCollection::make();
+
+        $arResult = $obCollection->all();
+        self::assertEquals(null, $arResult, $sMessage);
     }
 
     /**
@@ -143,6 +211,7 @@ class CollectionTest extends PluginTestCase
             self::assertEquals(array_shift($arElementIDList), $obItem->id, $sMessage);
         }
     }
+
     /**
      * Test exclude method in item collection class
      */
@@ -158,6 +227,36 @@ class CollectionTest extends PluginTestCase
 
         $obItem = $obCollection->find(3);
         self::assertEquals(true, $obItem->isEmpty(), $sMessage);
+
+        //Exclude from empty collection
+        $obCollection = TestCollection::make();
+        $obCollection->exclude(3);
+
+        self::assertEquals(true, $obItem->isEmpty(), $sMessage);
+
+        //Exclude missing element
+        $obCollection = TestCollection::make($this->arElementIDList);
+        $obCollection->exclude(15);
+
+        self::assertEquals(count($this->arElementIDList), $obCollection->count(), $sMessage);
+    }
+
+    /**
+     * Test random method in item collection class
+     */
+    public function testRandomMethod()
+    {
+        $sMessage = 'Error in "random" collection method';
+        $obCollection = TestCollection::make($this->arElementIDList);
+
+        $arResult = $obCollection->random(1);
+        $obItem = array_shift($arResult);
+        self::assertEquals(true, $obCollection->has($obItem->id), $sMessage);
+
+        $obCollection = TestCollection::make();
+
+        $arResult = $obCollection->random(1);
+        self::assertEquals(null, $arResult, $sMessage);
     }
 
     /**
@@ -177,6 +276,15 @@ class CollectionTest extends PluginTestCase
         foreach ($arResult as $iKey => $obItem) {
             self::assertEquals(array_shift($arElementIDList), $obItem->id, $sMessage);
         }
+
+        $arResult = $obCollection->page(-1, 1);
+
+        self::assertEquals(1, count($arResult), $sMessage);
+
+        $arElementIDList = $this->arElementIDList;
+        foreach ($arResult as $iKey => $obItem) {
+            self::assertEquals(array_shift($arElementIDList), $obItem->id, $sMessage);
+        }
     }
 
     /**
@@ -189,6 +297,11 @@ class CollectionTest extends PluginTestCase
 
         $obItem = $obCollection->first();
         self::assertEquals($this->arElementIDList[0], $obItem->id, $sMessage);
+
+        $obCollection = TestCollection::make();
+
+        $obItem = $obCollection->first();
+        self::assertEquals(true, $obItem->isEmpty(), $sMessage);
     }
 
     /**
@@ -201,6 +314,11 @@ class CollectionTest extends PluginTestCase
 
         $obItem = $obCollection->last();
         self::assertEquals($this->arElementIDList[count($this->arElementIDList) -1], $obItem->id, $sMessage);
+
+        $obCollection = TestCollection::make();
+
+        $obItem = $obCollection->last();
+        self::assertEquals(true, $obItem->isEmpty(), $sMessage);
     }
 
     /**
@@ -214,6 +332,60 @@ class CollectionTest extends PluginTestCase
         $obItem = $obCollection->shift();
         self::assertEquals(array_shift($this->arElementIDList), $obItem->id, $sMessage);
         self::assertEquals(count($this->arElementIDList), $obCollection->count(), $sMessage);
+
+        $obCollection = TestCollection::make();
+
+        $obItem = $obCollection->shift();
+        self::assertEquals(true, $obItem->isEmpty(), $sMessage);
+    }
+
+    /**
+     * Test unshift method in item collection class
+     */
+    public function testUnshiftMethod()
+    {
+        $sMessage = 'Error in "unshift" collection method';
+        $obCollection = TestCollection::make($this->arElementIDList);
+
+        $obCollection->unshift(null);
+        self::assertEquals(count($this->arElementIDList), $obCollection->count(), $sMessage);
+
+        $obCollection->unshift(10);
+
+        $obItem = $obCollection->first();
+        self::assertEquals(10, $obItem->id, $sMessage);
+
+        $obCollection = TestCollection::make();
+
+        $obCollection->unshift(10);
+        $obItem = $obCollection->first();
+        self::assertEquals(10, $obItem->id, $sMessage);
+        self::assertEquals(1, $obCollection->count(), $sMessage);
+    }
+
+
+    /**
+     * Test push method in item collection class
+     */
+    public function testPushMethod()
+    {
+        $sMessage = 'Error in "push" collection method';
+        $obCollection = TestCollection::make($this->arElementIDList);
+
+        $obCollection->push(null);
+        self::assertEquals(count($this->arElementIDList), $obCollection->count(), $sMessage);
+
+        $obCollection->push(10);
+
+        $obItem = $obCollection->last();
+        self::assertEquals(10, $obItem->id, $sMessage);
+
+        $obCollection = TestCollection::make();
+
+        $obCollection->unshift(10);
+        $obItem = $obCollection->last();
+        self::assertEquals(10, $obItem->id, $sMessage);
+        self::assertEquals(1, $obCollection->count(), $sMessage);
     }
 
     /**
@@ -227,6 +399,11 @@ class CollectionTest extends PluginTestCase
         $obItem = $obCollection->pop();
         self::assertEquals(array_pop($this->arElementIDList), $obItem->id, $sMessage);
         self::assertEquals(count($this->arElementIDList), $obCollection->count(), $sMessage);
+
+        $obCollection = TestCollection::make();
+
+        $obItem = $obCollection->pop();
+        self::assertEquals(true, $obItem->isEmpty(), $sMessage);
     }
 
     /**
@@ -239,6 +416,11 @@ class CollectionTest extends PluginTestCase
 
         $arResult = $obCollection->pluck('id');
         self::assertEquals($this->arElementIDList, $arResult, $sMessage);
+
+        $obCollection = TestCollection::make();
+
+        $arResult = $obCollection->pluck('id');
+        self::assertEquals(null, $arResult, $sMessage);
     }
 
     /**
@@ -254,6 +436,11 @@ class CollectionTest extends PluginTestCase
 
         $sResult = $obCollection->implode('id', '-');
         self::assertEquals(implode('-', $this->arElementIDList), $sResult, $sMessage);
+
+        $obCollection = TestCollection::make();
+
+        $sResult = $obCollection->implode('id');
+        self::assertEquals(null, $sResult, $sMessage);
     }
 
     /**
@@ -267,6 +454,11 @@ class CollectionTest extends PluginTestCase
 
         $obCollection = TestCollection::make()->saved('test');
         self::assertEquals($this->arElementIDList, $obCollection->getIDList(), $sMessage);
+
+        $obCollection->save(null);
+
+        $obCollection = TestCollection::make()->saved(null);
+        self::assertEquals(null, $obCollection, $sMessage);
     }
 
     /**
