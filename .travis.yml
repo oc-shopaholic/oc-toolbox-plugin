@@ -29,7 +29,7 @@ before_script:
       mv !(october) october/plugins/lovata/toolbox;
       cd october;
       composer self-update;
-      travis_retry composer install --no-interaction --prefer-dist;
+      travis_retry composer install;
       cd plugins/lovata/toolbox;
     fi
 
