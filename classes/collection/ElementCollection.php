@@ -574,6 +574,92 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     }
 
     /**
+     * Get new collection with next nearest elements
+     * @param int  $iElementID
+     * @param int  $iCount
+     * @param bool $bCyclic
+     *
+     * @return $this
+     */
+    public function getNearestNext($iElementID, $iCount = 1, $bCyclic = false)
+    {
+        $obList = self::make();
+        if(empty($iElementID) || empty($iCount) || $iCount < 1) {
+            return $obList;
+        }
+
+        //Check current collection
+        if($this->isEmpty() || !$this->has($iElementID)) {
+            return $obList;
+        }
+
+        //Search element position
+        $iPosition = array_search($iElementID, $this->arElementIDList);
+        if($iPosition === false) {
+            return $obList;
+        }
+
+        //Get next elements
+        $arElementIDList = array_slice($this->arElementIDList, $iPosition + 1);
+        if($bCyclic && $iPosition > 1) {
+            //Get elements from start of array
+            $arAdditionElementIDList = array_slice($this->arElementIDList, 0, $iPosition -1);
+            $arElementIDList = array_merge($arElementIDList, $arAdditionElementIDList);
+        }
+
+        //Get result element ID list
+        $arElementIDList = array_slice($arElementIDList, 0, $iCount);
+        $obList->intersect($arElementIDList);
+
+        return $obList;
+    }
+
+    /**
+     * Get new collection with prev nearest elements
+     * @param int  $iElementID
+     * @param int  $iCount
+     * @param bool $bCyclic
+     *
+     * @return $this
+     */
+    public function getNearestPrev($iElementID, $iCount = 1, $bCyclic = false)
+    {
+        $obList = self::make();
+        if(empty($iElementID) || empty($iCount) || $iCount < 1) {
+            return $obList;
+        }
+
+        //Check current collection
+        if($this->isEmpty() || !$this->has($iElementID)) {
+            return $obList;
+        }
+
+        //Search element position
+        $iPosition = array_search($iElementID, $this->arElementIDList);
+        if($iPosition === false) {
+            return $obList;
+        }
+
+        //Get prev elements
+        $arElementIDList = array_slice($this->arElementIDList, 0, $iPosition);
+        $arElementIDList = array_reverse($arElementIDList);
+
+        if($bCyclic && $iPosition < count($this->arElementIDList)) {
+            //Get elements from end of array
+            $arAdditionElementIDList = array_slice($this->arElementIDList, $iPosition);
+            $arAdditionElementIDList = array_reverse($arAdditionElementIDList);
+
+            $arElementIDList = array_merge($arElementIDList, $arAdditionElementIDList);
+        }
+
+        //Get result element ID list
+        $arElementIDList = array_slice($arElementIDList, 0, $iCount);
+        $obList->intersect($arElementIDList);
+
+        return $obList;
+    }
+
+    /**
      * Save item collection in store
      * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testSaveMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#saveskeysavedskey

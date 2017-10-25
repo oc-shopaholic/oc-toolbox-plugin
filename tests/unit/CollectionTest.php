@@ -4,6 +4,7 @@ include_once __DIR__.'/../../../toolbox/vendor/autoload.php';
 include_once __DIR__.'/../../../../../tests/PluginTestCase.php';
 
 use PluginTestCase;
+use Lovata\Toolbox\Classes\Item\TestItem;
 use Lovata\Toolbox\Classes\Collection\TestCollection;
 
 /**
@@ -441,6 +442,158 @@ class CollectionTest extends PluginTestCase
 
         $sResult = $obCollection->implode('id');
         self::assertEquals(null, $sResult, $sMessage);
+    }
+
+    /**
+     * Test getNearestNext method in item collection class
+     */
+    public function testGetNearestNextMethod()
+    {
+        $sMessage = 'Error in "getNearestNext" collection method';
+
+        $obCollection = TestCollection::make();
+
+        //Test method with empty collection
+        $obResult = $obCollection->getNearestNext(1);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(true, $obResult->isEmpty(), $sMessage);
+
+        //Get not empty collection
+        $obCollection = TestCollection::make($this->arElementIDList);
+
+        //Test method with empty data
+        $obResult = $obCollection->getNearestNext(null);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(true, $obResult->isEmpty(), $sMessage);
+
+        $obResult = $obCollection->getNearestNext(1, 0);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(true, $obResult->isEmpty(), $sMessage);
+
+        $obResult = $obCollection->getNearestNext(1, -1);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(true, $obResult->isEmpty(), $sMessage);
+
+        $obResult = $obCollection->getNearestNext(100);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(true, $obResult->isEmpty(), $sMessage);
+
+        //Get nearest elements #1
+        $obResult = $obCollection->getNearestNext(1);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(1, $obResult->count(), $sMessage);
+
+        $obItem = $obResult->first();
+        self::assertInstanceOf(TestItem::class, $obItem, $sMessage);
+        self::assertEquals(2, $obItem->id, $sMessage);
+
+        //Get nearest elements #2
+        $obResult = $obCollection->getNearestNext(5);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(true, $obResult->isEmpty(), $sMessage);
+
+        //Get nearest elements #3
+        $obResult = $obCollection->getNearestNext(4, 2);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(1, $obResult->count(), $sMessage);
+
+        $obItem = $obResult->first();
+        self::assertInstanceOf(TestItem::class, $obItem, $sMessage);
+        self::assertEquals(5, $obItem->id, $sMessage);
+
+        //Get nearest elements #4
+        $obResult = $obCollection->getNearestNext(4, 2, true);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(2, $obResult->count(), $sMessage);
+
+        $obItem = $obResult->last();
+        self::assertInstanceOf(TestItem::class, $obItem, $sMessage);
+        self::assertEquals(1, $obItem->id, $sMessage);
+    }
+
+    /**
+     * Test getNearestPrev method in item collection class
+     */
+    public function testGetNearestPrevMethod()
+    {
+        $sMessage = 'Error in "getNearestPrev" collection method';
+
+        $obCollection = TestCollection::make();
+
+        //Test method with empty collection
+        $obResult = $obCollection->getNearestPrev(1);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(true, $obResult->isEmpty(), $sMessage);
+
+        //Get not empty collection
+        $obCollection = TestCollection::make($this->arElementIDList);
+
+        //Test method with empty data
+        $obResult = $obCollection->getNearestPrev(null);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(true, $obResult->isEmpty(), $sMessage);
+
+        $obResult = $obCollection->getNearestPrev(1, 0);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(true, $obResult->isEmpty(), $sMessage);
+
+        $obResult = $obCollection->getNearestPrev(1, -1);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(true, $obResult->isEmpty(), $sMessage);
+
+        $obResult = $obCollection->getNearestPrev(100);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(true, $obResult->isEmpty(), $sMessage);
+
+        //Get nearest elements #1
+        $obResult = $obCollection->getNearestPrev(5);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(1, $obResult->count(), $sMessage);
+
+        $obItem = $obResult->first();
+        self::assertInstanceOf(TestItem::class, $obItem, $sMessage);
+        self::assertEquals(4, $obItem->id, $sMessage);
+
+        //Get nearest elements #2
+        $obResult = $obCollection->getNearestPrev(1);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(true, $obResult->isEmpty(), $sMessage);
+
+        //Get nearest elements #3
+        $obResult = $obCollection->getNearestPrev(2, 2);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(1, $obResult->count(), $sMessage);
+
+        $obItem = $obResult->first();
+        self::assertInstanceOf(TestItem::class, $obItem, $sMessage);
+        self::assertEquals(1, $obItem->id, $sMessage);
+
+        //Get nearest elements #4
+        $obResult = $obCollection->getNearestPrev(2, 2, true);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(2, $obResult->count(), $sMessage);
+
+        $obItem = $obResult->last();
+        self::assertInstanceOf(TestItem::class, $obItem, $sMessage);
+        self::assertEquals(5, $obItem->id, $sMessage);
     }
 
     /**
