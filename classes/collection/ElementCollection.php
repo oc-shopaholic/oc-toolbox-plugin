@@ -593,6 +593,8 @@ abstract class ElementCollection extends Extendable  implements \Iterator
             return $obList;
         }
 
+        $this->arElementIDList = array_values($this->arElementIDList);
+
         //Search element position
         $iPosition = array_search($iElementID, $this->arElementIDList);
         if($iPosition === false) {
@@ -633,6 +635,8 @@ abstract class ElementCollection extends Extendable  implements \Iterator
         if($this->isEmpty() || !$this->has($iElementID)) {
             return $obList;
         }
+
+        $this->arElementIDList = array_values($this->arElementIDList);
 
         //Search element position
         $iPosition = array_search($iElementID, $this->arElementIDList);
