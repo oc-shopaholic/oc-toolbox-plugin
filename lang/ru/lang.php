@@ -61,7 +61,7 @@
         'pagination_desc'         => 'Вывод кнопок пагинации',
 
         'property_redirect_page' => 'Страница перенаправления',
-        'property_redirect_on'   => 'Redirect ON',
+        'property_redirect_on'   => 'Перенаправление вкл.',
         'property_flash_on'      => 'Flash ON',
         'property_mode'          => 'Component mode',
         'mode_submit'            => 'Form submit',
