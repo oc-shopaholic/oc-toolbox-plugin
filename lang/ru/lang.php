@@ -1,7 +1,7 @@
 <?php return [
     'plugin'    => [
         'name'        => 'Toolbox',
-        'description' => 'Toolbox is a set of helpers for faster development for October CMS.',
+        'description' => 'Toolbox — это набор хэлперов для ускорения разработки на платформе October CMS.',
     ],
     'field'     => [
         'id'                  => 'ID',
@@ -55,12 +55,12 @@
     ],
     'component' => [
         'property_name_error_404' => 'Отображать 404 страницу',
-        'property_slug'           => 'Slug',
+        'property_slug'           => 'ЧПУ',
         'property_slug_required'  => 'Параметр slug обязательный',
         'pagination'              => 'Пагинация',
         'pagination_desc'         => 'Вывод кнопок пагинации',
 
-        'property_redirect_page' => 'Redirect page',
+        'property_redirect_page' => 'Страница перенаправления',
         'property_redirect_on'   => 'Redirect ON',
         'property_flash_on'      => 'Flash ON',
         'property_mode'          => 'Component mode',
