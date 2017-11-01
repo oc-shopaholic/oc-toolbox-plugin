@@ -1,7 +1,7 @@
 <?php return [
     'plugin'    => [
         'name'        => 'Toolbox',
-        'description' => '',
+        'description' => 'Toolbox is a set of helpers for faster development for October CMS.',
     ],
     'field'     => [
         'id'                  => 'ID',
@@ -59,6 +59,13 @@
         'property_slug_required'  => 'Slug is required',
         'pagination'              => 'Pagination',
         'pagination_desc'         => 'Render button of pagination',
+
+        'property_redirect_page' => 'Redirect page',
+        'property_redirect_on'   => 'Redirect ON',
+        'property_flash_on'      => 'Flash ON',
+        'property_mode'          => 'Component mode',
+        'mode_submit'            => 'Form submit',
+        'mode_ajax'              => 'Ajax',
     ],
     'message'   => [
         'create_success'        => 'Create :name was successfully',

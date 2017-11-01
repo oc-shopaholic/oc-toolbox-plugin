@@ -29,7 +29,7 @@ before_script:
       mv !(october) october/plugins/lovata/toolbox;
       cd october;
       composer self-update;
-      travis_retry composer install --no-interaction --prefer-dist;
+      travis_retry composer install;
       cd plugins/lovata/toolbox;
     fi
 
@@ -47,7 +47,7 @@ jobs:
         - BUILD=true
       script:
         - NAME="toolbox"
-        - zip -r $NAME ./ -x .git/\* -x .gitignore -x .travis.yml -x crowdin.yml -x .editorconfig -x tests/\* -x phpunit.xml
+        - zip -r $NAME ./ -x .git/\* -x .gitignore -x .travis.yml -x crowdin.yml -x .editorconfig
         - TAG=$(git describe --tags)
         - FILE="./$NAME.zip"
         - if [[ -e $FILE ]]; then

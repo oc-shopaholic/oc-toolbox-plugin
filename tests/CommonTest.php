@@ -33,5 +33,6 @@ abstract class CommonTest extends PluginTestCase
         }
 
         $obManager->bootAll(true);
+        $obManager->registerAll(true);
     }
 }

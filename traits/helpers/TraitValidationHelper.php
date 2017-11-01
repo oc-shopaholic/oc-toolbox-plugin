@@ -1,5 +1,7 @@
 <?php namespace Lovata\Toolbox\Traits\Helpers;
 
+use Kharanenka\Helper\Result;
+
 /**
  * Trait TraitValidationHelper
  * @package Lovata\Toolbox\Traits\Helpers
@@ -8,29 +10,15 @@
 trait TraitValidationHelper
 {
     /**
-     * Get validation error data
-     * @param \October\Rain\Exception\ValidationException $obException
-     * @return array
+     * Process validation error data
+     * @param \October\Rain\Database\ModelException $obException
      */
-    protected function getValidationError($obException)
+    protected function processValidationError(&$obException)
     {
-        $arResult = [
-            'message' => null,
-            'field'   => null,
-        ];
+        $arFiledList = array_keys($obException->getFields());
 
-        if(empty($obException)) {
-            return $arResult;
-        }
-
-        //Get first field name
-        $arFieldList = array_keys($obException->getFields());
-
-        $arResult = [
-            'message' => $obException->getMessage(),
-            'field'   => array_shift($arFieldList),
-        ];
-
-        return $arResult;
+        Result::setFalse(['field' => array_shift($arFiledList)])
+            ->setMessage($obException->getMessage())
+            ->setCode($obException->getCode());
     }
 }

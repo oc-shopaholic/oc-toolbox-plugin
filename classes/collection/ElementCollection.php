@@ -214,6 +214,32 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     }
 
     /**
+     * Apply array_diff for element array list
+     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testDiffMethod()
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#diffarelementidlist
+     * @param array $arExcludeIDList
+     * @return $this
+     */
+    public function diff($arExcludeIDList = [])
+    {
+        if(empty($arExcludeIDList) || $this->isEmpty()) {
+            return $this->returnThis();
+        }
+
+        $arElementIDList = $this->getIDList();
+
+        $arElementIDList = array_diff($arElementIDList, $arExcludeIDList);
+
+        if(empty($arElementIDList)) {
+            return $this->clear();
+        }
+
+        $this->arElementIDList = $arElementIDList;
+
+        return $this->returnThis();
+    }
+
+    /**
      * Get element item list
      * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testAllMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#all
@@ -335,8 +361,9 @@ abstract class ElementCollection extends Extendable  implements \Iterator
         }
 
         $arElementKeyList = array_rand($this->arElementIDList, $iCount);
-        if(empty($arElementKeyList)) {
-            return null;
+
+        if($iCount == 1) {
+            $arElementKeyList = [$arElementKeyList];
         }
 
         $arResult = [];
@@ -432,6 +459,28 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     }
 
     /**
+     * Apply array_unshift to element ID
+     * @param int $iElementID
+     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testUnshiftMethod()
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#unshiftielementid
+     * @return $this
+     */
+    public function unshift($iElementID)
+    {
+        if(empty($iElementID)) {
+            return $this->returnThis();
+        }
+
+        if($this->isEmpty()) {
+            $this->arElementIDList = [$iElementID];
+            return $this->returnThis();
+        }
+
+        array_unshift($this->arElementIDList, $iElementID);
+        return $this->returnThis();
+    }
+
+    /**
      * Apply array_pop to element ID list and get first element item
      * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testPopMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#pop
@@ -445,6 +494,28 @@ abstract class ElementCollection extends Extendable  implements \Iterator
 
         $iElementID = array_pop($this->arElementIDList);
         return $this->makeItem($iElementID, null);
+    }
+
+    /**
+     * Push element ID to end of list
+     * @param int $iElementID
+     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testUnshiftMethod()
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#pushielementid
+     * @return $this
+     */
+    public function push($iElementID)
+    {
+        if(empty($iElementID)) {
+            return $this->returnThis();
+        }
+
+        if($this->isEmpty()) {
+            $this->arElementIDList = [$iElementID];
+            return $this->returnThis();
+        }
+
+        $this->arElementIDList[] = $iElementID;
+        return $this->returnThis();
     }
 
     /**
@@ -500,6 +571,96 @@ abstract class ElementCollection extends Extendable  implements \Iterator
 
         $sResult = implode($sDelimiter, $arFieldValue);
         return $sResult;
+    }
+
+    /**
+     * Get new collection with next nearest elements
+     * @param int  $iElementID
+     * @param int  $iCount
+     * @param bool $bCyclic
+     *
+     * @return $this
+     */
+    public function getNearestNext($iElementID, $iCount = 1, $bCyclic = false)
+    {
+        $obList = self::make();
+        if(empty($iElementID) || empty($iCount) || $iCount < 1) {
+            return $obList;
+        }
+
+        //Check current collection
+        if($this->isEmpty() || !$this->has($iElementID)) {
+            return $obList;
+        }
+
+        $this->arElementIDList = array_values($this->arElementIDList);
+
+        //Search element position
+        $iPosition = array_search($iElementID, $this->arElementIDList);
+        if($iPosition === false) {
+            return $obList;
+        }
+
+        //Get next elements
+        $arElementIDList = array_slice($this->arElementIDList, $iPosition + 1);
+        if($bCyclic && $iPosition > 1) {
+            //Get elements from start of array
+            $arAdditionElementIDList = array_slice($this->arElementIDList, 0, $iPosition -1);
+            $arElementIDList = array_merge($arElementIDList, $arAdditionElementIDList);
+        }
+
+        //Get result element ID list
+        $arElementIDList = array_slice($arElementIDList, 0, $iCount);
+        $obList->intersect($arElementIDList);
+
+        return $obList;
+    }
+
+    /**
+     * Get new collection with prev nearest elements
+     * @param int  $iElementID
+     * @param int  $iCount
+     * @param bool $bCyclic
+     *
+     * @return $this
+     */
+    public function getNearestPrev($iElementID, $iCount = 1, $bCyclic = false)
+    {
+        $obList = self::make();
+        if(empty($iElementID) || empty($iCount) || $iCount < 1) {
+            return $obList;
+        }
+
+        //Check current collection
+        if($this->isEmpty() || !$this->has($iElementID)) {
+            return $obList;
+        }
+
+        $this->arElementIDList = array_values($this->arElementIDList);
+
+        //Search element position
+        $iPosition = array_search($iElementID, $this->arElementIDList);
+        if($iPosition === false) {
+            return $obList;
+        }
+
+        //Get prev elements
+        $arElementIDList = array_slice($this->arElementIDList, 0, $iPosition);
+        $arElementIDList = array_reverse($arElementIDList);
+
+        if($bCyclic && $iPosition < count($this->arElementIDList)) {
+            //Get elements from end of array
+            $arAdditionElementIDList = array_slice($this->arElementIDList, $iPosition);
+            $arAdditionElementIDList = array_reverse($arAdditionElementIDList);
+
+            $arElementIDList = array_merge($arElementIDList, $arAdditionElementIDList);
+        }
+
+        //Get result element ID list
+        $arElementIDList = array_slice($arElementIDList, 0, $iCount);
+        $obList->intersect($arElementIDList);
+
+        return $obList;
     }
 
     /**
