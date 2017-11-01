@@ -1,7 +1,7 @@
 <?php return [
     'plugin'    => [
         'name'        => 'Toolbox',
-        'description' => 'Toolbox — это набор хэлперов для ускорения разработки на платформе October CMS.',
+        'description' => 'Toolbox is a set of helpers for faster development for October CMS.',
     ],
     'field'     => [
         'id'                  => 'ID',
