@@ -56,15 +56,15 @@
     'component' => [
         'property_name_error_404' => 'Отображать 404 страницу',
         'property_slug'           => 'Slug',
-        'property_slug_required'  => 'Параметр slug обязательный',
+        'property_slug_required'  => 'Параметр Slug обязательный',
         'pagination'              => 'Пагинация',
         'pagination_desc'         => 'Вывод кнопок пагинации',
 
-        'property_redirect_page' => 'Redirect page',
-        'property_redirect_on'   => 'Redirect ON',
-        'property_flash_on'      => 'Flash ON',
-        'property_mode'          => 'Component mode',
-        'mode_submit'            => 'Form submit',
+        'property_redirect_page' => 'Страница перенаправления',
+        'property_redirect_on'   => 'Перенаправление вкл.',
+        'property_flash_on'      => 'Уведомление вкл.',
+        'property_mode'          => 'Режим работы',
+        'mode_submit'            => 'Отправка формы',
         'mode_ajax'              => 'Ajax',
     ],
     'message'   => [
