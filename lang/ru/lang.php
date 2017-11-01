@@ -55,7 +55,7 @@
     ],
     'component' => [
         'property_name_error_404' => 'Отображать 404 страницу',
-        'property_slug'           => 'ЧПУ',
+        'property_slug'           => 'Slug',
         'property_slug_required'  => 'Параметр Slug обязательный',
         'pagination'              => 'Пагинация',
         'pagination_desc'         => 'Вывод кнопок пагинации',
