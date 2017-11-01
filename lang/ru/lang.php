@@ -62,9 +62,9 @@
 
         'property_redirect_page' => 'Страница перенаправления',
         'property_redirect_on'   => 'Перенаправление вкл.',
-        'property_flash_on'      => 'Flash ON',
-        'property_mode'          => 'Component mode',
-        'mode_submit'            => 'Form submit',
+        'property_flash_on'      => 'Уведомление вкл.',
+        'property_mode'          => 'Режим работы',
+        'mode_submit'            => 'Отправка формы',
         'mode_ajax'              => 'Ajax',
     ],
     'message'   => [
