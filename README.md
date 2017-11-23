@@ -1,3 +1,5 @@
+<img src="assets/images/logo.svg" align="right">
+
 # Toolbox
 
 [![Build Status](https://travis-ci.org/lovata/oc-toolbox-plugin.svg?branch=master)](https://travis-ci.org/lovata/oc-toolbox-plugin)
@@ -19,7 +21,7 @@ Toolbox is a set of helpers for faster development for [October CMS](https://git
     * `ElementData` is an abstract class for components that returns object of `ElementItem` class for model.
     * `ElementItem` provides a flexible tool for single element data caching.
     * etc.
-    
+
 [Read more…](https://github.com/lovata/oc-toolbox-plugin/wiki)
 
 ## Get involved
