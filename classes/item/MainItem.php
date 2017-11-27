@@ -166,7 +166,7 @@ abstract class MainItem
             return null;
         }
 
-        $obValue = $this->getAttribute($sFieldName);
+        $obValue = $this->getAttribute($sName);
         if(!empty($obValue) && $obValue instanceof $sClassName) {
             return $obValue;
         }

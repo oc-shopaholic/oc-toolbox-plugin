@@ -193,8 +193,21 @@ class CollectionTest extends PluginTestCase
     public function testTakeMethod()
     {
         $sMessage = 'Error in "take" collection method';
+
+        $obCollection = TestCollection::make([]);
+        $arResult = $obCollection->take(2);
+        self::assertEquals(null, $arResult, $sMessage);
+        
         $obCollection = TestCollection::make($this->arElementIDList);
 
+        $arElementIDList = $this->arElementIDList;
+        $arResult = $obCollection->take(null);
+
+        self::assertEquals(count($arElementIDList), count($arResult), $sMessage);
+        foreach ($arResult as $iKey => $obItem) {
+            self::assertEquals(array_shift($arElementIDList), $obItem->id, $sMessage);
+        }
+        
         $arElementIDList = $this->arElementIDList;
         $arResult = $obCollection->take(2);
 
@@ -211,6 +224,9 @@ class CollectionTest extends PluginTestCase
         foreach ($arResult as $iKey => $obItem) {
             self::assertEquals(array_shift($arElementIDList), $obItem->id, $sMessage);
         }
+
+        $arResult = $obCollection->skip(10)->take(2);
+        self::assertEquals(null, $arResult, $sMessage);
     }
 
     /**
@@ -254,6 +270,13 @@ class CollectionTest extends PluginTestCase
         $obItem = array_shift($arResult);
         self::assertEquals(true, $obCollection->has($obItem->id), $sMessage);
 
+        $arResult = $obCollection->random(-1);
+        $obItem = array_shift($arResult);
+        self::assertEquals(true, $obCollection->has($obItem->id), $sMessage);
+        
+        $arResult = $obCollection->random($obCollection->count() + 1);
+        self::assertEquals($obCollection->count(), count($arResult), $sMessage);
+        
         $obCollection = TestCollection::make();
 
         $arResult = $obCollection->random(1);
@@ -286,6 +309,9 @@ class CollectionTest extends PluginTestCase
         foreach ($arResult as $iKey => $obItem) {
             self::assertEquals(array_shift($arElementIDList), $obItem->id, $sMessage);
         }
+
+        $arResult = $obCollection->page(1, -1);
+        self::assertEquals($obCollection->count(), count($arResult), $sMessage);
     }
 
     /**
@@ -383,7 +409,7 @@ class CollectionTest extends PluginTestCase
 
         $obCollection = TestCollection::make();
 
-        $obCollection->unshift(10);
+        $obCollection->push(10);
         $obItem = $obCollection->last();
         self::assertEquals(10, $obItem->id, $sMessage);
         self::assertEquals(1, $obCollection->count(), $sMessage);
@@ -518,6 +544,12 @@ class CollectionTest extends PluginTestCase
         $obItem = $obResult->last();
         self::assertInstanceOf(TestItem::class, $obItem, $sMessage);
         self::assertEquals(1, $obItem->id, $sMessage);
+
+        //Get nearest elements #10
+        $obResult = $obCollection->getNearestNext(10, 2, true);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(0, $obResult->count(), $sMessage);
     }
 
     /**
@@ -594,6 +626,12 @@ class CollectionTest extends PluginTestCase
         $obItem = $obResult->last();
         self::assertInstanceOf(TestItem::class, $obItem, $sMessage);
         self::assertEquals(5, $obItem->id, $sMessage);
+
+        //Get nearest elements #10
+        $obResult = $obCollection->getNearestPrev(10, 2, true);
+
+        self::assertInstanceOf(TestCollection::class, $obResult, $sMessage);
+        self::assertEquals(0, $obResult->count(), $sMessage);
     }
 
     /**
@@ -615,12 +653,29 @@ class CollectionTest extends PluginTestCase
     }
 
     /**
+     * Test debug method in item collection class
+     */
+    public function testDebugMethod()
+    {
+        $sMessage = 'Error in "debug" collection method';
+        $obCollection = TestCollection::make($this->arElementIDList);
+        
+            self::assertEquals($obCollection, $obCollection->debug(), $sMessage);
+    }
+    
+    /**
      * Test iterator interface in item collection class
      */
     public function testIteratorInterface()
     {
         $sMessage = 'Error in iteration collection';
         $obCollection = TestCollection::make($this->arElementIDList);
+
+        foreach ($obCollection as $iKey => $obItem) {
+            self::assertEquals(array_shift($this->arElementIDList), $obItem->id, $sMessage);
+        }
+
+        $obCollection = TestCollection::make([]);
 
         foreach ($obCollection as $iKey => $obItem) {
             self::assertEquals(array_shift($this->arElementIDList), $obItem->id, $sMessage);

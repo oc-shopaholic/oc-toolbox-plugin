@@ -597,9 +597,6 @@ abstract class ElementCollection extends Extendable  implements \Iterator
 
         //Search element position
         $iPosition = array_search($iElementID, $this->arElementIDList);
-        if($iPosition === false) {
-            return $obList;
-        }
 
         //Get next elements
         $arElementIDList = array_slice($this->arElementIDList, $iPosition + 1);
@@ -640,10 +637,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
 
         //Search element position
         $iPosition = array_search($iElementID, $this->arElementIDList);
-        if($iPosition === false) {
-            return $obList;
-        }
-
+        
         //Get prev elements
         $arElementIDList = array_slice($this->arElementIDList, 0, $iPosition);
         $arElementIDList = array_reverse($arElementIDList);
