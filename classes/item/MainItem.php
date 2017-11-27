@@ -71,15 +71,24 @@ abstract class MainItem
     /**
      * Get lang attribute value
      * @param string $sName
+     * @param string $sLangCode
      * @return mixed|null
      */
-    public function getLangAttribute($sName)
+    public function getLangAttribute($sName, $sLangCode = null)
     {
         if(empty($sName)) {
             return null;
         }
+        
+        if(empty($sLangCode)) {
+            $sLangCode = self::$sActiveLang;
+        }
+        
+        if(empty($sLangCode)) {
+            return $this->getAttribute($sName);
+        }
 
-        $sLangName = $sName.'|'.self::$sActiveLang;
+        $sLangName = $sName.'|'.$sLangCode;
         if(!empty($this->arModelData) && isset($this->arModelData[$sLangName])) {
             return $this->arModelData[$sLangName];
         }
