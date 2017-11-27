@@ -17,6 +17,15 @@ abstract class MainItem
     /** @var array  */
     public $arRelationList = [];
 
+    /** @var string - Active lang code from Translate plugin */
+    protected static $sActiveLang = null;
+
+    /** @var string - Default lang code from Translate plugin */
+    protected static $sDefaultLang = null;
+
+    /** @var array Active lang list from Translate plugin */
+    protected static $arActiveLangList = null;
+
     /**
      * Get param from model data
      * @param string $sName
@@ -32,6 +41,10 @@ abstract class MainItem
         $sMethodName = 'get'.studly_case($sName).'Attribute';
         if(method_exists(static::class, $sMethodName) || $this->methodExists($sMethodName)) {
             return $this->$sMethodName();
+        }
+        
+        if(!empty(self::$sActiveLang)) {
+            return $this->getLangAttribute($sName);
         }
 
         return $this->getAttribute($sName);
@@ -53,6 +66,25 @@ abstract class MainItem
         }
 
         return null;
+    }
+    
+    /**
+     * Get lang attribute value
+     * @param string $sName
+     * @return mixed|null
+     */
+    public function getLangAttribute($sName)
+    {
+        if(empty($sName)) {
+            return null;
+        }
+
+        $sLangName = $sName.'|'.self::$sActiveLang;
+        if(!empty($this->arModelData) && isset($this->arModelData[$sLangName])) {
+            return $this->arModelData[$sLangName];
+        }
+
+        return $this->getAttribute($sName);
     }
 
     /**
