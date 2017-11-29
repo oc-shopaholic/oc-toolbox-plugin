@@ -51,7 +51,13 @@ class CommonProperty extends Model
     const TYPE_MEDIA_FINDER = 'mediafinder';
 
     public $table = null;
+    
+    public $implement = [
+        '@RainLab.Translate.Behaviors.TranslatableModel',
+    ];
 
+    public $translatable = ['name', 'description'];
+    
     public $rules = [];
 
     public $dates = ['created_at', 'updated_at'];
@@ -71,6 +77,10 @@ class CommonProperty extends Model
                 $arResult = [
                     'type' => 'text',
                 ];
+                
+                if($this->isTranslatable()) {
+                    $arResult['type'] = 'mltext';
+                }
                 break;
             /** TEXT AREA TYPE */
             case self::TYPE_TEXT_AREA :
@@ -78,6 +88,10 @@ class CommonProperty extends Model
                     'type' => 'textarea',
                     'size' => 'large',
                 ];
+
+                if($this->isTranslatable()) {
+                    $arResult['type'] = 'mltextarea';
+                }
                 break;
             /** SELECT TYPE */
             case self::TYPE_SELECT :
@@ -111,13 +125,7 @@ class CommonProperty extends Model
             /** DATE AND TIME PICKER TYPE */
             case self::TYPE_DATE :
 
-                $sMode = null;
-                $arSettings = $this->settings;
-                if(empty($arSettings) || !isset($arSettings['datepicker']) || empty($arSettings['datepicker'])) {
-                    break;
-                }
-                
-                $sMode = $arSettings['datepicker'];
+                $sMode = $this->getSettingValue('datepicker');
                 if(!in_array($sMode, ['date', 'time', 'datetime'])) {
                     break;
                 }
@@ -136,13 +144,7 @@ class CommonProperty extends Model
             /** FILE FINDER TYPE */
             case self::TYPE_MEDIA_FINDER :
 
-                $sMode = null;
-                $arSettings = $this->settings;
-                if(empty($arSettings) || !isset($arSettings['mediafinder']) || empty($arSettings['mediafinder'])) {
-                    break;
-                }
-
-                $sMode = $arSettings['mediafinder'];
+                $sMode = $this->getSettingValue('mediafinder');
                 if(!in_array($sMode, ['file', 'image'])) {
                     break;
                 }
@@ -155,15 +157,22 @@ class CommonProperty extends Model
         }
         
         //Get common widget settings
-        if(!empty($arResult)) {
-            
-            //Get property tab
-            $arResult['tab'] = 'lovata.propertiesshopaholic::lang.field.properties';
-            $arResult['span'] = 'left';
-
-            //Get property name with measure
-            $arResult['label'] = $this->name;
+        if(empty($arResult)) {
+            return $arResult;
         }
+            
+        //Get property tab
+        $sTabName = $this->getSettingValue('tab');
+        if(!empty($sTabName)) {
+            $arResult['tab'] = $sTabName;
+        } else {
+            $arResult['tab'] = 'lovata.propertiesshopaholic::lang.field.properties';
+        }
+        
+        $arResult['span'] = 'left';
+
+        //Get property name with measure
+        $arResult['label'] = $this->name;
         
         return $arResult;
     }
@@ -208,6 +217,15 @@ class CommonProperty extends Model
         }
         
         return $arValueList;
+    }
+
+    /**
+     * Check, property is translatable flag
+     * @return bool
+     */
+    public function isTranslatable()
+    {
+        return (bool) $this->getSettingValue('is_translatable');
     }
 
     /**

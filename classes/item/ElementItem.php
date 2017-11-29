@@ -1,6 +1,7 @@
 <?php namespace Lovata\Toolbox\Classes\Item;
 
 use Model;
+use System\Classes\PluginManager;
 use Kharanenka\Helper\CCache;
 use October\Rain\Extension\ExtendableTrait;
 
@@ -41,6 +42,7 @@ abstract class ElementItem extends MainItem
             $this->obElement = null;
         }
 
+        $this->initActiveLang();
         $this->extendableConstruct();
     }
 
@@ -188,6 +190,11 @@ abstract class ElementItem extends MainItem
             return;
         }
 
+        //Set default lang (if update cache with non default lang)
+        if(self::$bLangInit && !empty(self::$sDefaultLang) && $this->obElement->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
+            $this->obElement->lang(self::$sDefaultLang);
+        }
+        
         $arResult = $this->getElementData();
         if(empty($arResult)) {
             return;
@@ -195,6 +202,9 @@ abstract class ElementItem extends MainItem
 
         $this->arModelData = $arResult;
 
+        //Save lang properties (integration with Translate plugin)
+        $this->setLangProperties();
+        
         //Check extend result methods
         if(empty($this->arExtendResult)) {
             return;
@@ -246,6 +256,94 @@ abstract class ElementItem extends MainItem
         CCache::forever($arCacheTags, $sCacheKey, $this->arModelData);
     }
 
+    /**
+     * Get and save active lang from Translate plugin
+     */
+    private function initActiveLang()
+    {
+        if(self::$bLangInit || !PluginManager::instance()->hasPlugin('RainLab.Translate')) {
+            return;
+        }
+
+        self::$bLangInit = true;
+        $obTranslate = \RainLab\Translate\Classes\Translator::instance();
+
+        self::$sDefaultLang = $obTranslate->getDefaultLocale();
+        
+        $sActiveLang = $obTranslate->getLocale();
+        if(empty($sActiveLang) || $obTranslate->getDefaultLocale() == $sActiveLang) {
+            return;
+        }
+        
+        self::$sActiveLang = $sActiveLang;
+    }
+
+    /**
+     * Get and save active lang list
+     */
+    protected function getActiveLangList()
+    {
+        if(self::$arActiveLangList !== null || !PluginManager::instance()->hasPlugin('RainLab.Translate')) {
+            return self::$arActiveLangList;
+        }
+        
+        self::$arActiveLangList = \RainLab\Translate\Models\Locale::isEnabled()->lists('code');
+        if(empty(self::$arActiveLangList)) {
+            return self::$arActiveLangList;
+        }
+        
+        //Remove default lang from list
+        foreach (self::$arActiveLangList as $iKey => $sLangCode) {
+            if($sLangCode == self::$sDefaultLang) {
+                unset(self::$arActiveLangList[$iKey]);
+                break;
+            }
+        }
+        
+        return self::$arActiveLangList;
+    }
+
+    /**
+     * Process translatable fields and save values, how 'field_name|lang_code'
+     */
+    private function setLangProperties()
+    {
+        if(empty($this->obElement) || !$this->obElement->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
+            return;
+        }
+        
+        //Check translate model property
+        if(empty($this->obElement->translatable) || !is_array($this->obElement->translatable)) {
+            return;
+        }
+
+        //Get active lang list from Translate plugin
+        $arLangList = self::getActiveLangList();
+        if(empty($arLangList)) {
+            return;
+        }
+        
+        //Process translatable fields
+        foreach ($this->obElement->translatable as $sField) {
+            //Check field name
+            if(empty($sField) || !is_string($sField)) {
+                continue;
+            }
+            
+            if(!isset($this->arModelData[$sField])) {
+                continue;
+            }
+            
+            //Save field value with different lang code
+            foreach ($arLangList as $sLangCode) {
+                
+                $sLangField = $sField.'|'.$sLangCode;
+                $sValue = $this->obElement->lang($sLangCode)->$sField;
+                $this->setAttribute($sLangField, $sValue);
+            }
+        }
+    }
+    
     /**
      * @param string $sName
      * @return string

@@ -17,8 +17,9 @@
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./classes/collection</directory>
-            <directory suffix=".php">./classes/item</directory>
+            <file>./classes/collection/ElementCollection.php</file>
+            <file>./classes/item/ElementItem.php</file>
+            <file>./classes/item/MainItem.php</file>
         </whitelist>
     </filter>
     <php>
