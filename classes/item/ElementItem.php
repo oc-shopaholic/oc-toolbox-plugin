@@ -26,9 +26,6 @@ abstract class ElementItem extends MainItem
 
     /** @var array */
     public $arExtendResult = [];
-    
-    /** @var bool - Flag, Translate plugin data was init */
-    private static $bLangInit = false;
 
     /**
      * ElementItem constructor.
@@ -193,6 +190,11 @@ abstract class ElementItem extends MainItem
             return;
         }
 
+        //Set default lang (if update cache with non default lang)
+        if(self::$bLangInit && !empty(self::$sDefaultLang) && $this->obElement->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
+            $this->obElement->lang(self::$sDefaultLang);
+        }
+        
         $arResult = $this->getElementData();
         if(empty($arResult)) {
             return;
@@ -279,7 +281,7 @@ abstract class ElementItem extends MainItem
     /**
      * Get and save active lang list
      */
-    private function getActiveLangList()
+    protected function getActiveLangList()
     {
         if(self::$arActiveLangList !== null || !PluginManager::instance()->hasPlugin('RainLab.Translate')) {
             return self::$arActiveLangList;
@@ -306,7 +308,7 @@ abstract class ElementItem extends MainItem
      */
     private function setLangProperties()
     {
-        if(empty($this->obElement)) {
+        if(empty($this->obElement) || !$this->obElement->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
             return;
         }
         

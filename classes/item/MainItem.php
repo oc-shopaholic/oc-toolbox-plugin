@@ -16,7 +16,10 @@ abstract class MainItem
 
     /** @var array  */
     public $arRelationList = [];
-
+    
+    /** @var bool - Flag, Translate plugin data was init */
+    protected static $bLangInit = false;
+    
     /** @var string - Active lang code from Translate plugin */
     protected static $sActiveLang = null;
 
