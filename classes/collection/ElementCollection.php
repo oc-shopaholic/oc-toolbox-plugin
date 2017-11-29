@@ -359,25 +359,11 @@ abstract class ElementCollection extends Extendable  implements \Iterator
         if (count($this->arElementIDList) < $iCount) {
             $iCount = count($this->arElementIDList);
         }
+        
+        $obThis = clone $this;
+        shuffle($obThis->arElementIDList);
 
-        $arElementKeyList = array_rand($this->arElementIDList, $iCount);
-
-        if($iCount == 1) {
-            $arElementKeyList = [$arElementKeyList];
-        }
-
-        $arResult = [];
-        foreach ($arElementKeyList as $iElementKey) {
-            $iElementID = $this->arElementIDList[$iElementKey];
-            $obElementItem = $this->makeItem($iElementID);
-            if($obElementItem->isEmpty()) {
-                continue;
-            }
-
-            $arResult[$iElementID] = $obElementItem;
-        }
-
-        return $arResult;
+        return $obThis->take($iCount);
     }
 
     /**
