@@ -135,18 +135,18 @@ class CommonProperty extends Model
             /** COLOR PICKER TYPE */
             case self::TYPE_COLOR_PICKER:
                 $arResult = [
-                    'type' => 'colorpicker',
+                    'type' => self::TYPE_COLOR_PICKER,
                 ];
                 break;
             /** FILE FINDER TYPE */
             case self::TYPE_MEDIA_FINDER:
-                $sMode = $this->getSettingValue('mediafinder');
+                $sMode = $this->getSettingValue(self::TYPE_MEDIA_FINDER);
                 if (!in_array($sMode, ['file', 'image'])) {
                     break;
                 }
 
                 $arResult = [
-                    'type' => 'mediafinder',
+                    'type' => self::TYPE_MEDIA_FINDER,
                     'mode' => $sMode,
                 ];
                 break;
@@ -214,14 +214,16 @@ class CommonProperty extends Model
      */
     public function getTypeOptions()
     {
+        $sLangPath = 'lovata.toolbox::lang.type.';
+        
         return [
-            self::TYPE_INPUT        => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_INPUT),
-            self::TYPE_TEXT_AREA    => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_TEXT_AREA),
-            self::TYPE_CHECKBOX     => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_CHECKBOX),
-            self::TYPE_SELECT       => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_SELECT),
-            self::TYPE_DATE         => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_DATE),
-            self::TYPE_COLOR_PICKER => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_COLOR_PICKER),
-            self::TYPE_MEDIA_FINDER => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_MEDIA_FINDER),
+            self::TYPE_INPUT        => Lang::get($sLangPath.self::TYPE_INPUT),
+            self::TYPE_TEXT_AREA    => Lang::get($sLangPath.self::TYPE_TEXT_AREA),
+            self::TYPE_CHECKBOX     => Lang::get($sLangPath.self::TYPE_CHECKBOX),
+            self::TYPE_SELECT       => Lang::get($sLangPath.self::TYPE_SELECT),
+            self::TYPE_DATE         => Lang::get($sLangPath.self::TYPE_DATE),
+            self::TYPE_COLOR_PICKER => Lang::get($sLangPath.self::TYPE_COLOR_PICKER),
+            self::TYPE_MEDIA_FINDER => Lang::get($sLangPath.self::TYPE_MEDIA_FINDER),
         ];
     }
 

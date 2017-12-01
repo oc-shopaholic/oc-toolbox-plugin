@@ -44,9 +44,9 @@ class Pagination extends ComponentBase
      */
     public function init()
     {
-        $iElementOnPage = $this->property('count_per_page');
-        if ($iElementOnPage > 0) {
-            $this->iElementOnPage = $iElementOnPage;
+        $iRequestElementOnPage = $this->property('count_per_page');
+        if ($iRequestElementOnPage > 0) {
+            $this->iElementOnPage = $iRequestElementOnPage;
         }
     }
 
@@ -56,7 +56,7 @@ class Pagination extends ComponentBase
      */
     public function getPageFromRequest()
     {
-        $iPage = (int)trim(Input::get('page'));
+        $iPage = (int) trim(Input::get('page'));
 
         //Check page value
         if ($iPage < 1) {

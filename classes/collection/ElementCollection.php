@@ -752,7 +752,7 @@ abstract class ElementCollection extends Extendable implements \Iterator
      * @return \Lovata\Toolbox\Classes\Item\ElementItem
      */
     abstract protected function makeItem($iElementID, $obElement = null);
-    
+
     /**
      * Check list is clear
      * @return bool

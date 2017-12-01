@@ -7,7 +7,7 @@ use Lovata\Toolbox\Plugin;
  * Trait TraitActiveList
  * @package Lovata\Toolbox\Traits\Store
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- * 
+ *
  * @method array getActiveIDList()
  */
 trait TraitActiveList

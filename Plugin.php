@@ -28,7 +28,7 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-        if(env('APP_ENV') == 'testing') {
+        if (env('APP_ENV') == 'testing') {
             $this->app->bind(\Lovata\Toolbox\Classes\Item\TestItem::class, \Lovata\Toolbox\Classes\Item\TestItem::class);
             $this->app->bind(\Lovata\Toolbox\Classes\Collection\TestCollection::class, \Lovata\Toolbox\Classes\Collection\TestCollection::class);
         }
