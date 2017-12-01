@@ -6,7 +6,7 @@ use Lovata\Toolbox\Classes\Collection\ElementCollection;
  * Class MainItem
  * @package Lovata\Toolbox\Classes\Item
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- * 
+ *
  * @mixin \October\Rain\Extension\ExtendableTrait
  */
 abstract class MainItem

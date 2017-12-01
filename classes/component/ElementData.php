@@ -10,26 +10,14 @@ use Cms\Classes\ComponentBase;
  */
 abstract class ElementData extends ComponentBase
 {
-    protected $iElementID = null;
-
-    /** @var  \Lovata\Toolbox\Classes\Item\ElementItem */
-    protected $obElementItem;
-
-    /**
-     * Male new element item
-     * @param int $iElementID
-     * @return \Lovata\Toolbox\Classes\Item\ElementItem
-     */
-    protected abstract function makeItem($iElementID);
-
     /**
      * Ajax listener
      * @return array|null
      */
     public function onGetData()
     {
-        $this->iElementID = Input::get('element_id');
-        $obElementItem = $this->makeItem($this->iElementID);
+        $iElementID = Input::get('element_id');
+        $obElementItem = $this->makeItem($iElementID);
 
         return $obElementItem->toArray();
     }
@@ -40,8 +28,8 @@ abstract class ElementData extends ComponentBase
      */
     public function onGetJSONData()
     {
-        $this->iElementID = Input::get('element_id');
-        $obElementItem = $this->makeItem($this->iElementID);
+        $iElementID = Input::get('element_id');
+        $obElementItem = $this->makeItem($iElementID);
 
         return $obElementItem->toJSON();
     }
@@ -66,4 +54,11 @@ abstract class ElementData extends ComponentBase
 
         return $obElementItem;
     }
+
+    /**
+     * Male new element item
+     * @param int $iElementID
+     * @return \Lovata\Toolbox\Classes\Item\ElementItem
+     */
+    abstract protected function makeItem($iElementID);
 }

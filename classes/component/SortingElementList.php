@@ -14,12 +14,6 @@ abstract class SortingElementList extends ComponentBase
     protected $sSorting;
 
     /**
-     * Get available sorting array
-     * @return array
-     */
-    protected abstract function getAvailableSorting();
-
-    /**
      * Init start data
      */
     public function init()
@@ -36,6 +30,12 @@ abstract class SortingElementList extends ComponentBase
     {
         return $this->sSorting;
     }
+
+    /**
+     * Get available sorting array
+     * @return array
+     */
+    abstract protected function getAvailableSorting();
 
     /**
      * Set active sorting

@@ -13,18 +13,6 @@ abstract class ModelHandler
     protected $obListStore;
 
     /**
-     * Get model class name
-     * @return string
-     */
-    protected abstract function getModelClass();
-
-    /**
-     * Get item class name
-     * @return string
-     */
-    protected abstract function getItemClass();
-
-    /**
      * Add listeners
      * @param \Illuminate\Events\Dispatcher $obEvent
      */
@@ -46,6 +34,18 @@ abstract class ModelHandler
             });
         });
     }
+
+    /**
+     * Get model class name
+     * @return string
+     */
+    abstract protected function getModelClass();
+
+    /**
+     * Get item class name
+     * @return string
+     */
+    abstract protected function getItemClass();
 
     /**
      * After save event handler

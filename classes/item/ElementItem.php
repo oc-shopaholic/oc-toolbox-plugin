@@ -28,24 +28,6 @@ abstract class ElementItem extends MainItem
     public $arExtendResult = [];
 
     /**
-     * Set model data from object
-     * @return mixed
-     */
-    protected abstract function getElementData();
-
-    /**
-     * Set element object
-     * @return mixed
-     */
-    protected abstract function setElementObject();
-
-    /**
-     * Get cache tag array for model
-     * @return array
-     */
-    protected static abstract function getCacheTag();
-
-    /**
      * ElementItem constructor.
      * @param int    $iElementID
      * @param \Model $obElement
@@ -62,6 +44,52 @@ abstract class ElementItem extends MainItem
 
         $this->initActiveLang();
         $this->extendableConstruct();
+    }
+
+    /**
+     * @param string $sName
+     * @return string
+     */
+    public function __get($sName)
+    {
+        return $this->extendableGet($sName);
+    }
+
+    /**
+     * @param string $sName
+     * @param mixed  $obValue
+     */
+    public function __set($sName, $obValue)
+    {
+        $this->extendableSet($sName, $obValue);
+    }
+
+    /**
+     * @param string $sName
+     * @param array  $arParamList
+     * @return mixed
+     */
+    public function __call($sName, $arParamList)
+    {
+        return $this->extendableCall($sName, $arParamList);
+    }
+
+    /**
+     * @param string $sName
+     * @param array  $arParamList
+     * @return mixed
+     */
+    public static function __callStatic($sName, $arParamList)
+    {
+        return self::extendableCallStatic($sName, $arParamList);
+    }
+
+    /**
+     * @param callable $callback
+     */
+    public static function extend(callable $callback)
+    {
+        self::extendableExtendCallback($callback);
     }
 
     /**
@@ -206,6 +234,15 @@ abstract class ElementItem extends MainItem
         //Save lang properties (integration with Translate plugin)
         $this->setLangProperties();
 
+        //Run methods from $arExtendResult array
+        $this->setExtendData();
+    }
+
+    /**
+     * Run methods from $arExtendResult array
+     */
+    protected function setExtendData()
+    {
         //Check extend result methods
         if (empty($this->arExtendResult)) {
             return;
@@ -258,28 +295,6 @@ abstract class ElementItem extends MainItem
     }
 
     /**
-     * Get and save active lang from Translate plugin
-     */
-    private function initActiveLang()
-    {
-        if (self::$bLangInit || !PluginManager::instance()->hasPlugin('RainLab.Translate')) {
-            return;
-        }
-
-        self::$bLangInit = true;
-        $obTranslate = \RainLab\Translate\Classes\Translator::instance();
-
-        self::$sDefaultLang = $obTranslate->getDefaultLocale();
-
-        $sActiveLang = $obTranslate->getLocale();
-        if (empty($sActiveLang) || $obTranslate->getDefaultLocale() == $sActiveLang) {
-            return;
-        }
-
-        self::$sActiveLang = $sActiveLang;
-    }
-
-    /**
      * Get and save active lang list
      */
     protected function getActiveLangList()
@@ -302,6 +317,46 @@ abstract class ElementItem extends MainItem
         }
 
         return self::$arActiveLangList;
+    }
+
+    /**
+     * Set model data from object
+     * @return mixed
+     */
+    abstract protected function getElementData();
+
+    /**
+     * Set element object
+     * @return mixed
+     */
+    abstract protected function setElementObject();
+
+    /**
+     * Get cache tag array for model
+     * @return array
+     */
+    abstract protected static function getCacheTag();
+
+    /**
+     * Get and save active lang from Translate plugin
+     */
+    private function initActiveLang()
+    {
+        if (self::$bLangInit || !PluginManager::instance()->hasPlugin('RainLab.Translate')) {
+            return;
+        }
+
+        self::$bLangInit = true;
+        $obTranslate = \RainLab\Translate\Classes\Translator::instance();
+
+        self::$sDefaultLang = $obTranslate->getDefaultLocale();
+
+        $sActiveLang = $obTranslate->getLocale();
+        if (empty($sActiveLang) || $obTranslate->getDefaultLocale() == $sActiveLang) {
+            return;
+        }
+
+        self::$sActiveLang = $sActiveLang;
     }
 
     /**
@@ -342,51 +397,5 @@ abstract class ElementItem extends MainItem
                 $this->setAttribute($sLangField, $sValue);
             }
         }
-    }
-
-    /**
-     * @param string $sName
-     * @return string
-     */
-    public function __get($sName)
-    {
-        return $this->extendableGet($sName);
-    }
-
-    /**
-     * @param string $sName
-     * @param mixed  $obValue
-     */
-    public function __set($sName, $obValue)
-    {
-        $this->extendableSet($sName, $obValue);
-    }
-
-    /**
-     * @param string $sName
-     * @param array  $arParamList
-     * @return mixed
-     */
-    public function __call($sName, $arParamList)
-    {
-        return $this->extendableCall($sName, $arParamList);
-    }
-
-    /**
-     * @param string $sName
-     * @param array  $arParamList
-     * @return mixed
-     */
-    public static function __callStatic($sName, $arParamList)
-    {
-        return self::extendableCallStatic($sName, $arParamList);
-    }
-
-    /**
-     * @param callable $callback
-     */
-    public static function extend(callable $callback)
-    {
-        self::extendableExtendCallback($callback);
     }
 }

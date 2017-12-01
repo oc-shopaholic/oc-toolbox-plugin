@@ -22,21 +22,6 @@ abstract class ElementPage extends ComponentBase
     protected $arPropertyList = [];
 
     /**
-     * Get element object by slug
-     * @param string $sElementSlug
-     * @return \Model
-     */
-    protected abstract function getElementObject($sElementSlug);
-
-    /**
-     * Male new element item
-     * @param int $iElementID
-     * @param \Model $obElement
-     * @return \Lovata\Toolbox\Classes\Item\ElementItem
-     */
-    protected abstract function makeItem($iElementID, $obElement);
-
-    /**
      * @return array
      */
     public function defineProperties()
@@ -54,12 +39,8 @@ abstract class ElementPage extends ComponentBase
     {
         //Get element slug
         $sElementSlug = $this->property('slug');
-        if (empty($sElementSlug)) {
-            if (!$this->property('slug_required')) {
-                return null;
-            }
-
-            return $this->getErrorResponse();
+        if (empty($sElementSlug) && !$this->property('slug_required')) {
+            return null;
         }
 
         if (empty($this->obElement)) {
@@ -81,15 +62,13 @@ abstract class ElementPage extends ComponentBase
         }
 
         //Get element by slug
-        $obElement = $this->getElementObject($sElementSlug);
-        if (empty($obElement)) {
+        $this->obElement = $this->getElementObject($sElementSlug);
+        if (empty($this->obElement)) {
             return;
         }
 
-        $this->obElement = $obElement;
-
         //Get element item
-        $this->obElementItem = $this->makeItem($obElement->id, $obElement);
+        $this->obElementItem = $this->makeItem($this->obElement->id, $this->obElement);
     }
 
     /**
@@ -100,4 +79,19 @@ abstract class ElementPage extends ComponentBase
     {
         return $this->obElementItem;
     }
+
+    /**
+     * Get element object by slug
+     * @param string $sElementSlug
+     * @return \Model
+     */
+    abstract protected function getElementObject($sElementSlug);
+
+    /**
+     * Male new element item
+     * @param int $iElementID
+     * @param \Model $obElement
+     * @return \Lovata\Toolbox\Classes\Item\ElementItem
+     */
+    abstract protected function makeItem($iElementID, $obElement);
 }

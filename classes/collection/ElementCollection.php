@@ -22,14 +22,6 @@ abstract class ElementCollection extends Extendable implements \Iterator
     protected $iSkip = 0;
 
     /**
-     * Male new element item
-     * @param int $iElementID
-     * @param \Model $obElement
-     * @return \Lovata\Toolbox\Classes\Item\ElementItem
-     */
-    protected abstract function makeItem($iElementID, $obElement = null);
-
-    /**
      * ElementCollection constructor.
      */
     public function __construct()
@@ -753,6 +745,14 @@ abstract class ElementCollection extends Extendable implements \Iterator
         return isset($arResultIDList[$this->iPosition]);
     }
 
+    /**
+     * Male new element item
+     * @param int $iElementID
+     * @param \Model $obElement
+     * @return \Lovata\Toolbox\Classes\Item\ElementItem
+     */
+    abstract protected function makeItem($iElementID, $obElement = null);
+    
     /**
      * Check list is clear
      * @return bool
