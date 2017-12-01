@@ -150,6 +150,8 @@ class CommonProperty extends Model
                     'mode' => $sMode,
                 ];
                 break;
+            default:
+                return $arResult;
         }
 
         //Get common widget settings
@@ -215,7 +217,7 @@ class CommonProperty extends Model
     public function getTypeOptions()
     {
         $sLangPath = 'lovata.toolbox::lang.type.';
-        
+
         return [
             self::TYPE_INPUT        => Lang::get($sLangPath.self::TYPE_INPUT),
             self::TYPE_TEXT_AREA    => Lang::get($sLangPath.self::TYPE_TEXT_AREA),
