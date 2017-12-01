@@ -23,6 +23,8 @@ ratings:
   paths:
   - "**.php"
 exclude_patterns:
+  - 'tests/'
+  - 'vendor/'
   - 'lang/'
   - 'classes/item/TestItem.php'
   - 'classes/collection/TestCollection.php'
