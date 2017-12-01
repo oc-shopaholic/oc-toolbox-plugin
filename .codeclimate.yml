@@ -22,4 +22,7 @@ plugins:
 ratings:
   paths:
   - "**.php"
-exclude_paths: []
+exclude_patterns:
+  - 'lang/'
+  - 'classes/item/TestItem.php'
+  - 'classes/collection/TestCollection.php'
