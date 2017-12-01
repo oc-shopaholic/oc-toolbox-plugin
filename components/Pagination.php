@@ -24,8 +24,8 @@ class Pagination extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'          => 'lovata.toolbox::lang.component.pagination',
-            'description'   => 'lovata.toolbox::lang.component.pagination_desc',
+            'name'        => 'lovata.toolbox::lang.component.pagination',
+            'description' => 'lovata.toolbox::lang.component.pagination_desc',
         ];
     }
 
@@ -35,6 +35,7 @@ class Pagination extends ComponentBase
     public function defineProperties()
     {
         $this->arPropertyList = array_merge($this->arPropertyList, PaginationHelper::getProperties(Plugin::NAME));
+
         return $this->arPropertyList;
     }
 
@@ -44,7 +45,7 @@ class Pagination extends ComponentBase
     public function init()
     {
         $iElementOnPage = $this->property('count_per_page');
-        if($iElementOnPage > 0) {
+        if ($iElementOnPage > 0) {
             $this->iElementOnPage = $iElementOnPage;
         }
     }
@@ -55,10 +56,10 @@ class Pagination extends ComponentBase
      */
     public function getPageFromRequest()
     {
-        $iPage = (int) trim(Input::get('page'));
+        $iPage = (int)trim(Input::get('page'));
 
         //Check page value
-        if($iPage < 1) {
+        if ($iPage < 1) {
             $iPage = 1;
         }
 
@@ -73,7 +74,7 @@ class Pagination extends ComponentBase
     {
         return $this->iElementOnPage;
     }
-    
+
     /**
      * Get max page value
      * @param int $iCount
@@ -81,7 +82,7 @@ class Pagination extends ComponentBase
      */
     public function getMaxPage($iCount)
     {
-        if($iCount < 1) {
+        if ($iCount < 1) {
             return 0;
         }
 
@@ -97,25 +98,25 @@ class Pagination extends ComponentBase
      */
     public function getCountForNextPage($iPage, $iCount)
     {
-        if($iCount < 1) {
+        if ($iCount < 1) {
             return 0;
         }
 
         $iPage = (int) trim($iPage);
 
         //Check page value
-        if($iPage < 1) {
+        if ($iPage < 1) {
             $iPage = 1;
         }
 
         //Get max page value
         $iMaxPage = $this->getMaxPage($iCount);
-        if($iMaxPage <= $iPage) {
+        if ($iMaxPage <= $iPage) {
             return 0;
         }
 
         $iNextCount = $iCount - $this->iElementOnPage * $iPage;
-        if($iNextCount > $this->iElementOnPage) {
+        if ($iNextCount > $this->iElementOnPage) {
             $iNextCount = $this->iElementOnPage;
         }
 
@@ -130,14 +131,14 @@ class Pagination extends ComponentBase
      */
     public function get($iPage, $iCount)
     {
-        if($iCount < 1) {
+        if ($iCount < 1) {
             return null;
         }
 
         $iPage = (int) trim($iPage);
 
         //Check page value
-        if($iPage < 1) {
+        if ($iPage < 1) {
             $iPage = 1;
         }
 

@@ -9,44 +9,17 @@ use October\Rain\Extension\Extendable;
  *
  * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection
  */
-abstract class ElementCollection extends Extendable  implements \Iterator
+abstract class ElementCollection extends Extendable implements \Iterator
 {
     const COUNT_PER_PAGE = 10;
 
     protected $iPosition = 0;
-    
+
     /** @var array */
     protected $arElementIDList = null;
 
     /** @var int Skip element count, used in "take" method */
     protected $iSkip = 0;
-
-    /**
-     * ElementCollection constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-    
-    /**
-     * Make new list store
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testMakeMethod()
-     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#makearelementidlist--
-     * @param $arElementIDList
-     * @return $this
-     */
-    public static function make($arElementIDList = [])
-    {
-        /** @var ElementCollection $obCollection */
-        $obCollection = app()->make(static::class);
-
-        if(!empty($arElementIDList) && is_array($arElementIDList)) {
-            $obCollection->arElementIDList = $arElementIDList;
-        }
-
-        return $obCollection;
-    }
 
     /**
      * Male new element item
@@ -57,6 +30,33 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     protected abstract function makeItem($iElementID, $obElement = null);
 
     /**
+     * ElementCollection constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Make new list store
+     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testMakeMethod()
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#makearelementidlist--
+     * @param array $arElementIDList - element ID list
+     * @return $this
+     */
+    public static function make($arElementIDList = [])
+    {
+        /** @var ElementCollection $obCollection */
+        $obCollection = app()->make(static::class);
+
+        if (!empty($arElementIDList) && is_array($arElementIDList)) {
+            $obCollection->arElementIDList = $arElementIDList;
+        }
+
+        return $obCollection;
+    }
+
+    /**
      * Return this collection
      * @return $this
      */
@@ -64,7 +64,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     {
         return $this;
     }
-    
+
     /**
      * Check list is empty
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#isempty
@@ -74,7 +74,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     {
         return empty($this->arElementIDList);
     }
-    
+
     /**
      * Check list is not empty
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#isnotempty
@@ -83,15 +83,6 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     public function isNotEmpty()
     {
         return !$this->isEmpty();
-    }
-
-    /**
-     * Check list is clear
-     * @return bool
-     */
-    protected function isClear()
-    {
-        return $this->arElementIDList === null;
     }
 
     /**
@@ -113,7 +104,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function has($iElementID)
     {
-        if(empty($iElementID) || $this->isEmpty()) {
+        if (empty($iElementID) || $this->isEmpty()) {
             return false;
         }
 
@@ -129,10 +120,10 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function find($iElementID)
     {
-        if(!$this->has($iElementID)) {
+        if (!$this->has($iElementID)) {
             return $this->makeItem(null);
         }
-        
+
         return $this->makeItem($iElementID);
     }
 
@@ -145,6 +136,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     public function clear()
     {
         $this->arElementIDList = [];
+
         return $this->returnThis();
     }
 
@@ -156,7 +148,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function count()
     {
-        if(empty($this->arElementIDList)) {
+        if ($this->isEmpty()) {
             return 0;
         }
 
@@ -172,20 +164,18 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function intersect($arElementIDList)
     {
-        if(empty($arElementIDList)) {
+        if (empty($arElementIDList)) {
             return $this->clear();
         }
 
-        if($this->isClear()) {
+        if ($this->isClear()) {
             $this->arElementIDList = $arElementIDList;
-            return $this->returnThis();
-        }
 
-        if(empty($this->arElementIDList)) {
             return $this->returnThis();
         }
 
         $this->arElementIDList = array_intersect($this->arElementIDList, $arElementIDList);
+
         return $this->returnThis();
     }
 
@@ -198,12 +188,13 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function merge($arElementIDList)
     {
-        if(empty($arElementIDList)) {
+        if (empty($arElementIDList)) {
             return $this->returnThis();
         }
 
-        if($this->isClear()) {
+        if ($this->isClear()) {
             $this->arElementIDList = $arElementIDList;
+
             return $this->returnThis();
         }
 
@@ -222,19 +213,11 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function diff($arExcludeIDList = [])
     {
-        if(empty($arExcludeIDList) || $this->isEmpty()) {
+        if (empty($arExcludeIDList) || $this->isEmpty()) {
             return $this->returnThis();
         }
 
-        $arElementIDList = $this->getIDList();
-
-        $arElementIDList = array_diff($arElementIDList, $arExcludeIDList);
-
-        if(empty($arElementIDList)) {
-            return $this->clear();
-        }
-
-        $this->arElementIDList = $arElementIDList;
+        $this->arElementIDList = array_diff($this->arElementIDList, $arExcludeIDList);
 
         return $this->returnThis();
     }
@@ -243,19 +226,18 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      * Get element item list
      * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testAllMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#all
-     * @return array|null|\Lovata\Toolbox\Classes\Item\ElementItem[]
+     * @return array|\Lovata\Toolbox\Classes\Item\ElementItem[]
      */
     public function all()
     {
-        if(empty($this->arElementIDList)) {
-            return null;
+        if ($this->isEmpty()) {
+            return [];
         }
 
         $arResult = [];
         foreach ($this->arElementIDList as $iElementID) {
-
             $obElementItem = $this->makeItem($iElementID, null);
-            if($obElementItem->isEmpty()) {
+            if ($obElementItem->isEmpty()) {
                 continue;
             }
 
@@ -270,12 +252,13 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testTakeMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#skipicount
      * Used in "take" method
-     * @param $iCount
+     * @param int $iCount
      * @return $this
      */
     public function skip($iCount)
     {
         $this->iSkip = (int) trim($iCount);
+
         return $this->returnThis();
     }
 
@@ -284,29 +267,28 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testTakeMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#takeicount--0
      * @param int $iCount
-     * @return array|null|\Lovata\Toolbox\Classes\Item\ElementItem[]
+     * @return array|\Lovata\Toolbox\Classes\Item\ElementItem[]
      */
     public function take($iCount = 0)
     {
         $iCount = (int) trim($iCount);
-        if($this->isEmpty()) {
-            return null;
+        if ($this->isEmpty()) {
+            return [];
         }
-        
-        if(empty($iCount)) {
+
+        if (empty($iCount)) {
             $iCount = null;
         }
 
-        $arElementIDList = array_slice($this->arElementIDList, $this->iSkip, $iCount);
-        if(empty($arElementIDList)) {
-            return null;
+        $arResultIDList = array_slice($this->arElementIDList, $this->iSkip, $iCount);
+        if (empty($arResultIDList)) {
+            return [];
         }
 
         $arResult = [];
-        foreach ($arElementIDList as $iElementID) {
-
+        foreach ($arResultIDList as $iElementID) {
             $obElementItem = $this->makeItem($iElementID, null);
-            if($obElementItem->isEmpty()) {
+            if ($obElementItem->isEmpty()) {
                 continue;
             }
 
@@ -325,12 +307,12 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function exclude($iElementID = null)
     {
-        if(empty($iElementID) || $this->isEmpty()) {
+        if (empty($iElementID) || $this->isEmpty()) {
             return $this->returnThis();
         }
 
         $iElementIDKey = array_search($iElementID, $this->arElementIDList);
-        if($iElementIDKey === false) {
+        if ($iElementIDKey === false) {
             return $this->returnThis();
         }
 
@@ -343,23 +325,23 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      * Take array with random element items
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#randomicount
      * @param int $iCount
-     * @return array|null|\Lovata\Toolbox\Classes\Item\ElementItem[]
+     * @return array|\Lovata\Toolbox\Classes\Item\ElementItem[]
      */
     public function random($iCount = 1)
     {
-        if($this->isEmpty()) {
-            return null;
+        if ($this->isEmpty()) {
+            return [];
         }
 
         $iCount = (int) trim($iCount);
-        if($iCount < 1) {
+        if ($iCount < 1) {
             $iCount = 1;
         }
 
         if (count($this->arElementIDList) < $iCount) {
             $iCount = count($this->arElementIDList);
         }
-        
+
         $obThis = clone $this;
         shuffle($obThis->arElementIDList);
 
@@ -380,11 +362,11 @@ abstract class ElementCollection extends Extendable  implements \Iterator
         $iPage = (int) trim($iPage);
 
         //Check page value
-        if($iPage < 1) {
+        if ($iPage < 1) {
             $iPage = 1;
         }
 
-        if($iElementOnPage < 1) {
+        if ($iElementOnPage < 1) {
             $iElementOnPage = self::COUNT_PER_PAGE;
         }
 
@@ -399,14 +381,15 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function first()
     {
-        if(empty($this->arElementIDList)) {
+        if ($this->isEmpty()) {
             return $this->makeItem(null);
         }
 
-        $arElementIDList = array_values($this->arElementIDList);
+        $arResultIDList = $this->arElementIDList;
 
-        $iElementID = $arElementIDList[0];
-        return $this->makeItem($iElementID, null);
+        $iElementID = array_shift($arResultIDList);
+
+        return $this->makeItem($iElementID);
     }
 
     /**
@@ -417,15 +400,15 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function last()
     {
-        if(empty($this->arElementIDList)) {
+        if ($this->isEmpty()) {
             return $this->makeItem(null);
         }
 
-        $arElementIDList = array_values($this->arElementIDList);
-        $iCount = count($arElementIDList);
+        $arResultIDList = $this->arElementIDList;
 
-        $iElementID = $arElementIDList[$iCount -1];
-        return $this->makeItem($iElementID, null);
+        $iElementID = array_pop($arResultIDList);
+
+        return $this->makeItem($iElementID);
     }
 
     /**
@@ -436,12 +419,13 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function shift()
     {
-        if(empty($this->arElementIDList)) {
+        if (empty($this->arElementIDList)) {
             return $this->makeItem(null);
         }
 
         $iElementID = array_shift($this->arElementIDList);
-        return $this->makeItem($iElementID, null);
+
+        return $this->makeItem($iElementID);
     }
 
     /**
@@ -453,16 +437,18 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function unshift($iElementID)
     {
-        if(empty($iElementID)) {
+        if (empty($iElementID)) {
             return $this->returnThis();
         }
 
-        if($this->isEmpty()) {
+        if ($this->isEmpty()) {
             $this->arElementIDList = [$iElementID];
+
             return $this->returnThis();
         }
 
         array_unshift($this->arElementIDList, $iElementID);
+
         return $this->returnThis();
     }
 
@@ -474,12 +460,13 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function pop()
     {
-        if(empty($this->arElementIDList)) {
+        if ($this->isEmpty()) {
             return $this->makeItem(null);
         }
 
         $iElementID = array_pop($this->arElementIDList);
-        return $this->makeItem($iElementID, null);
+
+        return $this->makeItem($iElementID);
     }
 
     /**
@@ -491,16 +478,18 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function push($iElementID)
     {
-        if(empty($iElementID)) {
+        if (empty($iElementID)) {
             return $this->returnThis();
         }
 
-        if($this->isEmpty()) {
+        if ($this->isEmpty()) {
             $this->arElementIDList = [$iElementID];
+
             return $this->returnThis();
         }
 
         $this->arElementIDList[] = $iElementID;
+
         return $this->returnThis();
     }
 
@@ -514,7 +503,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function pluck($sFieldName)
     {
-        if(empty($sFieldName) || $this->isEmpty()) {
+        if (empty($sFieldName) || $this->isEmpty()) {
             return null;
         }
 
@@ -522,9 +511,8 @@ abstract class ElementCollection extends Extendable  implements \Iterator
         $arItemList = $this->all();
 
         $arResult = [];
-        foreach($arItemList as $obItem) {
-
-            if($obItem->isEmpty()) {
+        foreach ($arItemList as $obItem) {
+            if ($obItem->isEmpty()) {
                 continue;
             }
 
@@ -545,17 +533,18 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function implode($sFieldName, $sDelimiter = ', ')
     {
-        if(empty($sFieldName) || $this->isEmpty()) {
+        if (empty($sFieldName) || $this->isEmpty()) {
             return null;
         }
 
         //Get filed value array
         $arFieldValue = $this->pluck($sFieldName);
-        if(empty($arFieldValue)) {
+        if (empty($arFieldValue)) {
             return null;
         }
 
         $sResult = implode($sDelimiter, $arFieldValue);
+
         return $sResult;
     }
 
@@ -570,31 +559,31 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     public function getNearestNext($iElementID, $iCount = 1, $bCyclic = false)
     {
         $obList = self::make();
-        if(empty($iElementID) || empty($iCount) || $iCount < 1) {
+        if (empty($iElementID) || empty($iCount) || $iCount < 1) {
             return $obList;
         }
 
         //Check current collection
-        if($this->isEmpty() || !$this->has($iElementID)) {
+        if ($this->isEmpty() || !$this->has($iElementID)) {
             return $obList;
         }
 
         $this->arElementIDList = array_values($this->arElementIDList);
 
         //Search element position
-        $iPosition = array_search($iElementID, $this->arElementIDList);
+        $iElementPosition = array_search($iElementID, $this->arElementIDList);
 
         //Get next elements
-        $arElementIDList = array_slice($this->arElementIDList, $iPosition + 1);
-        if($bCyclic && $iPosition > 1) {
+        $arResultIDList = array_slice($this->arElementIDList, $iElementPosition + 1);
+        if ($bCyclic && $iElementPosition > 1) {
             //Get elements from start of array
-            $arAdditionElementIDList = array_slice($this->arElementIDList, 0, $iPosition -1);
-            $arElementIDList = array_merge($arElementIDList, $arAdditionElementIDList);
+            $arAdditionElementIDList = array_slice($this->arElementIDList, 0, $iElementPosition -1);
+            $arResultIDList = array_merge($arResultIDList, $arAdditionElementIDList);
         }
 
         //Get result element ID list
-        $arElementIDList = array_slice($arElementIDList, 0, $iCount);
-        $obList->intersect($arElementIDList);
+        $arResultIDList = array_slice($arResultIDList, 0, $iCount);
+        $obList->intersect($arResultIDList);
 
         return $obList;
     }
@@ -610,35 +599,35 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     public function getNearestPrev($iElementID, $iCount = 1, $bCyclic = false)
     {
         $obList = self::make();
-        if(empty($iElementID) || empty($iCount) || $iCount < 1) {
+        if (empty($iElementID) || empty($iCount) || $iCount < 1) {
             return $obList;
         }
 
         //Check current collection
-        if($this->isEmpty() || !$this->has($iElementID)) {
+        if ($this->isEmpty() || !$this->has($iElementID)) {
             return $obList;
         }
 
         $this->arElementIDList = array_values($this->arElementIDList);
 
         //Search element position
-        $iPosition = array_search($iElementID, $this->arElementIDList);
-        
-        //Get prev elements
-        $arElementIDList = array_slice($this->arElementIDList, 0, $iPosition);
-        $arElementIDList = array_reverse($arElementIDList);
+        $iElementPosition = array_search($iElementID, $this->arElementIDList);
 
-        if($bCyclic && $iPosition < count($this->arElementIDList)) {
+        //Get prev elements
+        $arResultIDList = array_slice($this->arElementIDList, 0, $iElementPosition);
+        $arResultIDList = array_reverse($arResultIDList);
+
+        if ($bCyclic && $iElementPosition < count($this->arElementIDList)) {
             //Get elements from end of array
-            $arAdditionElementIDList = array_slice($this->arElementIDList, $iPosition);
+            $arAdditionElementIDList = array_slice($this->arElementIDList, $iElementPosition);
             $arAdditionElementIDList = array_reverse($arAdditionElementIDList);
 
-            $arElementIDList = array_merge($arElementIDList, $arAdditionElementIDList);
+            $arResultIDList = array_merge($arResultIDList, $arAdditionElementIDList);
         }
 
         //Get result element ID list
-        $arElementIDList = array_slice($arElementIDList, 0, $iCount);
-        $obList->intersect($arElementIDList);
+        $arResultIDList = array_slice($arResultIDList, 0, $iCount);
+        $obList->intersect($arResultIDList);
 
         return $obList;
     }
@@ -653,7 +642,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function save($sKey)
     {
-        if(empty($sKey)) {
+        if (empty($sKey)) {
             return $this;
         }
 
@@ -673,15 +662,15 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function saved($sKey)
     {
-        if(empty($sKey)) {
+        if (empty($sKey)) {
             return null;
         }
 
         $sKey = static::class.'@'.$sKey;
 
         $obCollection = CollectionStore::instance()->get($sKey);
-        if(empty($obCollection)) {
-             return null;
+        if (empty($obCollection)) {
+            return null;
         }
 
         return clone $obCollection;
@@ -690,6 +679,7 @@ abstract class ElementCollection extends Extendable  implements \Iterator
     /**
      * Helper method for collection debug
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#debug
+     * @return $this
      */
     public function debug()
     {
@@ -710,16 +700,16 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function current()
     {
-        if($this->isEmpty()) {
+        if ($this->isEmpty()) {
             return null;
         }
-        
-        $arElementIDList = array_values($this->arElementIDList);
-        if(!isset($arElementIDList[$this->iPosition])) {
+
+        $arResultIDList = array_values($this->arElementIDList);
+        if (!isset($arResultIDList[$this->iPosition])) {
             return null;
         }
-        
-        return $this->makeItem($arElementIDList[$this->iPosition]);
+
+        return $this->makeItem($arResultIDList[$this->iPosition]);
     }
 
     /**
@@ -728,16 +718,16 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function key()
     {
-        if($this->isEmpty()) {
+        if ($this->isEmpty()) {
             return null;
         }
 
-        $arElementIDList = array_values($this->arElementIDList);
-        if(!isset($arElementIDList[$this->iPosition])) {
+        $arResultIDList = array_values($this->arElementIDList);
+        if (!isset($arResultIDList[$this->iPosition])) {
             return null;
         }
-        
-        return $arElementIDList[$this->iPosition];
+
+        return $arResultIDList[$this->iPosition];
     }
 
     /**
@@ -754,11 +744,21 @@ abstract class ElementCollection extends Extendable  implements \Iterator
      */
     public function valid()
     {
-        if($this->isEmpty()) {
+        if ($this->isEmpty()) {
             return null;
         }
 
-        $arElementIDList = array_values($this->arElementIDList);
-        return isset($arElementIDList[$this->iPosition]);
+        $arResultIDList = array_values($this->arElementIDList);
+
+        return isset($arResultIDList[$this->iPosition]);
+    }
+
+    /**
+     * Check list is clear
+     * @return bool
+     */
+    protected function isClear()
+    {
+        return $this->arElementIDList === null;
     }
 }

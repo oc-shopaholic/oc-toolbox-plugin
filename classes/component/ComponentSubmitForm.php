@@ -33,7 +33,7 @@ abstract class ComponentSubmitForm extends ComponentBase
     public function init()
     {
         $this->sMode = $this->property('mode');
-        if(empty($this->sMode)) {
+        if (empty($this->sMode)) {
             $this->sMode = self::MODE_AJAX;
         }
     }
@@ -45,7 +45,7 @@ abstract class ComponentSubmitForm extends ComponentBase
      */
     public function getOldValue($sField)
     {
-        if(empty($sField)) {
+        if (empty($sField)) {
             return null;
         }
 
@@ -77,8 +77,8 @@ abstract class ComponentSubmitForm extends ComponentBase
                 'title'   => 'lovata.toolbox::lang.component.property_mode',
                 'type'    => 'dropdown',
                 'options' => [
-                    self::MODE_SUBMIT => Lang::get('lovata.toolbox::lang.component.mode_' . self::MODE_SUBMIT),
-                    self::MODE_AJAX   => Lang::get('lovata.toolbox::lang.component.mode_' . self::MODE_AJAX),
+                    self::MODE_SUBMIT => Lang::get('lovata.toolbox::lang.component.mode_'.self::MODE_SUBMIT),
+                    self::MODE_AJAX   => Lang::get('lovata.toolbox::lang.component.mode_'.self::MODE_AJAX),
                 ],
             ],
             'flash_on'    => [
@@ -97,7 +97,7 @@ abstract class ComponentSubmitForm extends ComponentBase
             $arPageList = [];
         }
 
-        if(!empty($arPageList)) {
+        if (!empty($arPageList)) {
             $arResult['redirect_page'] = [
                 'title'             => 'lovata.toolbox::lang.component.property_redirect_page',
                 'type'              => 'dropdown',
@@ -114,21 +114,22 @@ abstract class ComponentSubmitForm extends ComponentBase
      */
     protected function getResponseModeForm()
     {
-        if(!Result::status()) {
+        if (!Result::status()) {
             return Redirect::back()->withInput()->with(Result::get());
         }
 
         $bRedirectOn = $this->property('redirect_on');
         $sRedirectPage = $this->property('redirect_page');
-        if(!$bRedirectOn) {
+        if (!$bRedirectOn) {
             return null;
         }
 
-        if(empty($sRedirectPage)) {
+        if (empty($sRedirectPage)) {
             return Redirect::to('/');
         }
 
         $sRedirectURL = Page::url($sRedirectPage, $this->getRedirectPageProperties());
+
         return Redirect::to($sRedirectURL);
     }
 
@@ -139,28 +140,29 @@ abstract class ComponentSubmitForm extends ComponentBase
     protected function getResponseModeAjax()
     {
         $bFlashOn = $this->property('flash_on');
-        if($bFlashOn) {
+        if ($bFlashOn) {
             $sMessage = Result::message();
-            if(!empty($sMessage)) {
+            if (!empty($sMessage)) {
                 Flash::error($sMessage);
             }
         }
 
-        if(!Result::status()) {
+        if (!Result::status()) {
             return Result::get();
         }
 
         $bRedirectOn = $this->property('redirect_on');
         $sRedirectPage = $this->property('redirect_page');
-        if(!$bRedirectOn) {
+        if (!$bRedirectOn) {
             return Result::get();
         }
 
-        if(empty($sRedirectPage)) {
+        if (empty($sRedirectPage)) {
             return Redirect::to('/');
         }
 
         $sRedirectURL = Page::url($sRedirectPage, $this->getRedirectPageProperties());
+
         return Redirect::to($sRedirectURL);
     }
 }

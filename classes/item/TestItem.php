@@ -17,11 +17,11 @@ class TestItem extends ElementItem
 
     /** @var Model */
     protected $obElement = null;
-    
+
     public $arExtendResult = [
         'addTitle',
     ];
-    
+
     public $arRelationList = [
         'test' => [
             'class' => self::class,
@@ -55,7 +55,7 @@ class TestItem extends ElementItem
      */
     protected function setElementObject()
     {
-        if(!empty($this->obElement) || empty($this->iElementID)) {
+        if (!empty($this->obElement) || empty($this->iElementID)) {
             return;
         }
 
@@ -81,7 +81,7 @@ class TestItem extends ElementItem
      */
     protected function getElementData()
     {
-        if(empty($this->obElement)) {
+        if (empty($this->obElement)) {
             return null;
         }
 

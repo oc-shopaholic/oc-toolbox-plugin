@@ -22,7 +22,7 @@ class CollectionStore
      */
     public function save($sKey, $obCollection)
     {
-        if(empty($sKey)) {
+        if (empty($sKey)) {
             return;
         }
 
@@ -37,7 +37,7 @@ class CollectionStore
      */
     public function get($sKey)
     {
-        if(empty($sKey) || empty($this->arStore) || !isset($this->arStore[$sKey])) {
+        if (empty($sKey) || empty($this->arStore) || !isset($this->arStore[$sKey])) {
             return null;
         }
 

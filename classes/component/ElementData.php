@@ -63,6 +63,7 @@ abstract class ElementData extends ComponentBase
     public function get($iElementID)
     {
         $obElementItem = $this->makeItem($iElementID);
+
         return $obElementItem;
     }
 }

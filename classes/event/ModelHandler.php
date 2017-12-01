@@ -9,15 +9,15 @@ abstract class ModelHandler
 {
     /** @var  \Model */
     protected $obElement;
-    
+
     protected $obListStore;
-    
+
     /**
      * Get model class name
      * @return string
      */
     protected abstract function getModelClass();
-    
+
     /**
      * Get item class name
      * @return string
@@ -32,15 +32,15 @@ abstract class ModelHandler
     {
         $sModelClass = $this->getModelClass();
         $sModelClass::extend(function ($obElement) {
-            
+
             /** @var \Model $obElement */
-            $obElement->bindEvent('model.afterSave', function () use($obElement) {
+            $obElement->bindEvent('model.afterSave', function () use ($obElement) {
                 $this->obElement = $obElement;
                 $this->afterSave();
             });
 
             /** @var \Model $obElement */
-            $obElement->bindEvent('model.afterDelete', function () use($obElement) {
+            $obElement->bindEvent('model.afterDelete', function () use ($obElement) {
                 $this->obElement = $obElement;
                 $this->afterDelete();
             });
@@ -53,7 +53,7 @@ abstract class ModelHandler
     protected function afterSave()
     {
         $sModelClass = $this->getModelClass();
-        if(empty($this->obElement) || !$this->obElement instanceof $sModelClass) {
+        if (empty($this->obElement) || !$this->obElement instanceof $sModelClass) {
             return;
         }
 
@@ -67,13 +67,13 @@ abstract class ModelHandler
     protected function afterDelete()
     {
         $sModelClass = $this->getModelClass();
-        if(empty($this->obElement) || !$this->obElement instanceof $sModelClass) {
+        if (empty($this->obElement) || !$this->obElement instanceof $sModelClass) {
             return;
         }
 
         $this->clearItemCache();
 
-        if($this->obElement->active) {
+        if ($this->obElement->active) {
             $this->clearActiveList();
         }
     }
@@ -93,7 +93,7 @@ abstract class ModelHandler
     protected function checkActiveField()
     {
         //check product "active" field
-        if($this->obElement->getOriginal('active') == $this->obElement->active) {
+        if ($this->obElement->getOriginal('active') == $this->obElement->active) {
             return;
         }
 
@@ -105,7 +105,7 @@ abstract class ModelHandler
      */
     protected function clearActiveList()
     {
-        if(empty($this->obListStore) || !method_exists($this->obListStore, 'clearActiveList')) {
+        if (empty($this->obListStore) || !method_exists($this->obListStore, 'clearActiveList')) {
             return;
         }
 

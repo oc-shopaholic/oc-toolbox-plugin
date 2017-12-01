@@ -184,7 +184,7 @@ class CollectionTest extends PluginTestCase
         $obCollection = TestCollection::make();
 
         $arResult = $obCollection->all();
-        self::assertEquals(null, $arResult, $sMessage);
+        self::assertEquals([], $arResult, $sMessage);
     }
 
     /**
@@ -196,7 +196,7 @@ class CollectionTest extends PluginTestCase
 
         $obCollection = TestCollection::make([]);
         $arResult = $obCollection->take(2);
-        self::assertEquals(null, $arResult, $sMessage);
+        self::assertEquals([], $arResult, $sMessage);
         
         $obCollection = TestCollection::make($this->arElementIDList);
 
@@ -226,7 +226,7 @@ class CollectionTest extends PluginTestCase
         }
 
         $arResult = $obCollection->skip(10)->take(2);
-        self::assertEquals(null, $arResult, $sMessage);
+        self::assertEquals([], $arResult, $sMessage);
     }
 
     /**
@@ -280,7 +280,7 @@ class CollectionTest extends PluginTestCase
         $obCollection = TestCollection::make();
 
         $arResult = $obCollection->random(1);
-        self::assertEquals(null, $arResult, $sMessage);
+        self::assertEquals([], $arResult, $sMessage);
     }
 
     /**
@@ -324,6 +324,7 @@ class CollectionTest extends PluginTestCase
 
         $obItem = $obCollection->first();
         self::assertEquals($this->arElementIDList[0], $obItem->id, $sMessage);
+        self::assertEquals(count($this->arElementIDList), $obCollection->count(), $sMessage);
 
         $obCollection = TestCollection::make();
 
@@ -341,6 +342,7 @@ class CollectionTest extends PluginTestCase
 
         $obItem = $obCollection->last();
         self::assertEquals($this->arElementIDList[count($this->arElementIDList) -1], $obItem->id, $sMessage);
+        self::assertEquals(count($this->arElementIDList), $obCollection->count(), $sMessage);
 
         $obCollection = TestCollection::make();
 

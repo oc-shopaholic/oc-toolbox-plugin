@@ -14,10 +14,10 @@ use Kharanenka\Scope\NameField;
  * Class CommonProperty
  * @package Lovata\Toolbox\Models
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- * 
+ *
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
- * 
+ *
  * @property $id
  * @property bool $active
  * @property string $name
@@ -41,7 +41,7 @@ class CommonProperty extends Model
     use NameField;
     use CodeField;
     use SlugField;
-    
+
     const TYPE_INPUT = 'input';
     const TYPE_TEXT_AREA = 'textarea';
     const TYPE_SELECT = 'select';
@@ -51,13 +51,13 @@ class CommonProperty extends Model
     const TYPE_MEDIA_FINDER = 'mediafinder';
 
     public $table = null;
-    
+
     public $implement = [
         '@RainLab.Translate.Behaviors.TranslatableModel',
     ];
 
     public $translatable = ['name', 'description'];
-    
+
     public $rules = [];
 
     public $dates = ['created_at', 'updated_at'];
@@ -70,38 +70,37 @@ class CommonProperty extends Model
     public function getWidgetData()
     {
         $arResult = [];
-        
-        switch($this->type) {
+
+        switch ($this->type) {
             /** INPUT TYPE */
-            case self::TYPE_INPUT :
+            case self::TYPE_INPUT:
                 $arResult = [
                     'type' => 'text',
                 ];
-                
-                if($this->isTranslatable()) {
+
+                if ($this->isTranslatable()) {
                     $arResult['type'] = 'mltext';
                 }
                 break;
             /** TEXT AREA TYPE */
-            case self::TYPE_TEXT_AREA :
+            case self::TYPE_TEXT_AREA:
                 $arResult = [
                     'type' => 'textarea',
                     'size' => 'large',
                 ];
 
-                if($this->isTranslatable()) {
+                if ($this->isTranslatable()) {
                     $arResult['type'] = 'mltextarea';
                 }
                 break;
             /** SELECT TYPE */
-            case self::TYPE_SELECT :
-                
+            case self::TYPE_SELECT:
                 //Get property variants
                 $arValueList = $this->getPropertyVariants();
-                if(empty($arValueList)) {
+                if (empty($arValueList)) {
                     break;
                 }
-                
+
                 $arResult = [
                     'type'        => 'dropdown',
                     'emptyOption' => 'lovata.toolbox::lang.field.empty',
@@ -109,11 +108,10 @@ class CommonProperty extends Model
                 ];
                 break;
             /** CHECKBOX TYPE */
-            case self::TYPE_CHECKBOX :
-
+            case self::TYPE_CHECKBOX:
                 //Get property variants
                 $arValueList = $this->getPropertyVariants();
-                if(empty($arValueList)) {
+                if (empty($arValueList)) {
                     break;
                 }
 
@@ -123,29 +121,27 @@ class CommonProperty extends Model
                 ];
                 break;
             /** DATE AND TIME PICKER TYPE */
-            case self::TYPE_DATE :
-
+            case self::TYPE_DATE:
                 $sMode = $this->getSettingValue('datepicker');
-                if(!in_array($sMode, ['date', 'time', 'datetime'])) {
+                if (!in_array($sMode, ['date', 'time', 'datetime'])) {
                     break;
                 }
-                
+
                 $arResult = [
                     'type' => 'datepicker',
                     'mode' => $sMode,
                 ];
                 break;
             /** COLOR PICKER TYPE */
-            case self::TYPE_COLOR_PICKER :
+            case self::TYPE_COLOR_PICKER:
                 $arResult = [
                     'type' => 'colorpicker',
                 ];
                 break;
             /** FILE FINDER TYPE */
-            case self::TYPE_MEDIA_FINDER :
-
+            case self::TYPE_MEDIA_FINDER:
                 $sMode = $this->getSettingValue('mediafinder');
-                if(!in_array($sMode, ['file', 'image'])) {
+                if (!in_array($sMode, ['file', 'image'])) {
                     break;
                 }
 
@@ -155,41 +151,26 @@ class CommonProperty extends Model
                 ];
                 break;
         }
-        
+
         //Get common widget settings
-        if(empty($arResult)) {
+        if (empty($arResult)) {
             return $arResult;
         }
-            
+
         //Get property tab
         $sTabName = $this->getSettingValue('tab');
-        if(!empty($sTabName)) {
+        if (!empty($sTabName)) {
             $arResult['tab'] = $sTabName;
         } else {
             $arResult['tab'] = 'lovata.propertiesshopaholic::lang.field.properties';
         }
-        
+
         $arResult['span'] = 'left';
 
         //Get property name with measure
         $arResult['label'] = $this->name;
-        
+
         return $arResult;
-    }
-
-    /**
-     * Get property settings value
-     * @param string $sKey
-     * @return mixed|null
-     */
-    protected function getSettingValue($sKey)
-    {
-        $arSettings = $this->settings;
-        if(empty($sKey) || empty($arSettings) || !isset($arSettings[$sKey])) {
-            return null;
-        }
-
-        return $arSettings[$sKey];
     }
 
     /**
@@ -199,23 +180,22 @@ class CommonProperty extends Model
     public function getPropertyVariants()
     {
         $arValueList = [];
-        
+
         //Get and check settings array
         $arSettings = $this->settings;
-        if(empty($arSettings) || !isset($arSettings['list']) || empty($arSettings['list'])) {
+        if (empty($arSettings) || !isset($arSettings['list']) || empty($arSettings['list'])) {
             return $arValueList;
         }
 
         //Get property value variants
-        foreach($arSettings['list'] as $arValue) {
-
-            if(!isset($arValue['value']) || empty($arValue['value'])) {
+        foreach ($arSettings['list'] as $arValue) {
+            if (!isset($arValue['value']) || empty($arValue['value'])) {
                 continue;
             }
 
             $arValueList[$arValue['value']] = $arValue['value'];
         }
-        
+
         return $arValueList;
     }
 
@@ -235,13 +215,28 @@ class CommonProperty extends Model
     public function getTypeOptions()
     {
         return [
-            self::TYPE_INPUT        => Lang::get('lovata.toolbox::lang.type.' . self::TYPE_INPUT),
-            self::TYPE_TEXT_AREA    => Lang::get('lovata.toolbox::lang.type.' . self::TYPE_TEXT_AREA),
-            self::TYPE_CHECKBOX     => Lang::get('lovata.toolbox::lang.type.' . self::TYPE_CHECKBOX),
-            self::TYPE_SELECT       => Lang::get('lovata.toolbox::lang.type.' . self::TYPE_SELECT),
-            self::TYPE_DATE         => Lang::get('lovata.toolbox::lang.type.' . self::TYPE_DATE),
-            self::TYPE_COLOR_PICKER => Lang::get('lovata.toolbox::lang.type.' . self::TYPE_COLOR_PICKER),
-            self::TYPE_MEDIA_FINDER => Lang::get('lovata.toolbox::lang.type.' . self::TYPE_MEDIA_FINDER),
+            self::TYPE_INPUT        => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_INPUT),
+            self::TYPE_TEXT_AREA    => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_TEXT_AREA),
+            self::TYPE_CHECKBOX     => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_CHECKBOX),
+            self::TYPE_SELECT       => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_SELECT),
+            self::TYPE_DATE         => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_DATE),
+            self::TYPE_COLOR_PICKER => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_COLOR_PICKER),
+            self::TYPE_MEDIA_FINDER => Lang::get('lovata.toolbox::lang.type.'.self::TYPE_MEDIA_FINDER),
         ];
+    }
+
+    /**
+     * Get property settings value
+     * @param string $sKey
+     * @return mixed|null
+     */
+    protected function getSettingValue($sKey)
+    {
+        $arSettings = $this->settings;
+        if (empty($sKey) || empty($arSettings) || !isset($arSettings[$sKey])) {
+            return null;
+        }
+
+        return $arSettings[$sKey];
     }
 }

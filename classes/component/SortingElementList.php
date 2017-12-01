@@ -43,11 +43,11 @@ abstract class SortingElementList extends ComponentBase
     protected function setActiveSorting()
     {
         $this->sSorting = Input::get('sort');
-        if(empty($this->sSorting)) {
+        if (empty($this->sSorting)) {
             $this->sSorting = $this->property('sorting');
         }
 
-        if(!in_array($this->sSorting, $this->getAvailableSorting())) {
+        if (!in_array($this->sSorting, $this->getAvailableSorting())) {
             $this->sSorting = $this->property('sorting');
         }
     }

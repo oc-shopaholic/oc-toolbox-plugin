@@ -28,25 +28,6 @@ abstract class ElementItem extends MainItem
     public $arExtendResult = [];
 
     /**
-     * ElementItem constructor.
-     * @param int    $iElementID
-     * @param \Model $obElement
-     */
-    public function __construct($iElementID, $obElement)
-    {
-        $this->iElementID = $iElementID;
-        $this->obElement = $obElement;
-
-        //Check instance of obElement
-        if(!empty($this->obElement) && !$this->obElement instanceof Model) {
-            $this->obElement = null;
-        }
-
-        $this->initActiveLang();
-        $this->extendableConstruct();
-    }
-
-    /**
      * Set model data from object
      * @return mixed
      */
@@ -63,6 +44,25 @@ abstract class ElementItem extends MainItem
      * @return array
      */
     protected static abstract function getCacheTag();
+
+    /**
+     * ElementItem constructor.
+     * @param int    $iElementID
+     * @param \Model $obElement
+     */
+    public function __construct($iElementID, $obElement)
+    {
+        $this->iElementID = $iElementID;
+        $this->obElement = $obElement;
+
+        //Check instance of obElement
+        if (!empty($this->obElement) && !$this->obElement instanceof Model) {
+            $this->obElement = null;
+        }
+
+        $this->initActiveLang();
+        $this->extendableConstruct();
+    }
 
     /**
      * Make new element item
@@ -121,7 +121,7 @@ abstract class ElementItem extends MainItem
      */
     public static function clearCache($iElementID)
     {
-        if(empty($iElementID)) {
+        if (empty($iElementID)) {
             return;
         }
 
@@ -177,6 +177,7 @@ abstract class ElementItem extends MainItem
     public function getObject()
     {
         $this->setElementObject();
+
         return $this->obElement;
     }
 
@@ -186,17 +187,17 @@ abstract class ElementItem extends MainItem
     protected function setData()
     {
         $this->setElementObject();
-        if(empty($this->obElement)) {
+        if (empty($this->obElement)) {
             return;
         }
 
         //Set default lang (if update cache with non default lang)
-        if(self::$bLangInit && !empty(self::$sDefaultLang) && $this->obElement->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
+        if (self::$bLangInit && !empty(self::$sDefaultLang) && $this->obElement->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
             $this->obElement->lang(self::$sDefaultLang);
         }
-        
+
         $arResult = $this->getElementData();
-        if(empty($arResult)) {
+        if (empty($arResult)) {
             return;
         }
 
@@ -204,15 +205,15 @@ abstract class ElementItem extends MainItem
 
         //Save lang properties (integration with Translate plugin)
         $this->setLangProperties();
-        
+
         //Check extend result methods
-        if(empty($this->arExtendResult)) {
+        if (empty($this->arExtendResult)) {
             return;
         }
 
         //Apply extend methods
         foreach ($this->arExtendResult as $sMethodName) {
-            if(empty($sMethodName) || !(method_exists($this, $sMethodName) || $this->methodExists($sMethodName))) {
+            if (empty($sMethodName) || !(method_exists($this, $sMethodName) || $this->methodExists($sMethodName))) {
                 continue;
             }
 
@@ -225,7 +226,7 @@ abstract class ElementItem extends MainItem
      */
     protected function setCachedData()
     {
-        if(empty($this->iElementID)) {
+        if (empty($this->iElementID)) {
             return;
         }
 
@@ -238,7 +239,7 @@ abstract class ElementItem extends MainItem
      */
     protected function setDataFromCache()
     {
-        if(empty($this->iElementID)) {
+        if (empty($this->iElementID)) {
             return;
         }
 
@@ -246,7 +247,7 @@ abstract class ElementItem extends MainItem
         $sCacheKey = $this->iElementID;
 
         $this->arModelData = CCache::get($arCacheTags, $sCacheKey);
-        if(!$this->isEmpty()) {
+        if (!$this->isEmpty()) {
             return;
         }
 
@@ -261,7 +262,7 @@ abstract class ElementItem extends MainItem
      */
     private function initActiveLang()
     {
-        if(self::$bLangInit || !PluginManager::instance()->hasPlugin('RainLab.Translate')) {
+        if (self::$bLangInit || !PluginManager::instance()->hasPlugin('RainLab.Translate')) {
             return;
         }
 
@@ -269,12 +270,12 @@ abstract class ElementItem extends MainItem
         $obTranslate = \RainLab\Translate\Classes\Translator::instance();
 
         self::$sDefaultLang = $obTranslate->getDefaultLocale();
-        
+
         $sActiveLang = $obTranslate->getLocale();
-        if(empty($sActiveLang) || $obTranslate->getDefaultLocale() == $sActiveLang) {
+        if (empty($sActiveLang) || $obTranslate->getDefaultLocale() == $sActiveLang) {
             return;
         }
-        
+
         self::$sActiveLang = $sActiveLang;
     }
 
@@ -283,23 +284,23 @@ abstract class ElementItem extends MainItem
      */
     protected function getActiveLangList()
     {
-        if(self::$arActiveLangList !== null || !PluginManager::instance()->hasPlugin('RainLab.Translate')) {
+        if (self::$arActiveLangList !== null || !PluginManager::instance()->hasPlugin('RainLab.Translate')) {
             return self::$arActiveLangList;
         }
-        
+
         self::$arActiveLangList = \RainLab\Translate\Models\Locale::isEnabled()->lists('code');
-        if(empty(self::$arActiveLangList)) {
+        if (empty(self::$arActiveLangList)) {
             return self::$arActiveLangList;
         }
-        
+
         //Remove default lang from list
         foreach (self::$arActiveLangList as $iKey => $sLangCode) {
-            if($sLangCode == self::$sDefaultLang) {
+            if ($sLangCode == self::$sDefaultLang) {
                 unset(self::$arActiveLangList[$iKey]);
                 break;
             }
         }
-        
+
         return self::$arActiveLangList;
     }
 
@@ -308,42 +309,41 @@ abstract class ElementItem extends MainItem
      */
     private function setLangProperties()
     {
-        if(empty($this->obElement) || !$this->obElement->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
+        if (empty($this->obElement) || !$this->obElement->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
             return;
         }
-        
+
         //Check translate model property
-        if(empty($this->obElement->translatable) || !is_array($this->obElement->translatable)) {
+        if (empty($this->obElement->translatable) || !is_array($this->obElement->translatable)) {
             return;
         }
 
         //Get active lang list from Translate plugin
         $arLangList = self::getActiveLangList();
-        if(empty($arLangList)) {
+        if (empty($arLangList)) {
             return;
         }
-        
+
         //Process translatable fields
         foreach ($this->obElement->translatable as $sField) {
             //Check field name
-            if(empty($sField) || !is_string($sField)) {
+            if (empty($sField) || !is_string($sField)) {
                 continue;
             }
-            
-            if(!isset($this->arModelData[$sField])) {
+
+            if (!isset($this->arModelData[$sField])) {
                 continue;
             }
-            
+
             //Save field value with different lang code
             foreach ($arLangList as $sLangCode) {
-                
                 $sLangField = $sField.'|'.$sLangCode;
                 $sValue = $this->obElement->lang($sLangCode)->$sField;
                 $this->setAttribute($sLangField, $sValue);
             }
         }
     }
-    
+
     /**
      * @param string $sName
      * @return string
@@ -374,7 +374,7 @@ abstract class ElementItem extends MainItem
 
     /**
      * @param string $sName
-     * @param array $arParamList
+     * @param array  $arParamList
      * @return mixed
      */
     public static function __callStatic($sName, $arParamList)

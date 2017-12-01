@@ -38,10 +38,10 @@ trait TraitComponentNotFoundResponse
      */
     protected function getErrorResponse()
     {
-        if(Request::ajax()) {
+        if (Request::ajax()) {
             throw new AjaxException('Element not found');
         }
-        
+
         return Response::make($this->controller->run('404')->getContent(), 404);
     }
 }

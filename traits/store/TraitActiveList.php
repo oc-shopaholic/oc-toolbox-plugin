@@ -23,14 +23,14 @@ trait TraitActiveList
         $sCacheKey = static::CACHE_TAG_LIST;
 
         $arElementIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arElementIDList)) {
+        if (!empty($arElementIDList)) {
             return $arElementIDList;
         }
 
         //Get sticker ID list
         /** @var array $arElementIDList */
         $arElementIDList = $this->getActiveIDList();
-        if(empty($arElementIDList)) {
+        if (empty($arElementIDList)) {
             return null;
         }
 
