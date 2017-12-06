@@ -2,6 +2,7 @@
 
 use Model;
 use Lovata\Toolbox\Plugin;
+use Lovata\Toolbox\Classes\Collection\TestCollection;
 
 /**
  * Class TestItem
@@ -17,12 +18,44 @@ class TestItem extends ElementItem
     /** @var Model */
     protected $obElement = null;
 
+    public $arExtendResult = [
+        'addTitle',
+    ];
+
+    public $arRelationList = [
+        'test' => [
+            'class' => self::class,
+            'field' => 'test_id',
+        ],
+        'test_null' => null,
+        'test_class' => [
+            'class_fail' => self::class,
+            'field'      => 'test_id',
+        ],
+        'test_field' => [
+            'class'      => self::class,
+            'field_fail' => 'test_id',
+        ],
+        'test_exist' => [
+            'class'      => self::class.'Test',
+            'field' => 'test_id',
+        ],
+        'test_list' => [
+            'class' => TestCollection::class,
+            'field' => 'test_list_id',
+        ],
+        'test_empty_list' => [
+            'class' => TestCollection::class,
+            'field' => 'test_empty_list_id',
+        ],
+    ];
+
     /**
      * Set element object
      */
     protected function setElementObject()
     {
-        if(!empty($this->obElement) || empty($this->iElementID)) {
+        if (!empty($this->obElement) || empty($this->iElementID)) {
             return;
         }
 
@@ -48,14 +81,24 @@ class TestItem extends ElementItem
      */
     protected function getElementData()
     {
-        if(empty($this->obElement)) {
+        if (empty($this->obElement)) {
             return null;
         }
 
         $arResult = [
-            'id' => $this->obElement->id,
+            'id'           => $this->obElement->id,
+            'test_id'      => $this->obElement->id + 1,
+            'test_list_id' => [$this->obElement->id, $this->obElement->id + 1],
         ];
 
         return $arResult;
+    }
+
+    /**
+     * Add title
+     */
+    protected function addTitle()
+    {
+        $this->setAttribute('title', 'title'.$this->obElement->id);
     }
 }

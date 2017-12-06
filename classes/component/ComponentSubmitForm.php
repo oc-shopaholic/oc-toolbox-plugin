@@ -19,13 +19,12 @@ abstract class ComponentSubmitForm extends ComponentBase
     const MODE_SUBMIT = 'submit';
     const MODE_AJAX = 'ajax';
 
-    protected $sMode = null;
+    const PROPERTY_MODE = 'mode';
+    const PROPERTY_FLASH_ON = 'flash_on';
+    const PROPERTY_REDIRECT_ON = 'redirect_on';
+    const PROPERTY_REDIRECT_PAGE = 'redirect_page';
 
-    /**
-     * Get redirect page property list
-     * @return array
-     */
-    protected abstract function getRedirectPageProperties();
+    protected $sMode = null;
 
     /**
      * Init plugin method
@@ -33,7 +32,7 @@ abstract class ComponentSubmitForm extends ComponentBase
     public function init()
     {
         $this->sMode = $this->property('mode');
-        if(empty($this->sMode)) {
+        if (empty($this->sMode)) {
             $this->sMode = self::MODE_AJAX;
         }
     }
@@ -45,7 +44,7 @@ abstract class ComponentSubmitForm extends ComponentBase
      */
     public function getOldValue($sField)
     {
-        if(empty($sField)) {
+        if (empty($sField)) {
             return null;
         }
 
@@ -67,25 +66,31 @@ abstract class ComponentSubmitForm extends ComponentBase
     }
 
     /**
+     * Get redirect page property list
+     * @return array
+     */
+    abstract protected function getRedirectPageProperties();
+
+    /**
      * Get component property "mode"
      * @return array
      */
     protected function getModeProperty()
     {
         $arResult = [
-            'mode'        => [
+            self::PROPERTY_MODE        => [
                 'title'   => 'lovata.toolbox::lang.component.property_mode',
                 'type'    => 'dropdown',
                 'options' => [
-                    self::MODE_SUBMIT => Lang::get('lovata.toolbox::lang.component.mode_' . self::MODE_SUBMIT),
-                    self::MODE_AJAX   => Lang::get('lovata.toolbox::lang.component.mode_' . self::MODE_AJAX),
+                    self::MODE_SUBMIT => Lang::get('lovata.toolbox::lang.component.mode_'.self::MODE_SUBMIT),
+                    self::MODE_AJAX   => Lang::get('lovata.toolbox::lang.component.mode_'.self::MODE_AJAX),
                 ],
             ],
-            'flash_on'    => [
+            self::PROPERTY_FLASH_ON    => [
                 'title' => 'lovata.toolbox::lang.component.property_flash_on',
                 'type'  => 'checkbox',
             ],
-            'redirect_on' => [
+            self::PROPERTY_REDIRECT_ON => [
                 'title' => 'lovata.toolbox::lang.component.property_redirect_on',
                 'type'  => 'checkbox',
             ],
@@ -97,8 +102,8 @@ abstract class ComponentSubmitForm extends ComponentBase
             $arPageList = [];
         }
 
-        if(!empty($arPageList)) {
-            $arResult['redirect_page'] = [
+        if (!empty($arPageList)) {
+            $arResult[self::PROPERTY_REDIRECT_PAGE] = [
                 'title'             => 'lovata.toolbox::lang.component.property_redirect_page',
                 'type'              => 'dropdown',
                 'options'           => $arPageList,
@@ -114,21 +119,22 @@ abstract class ComponentSubmitForm extends ComponentBase
      */
     protected function getResponseModeForm()
     {
-        if(!Result::status()) {
+        if (!Result::status()) {
             return Redirect::back()->withInput()->with(Result::get());
         }
 
-        $bRedirectOn = $this->property('redirect_on');
-        $sRedirectPage = $this->property('redirect_page');
-        if(!$bRedirectOn) {
+        $bRedirectOn = $this->property(self::PROPERTY_REDIRECT_ON);
+        $sRedirectPage = $this->property(self::PROPERTY_REDIRECT_PAGE);
+        if (!$bRedirectOn) {
             return null;
         }
 
-        if(empty($sRedirectPage)) {
+        if (empty($sRedirectPage)) {
             return Redirect::to('/');
         }
 
         $sRedirectURL = Page::url($sRedirectPage, $this->getRedirectPageProperties());
+
         return Redirect::to($sRedirectURL);
     }
 
@@ -138,29 +144,30 @@ abstract class ComponentSubmitForm extends ComponentBase
      */
     protected function getResponseModeAjax()
     {
-        $bFlashOn = $this->property('flash_on');
-        if($bFlashOn) {
+        $bFlashOn = $this->property(self::PROPERTY_FLASH_ON);
+        if ($bFlashOn) {
             $sMessage = Result::message();
-            if(!empty($sMessage)) {
+            if (!empty($sMessage)) {
                 Flash::error($sMessage);
             }
         }
 
-        if(!Result::status()) {
+        if (!Result::status()) {
             return Result::get();
         }
 
-        $bRedirectOn = $this->property('redirect_on');
-        $sRedirectPage = $this->property('redirect_page');
-        if(!$bRedirectOn) {
+        $bRedirectOn = $this->property(self::PROPERTY_REDIRECT_ON);
+        $sRedirectPage = $this->property(self::PROPERTY_REDIRECT_PAGE);
+        if (!$bRedirectOn) {
             return Result::get();
         }
 
-        if(empty($sRedirectPage)) {
+        if (empty($sRedirectPage)) {
             return Redirect::to('/');
         }
 
         $sRedirectURL = Page::url($sRedirectPage, $this->getRedirectPageProperties());
+
         return Redirect::to($sRedirectURL);
     }
 }

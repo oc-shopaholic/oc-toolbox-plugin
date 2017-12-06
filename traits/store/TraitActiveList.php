@@ -7,7 +7,7 @@ use Lovata\Toolbox\Plugin;
  * Trait TraitActiveList
  * @package Lovata\Toolbox\Traits\Store
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- * 
+ *
  * @method array getActiveIDList()
  */
 trait TraitActiveList
@@ -23,14 +23,14 @@ trait TraitActiveList
         $sCacheKey = static::CACHE_TAG_LIST;
 
         $arElementIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arElementIDList)) {
+        if (!empty($arElementIDList)) {
             return $arElementIDList;
         }
 
         //Get sticker ID list
         /** @var array $arElementIDList */
         $arElementIDList = $this->getActiveIDList();
-        if(empty($arElementIDList)) {
+        if (empty($arElementIDList)) {
             return null;
         }
 

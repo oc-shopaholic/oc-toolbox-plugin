@@ -2,3 +2,5 @@
     - 'Initialize plugin.'
 1.1.0:
     - 'Add diff, unshift, push, getNearestNext, getNearestPrev methods to ElementCollection class, add ComponentSubmitForm class'
+1.2.0:
+    - 'Add integration with Translate plugin'
