@@ -28,8 +28,8 @@ use Kharanenka\Scope\NameField;
  * @property string $description
  * @property int $sort_order
  *
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
+ * @property \October\Rain\Argon\Argon $created_at
+ * @property \October\Rain\Argon\Argon $updated_at
  */
 class CommonProperty extends Model
 {

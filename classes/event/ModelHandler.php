@@ -22,6 +22,12 @@ abstract class ModelHandler
         $sModelClass::extend(function ($obElement) {
 
             /** @var \Model $obElement */
+            $obElement->bindEvent('model.afterCreate', function () use ($obElement) {
+                $this->obElement = $obElement;
+                $this->afterCreate();
+            });
+
+            /** @var \Model $obElement */
             $obElement->bindEvent('model.afterSave', function () use ($obElement) {
                 $this->obElement = $obElement;
                 $this->afterSave();
@@ -46,6 +52,11 @@ abstract class ModelHandler
      * @return string
      */
     abstract protected function getItemClass();
+
+    /**
+     * After create event handler
+     */
+    protected function afterCreate() {}
 
     /**
      * After save event handler

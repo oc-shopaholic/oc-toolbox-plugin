@@ -1,5 +1,3 @@
-<img src="assets/images/logo.svg" align="right">
-
 # Toolbox
 
 [![Build Status](https://travis-ci.org/lovata/oc-toolbox-plugin.svg?branch=master)](https://travis-ci.org/lovata/oc-toolbox-plugin)
@@ -9,6 +7,8 @@
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/toolbox-plugin-for-october-cms/localized.svg)](https://crowdin.com/project/toolbox-plugin-for-october-cms)
 [![SemVer 2.0.0](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+![Toolbox Banner](assets/images/toolbox-banner.png)
 
 Toolbox is a set of helpers for faster development for [October CMS](https://github.com/octobercms/october). It includes a universal component for rendering pagination navigation controls, a set of tools for caching of objects and lists. Also, it includes a list of most common language strings for using in third-party plugins: name, title, description etc.
 
@@ -35,4 +35,4 @@ If you're interested in the improvement of this project you can help in the foll
 
 © 2017, [LOVATA Group, LLC](https://github.com/lovata) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
 
-Develped by [Andrey Kharanenka](https://github.com/kharanenka).
+Developed by [Andrey Kharanenka](https://github.com/kharanenka).
