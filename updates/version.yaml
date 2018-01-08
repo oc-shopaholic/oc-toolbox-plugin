@@ -4,3 +4,5 @@
     - 'Add diff, unshift, push, getNearestNext, getNearestPrev methods to ElementCollection class, add ComponentSubmitForm class'
 1.2.0:
     - 'Add integration with Translate plugin'
+1.3.0:
+    - 'Adding afterCreate model event handling for additional cache cleaning'
