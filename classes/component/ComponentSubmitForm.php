@@ -52,6 +52,15 @@ abstract class ComponentSubmitForm extends ComponentBase
     }
 
     /**
+     * Get all old form fields
+     * @return array|string
+     */
+    public function getOldFormData()
+    {
+        return Input::old();
+    }
+
+    /**
      * Get error message
      * @return mixed
      */
