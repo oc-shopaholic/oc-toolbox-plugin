@@ -54,6 +54,7 @@
         'images'          => 'Images',
         'settings'        => 'Settings',
         'description'     => 'Description',
+        'properties'      => 'Properties',
     ],
     'component' => [
         'property_name_error_404' => 'View 404 page',

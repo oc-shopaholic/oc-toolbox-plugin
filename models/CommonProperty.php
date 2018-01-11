@@ -164,7 +164,7 @@ class CommonProperty extends Model
         if (!empty($sTabName)) {
             $arResult['tab'] = $sTabName;
         } else {
-            $arResult['tab'] = 'lovata.propertiesshopaholic::lang.field.properties';
+            $arResult['tab'] = 'lovata.toolbox::lang.tab.properties';
         }
 
         $arResult['span'] = 'left';
