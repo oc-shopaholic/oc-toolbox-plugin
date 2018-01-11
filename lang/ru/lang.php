@@ -54,6 +54,7 @@
         'images'          => 'Изображения',
         'settings'        => 'Настройки',
         'description'     => 'Описание',
+        'properties'      => 'Свойства',
     ],
     'component' => [
         'property_name_error_404' => 'Отображать 404 страницу',
