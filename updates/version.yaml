@@ -10,3 +10,5 @@
     - 'Restore getOldFormData() method in ComponentSubmitForm class'
 1.3.2:
     - 'Fix lang path for the default properties tab in CommonProperty class'
+1.3.3:
+    - 'Fix path to field name with error in getErrorMessage() method'

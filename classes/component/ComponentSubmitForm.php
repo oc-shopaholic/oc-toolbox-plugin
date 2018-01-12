@@ -68,7 +68,7 @@ abstract class ComponentSubmitForm extends ComponentBase
     {
         $arResult = [
             'message' => Session::get('message'),
-            'field'   => Session::get('field'),
+            'field'   => Session::get('data.field'),
         ];
 
         return $arResult;
