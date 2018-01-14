@@ -34,28 +34,27 @@ class PageHelper
     public function getUrlParamList($sPageCode, $sComponentName, $sParamName = 'slug')
     {
         $sCacheKey = implode('_', [$sPageCode, $sComponentName, $sParamName]);
-        if($this->hasCache($sCacheKey)) {
+        if ($this->hasCache($sCacheKey)) {
             return $this->getCachedData($sCacheKey);
         }
 
         $arResult = [];
-        if(empty($sPageCode) || empty($sComponentName) || empty($sParamName)) {
+        if (empty($sPageCode) || empty($sComponentName) || empty($sParamName)) {
             return $arResult;
         }
 
         //Get component list
         $arComponentList = $this->getFullComponentList($sPageCode);
-        if(empty($arComponentList)) {
+        if (empty($arComponentList)) {
             return $arResult;
         }
 
         foreach ($arComponentList as $sKey => $arPropertyList) {
-
-            if(!preg_match('%^'.$sComponentName.'%', $sKey)) {
+            if (!preg_match('%^'.$sComponentName.'%', $sKey)) {
                 continue;
             }
 
-            if(empty($arPropertyList) || !isset($arPropertyList[$sParamName])) {
+            if (empty($arPropertyList) || !isset($arPropertyList[$sParamName])) {
                 continue;
             }
 
@@ -93,13 +92,13 @@ class PageHelper
      */
     protected function getFullComponentList($sPageCode)
     {
-        if($this->hasCache($sPageCode)) {
+        if ($this->hasCache($sPageCode)) {
             return $this->getCachedData($sPageCode);
         }
 
         //Get page object
         $obPage = $this->getPageObject($sPageCode);
-        if(empty($obPage) || empty($obPage->settings) || !isset($obPage->settings['components'])) {
+        if (empty($obPage) || empty($obPage->settings) || !isset($obPage->settings['components'])) {
             return [];
         }
 
@@ -117,11 +116,11 @@ class PageHelper
      */
     protected function getPageObject($sPageCode)
     {
-        if(isset($this->arPageList[$sPageCode])) {
+        if (isset($this->arPageList[$sPageCode])) {
             return $this->arPageList[$sPageCode];
         }
 
-        if(empty($sPageCode) || empty($this->obTheme)) {
+        if (empty($sPageCode) || empty($this->obTheme)) {
             return null;
         }
 
@@ -137,7 +136,7 @@ class PageHelper
      */
     protected function getCachedData($sKey)
     {
-        if(isset($this->arCachedData[$sKey])) {
+        if (isset($this->arCachedData[$sKey])) {
             return $this->arCachedData[$sKey];
         }
 
