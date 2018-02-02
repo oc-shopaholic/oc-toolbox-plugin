@@ -14,3 +14,5 @@
     - 'Fix path to field name with error in getErrorMessage() method'
 1.4.0:
     - 'Add PageHelper class'
+1.4.1:
+    - 'Fix processing of positive results in ComponentSubmitForm::getResponseModeAjax() method, if flash_on enabled'

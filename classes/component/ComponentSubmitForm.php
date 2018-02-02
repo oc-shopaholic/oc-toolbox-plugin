@@ -153,13 +153,7 @@ abstract class ComponentSubmitForm extends ComponentBase
      */
     protected function getResponseModeAjax()
     {
-        $bFlashOn = $this->property(self::PROPERTY_FLASH_ON);
-        if ($bFlashOn) {
-            $sMessage = Result::message();
-            if (!empty($sMessage)) {
-                Flash::error($sMessage);
-            }
-        }
+        $this->sendFlashMessage();
 
         if (!Result::status()) {
             return Result::get();
@@ -178,5 +172,27 @@ abstract class ComponentSubmitForm extends ComponentBase
         $sRedirectURL = Page::url($sRedirectPage, $this->getRedirectPageProperties());
 
         return Redirect::to($sRedirectURL);
+    }
+
+    /**
+     * Send flash message
+     */
+    protected function sendFlashMessage()
+    {
+        $bFlashOn = $this->property(self::PROPERTY_FLASH_ON);
+        if (!$bFlashOn) {
+            return;
+        }
+
+        $sMessage = Result::message();
+        if (empty($sMessage)) {
+            return;
+        }
+
+        if (Result::status()) {
+            Flash::success($sMessage);
+        } else {
+            Flash::error($sMessage);
+        }
     }
 }
