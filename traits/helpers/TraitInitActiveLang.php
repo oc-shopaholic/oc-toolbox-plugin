@@ -32,11 +32,11 @@ trait TraitInitActiveLang
 
         self::$sDefaultLang = $obTranslate->getDefaultLocale();
 
-        $sActiveLang = $obTranslate->getLocale();
-        if (empty($sActiveLang) || $obTranslate->getDefaultLocale() == $sActiveLang) {
+        $sActiveLangCode = $obTranslate->getLocale();
+        if (empty($sActiveLangCode) || $obTranslate->getDefaultLocale() == $sActiveLangCode) {
             return;
         }
 
-        self::$sActiveLang = $sActiveLang;
+        self::$sActiveLang = $sActiveLangCode;
     }
 }
