@@ -6,7 +6,7 @@ use Cms\Classes\ComponentBase;
 /**
  * Class SortingElementList
  * @package Lovata\Toolbox\Classes\Component
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  */
 abstract class SortingElementList extends ComponentBase
 {

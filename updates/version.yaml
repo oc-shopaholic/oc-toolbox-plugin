@@ -16,3 +16,5 @@
     - 'Add PageHelper class'
 1.4.1:
     - 'Fix processing of positive results in ComponentSubmitForm::getResponseModeAjax() method, if flash_on enabled'
+1.5.0:
+    - 'Add TraitInitActiveLang trait'

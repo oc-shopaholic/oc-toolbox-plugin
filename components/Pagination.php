@@ -8,7 +8,7 @@ use Kharanenka\Helper\Pagination as PaginationHelper;
 /**
  * Class Pagination
  * @package Lovata\Toolbox\Components
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class Pagination extends ComponentBase
 {

@@ -3,7 +3,7 @@
 /**
  * Class TestModelValidationNameField
  * @package Lovata\Toolbox\Traits\Tests
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @mixin \PHPUnit\Framework\Assert
  */

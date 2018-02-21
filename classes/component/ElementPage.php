@@ -6,7 +6,7 @@ use Lovata\Toolbox\Traits\Helpers\TraitComponentNotFoundResponse;
 /**
  * Class ElementPage
  * @package Lovata\Toolbox\Classes\Component
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
  */
 abstract class ElementPage extends ComponentBase
 {
