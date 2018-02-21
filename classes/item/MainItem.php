@@ -1,6 +1,7 @@
 <?php namespace Lovata\Toolbox\Classes\Item;
 
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
+use Lovata\Toolbox\Traits\Helpers\TraitInitActiveLang;
 
 /**
  * Class MainItem
@@ -11,20 +12,13 @@ use Lovata\Toolbox\Classes\Collection\ElementCollection;
  */
 abstract class MainItem
 {
+    use TraitInitActiveLang;
+
     /** @var array Array with model data */
     protected $arModelData = [];
 
     /** @var array  */
     public $arRelationList = [];
-
-    /** @var bool - Flag, Translate plugin data was init */
-    protected static $bLangInit = false;
-
-    /** @var string - Active lang code from Translate plugin */
-    protected static $sActiveLang = null;
-
-    /** @var string - Default lang code from Translate plugin */
-    protected static $sDefaultLang = null;
 
     /** @var array Active lang list from Translate plugin */
     protected static $arActiveLangList = null;

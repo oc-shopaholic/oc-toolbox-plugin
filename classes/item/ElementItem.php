@@ -338,28 +338,6 @@ abstract class ElementItem extends MainItem
     abstract protected static function getCacheTag();
 
     /**
-     * Get and save active lang from Translate plugin
-     */
-    private function initActiveLang()
-    {
-        if (self::$bLangInit || !PluginManager::instance()->hasPlugin('RainLab.Translate')) {
-            return;
-        }
-
-        self::$bLangInit = true;
-        $obTranslate = \RainLab\Translate\Classes\Translator::instance();
-
-        self::$sDefaultLang = $obTranslate->getDefaultLocale();
-
-        $sActiveLang = $obTranslate->getLocale();
-        if (empty($sActiveLang) || $obTranslate->getDefaultLocale() == $sActiveLang) {
-            return;
-        }
-
-        self::$sActiveLang = $sActiveLang;
-    }
-
-    /**
      * Process translatable fields and save values, how 'field_name|lang_code'
      */
     private function setLangProperties()
