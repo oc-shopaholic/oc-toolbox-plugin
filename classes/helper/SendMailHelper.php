@@ -30,16 +30,6 @@ class SendMailHelper
     protected $arMailData = [];
 
     /**
-     * Init settings
-     */
-    protected function init()
-    {
-        //Get queue settings
-        $this->bUseQueue = Settings::getValue('queue_on');
-        $this->sQueueName = Settings::getValue('queue_name');
-    }
-
-    /**
      * Send email
      * @param string $sMailTemplate
      * @param string $sEmailList
@@ -74,6 +64,16 @@ class SendMailHelper
 
             $this->sendMail($sEmail);
         }
+    }
+
+    /**
+     * Init settings
+     */
+    protected function init()
+    {
+        //Get queue settings
+        $this->bUseQueue = Settings::getValue('queue_on');
+        $this->sQueueName = Settings::getValue('queue_name');
     }
 
     /**

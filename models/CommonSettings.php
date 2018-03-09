@@ -32,13 +32,13 @@ class CommonSettings extends Model
     public static function getValue($sCode, $sDefaultValue = null)
     {
         if (empty($sCode)) {
-            return null;
+            return $sDefaultValue;
         }
 
         //Get settings object
         $obSettings = self::where('item', static::SETTINGS_CODE)->first();
         if (empty($obSettings)) {
-            return null;
+            return $sDefaultValue;
         }
 
         $sValue = $obSettings->$sCode;
