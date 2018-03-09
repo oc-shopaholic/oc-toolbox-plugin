@@ -151,16 +151,16 @@ class SendMailHelper
         }
 
         //Fire event
-        $sMailTemplate = Event::fire($sEventName);
-        if (!empty($sMailTemplate) && is_array($sMailTemplate)) {
-            $sMailTemplate = array_shift($sMailTemplate);
+        $sTemplateName = Event::fire($sEventName);
+        if (!empty($sTemplateName) && is_array($sTemplateName)) {
+            $sTemplateName = array_shift($sTemplateName);
         }
 
         //Check template name value
-        if (empty($sMailTemplate) || !is_string($sMailTemplate)) {
+        if (empty($sTemplateName) || !is_string($sTemplateName)) {
             return $sDefaultTemplateName;
         }
 
-        return $sMailTemplate;
+        return $sTemplateName;
     }
 }
