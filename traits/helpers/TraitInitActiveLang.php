@@ -39,4 +39,36 @@ trait TraitInitActiveLang
 
         self::$sActiveLang = $sActiveLangCode;
     }
+
+    /**
+     * Add suffix with active lang code
+     * @param string $sValue
+     * @param string $sSeparator
+     *
+     * @return string
+     */
+    protected function addActiveLangSuffix($sValue, $sSeparator = '_')
+    {
+        if (empty(static::$sActiveLang)) {
+            return $sValue;
+        }
+
+        return $sValue.$sSeparator.static::$sActiveLang;
+    }
+
+    /**
+     * Add prefix with active lang code
+     * @param string $sValue
+     * @param string $sSeparator
+     *
+     * @return string
+     */
+    protected function addActiveLangPrefix($sValue, $sSeparator = '_')
+    {
+        if (empty(static::$sActiveLang)) {
+            return $sValue;
+        }
+
+        return static::$sActiveLang.$sSeparator.$sValue;
+    }
 }

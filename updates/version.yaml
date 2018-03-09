@@ -18,3 +18,5 @@
     - 'Fix processing of positive results in ComponentSubmitForm::getResponseModeAjax() method, if flash_on enabled'
 1.5.0:
     - 'Add TraitInitActiveLang trait'
+1.6.0:
+    - 'Add SendMailHelper class, Add CommonSettings model'

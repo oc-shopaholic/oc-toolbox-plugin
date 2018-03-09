@@ -4,3 +4,8 @@ plugin:
     author: Lovata
     icon: oc-icon-star
     homepage: 'https://github.com/lovata/oc-toolbox-plugin'
+permissions:
+    toolbox-menu-settings:
+        tab: 'lovata.toolbox::lang.tab.permissions'
+        label: 'lovata.toolbox::lang.permission.settings'
+        order: 100

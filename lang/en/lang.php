@@ -47,14 +47,21 @@
         'deleted'    => 'deleted',
         'empty'      => 'Empty',
         'password'   => 'Password',
+
+        'site_settings'             => 'Site settings',
+        'site_settings_description' => 'Common site settings',
+        'queue_on'                  => 'Sending messages from the queue',
+        'queue_name'                => 'The name of the queue for sending the emails',
     ],
-    'tab'       => [
+    'tab' => [
         'preview_content' => 'Preview content',
         'full_content'    => 'Content',
         'images'          => 'Images',
         'settings'        => 'Settings',
         'description'     => 'Description',
         'properties'      => 'Properties',
+        'mail'            => 'Sending emails',
+        'permissions'     => 'Manage site settings',
     ],
     'component' => [
         'property_name_error_404' => 'View 404 page',
@@ -110,5 +117,8 @@
         'date'        => 'Date picker (datetime)',
         'colorpicker' => 'Color picker (colorpicker)',
         'mediafinder' => 'File',
+    ],
+    'permission' => [
+        'settings' => 'Manage settings',
     ],
 ];

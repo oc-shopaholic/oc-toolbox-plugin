@@ -24,6 +24,25 @@ class Plugin extends PluginBase
     }
 
     /**
+     * @return array
+     */
+    public function registerSettings()
+    {
+        return [
+            'config' => [
+                'label'       => 'lovata.toolbox::lang.field.site_settings',
+                'icon'        => 'icon-cogs',
+                'description' => 'lovata.toolbox::lang.field.site_settings_description',
+                'class'       => 'Lovata\Toolbox\Models\Settings',
+                'order'       => 300,
+                'permissions' => [
+                    'toolbox-menu-settings',
+                ],
+            ],
+        ];
+    }
+
+    /**
      * Plugin boot method
      */
     public function boot()
