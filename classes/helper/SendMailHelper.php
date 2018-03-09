@@ -1,11 +1,11 @@
 <?php namespace Lovata\Toolbox\Classes\Helper;
 
-use Lovata\Toolbox\Traits\Helpers\TraitInitActiveLang;
 use Mail;
 use Event;
 use October\Rain\Support\Traits\Singleton;
 
 use Lovata\Toolbox\Models\Settings;
+use Lovata\Toolbox\Traits\Helpers\TraitInitActiveLang;
 
 /**
  * Class SendMailHelper
@@ -44,25 +44,23 @@ class SendMailHelper
      * @param string $sMailTemplate
      * @param string $sEmailList
      * @param array  $arDefaultEmailData
-     * @param array  $arEmailData
-     * @param string $sTemplateEventName
      * @param string $sEmailDataEventName
      * @param bool   $bCheckActiveLang
      */
-    public function send($sMailTemplate, $sEmailList, $arDefaultEmailData = [], $arEmailData = [], $sTemplateEventName = null, $sEmailDataEventName = null, $bCheckActiveLang = false)
+    public function send($sMailTemplate, $sEmailList, $arDefaultEmailData = [], $sEmailDataEventName = null, $bCheckActiveLang = false)
     {
         if (empty($sEmailList) || (!is_string($sEmailList) && !is_array($sEmailList))) {
             return;
         }
 
         //Get template name
-        $this->sMailTemplate = $this->getMailTemplateName($sMailTemplate, $sTemplateEventName);
+        $this->sMailTemplate = $sMailTemplate;
         if ($bCheckActiveLang) {
             $this->sMailTemplate = $this->addActiveLangSuffix($this->sMailTemplate);
         }
 
         //Get template data
-        $this->arMailData = $this->getMailData($sEmailDataEventName, $arDefaultEmailData, $arEmailData);
+        $this->arMailData = $this->getMailData($sEmailDataEventName, $arDefaultEmailData);
 
         //Process email list
         if (is_string($sEmailList)) {
@@ -106,27 +104,22 @@ class SendMailHelper
     /**
      * Get mail data
      * @param string $sEventName
-     * @param array  $arDefaultResult
-     * @param array  $arEmailData
+     * @param array  $arResult
      * @return array
      */
-    protected function getMailData($sEventName, $arDefaultResult = [], $arEmailData = [])
+    protected function getMailData($sEventName, $arResult = [])
     {
-        if (empty($sEventName) || !is_array($arEmailData)) {
-            return $arDefaultResult;
+        if (empty($sEventName)) {
+            return $arResult;
         }
-
-        $arEventData = $arDefaultResult;
-        $arEventData['data'] = $arDefaultResult;
 
         //Get addition data for template
         //Fire event
-        $arAdditionData = Event::fire($sEventName, $arEventData);
+        $arAdditionData = Event::fire($sEventName, $arResult);
         if (empty($arAdditionData) || !is_array($arAdditionData)) {
-            return $arDefaultResult;
+            return $arResult;
         }
 
-        $arResult = $arDefaultResult;
         foreach ($arAdditionData as $arData) {
             if (empty($arData) || !is_array($arData)) {
                 continue;
@@ -136,31 +129,5 @@ class SendMailHelper
         }
 
         return $arResult;
-    }
-
-    /**
-     * Get mail template name
-     * @param string $sDefaultTemplateName
-     * @param string $sEventName
-     * @return string
-     */
-    protected function getMailTemplateName($sDefaultTemplateName, $sEventName = null)
-    {
-        if (empty($sEventName)) {
-            return $sDefaultTemplateName;
-        }
-
-        //Fire event
-        $sTemplateName = Event::fire($sEventName);
-        if (!empty($sTemplateName) && is_array($sTemplateName)) {
-            $sTemplateName = array_shift($sTemplateName);
-        }
-
-        //Check template name value
-        if (empty($sTemplateName) || !is_string($sTemplateName)) {
-            return $sDefaultTemplateName;
-        }
-
-        return $sTemplateName;
     }
 }
