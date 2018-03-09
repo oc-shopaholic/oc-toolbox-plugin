@@ -47,14 +47,21 @@
         'deleted'    => 'Удаленные',
         'empty'      => 'Не выбрано',
         'password'   => 'Пароль',
+
+        'site_settings'             => 'Site settings',
+        'site_settings_description' => 'Common site settings',
+        'queue_on'                  => 'Sending messages from the queue',
+        'queue_name'                => 'The name of the queue for sending the emails',
     ],
-    'tab'       => [
+    'tab' => [
         'preview_content' => 'Превью-контент',
         'full_content'    => 'Полный контент',
         'images'          => 'Изображения',
         'settings'        => 'Настройки',
         'description'     => 'Описание',
         'properties'      => 'Properties',
+        'mail'            => 'Sending emails',
+        'permissions'     => 'Manage site settings',
     ],
     'component' => [
         'property_name_error_404' => 'Отображать 404 страницу',
@@ -110,5 +117,8 @@
         'date'        => 'Поле выбора даты и времени (datetime)',
         'colorpicker' => 'Поле выбора цвета (colorpicker)',
         'mediafinder' => 'Файл',
+    ],
+    'permission' => [
+        'settings' => 'Manage settings',
     ],
 ];
