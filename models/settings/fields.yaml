@@ -1,0 +1,12 @@
+tabs:
+    fields:
+        queue_on:
+            tab: lovata.toolbox::lang.tab.mail
+            span: left
+            label: lovata.toolbox::lang.field.queue_on
+            type: checkbox
+        queue_name:
+            tab: lovata.toolbox::lang.tab.mail
+            span: left
+            label: lovata.toolbox::lang.field.queue_name
+            type: text

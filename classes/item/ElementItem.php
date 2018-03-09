@@ -84,6 +84,40 @@ abstract class ElementItem extends MainItem
         return self::extendableCallStatic($sName, $arParamList);
     }
 
+
+    /**
+     * Serialize item object
+     * @return array
+     */
+    public function __sleep()
+    {
+        return ['iElementID'];
+    }
+
+    /**
+     * Unserialize object
+     */
+    public function __wakeup()
+    {
+        $this->setCachedData();
+    }
+
+    /**
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->toJSON();
+    }
+
     /**
      * @param callable $callback
      */
