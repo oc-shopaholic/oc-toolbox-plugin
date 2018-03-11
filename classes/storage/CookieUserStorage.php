@@ -21,7 +21,7 @@ class CookieUserStorage extends AbstractUserStorage
     public function get($sKey, $sDefaultValue = null)
     {
         if (empty($sKey)) {
-            return null;
+            return $sDefaultValue;
         }
 
         $obValue = Cookie::get($sKey);

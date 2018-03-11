@@ -19,7 +19,7 @@ class SessionUserStorage extends AbstractUserStorage
     public function get($sKey, $sDefaultValue = null)
     {
         if (empty($sKey)) {
-            return null;
+            return $sDefaultValue;
         }
 
         $obValue = Session::get($sKey, $sDefaultValue);
