@@ -83,6 +83,7 @@ class UserStorage extends AbstractUserStorage
         $obUser = $this->obUserHelper->getUser();
         if (empty($obUser)) {
             $this->putDefaultStorageValue($sKey, $obValue);
+
             return;
         }
 

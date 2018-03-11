@@ -112,7 +112,7 @@ class UserHelper
         if ($obPluginManager->hasPlugin('Lovata.Buddies') && !$obPluginManager->isDisabled('Lovata.Buddies')) {
             $this->obHelper = app(BuddiesUserHelper::class);
             $this->sPluginName = 'Lovata.Buddies';
-        } else if ($obPluginManager->hasPlugin('RainLab.User') && !$obPluginManager->isDisabled('RainLab.User')) {
+        } elseif ($obPluginManager->hasPlugin('RainLab.User') && !$obPluginManager->isDisabled('RainLab.User')) {
             $this->obHelper = app(RainLabUserHelper::class);
             $this->sPluginName = 'RainLab.User';
         }
