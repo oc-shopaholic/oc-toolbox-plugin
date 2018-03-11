@@ -3,14 +3,14 @@
 /**
  * Class AbstractUserStorage
  * @package Lovata\Toolbox\Classes\Storage
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 abstract class AbstractUserStorage
 {
     /**
      * Get value from storage
      * @param string $sKey
-     * @param mixed $sDefaultValue
+     * @param mixed  $sDefaultValue
      *
      * @return mixed
      */
@@ -19,7 +19,7 @@ abstract class AbstractUserStorage
     /**
      * Put value to storage
      * @param string $sKey
-     * @param mixed $obValue
+     * @param mixed  $obValue
      */
     abstract public function put($sKey, $obValue);
 

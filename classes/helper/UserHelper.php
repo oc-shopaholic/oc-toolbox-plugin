@@ -9,7 +9,7 @@ use Lovata\Toolbox\Classes\Helper\Users\RainLabUserHelper;
 /**
  * Class UserHelper
  * @package Lovata\Toolbox\Classes\Helper
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class UserHelper
 {
@@ -32,13 +32,14 @@ class UserHelper
         }
 
         $sAuthFacadeClass = $this->obHelper->getAuthFacade();
+
         return $sAuthFacadeClass::getUser();
     }
 
     /**
      * Create new user
      * @param array $arUserData
-     * @param bool $bActivate
+     * @param bool  $bActivate
      * @return \Lovata\Buddies\Models\User|\RainLab\User\Models\User|null
      */
     public function register($arUserData, $bActivate = false)
@@ -48,6 +49,7 @@ class UserHelper
         }
 
         $sAuthFacadeClass = $this->obHelper->getAuthFacade();
+        
         return $sAuthFacadeClass::register($arUserData, $bActivate);
     }
 
@@ -107,10 +109,10 @@ class UserHelper
     protected function init()
     {
         $obPluginManager = PluginManager::instance();
-        if($obPluginManager->hasPlugin('Lovata.Buddies') && !$obPluginManager->isDisabled('Lovata.Buddies')) {
+        if ($obPluginManager->hasPlugin('Lovata.Buddies') && !$obPluginManager->isDisabled('Lovata.Buddies')) {
             $this->obHelper = app(BuddiesUserHelper::class);
             $this->sPluginName = 'Lovata.Buddies';
-        } else if($obPluginManager->hasPlugin('RainLab.User') && !$obPluginManager->isDisabled('RainLab.User')) {
+        } else if ($obPluginManager->hasPlugin('RainLab.User') && !$obPluginManager->isDisabled('RainLab.User')) {
             $this->obHelper = app(RainLabUserHelper::class);
             $this->sPluginName = 'RainLab.User';
         }

@@ -3,7 +3,7 @@
 /**
  * Class AbstractUserHelper
  * @package Lovata\Toolbox\Classes\Helper\Users
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 abstract class AbstractUserHelper
 {
@@ -21,7 +21,7 @@ abstract class AbstractUserHelper
 
     /**
      * Find User object by email
-     * @param $sEmail
+     * @param string $sEmail
      * @return \Lovata\Buddies\Models\User|\RainLab\User\Models\User|null
      */
     abstract public function findUserByEmail($sEmail);
