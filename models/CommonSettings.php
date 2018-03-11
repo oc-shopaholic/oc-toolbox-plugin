@@ -36,9 +36,9 @@ class CommonSettings extends Model
         }
 
         //Get settings object
-        $obSettings = self::where('item', static::SETTINGS_CODE)->first();
+        $obSettings = static::where('item', static::SETTINGS_CODE)->first();
         if (empty($obSettings)) {
-            return $sDefaultValue;
+            return static::get($sCode, $sDefaultValue);
         }
 
         $sValue = $obSettings->$sCode;
