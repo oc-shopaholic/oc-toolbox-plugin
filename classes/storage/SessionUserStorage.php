@@ -5,14 +5,14 @@ use Session;
 /**
  * Class SessionUserStorage
  * @package Lovata\Toolbox\Classes\Storage
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class SessionUserStorage extends AbstractUserStorage
 {
     /**
      * Get value from storage
      * @param string $sKey
-     * @param mixed $sDefaultValue
+     * @param mixed  $sDefaultValue
      *
      * @return mixed
      */
@@ -30,7 +30,7 @@ class SessionUserStorage extends AbstractUserStorage
     /**
      * Put value to storage
      * @param string $sKey
-     * @param mixed $obValue
+     * @param mixed  $obValue
      */
     public function put($sKey, $obValue)
     {

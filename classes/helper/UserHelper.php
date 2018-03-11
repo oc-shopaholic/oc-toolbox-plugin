@@ -49,7 +49,7 @@ class UserHelper
         }
 
         $sAuthFacadeClass = $this->obHelper->getAuthFacade();
-        
+
         return $sAuthFacadeClass::register($arUserData, $bActivate);
     }
 

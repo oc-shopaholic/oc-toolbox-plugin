@@ -3,7 +3,7 @@
 /**
  * Class BuddiesUserHelper
  * @package Lovata\Toolbox\Classes\Helper\Users
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class BuddiesUserHelper extends AbstractUserHelper
 {

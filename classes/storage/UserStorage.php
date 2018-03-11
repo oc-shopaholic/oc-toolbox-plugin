@@ -5,7 +5,7 @@ use Lovata\Toolbox\Classes\Helper\UserHelper;
 /**
  * Class UserStorage
  * @package Lovata\Toolbox\Classes\Storage
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class UserStorage extends AbstractUserStorage
 {
@@ -26,7 +26,7 @@ class UserStorage extends AbstractUserStorage
     /**
      * Set default user storage
      * @param string $obUserStorage
-     * @param int $iMinutePeriod
+     * @param int    $iMinutePeriod
      */
     public function setDefaultStorage($obUserStorage, $iMinutePeriod = 1440)
     {
@@ -43,7 +43,7 @@ class UserStorage extends AbstractUserStorage
     /**
      * Get value from storage
      * @param string $sKey
-     * @param mixed $sDefaultValue
+     * @param mixed  $sDefaultValue
      *
      * @return mixed
      */
@@ -71,7 +71,7 @@ class UserStorage extends AbstractUserStorage
     /**
      * Put value to storage
      * @param string $sKey
-     * @param mixed $obValue
+     * @param mixed  $obValue
      */
     public function put($sKey, $obValue)
     {
@@ -151,7 +151,7 @@ class UserStorage extends AbstractUserStorage
     /**
      * Get value from storage
      * @param string $sKey
-     * @param mixed $sDefaultValue
+     * @param mixed  $sDefaultValue
      *
      * @return mixed
      */
@@ -182,7 +182,7 @@ class UserStorage extends AbstractUserStorage
     /**
      * Put value to storage
      * @param string $sKey
-     * @param mixed $obValue
+     * @param mixed  $obValue
      */
     protected function putDefaultStorageValue($sKey, $obValue)
     {

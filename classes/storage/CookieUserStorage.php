@@ -5,7 +5,7 @@ use Cookie;
 /**
  * Class CookieUserStorage
  * @package Lovata\Toolbox\Classes\Storage
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class CookieUserStorage extends AbstractUserStorage
 {
@@ -14,7 +14,7 @@ class CookieUserStorage extends AbstractUserStorage
     /**
      * Get value from storage
      * @param string $sKey
-     * @param mixed $sDefaultValue
+     * @param mixed  $sDefaultValue
      *
      * @return mixed
      */
@@ -35,7 +35,7 @@ class CookieUserStorage extends AbstractUserStorage
     /**
      * Put value to storage
      * @param string $sKey
-     * @param mixed $obValue
+     * @param mixed  $obValue
      */
     public function put($sKey, $obValue)
     {
