@@ -50,7 +50,7 @@ class UserStorage extends AbstractUserStorage
     public function get($sKey, $sDefaultValue = null)
     {
         if (empty($sKey)) {
-            return null;
+            return $sDefaultValue;
         }
 
         //Get auth user object
