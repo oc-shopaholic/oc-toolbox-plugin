@@ -52,6 +52,7 @@
         'site_settings_description' => 'Общие настройки сайта',
         'queue_on'                  => 'Отправка писем используя Queue',
         'queue_name'                => 'Название queue для отправки письма',
+        'email_list_description'    => 'Заполните список email адресов, разделенных запятыми',
     ],
     'tab' => [
         'preview_content' => 'Превью-контент',
