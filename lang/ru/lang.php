@@ -52,6 +52,7 @@
         'site_settings_description' => 'Common site settings',
         'queue_on'                  => 'Sending messages from the queue',
         'queue_name'                => 'The name of the queue for sending the emails',
+        'email_list_description'    => 'Fill out list of emails separated by commas',
     ],
     'tab' => [
         'preview_content' => 'Превью-контент',
