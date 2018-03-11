@@ -25,12 +25,16 @@ class UserStorage extends AbstractUserStorage
 
     /**
      * Set default user storage
-     * @param SessionUserStorage|CookieUserStorage $obUserStorage
+     * @param string $obUserStorage
      * @param int $iMinutePeriod
      */
     public function setDefaultStorage($obUserStorage, $iMinutePeriod = 1440)
     {
-        $this->obDefaultStorage = $obUserStorage;
+        if (empty($obUserStorage)) {
+            return;
+        }
+
+        $this->obDefaultStorage = app($obUserStorage);
         if (!empty($this->obDefaultStorage) && $this->obDefaultStorage instanceof CookieUserStorage) {
             $this->obDefaultStorage->setMinutePeriod($iMinutePeriod);
         }
