@@ -20,3 +20,5 @@
     - 'Add TraitInitActiveLang trait'
 1.6.0:
     - 'Add SendMailHelper class, Add CommonSettings model'
+1.7.0:
+    - 'Add UserStorage classes. Add classes for integration with Lovata.Buddies and RainLab.User plugins'
