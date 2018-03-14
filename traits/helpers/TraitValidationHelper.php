@@ -5,7 +5,7 @@ use Kharanenka\Helper\Result;
 /**
  * Trait TraitValidationHelper
  * @package Lovata\Toolbox\Traits\Helpers
- * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 trait TraitValidationHelper
 {
