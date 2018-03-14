@@ -22,3 +22,5 @@
     - 'Add SendMailHelper class, Add CommonSettings model'
 1.7.0:
     - 'Add UserStorage classes. Add classes for integration with Lovata.Buddies and RainLab.User plugins'
+1.8.0:
+    - 'Added translation into French. Thanks for contribution philmarc.'
