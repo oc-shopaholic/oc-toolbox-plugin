@@ -63,7 +63,7 @@ abstract class AbstractUserStorage
         //Get value from storage
         $arValueList = $this->getList($sKey);
 
-        $arValueList[] = $sValue;
+        array_unshift($arValueList, $sValue);
         $arValueList = array_unique($arValueList);
 
         $this->put($sKey, $arValueList);
