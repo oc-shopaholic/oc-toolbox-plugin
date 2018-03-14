@@ -5,7 +5,7 @@ use October\Rain\Database\Model;
 /**
  * Class CommonSettings
  * @package Lovata\Toolbox\Models
- * @author  Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class CommonSettings extends Model
 {

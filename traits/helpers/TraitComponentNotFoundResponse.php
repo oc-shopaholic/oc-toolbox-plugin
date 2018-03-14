@@ -7,7 +7,7 @@ use October\Rain\Exception\AjaxException;
 /**
  * Class TraitComponentNotFoundResponse
  * @package Lovata\Toolbox\Traits\Helpers
- * @author Andrey Kahranenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 trait TraitComponentNotFoundResponse
 {

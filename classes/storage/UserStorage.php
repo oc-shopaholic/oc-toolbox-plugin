@@ -139,7 +139,7 @@ class UserStorage extends AbstractUserStorage
         }
 
         if (!empty($arDefaultStorageValue)) {
-            $arValueList = array_merge($arValueList, $arDefaultStorageValue);
+            $arValueList = array_merge($arDefaultStorageValue, $arValueList);
             $arValueList = array_unique($arValueList);
 
             $this->put($sKey, $arValueList);
