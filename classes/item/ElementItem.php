@@ -8,9 +8,9 @@ use October\Rain\Extension\ExtendableTrait;
 /**
  * Class ElementItem
  * @package Lovata\Toolbox\Classes\Item
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem
+ * @link    https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem
  */
 abstract class ElementItem extends MainItem
 {
@@ -103,14 +103,6 @@ abstract class ElementItem extends MainItem
     }
 
     /**
-     * @return array
-     */
-    public function __debugInfo()
-    {
-        return $this->toArray();
-    }
-
-    /**
      * @return string
      */
     public function __toString()
@@ -128,7 +120,7 @@ abstract class ElementItem extends MainItem
 
     /**
      * Make new element item
-     * @see \Lovata\Toolbox\Tests\Unit\ItemTest::testItem()
+     * @see  \Lovata\Toolbox\Tests\Unit\ItemTest::testItem()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#makeielementid-obelement--null
      * @param int|string $iElementID
      * @param \Model     $obElement
@@ -153,7 +145,7 @@ abstract class ElementItem extends MainItem
 
     /**
      * Make new element item (no cache)
-     * @see \Lovata\Toolbox\Tests\Unit\ItemTest::testItem()
+     * @see  \Lovata\Toolbox\Tests\Unit\ItemTest::testItem()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#makenocacheielementid-obelement--null
      * @param int    $iElementID
      * @param \Model $obElement
@@ -258,18 +250,45 @@ abstract class ElementItem extends MainItem
             $this->obElement->lang(self::$sDefaultLang);
         }
 
+        //Get cached field list from model and add fields to cache array
+        $this->setCachedFieldList();
+
+        //Get element data
         $arResult = $this->getElementData();
-        if (empty($arResult)) {
-            return;
+        if (empty($arResult) || !is_array($arResult)) {
+            $arResult = [];
         }
 
-        $this->arModelData = $arResult;
+        //Add fields values to cached array
+        foreach ($arResult as $sField => $sValue) {
+            $this->setAttribute($sField, $sValue);
+        }
 
         //Save lang properties (integration with Translate plugin)
         $this->setLangProperties();
 
         //Run methods from $arExtendResult array
         $this->setExtendData();
+    }
+
+    /**
+     * Get cached field list from model and add fields to cache array
+     */
+    protected function setCachedFieldList()
+    {
+        if (!method_exists($this->obElement, 'getCachedField')) {
+            return;
+        }
+
+        //Get cached field list
+        $arFieldList = $this->obElement->getCachedField();
+        if (empty($arFieldList)) {
+            return;
+        }
+
+        foreach ($arFieldList as $sField) {
+            $this->setAttribute($sField, $this->obElement->$sField);
+        }
     }
 
     /**
@@ -357,7 +376,10 @@ abstract class ElementItem extends MainItem
      * Set model data from object
      * @return mixed
      */
-    abstract protected function getElementData();
+    protected function getElementData()
+    {
+        return [];
+    }
 
     /**
      * Set element object
