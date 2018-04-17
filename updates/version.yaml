@@ -26,3 +26,5 @@
     - 'Added translation into French. Thanks for contribution philmarc.'
 1.9.0:
     - 'Add TraitCached. Update vendor packages.'
+1.9.1:
+    - 'Remove force boot and register plugins in CommonTest class'
