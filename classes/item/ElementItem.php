@@ -25,6 +25,9 @@ abstract class ElementItem extends MainItem
     protected $obElement = null;
 
     /** @var array */
+    protected static $arBooted = [];
+
+    /** @var array */
     public $arExtendResult = [];
 
     /**
@@ -41,6 +44,8 @@ abstract class ElementItem extends MainItem
         if (!empty($this->obElement) && !$this->obElement instanceof Model) {
             $this->obElement = null;
         }
+
+        $this->bootIfNotBooted();
 
         $this->initActiveLang();
         $this->extendableConstruct();
@@ -379,6 +384,46 @@ abstract class ElementItem extends MainItem
     protected function getElementData()
     {
         return [];
+    }
+
+    /**
+     * Check if the model needs to be booted and if so, do it.
+     *
+     * @return void
+     */
+    protected function bootIfNotBooted()
+    {
+        if (isset(static::$arBooted[static::class])) {
+            return;
+        }
+
+        static::boot();
+        static::$arBooted[static::class] = true;
+
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        static::bootTraits();
+    }
+
+    /**
+     * Boot all of the bootable traits on the model.
+     *
+     * @return void
+     */
+    protected static function bootTraits()
+    {
+        foreach (class_uses_recursive(get_called_class()) as $trait) {
+            if (method_exists(get_called_class(), $method = 'boot'.class_basename($trait))) {
+                forward_static_call([get_called_class(), $method]);
+            }
+        }
     }
 
     /**

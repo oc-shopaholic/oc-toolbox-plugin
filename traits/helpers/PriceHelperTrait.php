@@ -39,11 +39,12 @@ trait PriceHelperTrait
 
             $sFieldConvert = Str::studly($sFieldName);
 
-            self::addSetPriceFieldMethod($obElement, $sFieldName, $sFieldConvert);
-            self::addGetPriceValueFieldMethod($obElement, $sFieldName, $sFieldConvert);
             self::addGetPriceFieldMethod($obElement, $sFieldName, $sFieldConvert);
 
             if ($obElement instanceof Model) {
+                self::addSetPriceFieldMethod($obElement, $sFieldName, $sFieldConvert);
+                self::addGetPriceValueFieldMethod($obElement, $sFieldName, $sFieldConvert);
+
                 self::addScopePriceFieldMethod($obElement, $sFieldName, $sFieldConvert);
             }
         }
