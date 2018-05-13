@@ -22,36 +22,6 @@ class PriceHelper
     protected $sThousandsSep = ' ';
 
     /**
-     * PriceHelper constructor.
-     */
-    protected function init()
-    {
-        //Get options from settings
-        $iDecimal = Settings::getValue('decimals');
-        if ($iDecimal != null) {
-            $this->iDecimal = (int) $iDecimal;
-        }
-
-        $sDecPoint = Settings::getValue('dec_point');
-        switch ($sDecPoint) {
-            case 'comma':
-                $this->sDecPoint = ',';
-                break;
-            default:
-                $this->sDecPoint = '.';
-        }
-
-        $sThousandsSep = Settings::getValue('thousands_sep');
-        switch ($sThousandsSep) {
-            case 'space':
-                $this->sThousandsSep = ' ';
-                break;
-            default:
-                $this->sThousandsSep = '';
-        }
-    }
-
-    /**
      * Apply custom format for price float value
      * @param float $fPrice
      * @return string
@@ -87,5 +57,35 @@ class PriceHelper
     public static function round($fPrice)
     {
         return round($fPrice, 2);
+    }
+
+    /**
+     * PriceHelper constructor.
+     */
+    protected function init()
+    {
+        //Get options from settings
+        $iDecimalValue = Settings::getValue('decimals');
+        if ($iDecimalValue != null) {
+            $this->iDecimal = (int) $iDecimalValue;
+        }
+
+        $sDecPointValue = Settings::getValue('dec_point');
+        switch ($sDecPointValue) {
+            case 'comma':
+                $this->sDecPoint = ',';
+                break;
+            default:
+                $this->sDecPoint = '.';
+        }
+
+        $sThousandsSepValue = Settings::getValue('thousands_sep');
+        switch ($sThousandsSepValue) {
+            case 'space':
+                $this->sThousandsSep = ' ';
+                break;
+            default:
+                $this->sThousandsSep = '';
+        }
     }
 }

@@ -52,8 +52,8 @@ trait PriceHelperTrait
     /**
      * Add set{field_name}Attribute methods
      * @param \Model|\Eloquent|\Lovata\Toolbox\Classes\Item\ElementItem $obElement $obElement
-     * @param string $sFieldName
-     * @param string$sFieldConvert
+     * @param string                                                    $sFieldName
+     * @param string                                                    $sFieldConvert
      */
     protected static function addSetPriceFieldMethod($obElement, $sFieldName, $sFieldConvert)
     {
@@ -72,8 +72,8 @@ trait PriceHelperTrait
     /**
      * Add get{field_name}ValueAttribute methods
      * @param \Model|\Eloquent|\Lovata\Toolbox\Classes\Item\ElementItem $obElement $obElement
-     * @param string $sFieldName
-     * @param string$sFieldConvert
+     * @param string                                                    $sFieldName
+     * @param string                                                    $sFieldConvert
      */
     protected static function addGetPriceValueFieldMethod($obElement, $sFieldName, $sFieldConvert)
     {
@@ -96,8 +96,8 @@ trait PriceHelperTrait
     /**
      * Add get{field_name}Attribute methods
      * @param \Model|\Eloquent|\Lovata\Toolbox\Classes\Item\ElementItem $obElement $obElement
-     * @param string $sFieldName
-     * @param string$sFieldConvert
+     * @param string                                                    $sFieldName
+     * @param string                                                    $sFieldConvert
      */
     protected static function addGetPriceFieldMethod($obElement, $sFieldName, $sFieldConvert)
     {
@@ -120,8 +120,8 @@ trait PriceHelperTrait
     /**
      * Add scopeGetBy{field_name} methods
      * @param \Model|\Eloquent|\Lovata\Toolbox\Classes\Item\ElementItem $obElement $obElement
-     * @param string $sFieldName
-     * @param string$sFieldConvert
+     * @param string                                                    $sFieldName
+     * @param string                                                    $sFieldConvert
      */
     protected static function addScopePriceFieldMethod($obElement, $sFieldName, $sFieldConvert)
     {
