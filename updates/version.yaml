@@ -28,3 +28,6 @@
     - 'Add TraitCached. Update vendor packages.'
 1.9.1:
     - 'Remove force boot and register plugins in CommonTest class'
+1.10.0:
+    - 'Add PriceHelperTrait. Move PriceHelper class from Shopaholic plugin'
+    - seeder_price_format.php
