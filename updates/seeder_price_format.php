@@ -9,6 +9,9 @@ use Lovata\Toolbox\Models\Settings;
  */
 class SeederDefaultStatus extends Seeder
 {
+    /**
+     * Run seeder
+     */
     public function run()
     {
         if (!class_exists('\Lovata\Shopaholic\Models\Settings')) {
