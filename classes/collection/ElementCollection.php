@@ -45,7 +45,7 @@ abstract class ElementCollection extends Extendable implements \Iterator
             $obCollection->arElementIDList = $arElementIDList;
         }
 
-        return $obCollection;
+        return $obCollection->returnThis();
     }
 
     /**
@@ -55,6 +55,15 @@ abstract class ElementCollection extends Extendable implements \Iterator
     public function returnThis()
     {
         return $this;
+    }
+
+    /**
+     * Check list is clear
+     * @return bool
+     */
+    public function isClear()
+    {
+        return $this->arElementIDList === null;
     }
 
     /**
@@ -85,6 +94,22 @@ abstract class ElementCollection extends Extendable implements \Iterator
     public function getIDList()
     {
         return $this->arElementIDList;
+    }
+
+    /**
+     * Set new
+     * @param array $arElementIDList
+     * @return $this
+     */
+    public function set($arElementIDList)
+    {
+        if (!is_array($arElementIDList)) {
+            return $this->returnThis();
+        }
+
+        $this->arElementIDList = $arElementIDList;
+
+        return $this->returnThis();
     }
 
     /**
@@ -167,6 +192,28 @@ abstract class ElementCollection extends Extendable implements \Iterator
         }
 
         $this->arElementIDList = array_intersect($this->arElementIDList, $arElementIDList);
+
+        return $this->returnThis();
+    }
+
+    /**
+     *
+     * @param array $arResultIDList
+     * @return $this
+     */
+    public function applySorting($arResultIDList)
+    {
+        if (empty($arResultIDList)) {
+            return $this->clear();
+        }
+
+        if ($this->isClear()) {
+            $this->arElementIDList = $arResultIDList;
+
+            return $this->returnThis();
+        }
+
+        $this->arElementIDList = array_intersect($arResultIDList, $this->arElementIDList);
 
         return $this->returnThis();
     }
@@ -552,12 +599,12 @@ abstract class ElementCollection extends Extendable implements \Iterator
     {
         $obList = self::make();
         if (empty($iElementID) || empty($iCount) || $iCount < 1) {
-            return $obList;
+            return $obList->returnThis();
         }
 
         //Check current collection
         if ($this->isEmpty() || !$this->has($iElementID)) {
-            return $obList;
+            return $obList->returnThis();
         }
 
         $this->arElementIDList = array_values($this->arElementIDList);
@@ -577,7 +624,7 @@ abstract class ElementCollection extends Extendable implements \Iterator
         $arResultIDList = array_slice($arResultIDList, 0, $iCount);
         $obList->intersect($arResultIDList);
 
-        return $obList;
+        return $obList->returnThis();
     }
 
     /**
@@ -592,12 +639,12 @@ abstract class ElementCollection extends Extendable implements \Iterator
     {
         $obList = self::make();
         if (empty($iElementID) || empty($iCount) || $iCount < 1) {
-            return $obList;
+            return $obList->returnThis();
         }
 
         //Check current collection
         if ($this->isEmpty() || !$this->has($iElementID)) {
-            return $obList;
+            return $obList->returnThis();
         }
 
         $this->arElementIDList = array_values($this->arElementIDList);
@@ -621,7 +668,7 @@ abstract class ElementCollection extends Extendable implements \Iterator
         $arResultIDList = array_slice($arResultIDList, 0, $iCount);
         $obList->intersect($arResultIDList);
 
-        return $obList;
+        return $obList->returnThis();
     }
 
     /**
@@ -641,7 +688,7 @@ abstract class ElementCollection extends Extendable implements \Iterator
         $sKey = static::class.'@'.$sKey;
         CollectionStore::instance()->save($sKey, clone $this);
 
-        return $this;
+        return $this->returnThis();
     }
 
     /**
@@ -752,13 +799,4 @@ abstract class ElementCollection extends Extendable implements \Iterator
      * @return \Lovata\Toolbox\Classes\Item\ElementItem
      */
     abstract protected function makeItem($iElementID, $obElement = null);
-
-    /**
-     * Check list is clear
-     * @return bool
-     */
-    protected function isClear()
-    {
-        return $this->arElementIDList === null;
-    }
 }

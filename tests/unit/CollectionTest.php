@@ -34,6 +34,19 @@ class CollectionTest extends PluginTestCase
     }
 
     /**
+     * Test set method in item collection class
+     */
+    public function testSetMethod()
+    {
+        $sMessage = 'Error in "set" collection method';
+        $obCollection = TestCollection::make($this->arElementIDList);
+        self::assertEquals($this->arElementIDList, $obCollection->getIDList(), $sMessage);
+
+        $obCollection->set($this->arIntersectIDList);
+        self::assertEquals($this->arIntersectIDList, $obCollection->getIDList(), $sMessage);
+    }
+
+    /**
      * Test "has" method in item collection class
      */
     public function testHasMethod()
@@ -110,6 +123,39 @@ class CollectionTest extends PluginTestCase
 
         $obCollection = TestCollection::make()->intersect(null);
         $obCollection->intersect($this->arIntersectIDList);
+
+        self::assertEquals([], $obCollection->getIDList(), $sMessage);
+    }
+
+    /**
+     * Test applySorting method in item collection class
+     */
+    public function testApplySortingMethod()
+    {
+        $arSortedList = [5,3,4, 12, 20];
+
+        $sMessage = 'Error in "applySorting" collection method';
+        $obCollection = TestCollection::make($this->arElementIDList);
+        $obCollection->applySorting($arSortedList);
+
+        $arResult = array_intersect($arSortedList, $this->arElementIDList);
+
+        self::assertEquals($arResult, $obCollection->getIDList(), $sMessage);
+
+        //Test intersect with empty array
+        $obCollection = TestCollection::make($this->arElementIDList);
+        $obCollection->applySorting(null);
+
+        self::assertEquals([], $obCollection->getIDList(), $sMessage);
+
+        //Test intersect with clear collection
+        $obCollection = TestCollection::make();
+        $obCollection->applySorting($this->arIntersectIDList);
+
+        self::assertEquals($this->arIntersectIDList, $obCollection->getIDList(), $sMessage);
+
+        $obCollection = TestCollection::make()->applySorting(null);
+        $obCollection->applySorting($arSortedList);
 
         self::assertEquals([], $obCollection->getIDList(), $sMessage);
     }
