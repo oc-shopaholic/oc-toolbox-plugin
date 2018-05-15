@@ -399,7 +399,6 @@ abstract class ElementItem extends MainItem
 
         static::boot();
         static::$arBooted[static::class] = true;
-
     }
 
     /**
