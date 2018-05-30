@@ -64,12 +64,16 @@ abstract class ModelHandler
     /**
      * Init store objects
      */
-    protected function init(){}
+    protected function init()
+    {
+    }
 
     /**
      * After create event handler
      */
-    protected function afterCreate(){}
+    protected function afterCreate()
+    {
+    }
 
     /**
      * After save event handler
