@@ -154,7 +154,7 @@ class CollectionTest extends PluginTestCase
 
         self::assertEquals($this->arIntersectIDList, $obCollection->getIDList(), $sMessage);
 
-        $obCollection = TestCollection::make()->applySorting(null);
+        $obCollection = TestCollection::make()->intersect(null);
         $obCollection->applySorting($arSortedList);
 
         self::assertEquals([], $obCollection->getIDList(), $sMessage);

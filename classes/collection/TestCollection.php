@@ -9,15 +9,5 @@ use Lovata\Toolbox\Classes\Item\TestItem;
  */
 class TestCollection extends ElementCollection
 {
-    /**
-     * Make element item
-     * @param int   $iElementID
-     * @param \Lovata\Shopaholic\Models\Product  $obElement
-     *
-     * @return TestItem
-     */
-    protected function makeItem($iElementID, $obElement = null)
-    {
-        return TestItem::make($iElementID, $obElement);
-    }
+    const ITEM_CLASS = TestItem::class;
 }

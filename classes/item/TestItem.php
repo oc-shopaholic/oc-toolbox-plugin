@@ -13,7 +13,7 @@ use Lovata\Toolbox\Classes\Collection\TestCollection;
  */
 class TestItem extends ElementItem
 {
-    const CACHE_TAG_ELEMENT = 'toolbox-test-element';
+    const MODEL_CLASS = Model::class;
 
     /** @var Model */
     protected $obElement = null;
@@ -55,23 +55,10 @@ class TestItem extends ElementItem
      */
     protected function setElementObject()
     {
-        if (!empty($this->obElement) || empty($this->iElementID)) {
-            return;
-        }
-
         $obElement = new Model();
         $obElement->id = $this->iElementID;
 
         $this->obElement = $obElement;
-    }
-
-    /**
-     * Get cache tag array for model
-     * @return array
-     */
-    protected static function getCacheTag()
-    {
-        return [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
     }
 
     /**
@@ -81,10 +68,6 @@ class TestItem extends ElementItem
      */
     protected function getElementData()
     {
-        if (empty($this->obElement)) {
-            return null;
-        }
-
         $arResult = [
             'id'           => $this->obElement->id,
             'test_id'      => $this->obElement->id + 1,

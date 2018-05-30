@@ -2,8 +2,9 @@
 
 use Model;
 use System\Classes\PluginManager;
-use Kharanenka\Helper\CCache;
 use October\Rain\Extension\ExtendableTrait;
+
+use Kharanenka\Helper\CCache;
 
 /**
  * Class ElementItem
@@ -15,6 +16,8 @@ use October\Rain\Extension\ExtendableTrait;
 abstract class ElementItem extends MainItem
 {
     use ExtendableTrait;
+
+    const MODEL_CLASS = Model::class;
 
     public $implement = [];
 
@@ -34,6 +37,7 @@ abstract class ElementItem extends MainItem
      * ElementItem constructor.
      * @param int    $iElementID
      * @param \Model $obElement
+     * @throws
      */
     public function __construct($iElementID, $obElement)
     {
@@ -41,7 +45,8 @@ abstract class ElementItem extends MainItem
         $this->obElement = $obElement;
 
         //Check instance of obElement
-        if (!empty($this->obElement) && !$this->obElement instanceof Model) {
+        $sModelClass = static::MODEL_CLASS;
+        if (!empty($this->obElement) && !$this->obElement instanceof $sModelClass) {
             $this->obElement = null;
         }
 
@@ -83,6 +88,7 @@ abstract class ElementItem extends MainItem
      * @param string $sName
      * @param array  $arParamList
      * @return mixed
+     * @throws
      */
     public static function __callStatic($sName, $arParamList)
     {
@@ -139,11 +145,18 @@ abstract class ElementItem extends MainItem
             'obElement'  => $obElement,
         ];
 
+        $obItem = ItemStorage::get(static::class, $iElementID);
+        if (!empty($obItem)) {
+            return $obItem;
+        }
+
         /** @var ElementItem $obItem */
         $obItem = app()->make(static::class, $arParamList);
 
         //Init cached array model data
         $obItem->setCachedData();
+
+        ItemStorage::set(static::class, $iElementID, $obItem);
 
         return $obItem;
     }
@@ -184,6 +197,7 @@ abstract class ElementItem extends MainItem
             return;
         }
 
+        ItemStorage::clear(static::class, $iElementID);
         CCache::clear(static::getCacheTag(), $iElementID);
     }
 
@@ -235,7 +249,7 @@ abstract class ElementItem extends MainItem
      */
     public function getObject()
     {
-        $this->setElementObject();
+        $this->initElementObject();
 
         return $this->obElement;
     }
@@ -245,7 +259,7 @@ abstract class ElementItem extends MainItem
      */
     protected function setData()
     {
-        $this->setElementObject();
+        $this->initElementObject();
         if (empty($this->obElement)) {
             return;
         }
@@ -320,19 +334,6 @@ abstract class ElementItem extends MainItem
      * Set cached brand data
      */
     protected function setCachedData()
-    {
-        if (empty($this->iElementID)) {
-            return;
-        }
-
-        //Set model data from cache
-        $this->setDataFromCache();
-    }
-
-    /**
-     * Set model data from cache
-     */
-    protected function setDataFromCache()
     {
         if (empty($this->iElementID)) {
             return;
@@ -426,16 +427,39 @@ abstract class ElementItem extends MainItem
     }
 
     /**
-     * Set element object
-     * @return mixed
+     * Init element object
      */
-    abstract protected function setElementObject();
+    protected function initElementObject()
+    {
+        $sModelClass = static::MODEL_CLASS;
+        if (!empty($this->obElement) && !$this->obElement instanceof $sModelClass) {
+            $this->obElement = null;
+        }
+
+        if (!empty($this->obElement) || empty($this->iElementID)) {
+            return;
+        }
+
+        $this->setElementObject();
+    }
+
+    /**
+     * Set element object
+     */
+    protected function setElementObject()
+    {
+        $sModelClass = static::MODEL_CLASS;
+        $this->obElement = $sModelClass::find($this->iElementID);
+    }
 
     /**
      * Get cache tag array for model
      * @return array
      */
-    abstract protected static function getCacheTag();
+    protected static function getCacheTag()
+    {
+        return [static::class];
+    }
 
     /**
      * Process translatable fields and save values, how 'field_name|lang_code'

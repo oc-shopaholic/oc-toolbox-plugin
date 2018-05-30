@@ -32,22 +32,12 @@ abstract class SortingElementList extends ComponentBase
     }
 
     /**
-     * Get available sorting array
-     * @return array
-     */
-    abstract protected function getAvailableSorting();
-
-    /**
      * Set active sorting
      */
     protected function setActiveSorting()
     {
         $this->sSorting = Input::get('sort');
         if (empty($this->sSorting)) {
-            $this->sSorting = $this->property('sorting');
-        }
-
-        if (!in_array($this->sSorting, $this->getAvailableSorting())) {
             $this->sSorting = $this->property('sorting');
         }
     }

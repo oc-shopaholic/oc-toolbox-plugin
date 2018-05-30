@@ -12,6 +12,7 @@ use October\Rain\Extension\Extendable;
 abstract class ElementCollection extends Extendable implements \Iterator
 {
     const COUNT_PER_PAGE = 10;
+    const ITEM_CLASS = \Lovata\Toolbox\Classes\Item\ElementItem::class;
 
     protected $iPosition = 0;
 
@@ -205,6 +206,10 @@ abstract class ElementCollection extends Extendable implements \Iterator
     {
         if (empty($arResultIDList)) {
             return $this->clear();
+        }
+
+        if (!$this->isClear() && $this->isEmpty()) {
+            return $this->returnThis();
         }
 
         if ($this->isClear()) {
@@ -707,7 +712,7 @@ abstract class ElementCollection extends Extendable implements \Iterator
 
         $sKey = static::class.'@'.$sKey;
 
-        $obCollection = CollectionStore::instance()->get($sKey);
+        $obCollection = CollectionStore::instance()->saved($sKey);
         if (empty($obCollection)) {
             return null;
         }
@@ -792,11 +797,18 @@ abstract class ElementCollection extends Extendable implements \Iterator
         return isset($arResultIDList[$this->iPosition]);
     }
 
+
     /**
-     * Male new element item
-     * @param int $iElementID
+     * Make element item
+     * @param int                             $iElementID
      * @param \Model $obElement
+     *
      * @return \Lovata\Toolbox\Classes\Item\ElementItem
      */
-    abstract protected function makeItem($iElementID, $obElement = null);
+    protected function makeItem($iElementID, $obElement = null)
+    {
+        $sItemClass = static::ITEM_CLASS;
+
+        return $sItemClass::make($iElementID, $obElement);
+    }
 }
