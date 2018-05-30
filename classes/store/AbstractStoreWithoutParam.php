@@ -29,7 +29,7 @@ abstract class AbstractStoreWithoutParam extends AbstractStore
         return $arElementIDList;
     }
 
-    /***
+    /**
      * Clear element ID list
      */
     public function clear()

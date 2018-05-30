@@ -45,7 +45,7 @@ abstract class AbstractStoreWithParam extends AbstractStore
         return $arElementIDList;
     }
 
-    /***
+    /**
      * Clear element ID list
      * @param mixed $sFilterValue
      */

@@ -28,9 +28,9 @@ class ItemStorage
 
     /**
      * Set item object in storage
-     * @param string $sClassName
-     * @param int    $iElementID
-     * @param ElementItem    $obItem
+     * @param string      $sClassName
+     * @param int         $iElementID
+     * @param ElementItem $obItem
      */
     public static function set($sClassName, $iElementID, $obItem)
     {

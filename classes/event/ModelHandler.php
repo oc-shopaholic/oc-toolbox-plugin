@@ -64,12 +64,12 @@ abstract class ModelHandler
     /**
      * Init store objects
      */
-    protected function init() {}
+    protected function init(){}
 
     /**
      * After create event handler
      */
-    protected function afterCreate() {}
+    protected function afterCreate(){}
 
     /**
      * After save event handler
@@ -104,9 +104,7 @@ abstract class ModelHandler
      */
     protected function checkFieldChanges($sField, $obListStore)
     {
-        if (empty($sField) || empty($obListStore))
-
-        if ($this->obElement->$sField == $this->obElement->getOriginal($sField)) {
+        if (empty($sField) || empty($obListStore) || $this->obElement->$sField == $this->obElement->getOriginal($sField)) {
             return;
         }
 

@@ -37,7 +37,7 @@ abstract class ElementItem extends MainItem
      * ElementItem constructor.
      * @param int    $iElementID
      * @param \Model $obElement
-     * @throws
+     * @throws \Exception
      */
     public function __construct($iElementID, $obElement)
     {
@@ -88,7 +88,7 @@ abstract class ElementItem extends MainItem
      * @param string $sName
      * @param array  $arParamList
      * @return mixed
-     * @throws
+     * @throws \Exception
      */
     public static function __callStatic($sName, $arParamList)
     {
