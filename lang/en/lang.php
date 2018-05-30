@@ -56,8 +56,8 @@
         'empty'      => 'Empty',
         'password'   => 'Password',
 
-        'site_settings'             => 'Site settings',
-        'site_settings_description' => 'Common site settings',
+        'site_settings'             => 'Application settings',
+        'site_settings_description' => 'Common settings of application',
         'queue_on'                  => 'Sending messages from the queue',
         'queue_name'                => 'The name of the queue for sending the emails',
         'email_list_description'    => 'Fill out list of emails separated by commas',

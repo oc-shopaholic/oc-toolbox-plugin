@@ -55,8 +55,8 @@
         'empty'      => 'Не выбрано',
         'password'   => 'Пароль',
 
-        'site_settings'             => 'Настройки сайта',
-        'site_settings_description' => 'Общие настройки сайта',
+        'site_settings'             => 'Настройки приложения',
+        'site_settings_description' => 'Общие настройки приложения',
         'queue_on'                  => 'Отправка писем используя Queue',
         'queue_name'                => 'Название queue для отправки письма',
         'email_list_description'    => 'Заполните список email адресов, разделенных запятыми',
@@ -69,7 +69,7 @@
         'description'     => 'Описание',
         'properties'      => 'Свойства',
         'mail'            => 'Отправка писем',
-        'permissions'     => 'Управление настройками сайта',
+        'permissions'     => 'Управление настройками приложения',
         'prices_format'   => 'Формат цен',
     ],
     'component'  => [

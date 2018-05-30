@@ -55,8 +55,8 @@
         'empty'      => 'Vide',
         'password'   => 'Mot de passe',
 
-        'site_settings'             => 'Paramètres du site',
-        'site_settings_description' => 'Paramètres généraux du site',
+        'site_settings'             => 'Paramètres de l\'application',
+        'site_settings_description' => 'Paramètres généraux de l\'application',
         'queue_on'                  => "Envoi de messages de la file d'attente (queue)",
         'queue_name'                => "Nom de la queue pour l'envoi d'emails",
         'email_list_description'    => "Remplir une liste d'emails séparés par des virgules",
