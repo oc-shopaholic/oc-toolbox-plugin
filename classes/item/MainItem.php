@@ -20,9 +20,6 @@ abstract class MainItem
     /** @var array  */
     public $arRelationList = [];
 
-    /** @var array Active lang list from Translate plugin */
-    protected static $arActiveLangList = null;
-
     /**
      * Get param from model data
      * @param string $sName

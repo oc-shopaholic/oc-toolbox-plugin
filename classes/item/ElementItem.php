@@ -354,31 +354,6 @@ abstract class ElementItem extends MainItem
     }
 
     /**
-     * Get and save active lang list
-     */
-    protected function getActiveLangList()
-    {
-        if (self::$arActiveLangList !== null || !PluginManager::instance()->hasPlugin('RainLab.Translate')) {
-            return self::$arActiveLangList;
-        }
-
-        self::$arActiveLangList = \RainLab\Translate\Models\Locale::isEnabled()->lists('code');
-        if (empty(self::$arActiveLangList)) {
-            return self::$arActiveLangList;
-        }
-
-        //Remove default lang from list
-        foreach (self::$arActiveLangList as $iKey => $sLangCode) {
-            if ($sLangCode == self::$sDefaultLang) {
-                unset(self::$arActiveLangList[$iKey]);
-                break;
-            }
-        }
-
-        return self::$arActiveLangList;
-    }
-
-    /**
      * Set model data from object
      * @return mixed
      */
