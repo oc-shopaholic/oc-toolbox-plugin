@@ -34,6 +34,7 @@ abstract class ElementPage extends ComponentBase
     /**
      * Get element object
      * @return \Illuminate\Http\Response|null
+     * @throws \Exception
      */
     public function onRun()
     {

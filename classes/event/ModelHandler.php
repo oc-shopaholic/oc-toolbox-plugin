@@ -2,6 +2,7 @@
 
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithoutParam;
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithParam;
+use Lovata\Toolbox\Classes\Store\AbstractStoreWithTwoParam;
 
 /**
  * Class ModelHandler
@@ -108,7 +109,7 @@ abstract class ModelHandler
      */
     protected function checkFieldChanges($sField, $obListStore)
     {
-        if (empty($sField) || empty($obListStore) || $this->obElement->$sField == $this->obElement->getOriginal($sField)) {
+        if (empty($sField) || empty($obListStore) || !$this->isFieldChanged($sField)) {
             return;
         }
 
@@ -118,6 +119,30 @@ abstract class ModelHandler
             $obListStore->clear($this->obElement->$sField);
             $obListStore->clear($this->obElement->getOriginal($sField));
         }
+    }
+
+    /**
+     * @param $sField
+     * @param $sAdditionalField
+     * @param AbstractStoreWithTwoParam $obListStore
+     */
+    protected function checkFieldChangesTwoParam($sField, $sAdditionalField,  $obListStore)
+    {
+        if (empty($sField) || empty($sAdditionalField) || empty($obListStore) || !$obListStore instanceof AbstractStoreWithTwoParam) {
+            return;
+        }
+
+        if (!$this->isFieldChanged($sField) && $this->isFieldChanged($sAdditionalField)) {
+            return;
+        }
+
+        $obListStore->clear($this->obElement->$sField);
+        $obListStore->clear($this->obElement->$sField, $this->obElement->$sAdditionalField);
+        $obListStore->clear($this->obElement->$sField, $this->obElement->getOriginal($sField));
+
+        $obListStore->clear($this->obElement->getOriginal($sField));
+        $obListStore->clear($this->obElement->getOriginal($sField), $this->obElement->$sAdditionalField);
+        $obListStore->clear($this->obElement->getOriginal($sField), $this->obElement->getOriginal($sField));
     }
 
     /**

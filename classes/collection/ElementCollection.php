@@ -581,7 +581,7 @@ abstract class ElementCollection extends Extendable implements \Iterator
             return null;
         }
 
-        //Get filed value array
+        //Get field value array
         $arFieldValue = $this->pluck($sFieldName);
         if (empty($arFieldValue)) {
             return null;
