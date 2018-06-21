@@ -26,7 +26,7 @@ class CollectionStore
             return;
         }
 
-        $this->arStore[$sKey] = $obCollection;
+        $this->arStore[$sKey] = clone $obCollection;
     }
 
     /**
@@ -35,7 +35,7 @@ class CollectionStore
      * @param string $sKey
      * @return ElementCollection
      */
-    public function get($sKey)
+    public function saved($sKey)
     {
         if (empty($sKey) || empty($this->arStore) || !isset($this->arStore[$sKey])) {
             return null;

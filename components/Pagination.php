@@ -34,7 +34,7 @@ class Pagination extends ComponentBase
      */
     public function defineProperties()
     {
-        $this->arPropertyList = array_merge($this->arPropertyList, PaginationHelper::getProperties(Plugin::NAME));
+        $this->arPropertyList = array_merge($this->arPropertyList, PaginationHelper::getProperties('toolbox'));
 
         return $this->arPropertyList;
     }

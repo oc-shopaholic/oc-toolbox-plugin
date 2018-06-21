@@ -1,9 +1,9 @@
 <?php return [
-    'plugin'    => [
+    'plugin'     => [
         'name'        => 'Toolbox',
         'description' => "Toolbox est un ensemble d'helpers pour un développement plus rapide avec OctoberCMS.",
     ],
-    'field'     => [
+    'field'      => [
         'id'                       => 'ID',
         'name'                     => 'Nom',
         'title'                    => 'Titre',
@@ -39,6 +39,13 @@
         'datetime'                 => 'Date et heure',
         'time'                     => 'Heure',
         'file'                     => 'Fichier',
+        'decimals'                 => 'Nombre de décimales',
+        'dec_point'                => 'Séparateur décimal',
+        'thousands_sep'            => 'Séparateur de milliers',
+        'dot'                      => 'Point',
+        'comma'                    => 'Virgule',
+        'together'                 => 'Fusionner',
+        'space'                    => 'Espace',
 
         'sort_order' => 'Tri',
         'created_at' => 'Créé',
@@ -48,13 +55,13 @@
         'empty'      => 'Vide',
         'password'   => 'Mot de passe',
 
-        'site_settings'             => 'Paramètres du site',
-        'site_settings_description' => 'Paramètres généraux du site',
+        'site_settings'             => 'Paramètres de l\'application',
+        'site_settings_description' => 'Paramètres généraux de l\'application',
         'queue_on'                  => "Envoi de messages de la file d'attente (queue)",
         'queue_name'                => "Nom de la queue pour l'envoi d'emails",
         'email_list_description'    => "Remplir une liste d'emails séparés par des virgules",
     ],
-    'tab' => [
+    'tab'        => [
         'preview_content' => 'Prévisualiser le contenu',
         'full_content'    => 'Contenu',
         'images'          => 'Images',
@@ -63,22 +70,23 @@
         'properties'      => 'Propriétés',
         'mail'            => "Envoi d'emails",
         'permissions'     => 'Gérer les paramètres du site',
+        'prices_format'   => 'Format de prix',
     ],
-    'component' => [
+    'component'  => [
         'property_name_error_404' => 'Voir la page 404',
         'property_slug'           => 'Slug',
         'property_slug_required'  => 'Le slug est requis',
         'pagination'              => 'Pagination',
         'pagination_desc'         => 'Afficher le bouton de pagination',
 
-        'property_redirect_page'   => 'Page de redirection',
-        'property_redirect_on'     => 'Redirection ON',
-        'property_flash_on'        => 'Flash ON',
-        'property_mode'            => 'Mode du component',
-        'mode_submit'              => "Soumission par form",
-        'mode_ajax'                => 'Ajax',
+        'property_redirect_page' => 'Page de redirection',
+        'property_redirect_on'   => 'Redirection ON',
+        'property_flash_on'      => 'Flash ON',
+        'property_mode'          => 'Mode du component',
+        'mode_submit'            => "Soumission par form",
+        'mode_ajax'              => 'Ajax',
     ],
-    'message'   => [
+    'message'    => [
         'create_success'        => ':name créé avec succès',
         'update_success'        => ':name mis à jour avec succès',
         'delete_success'        => ':name supprimé avec succès',
@@ -86,7 +94,7 @@
         'restore_success'       => 'La restauration a été effectuée avec succès',
         'e_not_correct_request' => 'La requête est incorrecte',
     ],
-    'settings'  => [
+    'settings'   => [
         'count_per_page'          => 'Compter les éléments par page',
         'number_validation'       => 'Vous devez entrer le numéro',
         'pagination_limit'        => 'Maximum de boutons',
@@ -107,10 +115,10 @@
         'first-more_button'       => 'Bouton "More" (après "First")',
         'main_button'             => 'Bouton "Main"',
     ],
-    'button' => [
-        'add_property_value'    => 'Ajouter une valeur de propriété',
+    'button'     => [
+        'add_property_value' => 'Ajouter une valeur de propriété',
     ],
-    'type'      => [
+    'type'       => [
         'input'       => 'Champ de texte (input)',
         'textarea'    => 'Champ de texte (textarea)',
         'checkbox'    => 'Liste de cases à cocher (checkbox)',

@@ -10,3 +10,23 @@ tabs:
             span: left
             label: lovata.toolbox::lang.field.queue_name
             type: text
+        decimals:
+            tab: lovata.toolbox::lang.tab.prices_format
+            span: left
+            label: lovata.toolbox::lang.field.decimals
+        dec_point:
+            tab: lovata.toolbox::lang.tab.prices_format
+            span: left
+            label: lovata.toolbox::lang.field.dec_point
+            type: dropdown
+            options:
+                dot: lovata.toolbox::lang.field.dot
+                comma: lovata.toolbox::lang.field.comma
+        thousands_sep:
+            tab: lovata.toolbox::lang.tab.prices_format
+            span: left
+            label: lovata.toolbox::lang.field.thousands_sep
+            type: dropdown
+            options:
+                together: lovata.toolbox::lang.field.together
+                space: lovata.toolbox::lang.field.space

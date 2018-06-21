@@ -1,9 +1,9 @@
 <?php return [
-    'plugin'    => [
+    'plugin'     => [
         'name'        => 'Toolbox',
         'description' => 'Toolbox — это набор хэлперов для ускорения разработки на платформе October CMS.',
     ],
-    'field'     => [
+    'field'      => [
         'id'                       => 'ID',
         'name'                     => 'Название',
         'title'                    => 'Заголовок',
@@ -39,6 +39,13 @@
         'datetime'                 => 'Дата и время',
         'time'                     => 'Время',
         'file'                     => 'Файл',
+        'decimals'                 => 'Число знаков после запятой',
+        'dec_point'                => 'Разделитель дробной части',
+        'thousands_sep'            => 'Разделитель тысяч',
+        'dot'                      => 'Точка',
+        'comma'                    => 'Запятая',
+        'together'                 => 'Слитно',
+        'space'                    => 'Пробел',
 
         'sort_order' => 'Сортировка',
         'created_at' => 'Создано',
@@ -48,13 +55,13 @@
         'empty'      => 'Не выбрано',
         'password'   => 'Пароль',
 
-        'site_settings'             => 'Настройки сайта',
-        'site_settings_description' => 'Общие настройки сайта',
+        'site_settings'             => 'Настройки приложения',
+        'site_settings_description' => 'Общие настройки приложения',
         'queue_on'                  => 'Отправка писем используя Queue',
         'queue_name'                => 'Название queue для отправки письма',
         'email_list_description'    => 'Заполните список email адресов, разделенных запятыми',
     ],
-    'tab' => [
+    'tab'        => [
         'preview_content' => 'Превью-контент',
         'full_content'    => 'Полный контент',
         'images'          => 'Изображения',
@@ -62,23 +69,24 @@
         'description'     => 'Описание',
         'properties'      => 'Свойства',
         'mail'            => 'Отправка писем',
-        'permissions'     => 'Управление настройками сайта',
+        'permissions'     => 'Управление настройками приложения',
+        'prices_format'   => 'Формат цен',
     ],
-    'component' => [
+    'component'  => [
         'property_name_error_404' => 'Отображать 404 страницу',
         'property_slug'           => 'Slug',
         'property_slug_required'  => 'Параметр Slug обязательный',
         'pagination'              => 'Пагинация',
         'pagination_desc'         => 'Вывод кнопок пагинации',
 
-        'property_redirect_page'   => 'Страница перенаправления',
-        'property_redirect_on'     => 'Перенаправление вкл.',
-        'property_flash_on'        => 'Уведомление вкл.',
-        'property_mode'            => 'Режим работы',
-        'mode_submit'              => 'Отправка формы',
-        'mode_ajax'                => 'Ajax',
+        'property_redirect_page' => 'Страница перенаправления',
+        'property_redirect_on'   => 'Перенаправление вкл.',
+        'property_flash_on'      => 'Уведомление вкл.',
+        'property_mode'          => 'Режим работы',
+        'mode_submit'            => 'Отправка формы',
+        'mode_ajax'              => 'Ajax',
     ],
-    'message'   => [
+    'message'    => [
         'create_success'        => 'Создание :name было успешно выполнено',
         'update_success'        => 'Редактирование :name было успешно выполнено',
         'delete_success'        => 'Удаление :name было успешно выполнено',
@@ -86,7 +94,7 @@
         'restore_success'       => 'Элементы восстановлены',
         'e_not_correct_request' => 'Некорректный запрос',
     ],
-    'settings'  => [
+    'settings'   => [
         'count_per_page'          => 'Количество элементов на странице',
         'number_validation'       => 'Необходимо ввести число',
         'pagination_limit'        => 'Максимальное количество кнопок пагинации',
@@ -107,10 +115,10 @@
         'first-more_button'       => '"Еще" (после "Первая")',
         'main_button'             => '"Основная"',
     ],
-    'button' => [
-        'add_property_value'    => 'Добавить значение свойства',
+    'button'     => [
+        'add_property_value' => 'Добавить значение свойства',
     ],
-    'type'      => [
+    'type'       => [
         'input'       => 'Текстовое поле (input)',
         'textarea'    => 'Текстовое поле (textarea)',
         'checkbox'    => 'Множественный выбор из списка (checkbox)',

@@ -10,9 +10,6 @@ use Lovata\Toolbox\Components\Pagination;
  */
 class Plugin extends PluginBase
 {
-    const NAME = 'toolbox';
-    const CACHE_TAG = 'toolbox';
-
     /**
      * @return array
      */

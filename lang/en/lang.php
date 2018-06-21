@@ -1,9 +1,9 @@
 <?php return [
-    'plugin'    => [
+    'plugin'     => [
         'name'        => 'Toolbox',
         'description' => 'Toolbox is a set of helpers for faster development for October CMS.',
     ],
-    'field'     => [
+    'field'      => [
         'id'                       => 'ID',
         'name'                     => 'Name',
         'title'                    => 'Title',
@@ -39,6 +39,14 @@
         'datetime'                 => 'Date and time',
         'time'                     => 'Time',
         'file'                     => 'File',
+        'decimals'                 => 'Number of decimal places',
+        'dec_point'                => 'Fractional part separator',
+        'thousands_sep'            => 'Thousands separator',
+        'dot'                      => 'Dot',
+        'comma'                    => 'Comma',
+        'together'                 => 'Merge',
+        'space'                    => 'Space',
+
 
         'sort_order' => 'Sorting',
         'created_at' => 'Created',
@@ -48,13 +56,13 @@
         'empty'      => 'Empty',
         'password'   => 'Password',
 
-        'site_settings'             => 'Site settings',
-        'site_settings_description' => 'Common site settings',
+        'site_settings'             => 'Application settings',
+        'site_settings_description' => 'Common settings of application',
         'queue_on'                  => 'Sending messages from the queue',
         'queue_name'                => 'The name of the queue for sending the emails',
         'email_list_description'    => 'Fill out list of emails separated by commas',
     ],
-    'tab' => [
+    'tab'        => [
         'preview_content' => 'Preview content',
         'full_content'    => 'Content',
         'images'          => 'Images',
@@ -63,22 +71,23 @@
         'properties'      => 'Properties',
         'mail'            => 'Sending emails',
         'permissions'     => 'Manage site settings',
+        'prices_format'   => 'Price format',
     ],
-    'component' => [
+    'component'  => [
         'property_name_error_404' => 'View 404 page',
         'property_slug'           => 'Slug',
         'property_slug_required'  => 'Slug is required',
         'pagination'              => 'Pagination',
         'pagination_desc'         => 'Render button of pagination',
 
-        'property_redirect_page'   => 'Redirect page',
-        'property_redirect_on'     => 'Redirect ON',
-        'property_flash_on'        => 'Flash ON',
-        'property_mode'            => 'Component mode',
-        'mode_submit'              => 'Form submit',
-        'mode_ajax'                => 'Ajax',
+        'property_redirect_page' => 'Redirect page',
+        'property_redirect_on'   => 'Redirect ON',
+        'property_flash_on'      => 'Flash ON',
+        'property_mode'          => 'Component mode',
+        'mode_submit'            => 'Form submit',
+        'mode_ajax'              => 'Ajax',
     ],
-    'message'   => [
+    'message'    => [
         'create_success'        => 'Create :name was successfully',
         'update_success'        => 'Update :name was successfully',
         'delete_success'        => 'Delete :name was successfully',
@@ -86,7 +95,7 @@
         'restore_success'       => 'Restore elements was successfully',
         'e_not_correct_request' => 'Request is not correct',
     ],
-    'settings'  => [
+    'settings'   => [
         'count_per_page'          => 'Count elements per page',
         'number_validation'       => 'You must enter the number',
         'pagination_limit'        => 'Max count buttons',
@@ -107,10 +116,10 @@
         'first-more_button'       => '"More" (after "First")',
         'main_button'             => '"Main" button',
     ],
-    'button' => [
-        'add_property_value'    => 'Add property value',
+    'button'     => [
+        'add_property_value' => 'Add property value',
     ],
-    'type'      => [
+    'type'       => [
         'input'       => 'Text field (input)',
         'textarea'    => 'Text field (textarea)',
         'checkbox'    => 'Checkbox list (checkbox)',

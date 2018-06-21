@@ -17,6 +17,7 @@
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
+            <file>./classes/collection/CollectionStore.php</file>
             <file>./classes/collection/ElementCollection.php</file>
             <file>./classes/item/ElementItem.php</file>
             <file>./classes/item/MainItem.php</file>

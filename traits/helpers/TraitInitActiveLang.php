@@ -18,6 +18,34 @@ trait TraitInitActiveLang
     /** @var string - Default lang code from Translate plugin */
     protected static $sDefaultLang = null;
 
+    /** @var array Active lang list from Translate plugin */
+    protected static $arActiveLangList = null;
+
+    /**
+     * Get and save active lang list
+     */
+    protected function getActiveLangList()
+    {
+        if (self::$arActiveLangList !== null || !PluginManager::instance()->hasPlugin('RainLab.Translate')) {
+            return self::$arActiveLangList;
+        }
+
+        self::$arActiveLangList = \RainLab\Translate\Models\Locale::isEnabled()->lists('code');
+        if (empty(self::$arActiveLangList)) {
+            return self::$arActiveLangList;
+        }
+
+        //Remove default lang from list
+        foreach (self::$arActiveLangList as $iKey => $sLangCode) {
+            if ($sLangCode == self::$sDefaultLang) {
+                unset(self::$arActiveLangList[$iKey]);
+                break;
+            }
+        }
+
+        return self::$arActiveLangList;
+    }
+
     /**
      * Get and save active lang from Translate plugin
      */
@@ -49,11 +77,11 @@ trait TraitInitActiveLang
      */
     protected function addActiveLangSuffix($sValue, $sSeparator = '_')
     {
-        if (empty(static::$sActiveLang)) {
+        if (empty(self::$sActiveLang)) {
             return $sValue;
         }
 
-        return $sValue.$sSeparator.static::$sActiveLang;
+        return $sValue.$sSeparator.self::$sActiveLang;
     }
 
     /**
@@ -65,10 +93,10 @@ trait TraitInitActiveLang
      */
     protected function addActiveLangPrefix($sValue, $sSeparator = '_')
     {
-        if (empty(static::$sActiveLang)) {
+        if (empty(self::$sActiveLang)) {
             return $sValue;
         }
 
-        return static::$sActiveLang.$sSeparator.$sValue;
+        return self::$sActiveLang.$sSeparator.$sValue;
     }
 }

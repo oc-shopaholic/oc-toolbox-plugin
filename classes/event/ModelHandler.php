@@ -1,5 +1,9 @@
 <?php namespace Lovata\Toolbox\Classes\Event;
 
+use Lovata\Toolbox\Classes\Store\AbstractStoreWithoutParam;
+use Lovata\Toolbox\Classes\Store\AbstractStoreWithParam;
+use Lovata\Toolbox\Classes\Store\AbstractStoreWithTwoParam;
+
 /**
  * Class ModelHandler
  * @package Lovata\Toolbox\Classes\Event
@@ -11,6 +15,8 @@ abstract class ModelHandler
     protected $obElement;
 
     protected $obListStore;
+
+    protected $sIdentifierField = 'id';
 
     /**
      * Add listeners
@@ -24,18 +30,21 @@ abstract class ModelHandler
             /** @var \Model $obElement */
             $obElement->bindEvent('model.afterCreate', function () use ($obElement) {
                 $this->obElement = $obElement;
+                $this->init();
                 $this->afterCreate();
             });
 
             /** @var \Model $obElement */
             $obElement->bindEvent('model.afterSave', function () use ($obElement) {
                 $this->obElement = $obElement;
+                $this->init();
                 $this->afterSave();
             });
 
             /** @var \Model $obElement */
             $obElement->bindEvent('model.afterDelete', function () use ($obElement) {
                 $this->obElement = $obElement;
+                $this->init();
                 $this->afterDelete();
             });
         });
@@ -54,22 +63,25 @@ abstract class ModelHandler
     abstract protected function getItemClass();
 
     /**
+     * Init store objects
+     */
+    protected function init()
+    {
+    }
+
+    /**
      * After create event handler
      */
-    protected function afterCreate() {}
+    protected function afterCreate()
+    {
+    }
 
     /**
      * After save event handler
      */
     protected function afterSave()
     {
-        $sModelClass = $this->getModelClass();
-        if (empty($this->obElement) || !$this->obElement instanceof $sModelClass) {
-            return;
-        }
-
         $this->clearItemCache();
-        $this->checkActiveField();
     }
 
     /**
@@ -77,16 +89,7 @@ abstract class ModelHandler
      */
     protected function afterDelete()
     {
-        $sModelClass = $this->getModelClass();
-        if (empty($this->obElement) || !$this->obElement instanceof $sModelClass) {
-            return;
-        }
-
         $this->clearItemCache();
-
-        if ($this->obElement->active) {
-            $this->clearActiveList();
-        }
     }
 
     /**
@@ -95,31 +98,68 @@ abstract class ModelHandler
     protected function clearItemCache()
     {
         $sItemClass = $this->getItemClass();
-        $sItemClass::clearCache($this->obElement->id);
+        $sField = $this->sIdentifierField;
+
+        $sItemClass::clearCache($this->obElement->$sField);
     }
 
     /**
-     * Check brand "active" field, if it was changed, then clear cache
+     * @param $sField
+     * @param AbstractStoreWithParam|AbstractStoreWithoutParam $obListStore
      */
-    protected function checkActiveField()
+    protected function checkFieldChanges($sField, $obListStore)
     {
-        //check product "active" field
-        if ($this->obElement->getOriginal('active') == $this->obElement->active) {
+        if (empty($sField) || empty($obListStore) || !$this->isFieldChanged($sField)) {
             return;
         }
 
-        $this->clearActiveList();
+        if ($obListStore instanceof AbstractStoreWithoutParam) {
+            $obListStore->clear();
+        } elseif ($obListStore instanceof AbstractStoreWithParam) {
+            $obListStore->clear($this->obElement->$sField);
+            $obListStore->clear($this->obElement->getOriginal($sField));
+        }
     }
 
     /**
-     * Clear active list
+     * @param $sField
+     * @param $sAdditionalField
+     * @param AbstractStoreWithTwoParam $obListStore
      */
-    protected function clearActiveList()
+    protected function checkFieldChangesTwoParam($sField, $sAdditionalField, $obListStore)
     {
-        if (empty($this->obListStore) || !method_exists($this->obListStore, 'clearActiveList')) {
+        if (empty($sField) || empty($sAdditionalField) || empty($obListStore) || !$obListStore instanceof AbstractStoreWithTwoParam) {
             return;
         }
 
-        $this->obListStore->clearActiveList();
+        if (!$this->isFieldChanged($sField) && $this->isFieldChanged($sAdditionalField)) {
+            return;
+        }
+
+        $obListStore->clear($this->obElement->$sField);
+        $obListStore->clear($this->obElement->$sField, $this->obElement->$sAdditionalField);
+        $obListStore->clear($this->obElement->$sField, $this->obElement->getOriginal($sField));
+
+        $obListStore->clear($this->obElement->getOriginal($sField));
+        $obListStore->clear($this->obElement->getOriginal($sField), $this->obElement->$sAdditionalField);
+        $obListStore->clear($this->obElement->getOriginal($sField), $this->obElement->getOriginal($sField));
+    }
+
+    /**
+     * Check: field value was change
+     * @param string $sField
+     * @return bool
+     */
+    protected function isFieldChanged($sField)
+    {
+        if (empty($sField)) {
+            return false;
+        }
+
+        if ($this->obElement->$sField == $this->obElement->getOriginal($sField)) {
+            return false;
+        }
+
+        return true;
     }
 }
