@@ -30,3 +30,5 @@
     - 'Remove force boot and register plugins in CommonTest class'
 1.10.0:
     - 'Add PriceHelperTrait. Move PriceHelper class from Shopaholic plugin. Add set(), applySorting() methods to ElementCollection class. Add abstract store classes.'
+1.10.1:
+    - 'Fix ItemStorage class. Clone item objects form storage.'

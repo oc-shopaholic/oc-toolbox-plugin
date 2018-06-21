@@ -19,8 +19,8 @@ class ItemStorage
     public static function get($sClassName, $iElementID)
     {
         $sKey = self::getKey($sClassName, $iElementID);
-        if (isset(self::$arItemStore[$sKey])) {
-            return self::$arItemStore[$sKey];
+        if (isset(self::$arItemStore[$sKey]) && self::$arItemStore[$sKey] instanceof ElementItem) {
+            return clone self::$arItemStore[$sKey];
         }
 
         return null;
