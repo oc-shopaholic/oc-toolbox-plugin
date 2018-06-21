@@ -126,7 +126,7 @@ abstract class ModelHandler
      * @param $sAdditionalField
      * @param AbstractStoreWithTwoParam $obListStore
      */
-    protected function checkFieldChangesTwoParam($sField, $sAdditionalField,  $obListStore)
+    protected function checkFieldChangesTwoParam($sField, $sAdditionalField, $obListStore)
     {
         if (empty($sField) || empty($sAdditionalField) || empty($obListStore) || !$obListStore instanceof AbstractStoreWithTwoParam) {
             return;
