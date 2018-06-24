@@ -32,3 +32,5 @@
     - 'Add PriceHelperTrait. Move PriceHelper class from Shopaholic plugin. Add set(), applySorting() methods to ElementCollection class. Add abstract store classes.'
 1.10.1:
     - 'Fix ItemStorage class. Clone item objects form storage.'
+1.10.2:
+    - 'Fix ItemStorage class. Added cloning of *Item object before saving it to storage.'

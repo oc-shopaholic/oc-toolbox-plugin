@@ -39,7 +39,7 @@ class ItemStorage
         }
 
         $sKey = self::getKey($sClassName, $iElementID);
-        self::$arItemStore[$sKey] = $obItem;
+        self::$arItemStore[$sKey] = clone $obItem;
     }
 
     /**
