@@ -7,6 +7,9 @@
  */
 abstract class AbstractStoreWithParam extends AbstractStore
 {
+    /** @var array  */
+    protected $arCachedList = [];
+
     /** @var mixed */
     protected $sValue;
 
@@ -22,8 +25,12 @@ abstract class AbstractStoreWithParam extends AbstractStore
         }
 
         $this->sValue = $sFilterValue;
+        if (array_key_exists($this->getCacheKey(), $this->arCachedList)) {
+            return $this->arCachedList[$this->getCacheKey()];
+        }
 
         $arElementIDList = $this->getIDList();
+        $this->arCachedList[$this->getCacheKey()] = $arElementIDList;
 
         return $arElementIDList;
     }
@@ -58,6 +65,10 @@ abstract class AbstractStoreWithParam extends AbstractStore
         $this->sValue = $sFilterValue;
 
         $this->clearIDList();
+
+        if (array_key_exists($this->getCacheKey(), $this->arCachedList)) {
+            unset($this->arCachedList[$this->getCacheKey()]);
+        }
     }
 
     /**

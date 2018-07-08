@@ -9,19 +9,8 @@ use Lovata\Toolbox\Classes\Helper\UserHelper;
  */
 class UserStorage extends AbstractUserStorage
 {
-    /** @var UserHelper */
-    protected $obUserHelper;
-
     /** @var SessionUserStorage|CookieUserStorage */
     protected $obDefaultStorage;
-
-    /**
-     * UserStorage constructor.
-     */
-    public function __construct()
-    {
-        $this->obUserHelper = UserHelper::instance();
-    }
 
     /**
      * Set default user storage
@@ -54,7 +43,7 @@ class UserStorage extends AbstractUserStorage
         }
 
         //Get auth user object
-        $obUser = $this->obUserHelper->getUser();
+        $obUser = UserHelper::instance()->getUser();
         if (empty($obUser)) {
             return $this->getDefaultStorageValue($sKey, $sDefaultValue);
         }
@@ -80,7 +69,7 @@ class UserStorage extends AbstractUserStorage
         }
 
         //Get auth user object
-        $obUser = $this->obUserHelper->getUser();
+        $obUser = UserHelper::instance()->getUser();
         if (empty($obUser)) {
             $this->putDefaultStorageValue($sKey, $obValue);
 
@@ -104,7 +93,7 @@ class UserStorage extends AbstractUserStorage
         $this->clearDefaultStorageValue($sKey);
 
         //Get auth user object
-        $obUser = $this->obUserHelper->getUser();
+        $obUser = UserHelper::instance()->getUser();
         if (empty($obUser)) {
             return;
         }
@@ -127,7 +116,7 @@ class UserStorage extends AbstractUserStorage
         $arDefaultStorageValue = $this->getListDefaultStorageValue($sKey);
 
         //Get auth user object
-        $obUser = $this->obUserHelper->getUser();
+        $obUser = UserHelper::instance()->getUser();
         if (empty($obUser)) {
             return $arDefaultStorageValue;
         }

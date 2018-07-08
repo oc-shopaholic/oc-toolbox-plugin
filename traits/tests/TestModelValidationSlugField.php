@@ -10,7 +10,7 @@
 trait TestModelValidationSlugField
 {
     /**
-     * Check model "images" config
+     * Check model "slug" config
      */
     public function testHasValidationSlugField()
     {
