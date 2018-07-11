@@ -3,10 +3,13 @@
 /**
  * Class AbstractStoreWithTwoParam
  * @package Lovata\Toolbox\Classes\Store
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 abstract class AbstractStoreWithTwoParam extends AbstractStore
 {
+    /** @var array */
+    protected $arCachedList = [];
+
     /** @var mixed */
     protected $sValue;
 
@@ -27,8 +30,12 @@ abstract class AbstractStoreWithTwoParam extends AbstractStore
 
         $this->sValue = $sFilterValue;
         $this->sAdditionParam = $sAdditionalParam;
+        if (array_key_exists($this->getCacheKey(), $this->arCachedList)) {
+            return $this->arCachedList[$this->getCacheKey()];
+        }
 
         $arElementIDList = $this->getIDList();
+        $this->arCachedList[$this->getCacheKey()] = $arElementIDList;
 
         return $arElementIDList;
     }
@@ -68,6 +75,10 @@ abstract class AbstractStoreWithTwoParam extends AbstractStore
         $this->sAdditionParam = $sAdditionalParam;
 
         $this->clearIDList();
+
+        if (array_key_exists($this->getCacheKey(), $this->arCachedList)) {
+            unset($this->arCachedList[$this->getCacheKey()]);
+        }
     }
 
     /**

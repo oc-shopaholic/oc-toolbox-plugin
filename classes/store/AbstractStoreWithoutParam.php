@@ -7,13 +7,21 @@
  */
 abstract class AbstractStoreWithoutParam extends AbstractStore
 {
+    /** @var null|array  */
+    protected $arCachedList = null;
+
     /**
      * Get element ID list from cache or database
      * @return array|null
      */
     public function get()
     {
+        if ($this->arCachedList !== null) {
+            return $this->arCachedList;
+        }
+
         $arElementIDList = $this->getIDList();
+        $this->arCachedList = $arElementIDList;
 
         return $arElementIDList;
     }
@@ -35,6 +43,7 @@ abstract class AbstractStoreWithoutParam extends AbstractStore
     public function clear()
     {
         $this->clearIDList();
+        $this->arCachedList = null;
     }
 
     /**

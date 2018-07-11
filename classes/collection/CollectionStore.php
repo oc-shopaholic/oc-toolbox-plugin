@@ -41,6 +41,19 @@ class CollectionStore
             return null;
         }
 
-        return $this->arStore[$sKey];
+        return clone $this->arStore[$sKey];
+    }
+
+    /**
+     * Remove stored collection from store
+     * @param string $sKey
+     */
+    public function clear($sKey)
+    {
+        if (empty($sKey) || empty($this->arStore) || !isset($this->arStore[$sKey])) {
+            return;
+        }
+
+        unset($this->arStore[$sKey]);
     }
 }
