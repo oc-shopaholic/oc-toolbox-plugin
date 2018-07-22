@@ -2,6 +2,7 @@
 
 use Cms\Classes\Theme;
 use Cms\Classes\Page as CmsPage;
+use System\Classes\PluginManager;
 
 use October\Rain\Support\Traits\Singleton;
 
@@ -19,6 +20,9 @@ class PageHelper
 
     /** @var array|CmsPage[] */
     protected $arPageList = [];
+
+    /** @var CmsPage[] */
+    protected $arPageNameList;
 
     /** @var array */
     protected $arCachedData = [];
@@ -72,6 +76,34 @@ class PageHelper
         }
 
         $this->setCachedData($sCacheKey, $arResult);
+
+        return $arResult;
+    }
+
+    /**
+     * Get array with names of pages
+     * @return array
+     */
+    public function getPageNameList()
+    {
+        if (!empty($this->arPageNameList)) {
+            return $this->arPageNameList;
+        }
+
+        $arResult = [];
+
+        //Get page list
+        $obPageList = $this->getPageList();
+        if (empty($obPageList)) {
+            return $arResult;
+        }
+
+        //Process page list
+        foreach ($obPageList as $obPage) {
+            $arResult[$obPage->id] = $obPage->title;
+        }
+
+        $this->arPageNameList = $arResult;
 
         return $arResult;
     }
@@ -160,5 +192,61 @@ class PageHelper
     protected function hasCache($sKey)
     {
         return isset($this->arCachedData[$sKey]);
+    }
+
+    /**
+     * Get page list
+     * @return array|\Cms\Classes\CmsObjectCollection|CmsPage[]|null
+     */
+    protected function getPageList()
+    {
+        //Get CMS page list
+        $obPageList = $this->getCmsPageList();
+
+        //Get static page list
+        $obStaticPageList = $this->getStaticPageList();
+        if (!empty($obStaticPageList)) {
+            if (empty($obPageList)) {
+                return $obStaticPageList;
+            }
+
+            $obPageList = $obPageList->merge($obStaticPageList->all());
+        }
+
+        return $obPageList;
+    }
+
+    /**
+     * @return \Cms\Classes\CmsObjectCollection|\Cms\Classes\Page[]|null
+     */
+    protected function getCmsPageList()
+    {
+        if (empty($this->obTheme)) {
+            return null;
+        }
+
+        //Get CMS page list
+        /** @var \Cms\Classes\CmsObjectCollection|\Cms\Classes\Page[] $obPageList */
+        $obPageList = CmsPage::listInTheme($this->obTheme, true);
+
+        return $obPageList;
+    }
+
+    /**
+     * Get Static page list
+     * @return array|\Cms\Classes\CmsObjectCollection|CmsPage[]|null
+     */
+    protected function getStaticPageList()
+    {
+        if (!PluginManager::instance()->hasPlugin('RainLab.Pages') || empty($this->obTheme)) {
+            return null;
+        }
+
+        //Get Static page list
+        /** @var \Cms\Classes\CmsObjectCollection|\Cms\Classes\Page[] $obStaticPageList */
+        $obStaticPage = new \RainLab\Pages\Classes\PageList($this->obTheme);
+        $obStaticPageList = $obStaticPage->listPages(true);
+
+        return $obStaticPageList;
     }
 }

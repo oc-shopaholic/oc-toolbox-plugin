@@ -65,9 +65,9 @@ class PriceHelper
     protected function init()
     {
         //Get options from settings
-        $iDecimalValue = Settings::getValue('decimals');
-        if ($iDecimalValue != null) {
-            $this->iDecimal = (int) $iDecimalValue;
+        $iDecimalValue = (int) Settings::getValue('decimals');
+        if ($iDecimalValue >= 0) {
+            $this->iDecimal = $iDecimalValue;
         }
 
         $sDecPointValue = Settings::getValue('dec_point');
