@@ -36,3 +36,5 @@
     - 'Fix ItemStorage class. Added cloning of *Item object before saving it to storage.'
 1.11.0:
     - 'Added saving of arrays to class properties of *Store class objects after receiving array from cache.'
+1.12.0:
+    - 'Add PageHelper::getPageNameList() method.'
