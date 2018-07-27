@@ -38,3 +38,5 @@
     - 'Added saving of arrays to class properties of *Store class objects after receiving array from cache.'
 1.12.0:
     - 'Add PageHelper::getPageNameList() method.'
+1.12.1:
+    - 'Update of vendor packages'

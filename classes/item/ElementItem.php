@@ -1,7 +1,6 @@
 <?php namespace Lovata\Toolbox\Classes\Item;
 
 use Model;
-use System\Classes\PluginManager;
 use October\Rain\Extension\ExtendableTrait;
 
 use Kharanenka\Helper\CCache;
