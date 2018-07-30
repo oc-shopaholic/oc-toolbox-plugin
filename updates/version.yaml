@@ -40,3 +40,5 @@
     - 'Add PageHelper::getPageNameList() method.'
 1.12.1:
     - 'Update of vendor packages'
+1.12.2:
+    - 'Update of php-pagination vendor packages'
