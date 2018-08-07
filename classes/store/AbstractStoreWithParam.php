@@ -18,14 +18,14 @@ abstract class AbstractStoreWithParam extends AbstractStore
      * @param mixed $sFilterValue
      * @return array|null
      */
-    public function get($sFilterValue)
+    public function get($sFilterValue) : array
     {
         if (empty($sFilterValue)) {
-            return null;
+            return [];
         }
 
         $this->sValue = $sFilterValue;
-        if (array_key_exists($this->getCacheKey(), $this->arCachedList)) {
+        if (array_key_exists($this->getCacheKey(), $this->arCachedList) && is_array($this->arCachedList[$this->getCacheKey()])) {
             return $this->arCachedList[$this->getCacheKey()];
         }
 
@@ -40,10 +40,10 @@ abstract class AbstractStoreWithParam extends AbstractStore
      * @param mixed $sFilterValue
      * @return array|null
      */
-    public function getNoCache($sFilterValue)
+    public function getNoCache($sFilterValue) : array
     {
         if (empty($sFilterValue)) {
-            return null;
+            return [];
         }
 
         $this->sValue = $sFilterValue;
@@ -75,7 +75,7 @@ abstract class AbstractStoreWithParam extends AbstractStore
      * Get cache key
      * @return string
      */
-    protected function getCacheKey()
+    protected function getCacheKey() : string
     {
         return $this->sValue;
     }

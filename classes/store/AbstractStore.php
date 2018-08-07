@@ -17,23 +17,23 @@ abstract class AbstractStore
      * Get element ID list from database
      * @return array|null
      */
-    abstract protected function getIDListFromDB();
+    abstract protected function getIDListFromDB() : array;
 
     /**
      * Get cache key
      * @return string
      */
-    abstract protected function getCacheKey();
+    abstract protected function getCacheKey() : string;
 
     /**
      * Get element ID list from cache or database
      * @return array|null
      */
-    protected function getIDList()
+    protected function getIDList() : array
     {
         //Get element ID list from cache
         $arElementIDList = $this->getIDListFromCache();
-        if (!empty($arElementIDList)) {
+        if (!empty($arElementIDList) && is_array($arElementIDList)) {
             return $arElementIDList;
         }
 
@@ -47,12 +47,12 @@ abstract class AbstractStore
      * Get element ID list from array
      * @return array|null
      */
-    protected function getIDListFromCache()
+    protected function getIDListFromCache() : array
     {
         $arCacheTags = $this->getCacheTagList();
         $sCacheKey = $this->getCacheKey();
 
-        $arElementIDList  = CCache::get($arCacheTags, $sCacheKey);
+        $arElementIDList  = (array) CCache::get($arCacheTags, $sCacheKey);
 
         return $arElementIDList;
     }

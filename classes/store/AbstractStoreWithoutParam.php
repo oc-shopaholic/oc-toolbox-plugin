@@ -14,9 +14,9 @@ abstract class AbstractStoreWithoutParam extends AbstractStore
      * Get element ID list from cache or database
      * @return array|null
      */
-    public function get()
+    public function get() : array
     {
-        if ($this->arCachedList !== null) {
+        if ($this->arCachedList !== null && is_array($this->arCachedList)) {
             return $this->arCachedList;
         }
 
@@ -30,7 +30,7 @@ abstract class AbstractStoreWithoutParam extends AbstractStore
      * Get element ID list from database, without cache
      * @return array|null
      */
-    public function getNoCache()
+    public function getNoCache() : array
     {
         $arElementIDList = $this->getIDListFromDB();
 
@@ -50,7 +50,7 @@ abstract class AbstractStoreWithoutParam extends AbstractStore
      * Get cache key
      * @return string
      */
-    protected function getCacheKey()
+    protected function getCacheKey() : string
     {
         return static::class;
     }

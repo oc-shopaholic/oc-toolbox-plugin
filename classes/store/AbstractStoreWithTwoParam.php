@@ -22,15 +22,15 @@ abstract class AbstractStoreWithTwoParam extends AbstractStore
      * @param mixed $sAdditionalParam
      * @return array|null
      */
-    public function get($sFilterValue, $sAdditionalParam = null)
+    public function get($sFilterValue, $sAdditionalParam = null) : array
     {
         if (empty($sFilterValue)) {
-            return null;
+            return [];
         }
 
         $this->sValue = $sFilterValue;
         $this->sAdditionParam = $sAdditionalParam;
-        if (array_key_exists($this->getCacheKey(), $this->arCachedList)) {
+        if (array_key_exists($this->getCacheKey(), $this->arCachedList) && is_array($this->arCachedList[$this->getCacheKey()])) {
             return $this->arCachedList[$this->getCacheKey()];
         }
 
@@ -46,10 +46,10 @@ abstract class AbstractStoreWithTwoParam extends AbstractStore
      * @param mixed $sAdditionalParam
      * @return array|null
      */
-    public function getNoCache($sFilterValue, $sAdditionalParam = null)
+    public function getNoCache($sFilterValue, $sAdditionalParam = null) : array
     {
         if (empty($sFilterValue)) {
-            return null;
+            return [];
         }
 
         $this->sValue = $sFilterValue;
@@ -85,7 +85,7 @@ abstract class AbstractStoreWithTwoParam extends AbstractStore
      * Get cache key
      * @return string
      */
-    protected function getCacheKey()
+    protected function getCacheKey() : string
     {
         return $this->sValue.'_'.$this->sAdditionParam;
     }
