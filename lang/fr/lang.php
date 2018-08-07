@@ -8,6 +8,7 @@
         'name'                     => 'Nom',
         'title'                    => 'Titre',
         'active'                   => 'Actif',
+        'hidden'                   => 'Caché',
         'code'                     => 'Code',
         'slug'                     => 'URL',
         'external_id'              => 'ID Externe',
