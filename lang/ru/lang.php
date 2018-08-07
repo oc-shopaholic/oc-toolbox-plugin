@@ -8,6 +8,7 @@
         'name'                     => 'Название',
         'title'                    => 'Заголовок',
         'active'                   => 'Активность',
+        'hidden'                   => 'Hidden',
         'code'                     => 'Код',
         'slug'                     => 'URL',
         'external_id'              => 'Внешний ID',
