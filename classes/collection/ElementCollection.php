@@ -9,7 +9,7 @@ use October\Rain\Extension\Extendable;
  *
  * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection
  */
-abstract class ElementCollection extends Extendable implements \Iterator
+abstract class ElementCollection extends Extendable implements \Iterator, \Countable
 {
     const COUNT_PER_PAGE = 10;
     const ITEM_CLASS = \Lovata\Toolbox\Classes\Item\ElementItem::class;

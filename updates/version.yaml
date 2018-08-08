@@ -44,3 +44,5 @@
     - 'Update of php-pagination vendor packages'
 1.13.0:
     - 'Added type returned by methods in AbstractStore * classes'
+1.14.0:
+    - 'Add Countable interface in ElementCollection class'
