@@ -198,6 +198,8 @@ class CommonProperty extends Model
             $arValueList[$arValue['value']] = $arValue['value'];
         }
 
+        natsort($arValueList);
+
         return $arValueList;
     }
 
