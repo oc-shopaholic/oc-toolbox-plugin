@@ -12,6 +12,8 @@
     "kharanenka/laravel-scope-slug": "1.0.*",
     "kharanenka/laravel-scope-user-belongs-to": "1.0.*",
     "kharanenka/oc-data-file-model": "1.*",
-    "kharanenka/laravel-scope-moderation": "1.0.*"
+    "kharanenka/laravel-scope-moderation": "1.0.*",
+    "kharanenka/laravel-scope-hidden": "1.0.*",
+    "kharanenka/laravel-scope-type": "1.0.*"
   }
 }

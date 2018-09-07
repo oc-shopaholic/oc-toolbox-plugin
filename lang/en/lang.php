@@ -47,7 +47,17 @@
         'comma'                    => 'Comma',
         'together'                 => 'Merge',
         'space'                    => 'Space',
-
+        'date_begin'               => 'Date of the beginning',
+        'date_end'                 => 'Date of the ending',
+        'discount_value'           => 'Discount value',
+        'discount_type'            => 'Discount type',
+        'discount_price'           => 'Discount price',
+        'discount'                 => 'Discount',
+        'product'                  => 'Product',
+        'priority'                 => 'Priority',
+        'group'                    => 'Group',
+        'count'                    => 'Count',
+        'length'                   => 'Length',
 
         'sort_order' => 'Sorting',
         'created_at' => 'Created',
