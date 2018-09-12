@@ -36,6 +36,7 @@
         'property_is_translatable' => 'Property is translatable',
         'key'                      => 'Key',
         'value'                    => 'Value',
+        'label'                    => 'Label',
         'date'                     => 'Date',
         'datetime'                 => 'Date and time',
         'time'                     => 'Time',

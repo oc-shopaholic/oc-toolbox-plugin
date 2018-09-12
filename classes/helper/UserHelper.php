@@ -37,6 +37,20 @@ class UserHelper
     }
 
     /**
+     * Get user ID
+     * @return int|null
+     */
+    public function getUserID()
+    {
+        $obUser = $this->getUser();
+        if (empty($obUser)) {
+            return null;
+        }
+
+        return $obUser->id;
+    }
+
+    /**
      * Create new user
      * @param array $arUserData
      * @param bool  $bActivate
