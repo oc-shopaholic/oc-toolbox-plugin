@@ -61,6 +61,14 @@
         'queue_on'                  => "Envoi de messages de la file d'attente (queue)",
         'queue_name'                => "Nom de la queue pour l'envoi d'emails",
         'email_list_description'    => "Remplir une liste d'emails séparés par des virgules",
+
+        'country'  => 'Pays',
+        'state'    => 'Etat',
+        'house'    => 'Numéro de maison',
+        'flat'     => 'Numéro d\'appartement',
+        'address1' => 'Adresse 1',
+        'address2' => 'Adresse 2',
+        'postcode' => 'Code postal',
     ],
     'tab'        => [
         'preview_content' => 'Prévisualiser le contenu',

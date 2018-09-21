@@ -62,6 +62,14 @@
         'queue_on'                  => 'Sending messages from the queue',
         'queue_name'                => 'The name of the queue for sending the emails',
         'email_list_description'    => 'Fill out list of emails separated by commas',
+
+        'country'  => 'Country',
+        'state'    => 'State',
+        'house'    => 'House number',
+        'flat'     => 'Flat number',
+        'address1' => 'Address 1',
+        'address2' => 'Address 2',
+        'postcode' => 'Postcode',
     ],
     'tab'        => [
         'preview_content' => 'Preview content',
