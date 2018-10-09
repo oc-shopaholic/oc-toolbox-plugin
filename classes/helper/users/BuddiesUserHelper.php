@@ -32,6 +32,15 @@ class BuddiesUserHelper extends AbstractUserHelper
     }
 
     /**
+     * Get user controller class name
+     * @return string
+     */
+    public function getUserController()
+    {
+        return \Lovata\Buddies\Controllers\Users::class;
+    }
+
+    /**
      * Get auth facade class name
      * @return string
      */

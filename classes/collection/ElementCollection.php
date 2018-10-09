@@ -62,7 +62,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
      * Check list is clear
      * @return bool
      */
-    public function isClear()
+    public function isClear() : bool
     {
         return $this->arElementIDList === null;
     }
@@ -72,7 +72,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#isempty
      * @return bool
      */
-    public function isEmpty()
+    public function isEmpty() : bool
     {
         return empty($this->arElementIDList);
     }
@@ -82,7 +82,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#isnotempty
      * @return bool
      */
-    public function isNotEmpty()
+    public function isNotEmpty() : bool
     {
         return !$this->isEmpty();
     }
@@ -92,9 +92,9 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#getidlist
      * @return array
      */
-    public function getIDList()
+    public function getIDList() : array
     {
-        return $this->arElementIDList;
+        return array_values($this->arElementIDList);
     }
 
     /**
@@ -619,9 +619,9 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
         //Get next elements
         $arResultIDList = array_slice($this->arElementIDList, $iElementPosition + 1);
-        if ($bCyclic && $iElementPosition > 1) {
+        if ($bCyclic && $iElementPosition >= 1) {
             //Get elements from start of array
-            $arAdditionElementIDList = array_slice($this->arElementIDList, 0, $iElementPosition -1);
+            $arAdditionElementIDList = array_slice($this->arElementIDList, 0, $iElementPosition);
             $arResultIDList = array_merge($arResultIDList, $arAdditionElementIDList);
         }
 

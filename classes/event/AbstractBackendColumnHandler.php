@@ -3,10 +3,12 @@
 /**
  * Class AbstractBackendColumnHandler
  * @package Lovata\Toolbox\Classes\Event
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 abstract class AbstractBackendColumnHandler
 {
+    protected $iPriority = 1000;
+
     /**
      * Add listeners
      * @param \Illuminate\Events\Dispatcher $obEvent
@@ -28,7 +30,7 @@ abstract class AbstractBackendColumnHandler
             }
 
             $this->extendColumns($obWidget);
-        });
+        }, $this->iPriority);
     }
 
     /**
@@ -41,11 +43,11 @@ abstract class AbstractBackendColumnHandler
      * Get model class name
      * @return string
      */
-    abstract protected function getModelClass() : string ;
+    abstract protected function getModelClass() : string;
 
     /**
      * Get controller class name
      * @return string
      */
-    abstract protected function getControllerClass() : string ;
+    abstract protected function getControllerClass() : string;
 }

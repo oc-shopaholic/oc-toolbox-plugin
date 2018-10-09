@@ -48,11 +48,11 @@ abstract class AbstractExtendRelationConfigHandler
      * Get controller class name
      * @return string
      */
-    abstract protected function getControllerClass() : string ;
+    abstract protected function getControllerClass() : string;
 
     /**
      * Get path to config file
      * @return string
      */
-    abstract protected function getConfigPath() : string ;
+    abstract protected function getConfigPath() : string;
 }

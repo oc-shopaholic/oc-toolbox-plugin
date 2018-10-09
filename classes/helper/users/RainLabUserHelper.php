@@ -32,6 +32,15 @@ class RainLabUserHelper extends AbstractUserHelper
     }
 
     /**
+     * Get user controller class name
+     * @return string
+     */
+    public function getUserController()
+    {
+        return \RainLab\User\Controllers\Users::class;
+    }
+
+    /**
      * Get auth facade class name
      * @return string
      */

@@ -96,6 +96,19 @@ class UserHelper
     }
 
     /**
+     * Get user controller class name
+     * @return string
+     */
+    public function getUserController()
+    {
+        if (empty($this->obHelper)) {
+            return null;
+        }
+
+        return $this->obHelper->getUserController();
+    }
+
+    /**
      * Get auth facade class name
      * @return string
      */

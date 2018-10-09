@@ -11,6 +11,7 @@ use Lovata\Toolbox\Classes\Store\AbstractStoreWithTwoParam;
  */
 abstract class ModelHandler
 {
+    protected $iPriority = 1000;
     /** @var  \Model */
     protected $obElement;
 
@@ -32,21 +33,21 @@ abstract class ModelHandler
                 $this->obElement = $obElement;
                 $this->init();
                 $this->afterCreate();
-            });
+            }, $this->iPriority);
 
             /** @var \Model $obElement */
             $obElement->bindEvent('model.afterSave', function () use ($obElement) {
                 $this->obElement = $obElement;
                 $this->init();
                 $this->afterSave();
-            });
+            }, $this->iPriority);
 
             /** @var \Model $obElement */
             $obElement->bindEvent('model.afterDelete', function () use ($obElement) {
                 $this->obElement = $obElement;
                 $this->init();
                 $this->afterDelete();
-            });
+            }, $this->iPriority);
         });
     }
 

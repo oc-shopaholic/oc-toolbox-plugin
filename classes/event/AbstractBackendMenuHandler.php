@@ -7,6 +7,8 @@
  */
 abstract class AbstractBackendMenuHandler
 {
+    protected $iPriority = 1000;
+
     /**
      * Add listeners
      * @param \Illuminate\Events\Dispatcher $obEvent
@@ -15,7 +17,7 @@ abstract class AbstractBackendMenuHandler
     {
         $obEvent->listen('backend.menu.extendItems', function($obManager) {
             $this->addMenuItems($obManager);
-        });
+        }, $this->iPriority);
     }
 
     /**
