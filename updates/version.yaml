@@ -48,3 +48,5 @@
     - 'Add Countable interface in ElementCollection class'
 1.14.1:
     - 'Added natsort() for property value variants.'
+1.15.0:
+    - 'Added AbstractBackendColumnHandler, AbstractBackendFieldHandler, AbstractBackendMenuHandler, AbstractExtendRelationConfigHandler, AbstractModelRelationHandler classes.'
