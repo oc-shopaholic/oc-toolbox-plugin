@@ -3,7 +3,7 @@
 /**
  * Class AbstractBackendMenuHandler
  * @package Lovata\Toolbox\Classes\Event
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 abstract class AbstractBackendMenuHandler
 {
@@ -15,7 +15,7 @@ abstract class AbstractBackendMenuHandler
      */
     public function subscribe($obEvent)
     {
-        $obEvent->listen('backend.menu.extendItems', function($obManager) {
+        $obEvent->listen('backend.menu.extendItems', function ($obManager) {
             $this->addMenuItems($obManager);
         }, $this->iPriority);
     }

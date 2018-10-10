@@ -44,8 +44,8 @@ abstract class AbstractModelRelationHandler
     /**
      * After attach event handler
      * @param \Model $obModel
-     * @param array $arAttachedIDList
-     * @param array $arInsertData
+     * @param array  $arAttachedIDList
+     * @param array  $arInsertData
      */
     protected function afterAttach($obModel, $arAttachedIDList, $arInsertData)
     {
@@ -54,7 +54,7 @@ abstract class AbstractModelRelationHandler
     /**
      * After detach event handler
      * @param \Model $obModel
-     * @param array $arAttachedIDList
+     * @param array  $arAttachedIDList
      */
     protected function afterDetach($obModel, $arAttachedIDList)
     {
@@ -73,7 +73,7 @@ abstract class AbstractModelRelationHandler
         }
 
         if (is_array($sCheckedRelationName) && in_array($sRelationName, $sCheckedRelationName)) {
-            return  true;
+            return true;
         }
 
         $bResult = $sRelationName == $sCheckedRelationName;
