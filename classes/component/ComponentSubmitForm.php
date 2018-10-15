@@ -124,9 +124,10 @@ abstract class ComponentSubmitForm extends ComponentBase
 
     /**
      * Get response (mode = form)
+     * @param string $sRedirectURL
      * @return \Illuminate\Http\RedirectResponse|null
      */
-    protected function getResponseModeForm()
+    protected function getResponseModeForm($sRedirectURL = null)
     {
         if (!Result::status()) {
             return Redirect::back()->withInput()->with(Result::get());
@@ -136,6 +137,10 @@ abstract class ComponentSubmitForm extends ComponentBase
         $sRedirectPage = $this->property(self::PROPERTY_REDIRECT_PAGE);
         if (!$bRedirectOn) {
             return null;
+        }
+
+        if (!empty($sRedirectURL)) {
+            return Redirect::to($sRedirectURL);
         }
 
         if (empty($sRedirectPage)) {
@@ -149,9 +154,10 @@ abstract class ComponentSubmitForm extends ComponentBase
 
     /**
      * Get response (mode = response)
+     * @param string $sRedirectURL
      * @return \Illuminate\Http\RedirectResponse|array
      */
-    protected function getResponseModeAjax()
+    protected function getResponseModeAjax($sRedirectURL = null)
     {
         $this->sendFlashMessage();
 
@@ -163,6 +169,10 @@ abstract class ComponentSubmitForm extends ComponentBase
         $sRedirectPage = $this->property(self::PROPERTY_REDIRECT_PAGE);
         if (!$bRedirectOn) {
             return Result::get();
+        }
+
+        if (!empty($sRedirectURL)) {
+            return Redirect::to($sRedirectURL);
         }
 
         if (empty($sRedirectPage)) {

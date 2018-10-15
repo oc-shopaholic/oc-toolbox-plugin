@@ -37,6 +37,20 @@ class UserHelper
     }
 
     /**
+     * Get user ID
+     * @return int|null
+     */
+    public function getUserID()
+    {
+        $obUser = $this->getUser();
+        if (empty($obUser)) {
+            return null;
+        }
+
+        return $obUser->id;
+    }
+
+    /**
      * Create new user
      * @param array $arUserData
      * @param bool  $bActivate
@@ -79,6 +93,19 @@ class UserHelper
         }
 
         return $this->obHelper->getUserModel();
+    }
+
+    /**
+     * Get user controller class name
+     * @return string
+     */
+    public function getUserController()
+    {
+        if (empty($this->obHelper)) {
+            return null;
+        }
+
+        return $this->obHelper->getUserController();
     }
 
     /**

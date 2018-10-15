@@ -11,6 +11,7 @@ use Lovata\Toolbox\Classes\Store\AbstractStoreWithTwoParam;
  */
 abstract class ModelHandler
 {
+    protected $iPriority = 1000;
     /** @var  \Model */
     protected $obElement;
 
@@ -32,21 +33,21 @@ abstract class ModelHandler
                 $this->obElement = $obElement;
                 $this->init();
                 $this->afterCreate();
-            });
+            }, $this->iPriority);
 
             /** @var \Model $obElement */
             $obElement->bindEvent('model.afterSave', function () use ($obElement) {
                 $this->obElement = $obElement;
                 $this->init();
                 $this->afterSave();
-            });
+            }, $this->iPriority);
 
             /** @var \Model $obElement */
             $obElement->bindEvent('model.afterDelete', function () use ($obElement) {
                 $this->obElement = $obElement;
                 $this->init();
                 $this->afterDelete();
-            });
+            }, $this->iPriority);
         });
     }
 
@@ -104,7 +105,8 @@ abstract class ModelHandler
     }
 
     /**
-     * @param $sField
+     * If field value was changed, then cache clear by value
+     * @param string $sField
      * @param AbstractStoreWithParam|AbstractStoreWithoutParam $obListStore
      */
     protected function checkFieldChanges($sField, $obListStore)
@@ -119,6 +121,58 @@ abstract class ModelHandler
             $obListStore->clear($this->obElement->$sField);
             $obListStore->clear($this->obElement->getOriginal($sField));
         }
+    }
+
+    /**
+     * If field has not empty value, then cache clear by value
+     * @param string $sField
+     * @param AbstractStoreWithParam|AbstractStoreWithoutParam $obListStore
+     */
+    protected function clearCacheNotEmptyValue($sField, $obListStore)
+    {
+        if (empty($sField) || empty($obListStore) || empty($this->obElement->$sField)) {
+            return;
+        }
+
+        if ($obListStore instanceof AbstractStoreWithoutParam) {
+            $obListStore->clear();
+        } elseif ($obListStore instanceof AbstractStoreWithParam) {
+            $obListStore->clear($this->obElement->$sField);
+        }
+    }
+
+    /**
+     * If field has empty value, then cache clear by value
+     * @param string $sField
+     * @param AbstractStoreWithoutParam $obListStore
+     */
+    protected function clearCacheEmptyValue($sField, $obListStore)
+    {
+        if (empty($sField) || empty($obListStore) || !empty($this->obElement->$sField) || ! $obListStore instanceof AbstractStoreWithoutParam) {
+            return;
+        }
+
+        $obListStore->clear();
+    }
+
+    /**
+     * If field value was changed, then cache clear by value
+     * @param $sField
+     * @param $sAdditionalField
+     * @param AbstractStoreWithTwoParam $obListStore
+     */
+    protected function clearCacheNotEmptyTwoValue($sField, $sAdditionalField, $obListStore)
+    {
+        if (empty($sField) || empty($obListStore) || empty($this->obElement->$sField) || !$obListStore instanceof AbstractStoreWithTwoParam) {
+            return;
+        }
+
+        $obListStore->clear($this->obElement->$sField);
+        if (empty($this->obElement->$sAdditionalField)) {
+            return;
+        }
+
+        $obListStore->clear($this->obElement->$sField, $this->obElement->$sAdditionalField);
     }
 
     /**

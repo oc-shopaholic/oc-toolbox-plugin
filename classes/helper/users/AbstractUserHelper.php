@@ -14,6 +14,12 @@ abstract class AbstractUserHelper
     abstract public function getUserModel();
 
     /**
+     * Get user controller class name
+     * @return string
+     */
+    abstract public function getUserController();
+
+    /**
      * Get auth facade class name
      * @return string
      */

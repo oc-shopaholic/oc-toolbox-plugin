@@ -106,6 +106,7 @@ class CollectionTest extends PluginTestCase
         $obCollection->intersect($this->arIntersectIDList);
 
         $arResult = array_intersect($this->arElementIDList, $this->arIntersectIDList);
+        $arResult = array_values($arResult);
 
         self::assertEquals($arResult, $obCollection->getIDList(), $sMessage);
 
@@ -171,6 +172,7 @@ class CollectionTest extends PluginTestCase
 
         $arResult = array_merge($this->arElementIDList, $this->arIntersectIDList);
         $arResult = array_unique($arResult);
+        $arResult = array_values($arResult);
 
         self::assertEquals($arResult, $obCollection->getIDList(), $sMessage);
 

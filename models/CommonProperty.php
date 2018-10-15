@@ -5,6 +5,7 @@ use Model;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Sortable;
 
+use Kharanenka\Scope\TypeField;
 use Kharanenka\Scope\SlugField;
 use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
@@ -41,6 +42,7 @@ class CommonProperty extends Model
     use NameField;
     use CodeField;
     use SlugField;
+    use TypeField;
 
     const TYPE_INPUT = 'input';
     const TYPE_TEXT_AREA = 'textarea';
