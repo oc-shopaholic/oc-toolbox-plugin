@@ -1,4 +1,8 @@
 {
+  "name": "lovata/oc-toolbox-plugin",
+  "type": "october-plugin",
+  "description": "Toolbox plugin for October CMS",
+  "license": "GPL-3.0-only",
   "require": {
     "kharanenka/php-result-store": "2.*",
     "kharanenka/laravel-scope-active": "1.0.*",
