@@ -1,14 +1,13 @@
 <?php namespace Lovata\Toolbox\Components;
 
 use Input;
-use Lovata\Toolbox\Plugin;
 use Cms\Classes\ComponentBase;
 use Kharanenka\Helper\Pagination as PaginationHelper;
 
 /**
  * Class Pagination
  * @package Lovata\Toolbox\Components
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class Pagination extends ComponentBase
 {
@@ -16,7 +15,13 @@ class Pagination extends ComponentBase
     protected $iElementOnPage = 10;
 
     /** @var array Component property list */
-    protected $arPropertyList = [];
+    protected $arPropertyList = [
+        'available_count_per_page' => [
+            'title'       => 'lovata.toolbox::lang.settings.available_count_per_page',
+            'description' => 'lovata.toolbox::lang.settings.available_count_per_page_desc',
+            'type'        => 'string',
+        ],
+    ];
 
     /**
      * @return array
@@ -44,7 +49,20 @@ class Pagination extends ComponentBase
      */
     public function init()
     {
-        $iRequestElementOnPage = $this->property('count_per_page');
+        $arAvailableValue = [];
+        $sAvailableValue = $this->property('available_count_per_page');
+        if (!empty($sAvailableValue)) {
+            $arAvailableValue = explode(',', $sAvailableValue);
+        }
+
+        //Get limit from request
+        $iLimit = (int) Input::get('limit');
+        if ($iLimit > 0 && (empty($arAvailableValue) || in_array($iLimit, $arAvailableValue))) {
+            $this->iElementOnPage = $iLimit;
+            return;
+        }
+
+        $iRequestElementOnPage = (int) $this->property('count_per_page');
         if ($iRequestElementOnPage > 0) {
             $this->iElementOnPage = $iRequestElementOnPage;
         }
@@ -141,6 +159,8 @@ class Pagination extends ComponentBase
         if ($iPage < 1) {
             $iPage = 1;
         }
+
+        $this->properties['count_per_page'] = $this->iElementOnPage;
 
         return PaginationHelper::get($iPage, $iCount, $this->properties);
     }

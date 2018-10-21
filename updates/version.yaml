@@ -52,3 +52,5 @@
     - 'Added AbstractBackendColumnHandler, AbstractBackendFieldHandler, AbstractBackendMenuHandler, AbstractExtendRelationConfigHandler, AbstractModelRelationHandler classes.'
 1.16.0:
     - 'Add package information to composer.json. Thanks for contribution pikanji.'
+1.17.0:
+    - 'Added processing of "limit" parameter for the pagination component.'
