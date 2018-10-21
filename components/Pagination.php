@@ -59,6 +59,7 @@ class Pagination extends ComponentBase
         $iLimit = (int) Input::get('limit');
         if ($iLimit > 0 && (empty($arAvailableValue) || in_array($iLimit, $arAvailableValue))) {
             $this->iElementOnPage = $iLimit;
+
             return;
         }
 
