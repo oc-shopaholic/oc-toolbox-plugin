@@ -3,6 +3,9 @@
 use System\Classes\PluginBase;
 use Lovata\Toolbox\Components\Pagination;
 
+use Lovata\Toolbox\Classes\Console\CreateModel;
+use Lovata\Toolbox\Classes\Console\CreateCreationMigration;
+
 /**
  * Class Plugin
  * @package Lovata\Toolbox
@@ -48,5 +51,14 @@ class Plugin extends PluginBase
             $this->app->bind(\Lovata\Toolbox\Classes\Item\TestItem::class, \Lovata\Toolbox\Classes\Item\TestItem::class);
             $this->app->bind(\Lovata\Toolbox\Classes\Collection\TestCollection::class, \Lovata\Toolbox\Classes\Collection\TestCollection::class);
         }
+    }
+
+    /**
+     * Register commands
+     */
+    public function register()
+    {
+        $this->registerConsoleCommand('toolbox.create.model', CreateModel::class);
+        $this->registerConsoleCommand('toolbox.create.migration.create', CreateCreationMigration::class);
     }
 }

@@ -118,6 +118,13 @@
         'restore_confirm'       => 'Do you want to restore selected items?',
         'restore_success'       => 'Restore elements was successfully',
         'e_not_correct_request' => 'Request is not correct',
+
+        'choice_developer'  => 'Choice developer',
+        'choice_field_list' => 'Choose available fields (Example: 1,2,3,4)',
+        'set_developer'     => 'Set developer',
+        'set'               => 'Set :name (Example: :example)',
+        'create'            => 'Create :name?',
+        'force_file'        => 'File :file already exists. Create forced?',
     ],
     'settings'   => [
         'count_per_page'          => 'Count elements per page',
