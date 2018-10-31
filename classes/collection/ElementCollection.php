@@ -94,7 +94,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
      */
     public function getIDList() : array
     {
-        return array_values($this->arElementIDList);
+        return array_values((array) $this->arElementIDList);
     }
 
     /**
@@ -126,7 +126,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
             return false;
         }
 
-        return in_array($iElementID, $this->arElementIDList);
+        return in_array($iElementID, (array) $this->arElementIDList);
     }
 
     /**
@@ -170,7 +170,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
             return 0;
         }
 
-        return count($this->arElementIDList);
+        return count((array) $this->arElementIDList);
     }
 
     /**
