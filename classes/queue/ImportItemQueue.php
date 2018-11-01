@@ -9,7 +9,8 @@ class ImportItemQueue
 {
     /**
      * @param \Illuminate\Queue\Jobs\Job $obJob
-     * @param array $arQueueData
+     * @param array                      $arQueueData
+     * @throws \Throwable
      */
     public function fire($obJob, $arQueueData)
     {
@@ -24,7 +25,8 @@ class ImportItemQueue
     /**
      * Import item
      * @param string $sImportClass
-     * @param array $arImportData
+     * @param array  $arImportData
+     * @throws \Throwable
      */
     protected function import($sImportClass, $arImportData)
     {

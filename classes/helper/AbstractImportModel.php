@@ -58,8 +58,8 @@ abstract class AbstractImportModel
 
     /**
      * Import item
-     * @param      $arModeData
-     * @param bool $bWithQueue
+     * @param array $arModeData
+     * @param bool  $bWithQueue
      * @throws \Throwable
      */
     public function import($arModeData, $bWithQueue = true)
@@ -69,12 +69,14 @@ abstract class AbstractImportModel
 
         if (empty($arModeData)) {
             $this->setWarningResult('lovata.toolbox::lang.message.row_is_empty');
+
             return;
         }
 
         $this->sExternalID = trim(array_get($arModeData, 'external_id'));
         if (empty($this->sExternalID)) {
             $this->setWarningResult('lovata.toolbox::lang.message.external_id_is_empty');
+
             return;
         }
 
@@ -84,6 +86,7 @@ abstract class AbstractImportModel
         $bQueueOn = Settings::getValue('import_queue_on');
         if ($bQueueOn && $bWithQueue) {
             $this->createJob();
+
             return;
         }
 
@@ -171,6 +174,7 @@ abstract class AbstractImportModel
         } catch (\Exception $obException) {
             trace_log($obException);
             $this->setErrorResult($obException->getMessage());
+
             return;
         }
 
@@ -187,6 +191,7 @@ abstract class AbstractImportModel
         } catch (\Exception $obException) {
             trace_log($obException);
             $this->setErrorResult($obException->getMessage());
+
             return;
         }
 
@@ -303,6 +308,7 @@ abstract class AbstractImportModel
 
         if (empty($this->arImageList)) {
             $this->removeAllImages();
+
             return;
         }
 
@@ -340,6 +346,7 @@ abstract class AbstractImportModel
     {
         if (!array_key_exists('preview_image', $this->arImportData)) {
             $this->bNeedUpdatePreviewImage = false;
+
             return;
         }
 
@@ -375,6 +382,7 @@ abstract class AbstractImportModel
             $obPreviewImage = new File();
             $obPreviewImage->fromFile($this->sPreviewImage);
             $this->obModel->preview_image()->add($obPreviewImage);
+
             return;
         }
 
@@ -513,4 +521,3 @@ abstract class AbstractImportModel
         $this->sResultMethod = 'logSkipped';
     }
 }
-
