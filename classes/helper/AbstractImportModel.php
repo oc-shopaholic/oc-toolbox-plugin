@@ -377,7 +377,6 @@ abstract class AbstractImportModel
         }
 
         if (empty($obPreviewImage) && !empty($this->sPreviewImage)) {
-
             //Create new preview
             $obPreviewImage = new File();
             $obPreviewImage->fromFile($this->sPreviewImage);
@@ -460,6 +459,7 @@ abstract class AbstractImportModel
     {
         if (!empty($this->arExistIDList) && in_array($this->sExternalID, $this->arExistIDList)) {
             $this->setUpdatedResult();
+
             return;
         }
 
