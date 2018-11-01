@@ -30,3 +30,13 @@ tabs:
             options:
                 together: lovata.toolbox::lang.field.together
                 space: lovata.toolbox::lang.field.space
+        import_queue_on:
+            tab: lovata.toolbox::lang.tab.import
+            span: left
+            label: lovata.toolbox::lang.field.import_queue_on
+            type: checkbox
+        import_queue_name:
+            tab: lovata.toolbox::lang.tab.import
+            span: left
+            label: lovata.toolbox::lang.field.import_queue_name
+            type: text

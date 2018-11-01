@@ -54,3 +54,5 @@
     - 'Add package information to composer.json. Thanks for contribution pikanji.'
 1.17.0:
     - 'Added processing of "limit" parameter for the pagination component.'
+1.18.0:
+    - 'Added AbstractImportModel class.'
