@@ -418,7 +418,7 @@ abstract class AbstractImportModel
     }
 
     /**
-     * Set active filed value, if active value is null
+     * Set active filed value, if active value is not null
      */
     protected function setActiveField()
     {
