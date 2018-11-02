@@ -171,6 +171,51 @@ class CommonProperty extends ImportModel
     }
 
     /**
+     * Check, property is translatable flag
+     * @return bool
+     */
+    public function isTranslatable()
+    {
+        return (bool) $this->getSettingValue('is_translatable');
+    }
+
+    /**
+     * Get type list
+     * @return array
+     */
+    public function getTypeOptions()
+    {
+        $sLangPath = 'lovata.toolbox::lang.type.';
+
+        return [
+            self::TYPE_INPUT           => Lang::get($sLangPath.self::TYPE_INPUT),
+            self::TYPE_NUMBER          => Lang::get($sLangPath.self::TYPE_NUMBER),
+            self::TYPE_TEXT_AREA       => Lang::get($sLangPath.self::TYPE_TEXT_AREA),
+            self::TYPE_RICH_EDITOR     => Lang::get($sLangPath.self::TYPE_RICH_EDITOR),
+            self::TYPE_SINGLE_CHECKBOX => Lang::get($sLangPath.self::TYPE_SINGLE_CHECKBOX),
+            self::TYPE_SWITCH          => Lang::get($sLangPath.self::TYPE_SWITCH),
+            self::TYPE_CHECKBOX        => Lang::get($sLangPath.self::TYPE_CHECKBOX),
+            self::TYPE_TAG_LIST        => Lang::get($sLangPath.self::TYPE_TAG_LIST),
+            self::TYPE_SELECT          => Lang::get($sLangPath.self::TYPE_SELECT),
+            self::TYPE_RADIO           => Lang::get($sLangPath.self::TYPE_RADIO),
+            self::TYPE_BALLOON         => Lang::get($sLangPath.self::TYPE_BALLOON),
+            self::TYPE_DATE            => Lang::get($sLangPath.self::TYPE_DATE),
+            self::TYPE_COLOR_PICKER    => Lang::get($sLangPath.self::TYPE_COLOR_PICKER),
+            self::TYPE_MEDIA_FINDER    => Lang::get($sLangPath.self::TYPE_MEDIA_FINDER),
+        ];
+    }
+
+    /**
+     * Import item list from CSV file
+     * @param array $arElementList
+     * @param null  $sSessionKey
+     * @throws \Throwable
+     */
+    public function importData($arElementList, $sSessionKey = null)
+    {
+    }
+
+    /**
      * Get field setting with type "text"
      * @return array
      */
@@ -434,52 +479,6 @@ class CommonProperty extends ImportModel
 
         return $arResult;
     }
-
-    /**
-     * Check, property is translatable flag
-     * @return bool
-     */
-    public function isTranslatable()
-    {
-        return (bool) $this->getSettingValue('is_translatable');
-    }
-
-    /**
-     * Get type list
-     * @return array
-     */
-    public function getTypeOptions()
-    {
-        $sLangPath = 'lovata.toolbox::lang.type.';
-
-        return [
-            self::TYPE_INPUT           => Lang::get($sLangPath.self::TYPE_INPUT),
-            self::TYPE_NUMBER          => Lang::get($sLangPath.self::TYPE_NUMBER),
-            self::TYPE_TEXT_AREA       => Lang::get($sLangPath.self::TYPE_TEXT_AREA),
-            self::TYPE_RICH_EDITOR     => Lang::get($sLangPath.self::TYPE_RICH_EDITOR),
-            self::TYPE_SINGLE_CHECKBOX => Lang::get($sLangPath.self::TYPE_SINGLE_CHECKBOX),
-            self::TYPE_SWITCH          => Lang::get($sLangPath.self::TYPE_SWITCH),
-            self::TYPE_CHECKBOX        => Lang::get($sLangPath.self::TYPE_CHECKBOX),
-            self::TYPE_TAG_LIST        => Lang::get($sLangPath.self::TYPE_TAG_LIST),
-            self::TYPE_SELECT          => Lang::get($sLangPath.self::TYPE_SELECT),
-            self::TYPE_RADIO           => Lang::get($sLangPath.self::TYPE_RADIO),
-            self::TYPE_BALLOON         => Lang::get($sLangPath.self::TYPE_BALLOON),
-            self::TYPE_DATE            => Lang::get($sLangPath.self::TYPE_DATE),
-            self::TYPE_COLOR_PICKER    => Lang::get($sLangPath.self::TYPE_COLOR_PICKER),
-            self::TYPE_MEDIA_FINDER    => Lang::get($sLangPath.self::TYPE_MEDIA_FINDER),
-        ];
-    }
-
-    /**
-     * Import item list from CSV file
-     * @param array $arElementList
-     * @param null  $sSessionKey
-     * @throws \Throwable
-     */
-    public function importData($arElementList, $sSessionKey = null)
-    {
-    }
-
     /**
      * Get property settings value
      * @param string $sKey
