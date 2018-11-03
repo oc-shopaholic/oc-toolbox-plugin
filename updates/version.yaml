@@ -58,3 +58,5 @@
     - 'Added AbstractImportModel class.'
 1.19.0:
     - 'Added supported property types: number, rich editor, single checkbox, switch, balloon selector, tag list, radio.'
+1.20.0:
+    - 'Added Japanese language. Thanks for contribution pikanji.'
