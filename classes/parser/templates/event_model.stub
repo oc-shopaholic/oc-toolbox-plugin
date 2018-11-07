@@ -1,0 +1,73 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Event;
+
+use Lovata\Toolbox\Classes\Event\ModelHandler;
+use {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}};
+use {{studly_author}}\{{studly_plugin}}\Classes\Item\{{studly_model}}Item;
+[[active_sort]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}ListStore;
+[[active_sort]]
+/**
+ * Class {{studly_model}}ModelHandler
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Event
+ * @author  {{developer}}
+ */
+class {{studly_model}}ModelHandler extends ModelHandler
+{
+    /** @var {{studly_model}} */
+    protected $obElement;
+
+    /**
+     * Get model class name
+     * @return string
+     */
+    protected function getModelClass()
+    {
+        return {{studly_model}}::class;
+    }
+
+    /**
+     * Get item class name
+     * @return string
+     */
+    protected function getItemClass()
+    {
+        return {{studly_model}}Item::class;
+    }
+[[active_sort]]
+[[sort]]    /**
+     * After create event handler
+     */
+    protected function afterCreate()
+    {
+        parent::afterCreate();
+        $this->clearSortingList();
+    }
+
+[[sort]][[active]]    /**
+     * After save event handler
+     */
+    protected function afterSave()
+    {
+        parent::afterSave();
+        $this->checkFieldChanges('active', {{studly_model}}ListStore::instance()->active);
+    }
+
+[[active]]    /**
+     * After delete event handler
+     */
+    protected function afterDelete()
+    {
+        parent::afterDelete();
+[[sort]]        $this->clearSortingList();
+[[sort]][[active]]        if ($this->obElement->active) {
+            {{studly_model}}ListStore::instance()->active->clear();
+        }
+[[active]]    }
+[[sort]]
+    /**
+     * Clear sorting list
+     */
+    protected function clearSortingList()
+    {
+        {{studly_model}}ListStore::instance()->sorting->clear();
+    }
+[[sort]][[active_sort]]}

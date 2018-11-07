@@ -1,7 +1,6 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
 use Lang;
-
 use Lovata\Toolbox\Classes\Parser\ModelFile;
 
 /**
@@ -23,15 +22,16 @@ class CreateModel extends CommonCreateFile
      */
     public function handle()
     {
-        $this->arData = $this->argument('data');
-        $arAdditionList   = array_get($this->arData, 'addition');
-        $sModelLower      = array_get($this->arData, 'replace.' . self::PREFIX_LOWER . self::CODE_MODEL);
-        $sModelStudly     = array_get($this->arData, 'replace.' . self::PREFIX_STUDLY . self::CODE_MODEL);
-        $sControllerLower = array_get($this->arData, 'replace.' . self::PREFIX_LOWER . self::CODE_CONTROLLER);
+        parent::handle();
 
-        if (empty($this->arData)) {
+        $this->arData['enable'][] = self::CODE_TRAIT_VALIDATOR;
+
+        $sModelLower      = array_get($this->arInoutData, 'replace.' . self::PREFIX_LOWER . self::CODE_MODEL);
+        $sModelStudly     = array_get($this->arInoutData, 'replace.' . self::PREFIX_STUDLY . self::CODE_MODEL);
+        $sControllerLower = array_get($this->arInoutData, 'replace.' . self::PREFIX_LOWER . self::CODE_CONTROLLER);
+
+        if (empty($this->arInoutData)) {
             $this->logoToolBox();
-            $this->choiceDeveloper();
             $this->setAuthor();
             $this->setPlugin();
         }
@@ -44,9 +44,10 @@ class CreateModel extends CommonCreateFile
             $this->setController();
         }
 
-        if (empty($arAdditionList) || (!empty($arAdditionList) && !in_array(self::CODE_EMPTY_FIELD, $arAdditionList))) {
+        if (!$this->checkAddition(self::CODE_EMPTY_FIELD)) {
             $this->choiceFieldList();
             $this->addValidationData();
+            $this->setAdditionalList();
         }
 
         $this->createFile(ModelFile::class);
@@ -64,14 +65,24 @@ class CreateModel extends CommonCreateFile
         if ($this->confirm($sMessage, true)) {
             $this->call('toolbox.create.migration.create', ['data' => $this->arData]);
         }
+
+        $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_CREATION_MODEL_COLUMNS]);
+
+        if ($this->confirm($sMessage, true)) {
+            $this->call('toolbox.create.model.columns', ['data' => $this->arData]);
+        }
+
+        $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_CREATION_MODEL_FIELDS]);
+
+        if ($this->confirm($sMessage, true)) {
+            $this->call('toolbox.create.model.fields', ['data' => $this->arData]);
+        }
     }
 
     /**
      * Add validate data for $this->data
      */
     protected function addValidationData() {
-        $this->arData['enable'][] = self::CODE_TRAIT_VALIDATOR;
-
         $bFieldName = in_array('name', $this->arData['enable']);
         $bFieldSlug = in_array('slug', $this->arData['enable']);
 

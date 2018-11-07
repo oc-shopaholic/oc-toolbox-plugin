@@ -1,0 +1,26 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Store;
+
+use Lovata\Toolbox\Classes\Store\AbstractListStore;
+[[active]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}\ActiveListStore;
+[[active]][[sort]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}\SortingListStore;
+[[sort]]
+/**
+ * Class {{studly_model}}ListStore
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Store
+ * @author  {{developer}}
+[[active]] * @property ActiveListStore  $active
+[[active]][[sort]] * @property SortingListStore $sorting
+[[sort]] */
+class {{studly_model}}ListStore extends AbstractListStore
+{
+    protected static $instance;
+
+    /**
+     * Init store method
+     */
+    protected function init()
+    {
+[[active]]        $this->addToStoreList('active', ActiveListStore::class);
+[[active]][[sort]]        $this->addToStoreList('sorting', SortingListStore::class);
+[[sort]]    }
+}

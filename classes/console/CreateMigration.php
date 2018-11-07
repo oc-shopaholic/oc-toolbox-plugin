@@ -1,31 +1,30 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
-use Lovata\Toolbox\Classes\Parser\CreationMigrationFile;
+use Lovata\Toolbox\Classes\Parser\MigrationFile;
 
 /**
- * Class CreateCreationMigration
+ * Class CreateMigration
  * @package Lovata\Toolbox\Classes\Console
  * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
-class CreateCreationMigration extends CommonCreateFile
+class CreateMigration extends CommonCreateFile
 {
     /** @var string The console command name. */
     protected $name = 'toolbox.create.migration.create';
     /** @var string The console command description. */
-    protected $description = 'Create a new creation migration';
+    protected $description = 'Create a new creation migration.';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $this->arData = $this->argument('data');
-        $arAdditionList   = array_get($this->arData, 'addition');
-        $sControllerLower = array_get($this->arData, 'replace.' . self::PREFIX_LOWER . self::CODE_CONTROLLER);
+        parent::handle();
 
-        if (empty($this->arData)) {
+        $sControllerLower = array_get($this->arInoutData, 'replace.' . self::PREFIX_LOWER . self::CODE_CONTROLLER);
+
+        if (empty($this->arInoutData)) {
             $this->logoToolBox();
-            $this->choiceDeveloper();
             $this->setAuthor();
             $this->setPlugin();
         }
@@ -34,13 +33,13 @@ class CreateCreationMigration extends CommonCreateFile
             $this->setController();
         }
 
-        if (empty($arAdditionList) || (!empty($arAdditionList) && !in_array(self::CODE_EMPTY_FIELD, $arAdditionList))) {
+        if (!$this->checkAddition(self::CODE_EMPTY_FIELD)) {
             $this->choiceFieldList([
                 'preview_image',
                 'images',
             ]);
         };
 
-        $this->createFile(CreationMigrationFile::class);
+        $this->createFile(MigrationFile::class);
     }
 }

@@ -1,0 +1,29 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Controllers;
+
+use BackendMenu;
+use Backend\Classes\Controller;
+
+/**
+ * Class {{studly_controller}}
+ * @package {{studly_author}}\{{studly_plugin}}\Controllers
+ * @author  {{developer}}
+ */
+class {{studly_controller}} extends Controller
+{
+    public $implement = [
+        'Backend.Behaviors.ListController',
+        'Backend.Behaviors.FormController',
+    ];
+
+    public $listConfig = 'config_list.yaml';
+    public $formConfig = 'config_form.yaml';
+
+    /**
+     * {{studly_controller}} constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        BackendMenu::setContext('{{studly_author}}.{{studly_plugin}}', '{{lower_plugin}}-menu-main', '{{lower_plugin}}-menu-{{lower_controller}}');
+    }
+}

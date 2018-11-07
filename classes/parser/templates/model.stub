@@ -15,8 +15,9 @@ use Model;
  * @package {{studly_author}}\{{studly_plugin}}\Models
  * @author  {{developer}}
  *
- * @mixin \October\Rain\Database\Builder
- * @mixin \Eloquent
+ * @mixin    \October\Rain\Database\Builder
+ * @mixin    \Eloquent
+ *
  * @property integer                                                 $id
 [[active]] * @property bool                                                    $active
 [[active]][[name]] * @property string                                                  $name

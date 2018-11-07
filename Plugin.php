@@ -3,8 +3,24 @@
 use System\Classes\PluginBase;
 use Lovata\Toolbox\Components\Pagination;
 
+use Lovata\Toolbox\Classes\Console\ToolBoxHelper;
+use Lovata\Toolbox\Classes\Console\CreateAll;
+use Lovata\Toolbox\Classes\Console\CreatePlugin;
 use Lovata\Toolbox\Classes\Console\CreateModel;
-use Lovata\Toolbox\Classes\Console\CreateCreationMigration;
+use Lovata\Toolbox\Classes\Console\CreateModelColumn;
+use Lovata\Toolbox\Classes\Console\CreateModelField;
+use Lovata\Toolbox\Classes\Console\CreateController;
+use Lovata\Toolbox\Classes\Console\CreateMigration;
+use Lovata\Toolbox\Classes\Console\CreateComponentData;
+use Lovata\Toolbox\Classes\Console\CreateComponentList;
+use Lovata\Toolbox\Classes\Console\CreateComponentPage;
+use Lovata\Toolbox\Classes\Console\CreateItem;
+use Lovata\Toolbox\Classes\Console\CreateCollection;
+use Lovata\Toolbox\Classes\Console\CreateEventModel;
+use Lovata\Toolbox\Classes\Console\CreateStore;
+use Lovata\Toolbox\Classes\Console\CreateExtendBackendMenuHandler;
+use Lovata\Toolbox\Classes\Console\CreateExtendModelFieldsHandler;
+use Lovata\Toolbox\Classes\Console\CreateExtendModelColumnsHandler;
 
 /**
  * Class Plugin
@@ -58,7 +74,23 @@ class Plugin extends PluginBase
      */
     public function register()
     {
+        $this->registerConsoleCommand('toolbox.helper', ToolBoxHelper::class);
+        $this->registerConsoleCommand('toolbox.create.all', CreateAll::class);
+        $this->registerConsoleCommand('toolbox.create.plugin', CreatePlugin::class);
         $this->registerConsoleCommand('toolbox.create.model', CreateModel::class);
-        $this->registerConsoleCommand('toolbox.create.migration.create', CreateCreationMigration::class);
+        $this->registerConsoleCommand('toolbox.create.model.columns', CreateModelColumn::class);
+        $this->registerConsoleCommand('toolbox.create.model.fields', CreateModelField::class);
+        $this->registerConsoleCommand('toolbox.create.controller', CreateController::class);
+        $this->registerConsoleCommand('toolbox.create.migration', CreateMigration::class);
+        $this->registerConsoleCommand('toolbox.create.component.data', CreateComponentData::class);
+        $this->registerConsoleCommand('toolbox.create.component.list', CreateComponentList::class);
+        $this->registerConsoleCommand('toolbox.create.component.page', CreateComponentPage::class);
+        $this->registerConsoleCommand('toolbox.create.item', CreateItem::class);
+        $this->registerConsoleCommand('toolbox.create.collection', CreateCollection::class);
+        $this->registerConsoleCommand('toolbox.create.event.model', CreateEventModel::class);
+        $this->registerConsoleCommand('toolbox.create.store', CreateStore::class);
+        $this->registerConsoleCommand('toolbox.create.event.menu', CreateExtendBackendMenuHandler::class);
+        $this->registerConsoleCommand('toolbox.create.event.fields', CreateExtendModelFieldsHandler::class);
+        $this->registerConsoleCommand('toolbox.create.event.columns', CreateExtendModelColumnsHandler::class);
     }
 }

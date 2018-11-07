@@ -1,18 +1,18 @@
 <?php namespace Lovata\Toolbox\Classes\Parser;
 
 /**
- * Class CreationMigrationFile
+ * Class EventModelFile
  * @package Lovata\Toolbox\Classes\Parser
  * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
-class CreationMigrationFile extends CommonFile
+class EventModelFile extends CommonFile
 {
     /** @var string */
-    protected $sFile = 'create_table_{{lower_controller}}.php';
+    protected $sFile = '{{studly_model}}ModelHandler.php';
     /** @var string */
-    protected $sPathFolder = '/{{lower_author}}/{{lower_plugin}}/updates/';
+    protected $sPathFolder = '/{{lower_author}}/{{lower_plugin}}/classes/event/';
     /** @var string */
-    protected $sPathTemplate = '/lovata/toolbox/classes/parser/templates/creation_migration.stub';
+    protected $sPathTemplate = '/lovata/toolbox/classes/parser/templates/event_model.stub';
 
     /**
      * Create file

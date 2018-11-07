@@ -3,7 +3,6 @@
 use Lang;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
-
 use Lovata\Toolbox\Traits\Console\Logo;
 
 /**
@@ -17,32 +16,32 @@ class CommonCreateFile extends Command
 
     const GROUP_NAME = 'LOVATA Group';
 
-    const CODE_DEVELOPER          = 'developer';
-    const CODE_AUTHOR             = 'author';
-    const CODE_PLUGIN             = 'plugin';
-    const CODE_MODEL              = 'model';
-    const CODE_CONTROLLER         = 'controller';
-    const CODE_CREATION_MIGRATION = 'creation migration';
-    const CODE_EMPTY_FIELD        = 'empty_fields';
-    const CODE_SET_NAME           = 'Set developer';
-    const CODE_DEFAULT            = 'Default';
+    const CODE_DEVELOPER              = 'developer';
+    const CODE_AUTHOR                 = 'author';
+    const CODE_PLUGIN                 = 'plugin';
+    const CODE_MODEL                  = 'model';
+    const CODE_CONTROLLER             = 'controller';
+    const CODE_ITEM                   = 'item';
+    const CODE_COLLECTION             = 'collection';
+    const CODE_STORE                  = 'store';
+    const CODE_COMPONENT_PAGE         = 'component page';
+    const CODE_COMPONENT_DATA         = 'component data';
+    const CODE_COMPONENT_LIST         = 'component list';
+    const CODE_EVENT                  = 'event';
+    const CODE_CREATION_MIGRATION     = 'creation migration';
+    const CODE_CREATION_MODEL_COLUMNS = 'model columns';
+    const CODE_CREATION_MODEL_FIELDS  = 'model fields';
+    const CODE_EMPTY_FIELD            = 'empty_fields';
+    const CODE_SORT                   = 'sort';
+    const CODE_ACTIVE                 = 'active';
+    const CODE_FIELDS                 = 'fields';
+    const CODE_EMPTY_DEVELOPER        = 'empty_developer';
+    const CODE_SET_NAME               = 'Set developer';
+    const CODE_DEFAULT                = 'Default';
 
     const PREFIX_LOWER   = 'lower_';
     const PREFIX_STUDLY  = 'studly_';
 
-    /** @var array */
-    protected $arDeveloperList = [
-        [
-            'name'      => 'Andrey',
-            'last_name' => 'Kharanenka',
-            'email'     => 'a.khoronenko@lovata.com',
-        ],
-        [
-            'name'      => 'Sergey',
-            'last_name' => 'Zakharevich',
-            'email'     => 's.zakharevich@lovata.com',
-        ],
-    ];
     /** @var array */
     protected $arFieldList = [
         'active',
@@ -56,12 +55,36 @@ class CommonCreateFile extends Command
         'images',
     ];
     /** @var array */
+    protected $arInoutData = [];
+    /** @var array */
     protected $arData = [
         'replace'  => [],
         'enable'   => [],
         'disable'  => [],
         'addition' => [],
     ];
+
+    /**
+     * CommonCreateFile constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        array_set($this->arData, 'replace.developer', env('DEVELOPER', ''));
+    }
+
+    /**
+     * Execute the console command.
+     */
+    public function handle()
+    {
+        $this->arInoutData = $this->argument('data');
+
+        if (!empty($this->arInoutData)) {
+            $this->arData = $this->arInoutData;
+        }
+    }
 
     /**
      * Get the console command arguments.
@@ -72,29 +95,6 @@ class CommonCreateFile extends Command
         return [
             ['data', InputArgument::OPTIONAL],
         ];
-    }
-
-    /**
-     * Choice developer
-     */
-    protected function choiceDeveloper()
-    {
-        $arChoiceList = [self::CODE_SET_NAME];
-
-        foreach ($this->arDeveloperList as $arDeveloper) {
-            $arDeveloper[] = self::GROUP_NAME;
-            $arChoiceList[] = implode(' ', $arDeveloper);
-        }
-
-        $sMessage = Lang::get('lovata.toolbox::lang.message.choice_developer');
-        $sDeveloper = $this->choice($sMessage, $arChoiceList);
-
-        if ($sDeveloper == self::CODE_SET_NAME) {
-            $sMessage = Lang::get('lovata.toolbox::lang.message.set_developer');
-            $sDeveloper = $this->ask($sMessage);
-        }
-
-        array_set($this->arData, 'replace.' . self::CODE_DEVELOPER, $sDeveloper);
     }
 
     /**
@@ -287,6 +287,43 @@ class CommonCreateFile extends Command
             if ($this->confirm($sMessage, true)) {
                 $obFile->create(true);
             }
+        }
+    }
+
+    /**
+     * Check addition config
+     * @param string $sCode
+     * @return bool
+     */
+    protected function checkAddition($sCode)
+    {
+        $arAdditionList = array_get($this->arData, 'addition');
+
+        if (!empty($sCode) && !empty($arAdditionList) && in_array($sCode, $arAdditionList)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Set additional list
+     */
+    protected function setAdditionalList()
+    {
+        $arEnableList  = array_get($this->arData, 'enable');
+        $arDisableList = array_get($this->arData, 'disable');
+
+        if (in_array(self::CODE_ACTIVE, $arEnableList) || in_array(self::CODE_ACTIVE, $arDisableList)) {
+            $this->arData['addition'][] = self::CODE_ACTIVE;
+        }
+
+        if (in_array(self::CODE_SORT, $arEnableList) || in_array(self::CODE_SORT, $arDisableList)) {
+            $this->arData['addition'][] = self::CODE_SORT;
+        }
+
+        if (in_array(self::CODE_EMPTY_FIELD, $arEnableList) || in_array(self::CODE_EMPTY_FIELD, $arDisableList)) {
+            $this->arData['addition'][] = self::CODE_EMPTY_FIELD;
         }
     }
 }
