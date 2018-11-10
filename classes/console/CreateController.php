@@ -10,6 +10,7 @@ use Lovata\Toolbox\Classes\Parser\ControllerIndexFile;
 use Lovata\Toolbox\Classes\Parser\ControllerPreviewFile;
 use Lovata\Toolbox\Classes\Parser\ControllerUpdateFile;
 use Lovata\Toolbox\Classes\Parser\ControllerConfirmFilterFile;
+use Lovata\Toolbox\Classes\Parser\UpdatePluginYAML;
 
 /**
  * Class CreateController
@@ -30,22 +31,17 @@ class CreateController extends CommonCreateFile
     {
         parent::handle();
 
-        $sModelLower       = array_get($this->arInoutData, 'replace.' . self::PREFIX_LOWER . self::CODE_MODEL);
-        $sModelStudly      = array_get($this->arInoutData, 'replace.' . self::PREFIX_STUDLY . self::CODE_MODEL);
-        $sControllerLower  = array_get($this->arInoutData, 'replace.' . self::PREFIX_LOWER . self::CODE_CONTROLLER);
-        $sControllerStudly = array_get($this->arInoutData, 'replace.' . self::PREFIX_STUDLY . self::CODE_CONTROLLER);
-
         if (empty($this->arInoutData)) {
             $this->logoToolBox();
             $this->setAuthor();
             $this->setPlugin();
         }
 
-        if (empty($sModelLower) || empty($sModelStudly)) {
+        if (!$this->checkAddition(self::CODE_MODEL)) {
             $this->setModel();
         }
 
-        if (empty($sControllerLower) || empty($sControllerStudly)) {
+        if (!$this->checkAddition(self::CODE_CONTROLLER)) {
             $this->setController();
         }
 
@@ -57,13 +53,13 @@ class CreateController extends CommonCreateFile
             }
         };
 
-        $this->createFileList();
+        $this->createAdditionalFile();
     }
 
     /**
      * Create file list
      */
-    protected function createFileList ()
+    protected function createAdditionalFile()
     {
         $this->createFile(ControllerFile::class);
         $this->createFile(ControllerListToolbarFile::class);
@@ -74,5 +70,18 @@ class CreateController extends CommonCreateFile
         $this->createFile(ControllerPreviewFile::class);
         $this->createFile(ControllerUpdateFile::class);
         $this->createFile(ControllerConfirmFilterFile::class);
+
+        $this->updatePluginYAML();
+    }
+
+    /**
+     * Update plugin.yaml
+     */
+    protected function updatePluginYAML()
+    {
+        $sMessage = Lang::get('lovata.toolbox::lang.message.add_side_menu');
+        if ($this->confirm($sMessage, true)) {
+            new UpdatePluginYAML($this->arData);
+        }
     }
 }

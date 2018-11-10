@@ -34,8 +34,9 @@ class CommonCreateFile extends Command
     const CODE_EMPTY_FIELD            = 'empty_fields';
     const CODE_SORT                   = 'sort';
     const CODE_ACTIVE                 = 'active';
+    const CODE_NAME                   = 'name';
+    const CODE_SLUG                   = 'slug';
     const CODE_FIELDS                 = 'fields';
-    const CODE_EMPTY_DEVELOPER        = 'empty_developer';
     const CODE_SET_NAME               = 'Set developer';
     const CODE_DEFAULT                = 'Default';
 
@@ -224,6 +225,7 @@ class CommonCreateFile extends Command
 
         $sModel = $this->validationAskByName($sMessage);
         $this->setRegisterString($sModel, self::CODE_MODEL);
+        $this->arData['addition'][] = self::CODE_MODEL;
     }
 
     /**
@@ -238,6 +240,7 @@ class CommonCreateFile extends Command
 
         $sController = $this->validationAskByName($sMessage);
         $this->setRegisterString($sController, self::CODE_CONTROLLER);
+        $this->arData['addition'][] = self::CODE_CONTROLLER;
     }
 
     /**

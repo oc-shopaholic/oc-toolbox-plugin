@@ -22,15 +22,13 @@ class CreateEventModel extends CommonCreateFile
     {
         parent::handle();
 
-        $sModelStudly = array_get($this->arInoutData, 'replace.' . self::PREFIX_STUDLY . self::CODE_MODEL);
-
         if (empty($this->arInoutData)) {
             $this->logoToolBox();
             $this->setAuthor();
             $this->setPlugin();
         }
 
-        if (empty($sModelStudly)) {
+        if (!$this->checkAddition(self::CODE_MODEL)) {
             $this->setModel();
         }
 

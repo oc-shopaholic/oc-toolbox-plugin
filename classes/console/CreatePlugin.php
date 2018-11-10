@@ -27,9 +27,13 @@ class CreatePlugin extends CommonCreateFile
      */
     public function handle()
     {
-        $this->logoToolBox();
-        $this->setAuthor();
-        $this->setPlugin();
+        parent::handle();
+
+        if (empty($this->arInoutData)) {
+            $this->logoToolBox();
+            $this->setAuthor();
+            $this->setPlugin();
+        }
 
         $this->createFile(PluginPHPFile::class);
         $this->createFile(PluginYAMLFile::class);

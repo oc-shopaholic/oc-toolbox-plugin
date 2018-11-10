@@ -16,8 +16,8 @@ class {{studly_model}}Data extends ElementData
     public function componentDetails()
     {
         return [
-            'name'          => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_data_name',
-            'description'   => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_data_description',
+            'name'        => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_data_name',
+            'description' => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_data_description',
         ];
     }
 

@@ -16,8 +16,8 @@ class {{studly_model}}List extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'          => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_list_name',
-            'description'   => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_list_description',
+            'name'        => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_list_name',
+            'description' => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_list_description',
         ];
     }
 

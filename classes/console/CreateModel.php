@@ -26,21 +26,17 @@ class CreateModel extends CommonCreateFile
 
         $this->arData['enable'][] = self::CODE_TRAIT_VALIDATOR;
 
-        $sModelLower      = array_get($this->arInoutData, 'replace.' . self::PREFIX_LOWER . self::CODE_MODEL);
-        $sModelStudly     = array_get($this->arInoutData, 'replace.' . self::PREFIX_STUDLY . self::CODE_MODEL);
-        $sControllerLower = array_get($this->arInoutData, 'replace.' . self::PREFIX_LOWER . self::CODE_CONTROLLER);
-
         if (empty($this->arInoutData)) {
             $this->logoToolBox();
             $this->setAuthor();
             $this->setPlugin();
         }
 
-        if (empty($sModelLower) || empty($sModelStudly)) {
+        if (!$this->checkAddition(self::CODE_MODEL)) {
             $this->setModel();
         }
 
-        if (empty($sControllerLower)) {
+        if (!$this->checkAddition(self::CODE_CONTROLLER)) {
             $this->setController();
         }
 

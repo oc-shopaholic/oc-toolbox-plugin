@@ -21,15 +21,13 @@ class CreateModelColumn extends CommonCreateFile
     {
         parent::handle();
 
-        $sModelLower = array_get($this->arInoutData, 'replace.' . self::PREFIX_LOWER . self::CODE_MODEL);
-
         if (empty($this->arInoutData)) {
             $this->logoToolBox();
             $this->setAuthor();
             $this->setPlugin();
         }
 
-        if (empty($sModelLower)) {
+        if (!$this->checkAddition(self::CODE_MODEL)) {
             $this->setModel();
         }
 

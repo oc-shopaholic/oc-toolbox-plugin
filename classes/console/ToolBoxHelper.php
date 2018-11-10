@@ -41,7 +41,7 @@ class ToolBoxHelper extends Command
             ],
             [
                 'toolbox.create.plugin',
-                Lang::get('lovata.toolbox::lang.message.table_toolbox_create', ['description' => 'plugin..']),
+                Lang::get('lovata.toolbox::lang.message.table_toolbox_create', ['description' => 'plugin.']),
             ],
             [
                 'toolbox.create.model',
@@ -85,7 +85,7 @@ class ToolBoxHelper extends Command
             ],
             [
                 'toolbox.create.event.model',
-                Lang::get('lovata.toolbox::lang.message.table_toolbox_create', ['description' => 'plugin.']),
+                Lang::get('lovata.toolbox::lang.message.table_toolbox_create', ['description' => 'event model.']),
             ],
             [
                 'toolbox.create.store',

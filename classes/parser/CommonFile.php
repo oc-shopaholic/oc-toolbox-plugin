@@ -47,7 +47,7 @@ class CommonFile
         $this->sFile = $this->parseByName($this->arData['replace'], $this->sFile);
         $this->sPathFile = $this->sPathFolder . $this->sFile;
 
-        $this->obFile = new Filesystem();
+        $this->obFile = new Filesystem;
 
         $this->sContent = $this->obFile->get(plugins_path() . $this->sPathTemplate);
 

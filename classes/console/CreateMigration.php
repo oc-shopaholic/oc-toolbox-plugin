@@ -21,15 +21,13 @@ class CreateMigration extends CommonCreateFile
     {
         parent::handle();
 
-        $sControllerLower = array_get($this->arInoutData, 'replace.' . self::PREFIX_LOWER . self::CODE_CONTROLLER);
-
         if (empty($this->arInoutData)) {
             $this->logoToolBox();
             $this->setAuthor();
             $this->setPlugin();
         }
 
-        if (empty($sControllerLower)) {
+        if (!$this->checkAddition(self::CODE_CONTROLLER)) {
             $this->setController();
         }
 

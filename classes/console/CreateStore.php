@@ -24,8 +24,6 @@ class CreateStore extends CommonCreateFile
     {
         parent::handle();
 
-        $sModelLower  = array_get($this->arInoutData, 'replace.' . self::PREFIX_LOWER . self::CODE_MODEL);
-        $sModelStudly = array_get($this->arInoutData, 'replace.' . self::PREFIX_STUDLY . self::CODE_MODEL);
         $arEnableList = array_get($this->arInoutData, 'enable');
 
         if (empty($this->arInoutData)) {
@@ -34,7 +32,7 @@ class CreateStore extends CommonCreateFile
             $this->setPlugin();
         }
 
-        if (empty($sModelLower) || empty($sModelStudly)) {
+        if (!$this->checkAddition(self::CODE_MODEL)) {
             $this->setModel();
         }
 
