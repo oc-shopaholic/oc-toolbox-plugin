@@ -133,6 +133,7 @@
         'sort_list'             => 'Add default sort list for :class?',
         'filter_active'         => 'Add filter by active?',
         'add_side_menu'         => 'Add side menu to plugin.yaml?',
+        'version_up'            => 'Add new version to version.yaml?',
     ],
     'settings'   => [
         'count_per_page'          => 'Count elements per page',

@@ -43,7 +43,7 @@ class UpdatePluginYAML
         'label' => '',
     ];
     /** @var bool */
-    protected $bSave = false;
+    protected $bSave = true;
 
     /**
      * UpdatePluginYAML constructor.
@@ -52,14 +52,6 @@ class UpdatePluginYAML
      */
     public function __construct($arData = [])
     {
-//        $arData = [
-//            'replace' => [
-//                'lower_author' => 'lovata',
-//                'lower_plugin' => 'base',
-//                'lower_model' => 'category',
-//                'lower_controller' => 'categories',
-//            ],
-//        ];
         $this->arData = $arData;
         $sAuthor = array_get($this->arData, 'replace.lower_author');
         $sPlugin = array_get($this->arData, 'replace.lower_plugin');
@@ -84,10 +76,6 @@ class UpdatePluginYAML
     protected function processorYAML()
     {
         $this->arYAML = Yaml::parseFile($this->sPluginYAMLPath);
-
-        if (empty($this->arYAML)) {
-            return;
-        }
 
         $sLowerAuthor     = array_get($this->arData, 'replace.lower_author');
         $sLowerPlugin     = array_get($this->arData, 'replace.lower_plugin');;
@@ -123,10 +111,8 @@ class UpdatePluginYAML
             $this->arPermission = $arPermission;
         }
 
-        if ($this->bSave) {
-            $this->setYAML($sKeyMainMenu, $sKeySideMenu, $sKeyPermission);
-            $this->save();
-        }
+        $this->setYAML($sKeyMainMenu, $sKeySideMenu, $sKeyPermission);
+        $this->save();
     }
 
     /**
@@ -137,6 +123,12 @@ class UpdatePluginYAML
      */
     protected function setMainMenu($sLowerAuthor = '', $sLowerPlugin = '', $sLowerController = '')
     {
+        if (empty($sLowerAuthor) || empty($sLowerPlugin) || empty($sLowerController) || !$this->bSave) {
+            $this->bSave = false;
+
+            return;
+        }
+
         $sLabel      = $sLowerAuthor . '.' . $sLowerPlugin . '::lang.menu.main';
         $sURL        = $sLowerAuthor . '/' . $sLowerPlugin . '/' . $sLowerController;
         $sPermission = $sLowerPlugin . '-menu-*';
@@ -144,8 +136,6 @@ class UpdatePluginYAML
         $this->arMainMenu['label']         = $sLabel;
         $this->arMainMenu['url']           = $sURL;
         $this->arMainMenu['permissions'][] = $sPermission;
-
-        $this->bSave = true;
     }
 
     /**
@@ -154,8 +144,14 @@ class UpdatePluginYAML
      * @param string $sLowerPlugin
      * @param string $sLowerController
      */
-    protected function setSideMenu($sLowerAuthor = '', $sLowerPlugin = '', $sLowerController = '')
+    protected function setSideMenu($sLowerAuthor, $sLowerPlugin, $sLowerController)
     {
+        if (empty($sLowerAuthor) || empty($sLowerPlugin) || empty($sLowerController) || !$this->bSave) {
+            $this->bSave = false;
+
+            return;
+        }
+
         $sLabel      = $sLowerAuthor . '.' . $sLowerPlugin . '::lang.menu.' . $sLowerController;
         $sURL        = $sLowerAuthor . '/' . $sLowerPlugin . '/' . $sLowerController;
         $sPermission = $sLowerPlugin . '-menu-' . $sLowerController;
@@ -163,8 +159,6 @@ class UpdatePluginYAML
         $this->arSideMenu['label']         = $sLabel;
         $this->arSideMenu['url']           = $sURL;
         $this->arSideMenu['permissions'][] = $sPermission;
-
-        $this->bSave = true;
     }
 
     /** Set permission
@@ -172,15 +166,19 @@ class UpdatePluginYAML
      * @param string $sLowerPlugin
      * @param string $sLowerModel
      */
-    protected function setPermission($sLowerAuthor = '', $sLowerPlugin = '', $sLowerModel = '')
+    protected function setPermission($sLowerAuthor, $sLowerPlugin, $sLowerModel)
     {
+        if (empty($sLowerAuthor) || empty($sLowerPlugin) || empty($sLowerModel) || !$this->bSave) {
+            $this->bSave = false;
+
+            return;
+        }
+
         $sTab   = $sLowerAuthor . '.' . $sLowerPlugin . '::lang.tab.permissions';
         $sLabel = $sLowerAuthor . '.' . $sLowerPlugin . '::lang.permission.' . $sLowerModel;
 
         array_set($this->arPermission, 'tab', $sTab);
         array_set($this->arPermission, 'label', $sLabel);
-
-        $this->bSave = true;
     }
 
     /**
@@ -191,6 +189,12 @@ class UpdatePluginYAML
      */
     protected function setYAML($sKeyMainMenu, $sKeySideMenu, $sKeyPermission)
     {
+        if (empty($sKeyMainMenu) || empty($sKeySideMenu) || empty($sKeyPermission) || !$this->bSave) {
+            $this->bSave = false;
+
+            return;
+        }
+
         array_set($this->arMainMenu, self::SIDE_MENU .'.' . $sKeySideMenu, $this->arSideMenu);
         array_set($this->arYAML, self::NAVIGATION . '.' . $sKeyMainMenu, $this->arMainMenu);
         array_set($this->arYAML, self::PERMISSIONS . '.' . $sKeyPermission, $this->arPermission);
@@ -201,8 +205,10 @@ class UpdatePluginYAML
      */
     protected function save()
     {
-        $sContent = Yaml::render($this->arYAML);
-        $obFile = new Filesystem;
-        $obFile->put($this->sPluginYAMLPath, $sContent);
+        if ($this->bSave) {
+            $sContent = Yaml::render($this->arYAML);
+            $obFile = new Filesystem;
+            $obFile->put($this->sPluginYAMLPath, $sContent);
+        }
     }
 }
