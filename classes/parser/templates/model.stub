@@ -54,7 +54,7 @@ class {{studly_model}} extends Model
     /** @var array */
     public $rules = [[[trait_validation]]
 [[name]]        'name' => 'required',
-[[name]][[slug]]        'slug' => 'required|unique:{{lower_author}}_{{lower_plugin}}_{{lower_model}}',
+[[name]][[slug]]        'slug' => 'required|unique:{{lower_author}}_{{lower_plugin}}_{{lower_controller}}',
 [[slug]]    [[trait_validation]]];
     /** @var array */
     public $slugs = [[[slug]]'slug' => 'name'[[slug]]];

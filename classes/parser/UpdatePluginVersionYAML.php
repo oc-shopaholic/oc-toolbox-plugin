@@ -134,13 +134,11 @@ class UpdatePluginVersionYAML
             return;
         }
 
-        $sTable   =  $sLowerAuthor .'_' . $sLowerPlugin . '_' . $sLowerController;
-        $sMessage = 'Create ' . $sTable . ' table.';
+        $sMessage = 'Create tables.';
         $sFile    = 'create_table_' . $sLowerController . '.php';
 
         if (!$this->bVersionUp) {
             $this->arMigrationList   = array_pop($this->arVersion);
-            $this->arMigrationList[] = $sMessage;
             $this->arMigrationList[] = $sFile;
         } else {
             $this->arMigrationList[] = $sMessage;
