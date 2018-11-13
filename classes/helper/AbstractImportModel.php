@@ -324,7 +324,7 @@ abstract class AbstractImportModel
                     $obImage->deleteThumbs();
                     $obImage->fromFile($sFilePath);
                     $obImage->save();
-                } else if (empty($sFilePath)) {
+                } elseif (empty($sFilePath)) {
                     $obImage->deleteThumbs();
                     $obImage->delete();
                 }
