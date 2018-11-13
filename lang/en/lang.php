@@ -62,6 +62,7 @@
         'length'                   => 'Length',
         'amount'                   => 'Amount',
         'author'                   => 'Author',
+        'link'                     => 'Link',
 
         'sort_order' => 'Sorting',
         'created_at' => 'Created',

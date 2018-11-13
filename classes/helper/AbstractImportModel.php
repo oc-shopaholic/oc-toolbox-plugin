@@ -320,10 +320,13 @@ abstract class AbstractImportModel
                 $sFilePath = array_shift($this->arImageList);
 
                 //Check image
-                if (!file_exists($obImage->getLocalPath()) || (!empty($sFilePath) && md5_file($sFilePath) != md5_file($obImage->getLocalPath()))) {
+                if (!empty($sFilePath) && (!file_exists($obImage->getLocalPath()) || md5_file($sFilePath) != md5_file($obImage->getLocalPath()))) {
                     $obImage->deleteThumbs();
                     $obImage->fromFile($sFilePath);
                     $obImage->save();
+                } elseif (empty($sFilePath)) {
+                    $obImage->deleteThumbs();
+                    $obImage->delete();
                 }
             }
         }
