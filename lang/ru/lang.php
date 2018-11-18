@@ -106,6 +106,7 @@
         'property_name_error_404' => 'Отображать 404 страницу',
         'property_slug'           => 'Slug',
         'property_slug_required'  => 'Параметр Slug обязательный',
+        'property_url_check'      => 'Умная проверка URL',
         'pagination'              => 'Пагинация',
         'pagination_desc'         => 'Вывод кнопок пагинации',
 
@@ -154,6 +155,7 @@
         'first_button'                  => '"Первая"',
         'first-more_button'             => '"Еще" (после "Первая")',
         'main_button'                   => '"Основная"',
+        'slug_is_translatable'          => 'URL поддерживает мультиязычность',
     ],
     'button'     => [
         'add_property_value' => 'Добавить значение свойства',

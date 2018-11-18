@@ -458,8 +458,12 @@ abstract class ElementItem extends MainItem
         //Process translatable fields
         foreach ($this->obElement->translatable as $sField) {
             //Check field name
-            if (empty($sField) || !is_string($sField)) {
+            if (empty($sField) || (!is_string($sField) && !is_array($sField))) {
                 continue;
+            }
+
+            if (is_array($sField)) {
+                $sField = array_shift($sField);
             }
 
             if (!isset($this->arModelData[$sField])) {
