@@ -106,6 +106,7 @@
         'property_name_error_404' => 'View 404 page',
         'property_slug'           => 'Slug',
         'property_slug_required'  => 'Slug is required',
+        'property_url_check'      => 'Smart url check',
         'pagination'              => 'Pagination',
         'pagination_desc'         => 'Render button of pagination',
 
@@ -154,6 +155,7 @@
         'first_button'                  => '"First" button',
         'first-more_button'             => '"More" (after "First")',
         'main_button'                   => '"Main" button',
+        'slug_is_translatable'          => 'URL is translatable',
     ],
     'button'     => [
         'add_property_value' => 'Add property value',

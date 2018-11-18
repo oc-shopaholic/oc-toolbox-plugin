@@ -62,3 +62,5 @@
     - 'Added Japanese language. Thanks for contribution pikanji.'
 1.20.1:
     - 'Fixed deletion of old images for improt from CSV file.'
+1.21.0:
+    - 'Added support translatable slug in ElementPage class. Added German language. Thanks for contribution Gerald.'
