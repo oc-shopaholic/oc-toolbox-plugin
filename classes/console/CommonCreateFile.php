@@ -3,7 +3,7 @@
 use Lang;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
-use Lovata\Toolbox\Traits\Console\Logo;
+use Lovata\Toolbox\Traits\Console\TraitLogo;
 
 /**
  * Class CommonCreateFile
@@ -12,7 +12,7 @@ use Lovata\Toolbox\Traits\Console\Logo;
  */
 class CommonCreateFile extends Command
 {
-    use Logo;
+    use TraitLogo;
 
     const GROUP_NAME = 'LOVATA Group';
 
@@ -137,11 +137,11 @@ class CommonCreateFile extends Command
             return;
         }
 
-        $sMessage = '<info>' . $sMessage . '</info>';
+        $sMessage = '<info>'.$sMessage.'</info>';
         $arChoice = [$sMessage];
 
         foreach ($arList as $sKey => $sField) {
-            $arChoice[] = '[<info>' . $sKey . '</info>] ' . $sField;
+            $arChoice[] = '[<info>'.$sKey.'</info>] '.$sField;
         }
 
         $this->output->writeln($arChoice);
@@ -172,7 +172,6 @@ class CommonCreateFile extends Command
         $arEnableList  = [];
 
         foreach ($arKeyList as $iKey) {
-
             $sValue = array_get($arValueList, $iKey);
 
             if (!empty($sValue)) {
@@ -269,8 +268,8 @@ class CommonCreateFile extends Command
         $sStringCase   = snake_case($sString);
         $sStringStudly = studly_case($sStringCase);
         $sStringLower  = mb_strtolower($sString);
-        array_set($this->arData, 'replace.' . self::PREFIX_STUDLY . $sArrayKey, $sStringStudly);
-        array_set($this->arData, 'replace.' . self::PREFIX_LOWER . $sArrayKey, $sStringLower);
+        array_set($this->arData, 'replace.'.self::PREFIX_STUDLY.$sArrayKey, $sStringStudly);
+        array_set($this->arData, 'replace.'.self::PREFIX_LOWER.$sArrayKey, $sStringLower);
     }
 
     /**

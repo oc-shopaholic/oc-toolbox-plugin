@@ -1,7 +1,7 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
 use Lang;
-use Lovata\Toolbox\Traits\Console\Logo;
+use Lovata\Toolbox\Traits\Console\TraitLogo;
 
 /**
  * Class CreateAll
@@ -10,7 +10,7 @@ use Lovata\Toolbox\Traits\Console\Logo;
  */
 class CreateAll extends CommonCreateFile
 {
-    use Logo;
+    use TraitLogo;
 
     /** @var string The console command name. */
     protected $name = 'toolbox.create.all';
@@ -128,8 +128,8 @@ class CreateAll extends CommonCreateFile
             return $bResult;
         }
 
-        $sPluginPHPPath  = plugins_path($sAuthor . '/' . $sPlugin . '/Plugin.php');
-        $sPluginYAMLPath = plugins_path($sAuthor . '/' . $sPlugin . '/plugin.yaml');
+        $sPluginPHPPath  = plugins_path($sAuthor.'/'.$sPlugin.'/Plugin.php');
+        $sPluginYAMLPath = plugins_path($sAuthor.'/'.$sPlugin.'/plugin.yaml');
 
         if (!file_exists($sPluginPHPPath) && !file_exists($sPluginYAMLPath)) {
             $bResult = false;

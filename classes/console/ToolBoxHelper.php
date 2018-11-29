@@ -2,7 +2,7 @@
 
 use Lang;
 use Illuminate\Console\Command;
-use Lovata\Toolbox\Traits\Console\Logo;
+use Lovata\Toolbox\Traits\Console\TraitLogo;
 
 /**
  * Class ToolBoxHelper
@@ -11,7 +11,7 @@ use Lovata\Toolbox\Traits\Console\Logo;
  */
 class ToolBoxHelper extends Command
 {
-    use Logo;
+    use TraitLogo;
 
     const HEADER_COMMAND_LIST = 'Command list';
     const HEADER_DESCRIPTION = 'Description';

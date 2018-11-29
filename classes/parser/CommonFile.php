@@ -43,13 +43,13 @@ class CommonFile
             return;
         }
 
-        $this->sPathFolder = plugins_path() . $this->parseByName($this->arData['replace'], $this->sPathFolder);
+        $this->sPathFolder = plugins_path().$this->parseByName($this->arData['replace'], $this->sPathFolder);
         $this->sFile = $this->parseByName($this->arData['replace'], $this->sFile);
-        $this->sPathFile = $this->sPathFolder . $this->sFile;
+        $this->sPathFile = $this->sPathFolder.$this->sFile;
 
-        $this->obFile = new Filesystem;
+        $this->obFile = new Filesystem();
 
-        $this->sContent = $this->obFile->get(plugins_path() . $this->sPathTemplate);
+        $this->sContent = $this->obFile->get(plugins_path().$this->sPathTemplate);
 
         if (!$this->obFile->exists($this->sPathFolder)) {
             $this->obFile->makeDirectory($this->sPathFolder, 0777, true, true);
@@ -127,7 +127,7 @@ class CommonFile
      */
     protected function namePattern($sKey)
     {
-        return '{{' . $sKey . '}}';
+        return '{{'.$sKey.'}}';
     }
 
     /**
@@ -137,7 +137,7 @@ class CommonFile
      */
     protected function nameWrapperPattern($sKey)
     {
-        return '/\[\[' . $sKey . '\]\]/';
+        return '/\[\['.$sKey.'\]\]/';
     }
 
     /**
@@ -147,6 +147,6 @@ class CommonFile
      */
     protected function wrapperPattern($sKey)
     {
-        return "[\[\[" . $sKey . "\]\][A-Za-z0-9\t\n\r\f\v\x20-\x7E]+?\[\[" . $sKey . "\]\]]";
+        return "[\[\[".$sKey."\]\][A-Za-z0-9\t\n\r\f\v\x20-\x7E]+?\[\[".$sKey."\]\]]";
     }
 }
