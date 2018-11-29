@@ -44,7 +44,7 @@ class UpdatePluginVersionYAML
             return;
         }
 
-        $this->sPluginVersionPath = plugins_path($sAuthor . '/' . $sPlugin . '/updates/' . $this->sFile);
+        $this->sPluginVersionPath = plugins_path($sAuthor .'/'.$sPlugin.'/updates/'.$this->sFile);
 
         if (!file_exists($this->sPluginVersionPath)) {
             $obPluginYAMLFile = new PluginVersionFile($this->arData);
@@ -65,7 +65,7 @@ class UpdatePluginVersionYAML
             return;
         }
         $sLowerAuthor     = array_get($this->arData, 'replace.lower_author');
-        $sLowerPlugin     = array_get($this->arData, 'replace.lower_plugin');;
+        $sLowerPlugin     = array_get($this->arData, 'replace.lower_plugin');
         $sLowerController = array_get($this->arData, 'replace.lower_controller');
 
         if (!empty($this->arYAML) && count($this->arYAML) > 0) {
@@ -135,7 +135,7 @@ class UpdatePluginVersionYAML
         }
 
         $sMessage = 'Create tables.';
-        $sFile    = 'create_table_' . $sLowerController . '.php';
+        $sFile    = 'create_table_'.$sLowerController.'.php';
 
         if (!$this->bVersionUp) {
             $this->arMigrationList   = array_pop($this->arVersion);
@@ -167,7 +167,7 @@ class UpdatePluginVersionYAML
     {
         if ($this->bSave) {
             $sContent = Yaml::render($this->arYAML);
-            $obFile = new Filesystem;
+            $obFile = new Filesystem();
             $obFile->put($this->sPluginVersionPath, $sContent);
         }
     }

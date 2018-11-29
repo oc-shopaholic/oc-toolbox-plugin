@@ -60,7 +60,7 @@ class UpdatePluginYAML
             return;
         }
 
-        $this->sPluginYAMLPath = plugins_path($sAuthor . '/' . $sPlugin . '/' . $this->sFile);
+        $this->sPluginYAMLPath = plugins_path($sAuthor.'/'.$sPlugin.'/'.$this->sFile);
 
         if (!file_exists($this->sPluginYAMLPath)) {
             $obPluginYAMLFile = new PluginYAMLFile($this->arData);
@@ -78,19 +78,19 @@ class UpdatePluginYAML
         $this->arYAML = Yaml::parseFile($this->sPluginYAMLPath);
 
         $sLowerAuthor     = array_get($this->arData, 'replace.lower_author');
-        $sLowerPlugin     = array_get($this->arData, 'replace.lower_plugin');;
+        $sLowerPlugin     = array_get($this->arData, 'replace.lower_plugin');
         $sLowerController = array_get($this->arData, 'replace.lower_controller');
         $sLowerModel      = array_get($this->arData, 'replace.lower_model');
 
-        $sKeyMainMenu   = $sLowerPlugin . '-menu-main';
-        $sKeySideMenu   = $sLowerPlugin . '-menu-' . $sLowerController;
-        $sKeyPermission = $sLowerPlugin . '-menu-' . $sLowerController;
+        $sKeyMainMenu   = $sLowerPlugin.'-menu-main';
+        $sKeySideMenu   = $sLowerPlugin.'-menu-' . $sLowerController;
+        $sKeyPermission = $sLowerPlugin.'-menu-' . $sLowerController;
 
         $arNavigation  = array_get($this->arYAML, self::NAVIGATION);
         $arPermissions = array_get($this->arYAML, self::PERMISSIONS);
 
         $arMainMenu    = array_get($arNavigation, $sKeyMainMenu);
-        $arSideMenu    = array_get($arMainMenu, self::SIDE_MENU . '.' . $sKeySideMenu);
+        $arSideMenu    = array_get($arMainMenu, self::SIDE_MENU.'.'.$sKeySideMenu);
         $arPermission  = array_get($arPermissions, $sKeyPermission);
 
         if (empty($arNavigation) || count($arNavigation) == 0 || empty($arMainMenu)) {
@@ -129,9 +129,9 @@ class UpdatePluginYAML
             return;
         }
 
-        $sLabel      = $sLowerAuthor . '.' . $sLowerPlugin . '::lang.menu.main';
-        $sURL        = $sLowerAuthor . '/' . $sLowerPlugin . '/' . $sLowerController;
-        $sPermission = $sLowerPlugin . '-menu-*';
+        $sLabel      = $sLowerAuthor.'.'.$sLowerPlugin.'::lang.menu.main';
+        $sURL        = $sLowerAuthor.'/'.$sLowerPlugin.'/'.$sLowerController;
+        $sPermission = $sLowerPlugin.'-menu-*';
 
         $this->arMainMenu['label']         = $sLabel;
         $this->arMainMenu['url']           = $sURL;
@@ -152,9 +152,9 @@ class UpdatePluginYAML
             return;
         }
 
-        $sLabel      = $sLowerAuthor . '.' . $sLowerPlugin . '::lang.menu.' . $sLowerController;
-        $sURL        = $sLowerAuthor . '/' . $sLowerPlugin . '/' . $sLowerController;
-        $sPermission = $sLowerPlugin . '-menu-' . $sLowerController;
+        $sLabel      = $sLowerAuthor.'.'.$sLowerPlugin.'::lang.menu.'.$sLowerController;
+        $sURL        = $sLowerAuthor.'/'.$sLowerPlugin.'/'.$sLowerController;
+        $sPermission = $sLowerPlugin.'-menu-'.$sLowerController;
 
         $this->arSideMenu['label']         = $sLabel;
         $this->arSideMenu['url']           = $sURL;
@@ -174,8 +174,8 @@ class UpdatePluginYAML
             return;
         }
 
-        $sTab   = $sLowerAuthor . '.' . $sLowerPlugin . '::lang.tab.permissions';
-        $sLabel = $sLowerAuthor . '.' . $sLowerPlugin . '::lang.permission.' . $sLowerModel;
+        $sTab   = $sLowerAuthor.'.'.$sLowerPlugin.'::lang.tab.permissions';
+        $sLabel = $sLowerAuthor.'.'.$sLowerPlugin.'::lang.permission.'.$sLowerModel;
 
         array_set($this->arPermission, 'tab', $sTab);
         array_set($this->arPermission, 'label', $sLabel);
@@ -195,9 +195,9 @@ class UpdatePluginYAML
             return;
         }
 
-        array_set($this->arMainMenu, self::SIDE_MENU .'.' . $sKeySideMenu, $this->arSideMenu);
-        array_set($this->arYAML, self::NAVIGATION . '.' . $sKeyMainMenu, $this->arMainMenu);
-        array_set($this->arYAML, self::PERMISSIONS . '.' . $sKeyPermission, $this->arPermission);
+        array_set($this->arMainMenu, self::SIDE_MENU.'.'.$sKeySideMenu, $this->arSideMenu);
+        array_set($this->arYAML, self::NAVIGATION.'.'.$sKeyMainMenu, $this->arMainMenu);
+        array_set($this->arYAML, self::PERMISSIONS.'.'.$sKeyPermission, $this->arPermission);
     }
 
     /**
@@ -207,7 +207,7 @@ class UpdatePluginYAML
     {
         if ($this->bSave) {
             $sContent = Yaml::render($this->arYAML);
-            $obFile = new Filesystem;
+            $obFile = new Filesystem();
             $obFile->put($this->sPluginYAMLPath, $sContent);
         }
     }

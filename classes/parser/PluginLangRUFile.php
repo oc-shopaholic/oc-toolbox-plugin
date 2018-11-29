@@ -25,7 +25,7 @@ class PluginLangRUFile extends CommonFile
             return $this->sPathFile;
         }
 
-        $arReplace = array_get($this->arData , 'replace');
+        $arReplace = array_get($this->arData, 'replace');
 
         if (!empty($arReplace)) {
             $this->sContent = $this->parseByName($arReplace, $this->sContent);

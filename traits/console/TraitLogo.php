@@ -6,7 +6,7 @@
  * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  *
  */
-trait Logo
+trait TraitLogo
 {
     /** @var array */
     protected $arLogoToolBox = [

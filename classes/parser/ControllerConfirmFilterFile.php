@@ -25,9 +25,9 @@ class ControllerConfirmFilterFile extends CommonFile
             return $this->sPathFile;
         }
 
-        $arReplace          = array_get($this->arData , 'replace');
-        $arEnableFieldList  = array_get($this->arData , 'enable');
-        $arDisableFieldList = array_get($this->arData , 'disable');
+        $arReplace          = array_get($this->arData, 'replace');
+        $arEnableFieldList  = array_get($this->arData, 'enable');
+        $arDisableFieldList = array_get($this->arData, 'disable');
 
         if (!empty($arDisableFieldList)) {
             $this->sContent = $this->parseByWrapper($arDisableFieldList, $this->sContent);
