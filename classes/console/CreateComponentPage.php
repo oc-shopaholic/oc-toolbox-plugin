@@ -11,7 +11,7 @@ use Lovata\Toolbox\Classes\Parser\ComponentPage;
 class CreateComponentPage extends CommonCreateFile
 {
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.component.page';
+    protected $name = 'toolbox:create.component.page';
     /** @var string The console command description. */
     protected $description = 'Create a new component page.';
 

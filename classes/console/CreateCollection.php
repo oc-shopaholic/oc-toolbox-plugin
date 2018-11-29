@@ -11,7 +11,7 @@ use Lovata\Toolbox\Classes\Parser\CollectionFile;
 class CreateCollection extends CommonCreateFile
 {
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.collection';
+    protected $name = 'toolbox:create.collection';
     /** @var string The console command description. */
     protected $description = 'Create a new collection.';
 

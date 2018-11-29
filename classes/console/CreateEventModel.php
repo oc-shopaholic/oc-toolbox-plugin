@@ -11,7 +11,7 @@ use Lovata\Toolbox\Classes\Parser\EventModelFile;
 class CreateEventModel extends CommonCreateFile
 {
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.event.model';
+    protected $name = 'toolbox:create.event.model';
     /** @var string The console command description. */
     protected $description = 'Create a new event model.';
 

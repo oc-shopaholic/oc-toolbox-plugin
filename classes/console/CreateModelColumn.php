@@ -10,7 +10,7 @@ use Lovata\Toolbox\Classes\Parser\ModelColumnFile;
 class CreateModelColumn extends CommonCreateFile
 {
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.model.columns';
+    protected $name = 'toolbox:create.model.columns';
     /** @var string The console command description. */
     protected $description = 'Create a new columns model.';
 

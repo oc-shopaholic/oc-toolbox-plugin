@@ -13,7 +13,7 @@ use Lovata\Toolbox\Classes\Parser\SortingListStoreFile;
 class CreateStore extends CommonCreateFile
 {
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.store';
+    protected $name = 'toolbox:create.store';
     /** @var string The console command description. */
     protected $description = 'Create a new store.';
 

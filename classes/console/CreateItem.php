@@ -10,7 +10,7 @@ use Lovata\Toolbox\Classes\Parser\ItemFile;
 class CreateItem extends CommonCreateFile
 {
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.item';
+    protected $name = 'toolbox:create.item';
     /** @var string The console command description. */
     protected $description = 'Create a new item.';
 

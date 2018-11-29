@@ -18,7 +18,7 @@ class CreatePlugin extends CommonCreateFile
     use Logo;
 
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.plugin';
+    protected $name = 'toolbox:create.plugin';
     /** @var string The console command description. */
     protected $description = 'Create a new plugin.';
 

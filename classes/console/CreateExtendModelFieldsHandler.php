@@ -13,7 +13,7 @@ class CreateExtendModelFieldsHandler extends CommonCreateFile
     use Logo;
 
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.event.fields';
+    protected $name = 'toolbox:create.event.fields';
     /** @var string The console command description. */
     protected $description = 'Create a new extend model fields.';
 

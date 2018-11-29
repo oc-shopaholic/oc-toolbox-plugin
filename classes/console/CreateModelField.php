@@ -10,7 +10,7 @@ use Lovata\Toolbox\Classes\Parser\ModelFieldFile;
 class CreateModelField extends CommonCreateFile
 {
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.model.fields';
+    protected $name = 'toolbox:create.model.fields';
     /** @var string The console command description. */
     protected $description = 'Create a new fields model.';
 

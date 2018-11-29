@@ -15,12 +15,15 @@ create:
     title: 'backend::lang.form.create_title'
     redirect: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}/update/:id
     redirectClose: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}
+    flashSave: 'lovata.toolbox::lang.message.create_success'
 
 # Update page
 update:
     title: 'backend::lang.form.update_title'
     redirect: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}
     redirectClose: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
 
 # Preview page
 preview: {  }

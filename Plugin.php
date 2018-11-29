@@ -74,23 +74,23 @@ class Plugin extends PluginBase
      */
     public function register()
     {
-        $this->registerConsoleCommand('toolbox.helper', ToolBoxHelper::class);
-        $this->registerConsoleCommand('toolbox.create.all', CreateAll::class);
-        $this->registerConsoleCommand('toolbox.create.plugin', CreatePlugin::class);
-        $this->registerConsoleCommand('toolbox.create.model', CreateModel::class);
-        $this->registerConsoleCommand('toolbox.create.model.columns', CreateModelColumn::class);
-        $this->registerConsoleCommand('toolbox.create.model.fields', CreateModelField::class);
-        $this->registerConsoleCommand('toolbox.create.controller', CreateController::class);
-        $this->registerConsoleCommand('toolbox.create.migration', CreateMigration::class);
-        $this->registerConsoleCommand('toolbox.create.component.data', CreateComponentData::class);
-        $this->registerConsoleCommand('toolbox.create.component.list', CreateComponentList::class);
-        $this->registerConsoleCommand('toolbox.create.component.page', CreateComponentPage::class);
-        $this->registerConsoleCommand('toolbox.create.item', CreateItem::class);
-        $this->registerConsoleCommand('toolbox.create.collection', CreateCollection::class);
-        $this->registerConsoleCommand('toolbox.create.event.model', CreateEventModel::class);
-        $this->registerConsoleCommand('toolbox.create.store', CreateStore::class);
-        $this->registerConsoleCommand('toolbox.create.event.menu', CreateExtendBackendMenuHandler::class);
-        $this->registerConsoleCommand('toolbox.create.event.fields', CreateExtendModelFieldsHandler::class);
-        $this->registerConsoleCommand('toolbox.create.event.columns', CreateExtendModelColumnsHandler::class);
+        $this->registerConsoleCommand('toolbox:helper', ToolBoxHelper::class);
+        $this->registerConsoleCommand('toolbox:create.all', CreateAll::class);
+        $this->registerConsoleCommand('toolbox:create.plugin', CreatePlugin::class);
+        $this->registerConsoleCommand('toolbox:create.model', CreateModel::class);
+        $this->registerConsoleCommand('toolbox:create.model.columns', CreateModelColumn::class);
+        $this->registerConsoleCommand('toolbox:create.model.fields', CreateModelField::class);
+        $this->registerConsoleCommand('toolbox:create.controller', CreateController::class);
+        $this->registerConsoleCommand('toolbox:create.migration', CreateMigration::class);
+        $this->registerConsoleCommand('toolbox:create.component.data', CreateComponentData::class);
+        $this->registerConsoleCommand('toolbox:create.component.list', CreateComponentList::class);
+        $this->registerConsoleCommand('toolbox:create.component.page', CreateComponentPage::class);
+        $this->registerConsoleCommand('toolbox:create.item', CreateItem::class);
+        $this->registerConsoleCommand('toolbox:create.collection', CreateCollection::class);
+        $this->registerConsoleCommand('toolbox:create.event.model', CreateEventModel::class);
+        $this->registerConsoleCommand('toolbox:create.store', CreateStore::class);
+        $this->registerConsoleCommand('toolbox:create.event.menu', CreateExtendBackendMenuHandler::class);
+        $this->registerConsoleCommand('toolbox:create.event.fields', CreateExtendModelFieldsHandler::class);
+        $this->registerConsoleCommand('toolbox:create.event.columns', CreateExtendModelColumnsHandler::class);
     }
 }

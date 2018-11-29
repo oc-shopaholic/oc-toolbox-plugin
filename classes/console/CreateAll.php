@@ -13,7 +13,7 @@ class CreateAll extends CommonCreateFile
     use Logo;
 
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.all';
+    protected $name = 'toolbox:create.all';
     /** @var string The console command description. */
     protected $description = 'Create all pack.';
 
@@ -56,61 +56,61 @@ class CreateAll extends CommonCreateFile
     protected function callCommandList()
     {
         if (!$this->checkPluginExist()) {
-            $this->call('toolbox.create.plugin', ['data' => $this->arData]);
+            $this->call('toolbox:create.plugin', ['data' => $this->arData]);
         }
 
         $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_MODEL]);
 
         if ($this->confirm($sMessage, true)) {
-            $this->call('toolbox.create.model', ['data' => $this->arData]);
+            $this->call('toolbox:create.model', ['data' => $this->arData]);
         }
 
         $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_CONTROLLER]);
 
         if ($this->confirm($sMessage, true)) {
-            $this->call('toolbox.create.controller', ['data' => $this->arData]);
+            $this->call('toolbox:create.controller', ['data' => $this->arData]);
         }
 
         $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_ITEM]);
 
         if ($this->confirm($sMessage, true)) {
-            $this->call('toolbox.create.item', ['data' => $this->arData]);
+            $this->call('toolbox:create.item', ['data' => $this->arData]);
         }
 
         $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_STORE]);
 
         if ($this->confirm($sMessage, true)) {
-            $this->call('toolbox.create.store', ['data' => $this->arData]);
+            $this->call('toolbox:create.store', ['data' => $this->arData]);
         }
 
         $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_COLLECTION]);
 
         if ($this->confirm($sMessage, true)) {
-            $this->call('toolbox.create.collection', ['data' => $this->arData]);
+            $this->call('toolbox:create.collection', ['data' => $this->arData]);
         }
 
         $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_COMPONENT_PAGE]);
 
         if ($this->confirm($sMessage, true)) {
-            $this->call('toolbox.create.component.page', ['data' => $this->arData]);
+            $this->call('toolbox:create.component.page', ['data' => $this->arData]);
         }
 
         $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_COMPONENT_DATA]);
 
         if ($this->confirm($sMessage, true)) {
-            $this->call('toolbox.create.component.data', ['data' => $this->arData]);
+            $this->call('toolbox:create.component.data', ['data' => $this->arData]);
         }
 
         $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_COMPONENT_LIST]);
 
         if ($this->confirm($sMessage, true)) {
-            $this->call('toolbox.create.component.list', ['data' => $this->arData]);
+            $this->call('toolbox:create.component.list', ['data' => $this->arData]);
         }
 
         $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_EVENT]);
 
         if ($this->confirm($sMessage, true)) {
-            $this->call('toolbox.create.event.model', ['data' => $this->arData]);
+            $this->call('toolbox:create.event.model', ['data' => $this->arData]);
         }
     }
 

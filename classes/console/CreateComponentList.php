@@ -10,7 +10,7 @@ use Lovata\Toolbox\Classes\Parser\ComponentList;
 class CreateComponentList extends CommonCreateFile
 {
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.component.list';
+    protected $name = 'toolbox:create.component.list';
     /** @var string The console command description. */
     protected $description = 'Create a new component list.';
 

@@ -20,7 +20,7 @@ use Lovata\Toolbox\Classes\Parser\UpdatePluginYAML;
 class CreateController extends CommonCreateFile
 {
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.controller';
+    protected $name = 'toolbox:create.controller';
     /** @var string The console command description. */
     protected $description = 'Create a new controller.';
 

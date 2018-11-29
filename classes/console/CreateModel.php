@@ -13,7 +13,7 @@ class CreateModel extends CommonCreateFile
     const CODE_TRAIT_VALIDATOR = 'trait_validation';
 
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.model';
+    protected $name = 'toolbox:create.model';
     /** @var string The console command description. */
     protected $description = 'Create a new model.';
 
@@ -59,19 +59,19 @@ class CreateModel extends CommonCreateFile
         $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_CREATION_MIGRATION]);
 
         if ($this->confirm($sMessage, true)) {
-            $this->call('toolbox.create.migration.create', ['data' => $this->arData]);
+            $this->call('toolbox:create.migration.create', ['data' => $this->arData]);
         }
 
         $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_CREATION_MODEL_COLUMNS]);
 
         if ($this->confirm($sMessage, true)) {
-            $this->call('toolbox.create.model.columns', ['data' => $this->arData]);
+            $this->call('toolbox:create.model.columns', ['data' => $this->arData]);
         }
 
         $sMessage = Lang::get('lovata.toolbox::lang.message.create', ['name' => self::CODE_CREATION_MODEL_FIELDS]);
 
         if ($this->confirm($sMessage, true)) {
-            $this->call('toolbox.create.model.fields', ['data' => $this->arData]);
+            $this->call('toolbox:create.model.fields', ['data' => $this->arData]);
         }
     }
 

@@ -12,7 +12,7 @@ use Lovata\Toolbox\Classes\Parser\UpdatePluginVersionYAML;
 class CreateMigration extends CommonCreateFile
 {
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.migration.create';
+    protected $name = 'toolbox:create.migration.create';
     /** @var string The console command description. */
     protected $description = 'Create a new creation migration.';
 

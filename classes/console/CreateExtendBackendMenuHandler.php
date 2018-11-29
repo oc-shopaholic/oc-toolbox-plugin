@@ -13,7 +13,7 @@ class CreateExtendBackendMenuHandler extends CommonCreateFile
     use Logo;
 
     /** @var string The console command name. */
-    protected $name = 'toolbox.create.event.menu';
+    protected $name = 'toolbox:create.event.menu';
     /** @var string The console command description. */
     protected $description = 'Create a new extend backend menu.';
 
