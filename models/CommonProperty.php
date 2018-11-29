@@ -1,7 +1,7 @@
 <?php namespace Lovata\Toolbox\Models;
 
 use Lang;
-use Model;
+use Backend\Models\ImportModel;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Sortable;
 
@@ -14,25 +14,25 @@ use Kharanenka\Scope\NameField;
 /**
  * Class CommonProperty
  * @package Lovata\Toolbox\Models
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  *
- * @property $id
- * @property bool $active
- * @property string $name
- * @property string $code
- * @property string $slug
- * @property string $type (input, textarea, select, checkbox)
- * @property array $settings
- * @property string $description
- * @property int $sort_order
+ * @property                           $id
+ * @property bool                      $active
+ * @property string                    $name
+ * @property string                    $code
+ * @property string                    $slug
+ * @property string                    $type (input, textarea, select, checkbox)
+ * @property array                     $settings
+ * @property string                    $description
+ * @property int                       $sort_order
  *
  * @property \October\Rain\Argon\Argon $created_at
  * @property \October\Rain\Argon\Argon $updated_at
  */
-class CommonProperty extends Model
+class CommonProperty extends ImportModel
 {
     const NAME = 'property';
 
@@ -45,9 +45,16 @@ class CommonProperty extends Model
     use TypeField;
 
     const TYPE_INPUT = 'input';
+    const TYPE_NUMBER = 'number';
     const TYPE_TEXT_AREA = 'textarea';
-    const TYPE_SELECT = 'select';
+    const TYPE_RICH_EDITOR = 'rich_editor';
+    const TYPE_SINGLE_CHECKBOX = 'single_checkbox';
+    const TYPE_SWITCH = 'switch';
     const TYPE_CHECKBOX = 'checkbox';
+    const TYPE_BALLOON = 'balloon_selector';
+    const TYPE_TAG_LIST = 'tag_list';
+    const TYPE_SELECT = 'select';
+    const TYPE_RADIO = 'radio';
     const TYPE_DATE = 'date';
     const TYPE_COLOR_PICKER = 'colorpicker';
     const TYPE_MEDIA_FINDER = 'mediafinder';
@@ -65,6 +72,10 @@ class CommonProperty extends Model
     public $dates = ['created_at', 'updated_at'];
     public $jsonable = ['settings'];
 
+    public $attachOne = [
+        'import_file' => [\System\Models\File::class, 'public' => false],
+    ];
+
     /**
      * Get widget data
      * @return array
@@ -74,83 +85,48 @@ class CommonProperty extends Model
         $arResult = [];
 
         switch ($this->type) {
-            /** INPUT TYPE */
             case self::TYPE_INPUT:
-                $arResult = [
-                    'type' => 'text',
-                ];
-
-                if ($this->isTranslatable()) {
-                    $arResult['type'] = 'mltext';
-                }
+                $arResult = $this->getInputFieldSettings();
                 break;
-            /** TEXT AREA TYPE */
+            case self::TYPE_NUMBER:
+                $arResult = $this->getNumberFieldSettings();
+                break;
             case self::TYPE_TEXT_AREA:
-                $arResult = [
-                    'type' => 'textarea',
-                    'size' => 'large',
-                ];
-
-                if ($this->isTranslatable()) {
-                    $arResult['type'] = 'mltextarea';
-                }
+                $arResult = $this->getTextareaFieldSettings();
                 break;
-            /** SELECT TYPE */
-            case self::TYPE_SELECT:
-                //Get property variants
-                $arValueList = $this->getPropertyVariants();
-                if (empty($arValueList)) {
-                    break;
-                }
-
-                $arResult = [
-                    'type'        => 'dropdown',
-                    'emptyOption' => 'lovata.toolbox::lang.field.empty',
-                    'options'     => $arValueList,
-                ];
+            case self::TYPE_RICH_EDITOR:
+                $arResult = $this->getRichEditorFieldSettings();
                 break;
-            /** CHECKBOX TYPE */
+            case self::TYPE_SINGLE_CHECKBOX:
+                $arResult = $this->getSingleCheckboxFieldSettings();
+                break;
+            case self::TYPE_SWITCH:
+                $arResult = $this->getSwitchFieldSettings();
+                break;
             case self::TYPE_CHECKBOX:
-                //Get property variants
-                $arValueList = $this->getPropertyVariants();
-                if (empty($arValueList)) {
-                    break;
-                }
-
-                $arResult = [
-                    'type' => 'checkboxlist',
-                    'options' => $arValueList,
-                ];
+                $arResult = $this->getCheckboxListSettings();
                 break;
-            /** DATE AND TIME PICKER TYPE */
+            case self::TYPE_BALLOON:
+                $arResult = $this->getBalloonSettings();
+                break;
+            case self::TYPE_TAG_LIST:
+                $arResult = $this->getTagListSettings();
+                break;
+            case self::TYPE_SELECT:
+                $arResult = $this->getSelectSettings();
+                break;
+            case self::TYPE_RADIO:
+                $arResult = $this->getRadioSettings();
+                break;
             case self::TYPE_DATE:
-                $sMode = $this->getSettingValue('datepicker');
-                if (!in_array($sMode, ['date', 'time', 'datetime'])) {
-                    break;
-                }
-
-                $arResult = [
-                    'type' => 'datepicker',
-                    'mode' => $sMode,
-                ];
+                $arResult = $this->getDateSettings();
                 break;
-            /** COLOR PICKER TYPE */
             case self::TYPE_COLOR_PICKER:
-                $arResult = [
-                    'type' => self::TYPE_COLOR_PICKER,
-                ];
+                $arResult = $this->getColorPickerSettings();
                 break;
             /** FILE FINDER TYPE */
             case self::TYPE_MEDIA_FINDER:
-                $sMode = $this->getSettingValue(self::TYPE_MEDIA_FINDER);
-                if (!in_array($sMode, ['file', 'image'])) {
-                    break;
-                }
-
-                $arResult = [
-                    'type' => self::TYPE_MEDIA_FINDER,
-                    'mode' => $sMode,
-                ];
+                $arResult = $this->getMediaFinderSettings();
                 break;
             default:
                 return $arResult;
@@ -161,18 +137,7 @@ class CommonProperty extends Model
             return $arResult;
         }
 
-        //Get property tab
-        $sTabName = $this->getSettingValue('tab');
-        if (!empty($sTabName)) {
-            $arResult['tab'] = $sTabName;
-        } else {
-            $arResult['tab'] = 'lovata.toolbox::lang.tab.properties';
-        }
-
-        $arResult['span'] = 'left';
-
-        //Get property name with measure
-        $arResult['label'] = $this->name;
+        $arResult = array_merge($arResult, $this->getDefaultConfigSettings());
 
         return $arResult;
     }
@@ -223,16 +188,297 @@ class CommonProperty extends Model
         $sLangPath = 'lovata.toolbox::lang.type.';
 
         return [
-            self::TYPE_INPUT        => Lang::get($sLangPath.self::TYPE_INPUT),
-            self::TYPE_TEXT_AREA    => Lang::get($sLangPath.self::TYPE_TEXT_AREA),
-            self::TYPE_CHECKBOX     => Lang::get($sLangPath.self::TYPE_CHECKBOX),
-            self::TYPE_SELECT       => Lang::get($sLangPath.self::TYPE_SELECT),
-            self::TYPE_DATE         => Lang::get($sLangPath.self::TYPE_DATE),
-            self::TYPE_COLOR_PICKER => Lang::get($sLangPath.self::TYPE_COLOR_PICKER),
-            self::TYPE_MEDIA_FINDER => Lang::get($sLangPath.self::TYPE_MEDIA_FINDER),
+            self::TYPE_INPUT           => Lang::get($sLangPath.self::TYPE_INPUT),
+            self::TYPE_NUMBER          => Lang::get($sLangPath.self::TYPE_NUMBER),
+            self::TYPE_TEXT_AREA       => Lang::get($sLangPath.self::TYPE_TEXT_AREA),
+            self::TYPE_RICH_EDITOR     => Lang::get($sLangPath.self::TYPE_RICH_EDITOR),
+            self::TYPE_SINGLE_CHECKBOX => Lang::get($sLangPath.self::TYPE_SINGLE_CHECKBOX),
+            self::TYPE_SWITCH          => Lang::get($sLangPath.self::TYPE_SWITCH),
+            self::TYPE_CHECKBOX        => Lang::get($sLangPath.self::TYPE_CHECKBOX),
+            self::TYPE_TAG_LIST        => Lang::get($sLangPath.self::TYPE_TAG_LIST),
+            self::TYPE_SELECT          => Lang::get($sLangPath.self::TYPE_SELECT),
+            self::TYPE_RADIO           => Lang::get($sLangPath.self::TYPE_RADIO),
+            self::TYPE_BALLOON         => Lang::get($sLangPath.self::TYPE_BALLOON),
+            self::TYPE_DATE            => Lang::get($sLangPath.self::TYPE_DATE),
+            self::TYPE_COLOR_PICKER    => Lang::get($sLangPath.self::TYPE_COLOR_PICKER),
+            self::TYPE_MEDIA_FINDER    => Lang::get($sLangPath.self::TYPE_MEDIA_FINDER),
         ];
     }
 
+    /**
+     * Import item list from CSV file
+     * @param array $arElementList
+     * @param null  $sSessionKey
+     * @throws \Throwable
+     */
+    public function importData($arElementList, $sSessionKey = null)
+    {
+    }
+
+    /**
+     * Get field setting with type "text"
+     * @return array
+     */
+    protected function getInputFieldSettings() : array
+    {
+        $arResult = [
+            'type' => 'text',
+        ];
+
+        if ($this->isTranslatable()) {
+            $arResult['type'] = 'mltext';
+        }
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "number"
+     * @return array
+     */
+    protected function getNumberFieldSettings() : array
+    {
+        $arResult = [
+            'type' => 'number',
+        ];
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "textarea"
+     * @return array
+     */
+    protected function getTextareaFieldSettings() : array
+    {
+        $arResult = [
+            'type' => 'textarea',
+            'size' => 'large',
+        ];
+
+        if ($this->isTranslatable()) {
+            $arResult['type'] = 'mltextarea';
+        }
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "rich editor"
+     * @return array
+     */
+    protected function getRichEditorFieldSettings() : array
+    {
+        $arResult = [
+            'type' => 'richeditor',
+            'size' => 'large',
+        ];
+
+        if ($this->isTranslatable()) {
+            $arResult['type'] = 'mlricheditor';
+        }
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "checkbox"
+     * @return array
+     */
+    protected function getSingleCheckboxFieldSettings() : array
+    {
+        $arResult = [
+            'type' => 'checkbox',
+        ];
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "switch"
+     * @return array
+     */
+    protected function getSwitchFieldSettings() : array
+    {
+        $arResult = [
+            'type' => 'switch',
+        ];
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "checkbox list"
+     * @return array
+     */
+    protected function getCheckboxListSettings() : array
+    {
+        //Get property variants
+        $arValueList = $this->getPropertyVariants();
+        if (empty($arValueList)) {
+            return [];
+        }
+
+        $arResult = [
+            'type'    => 'checkboxlist',
+            'options' => $arValueList,
+        ];
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "balloon-selector"
+     * @return array
+     */
+    protected function getBalloonSettings() : array
+    {
+        //Get property variants
+        $arValueList = $this->getPropertyVariants();
+        if (empty($arValueList)) {
+            return [];
+        }
+
+        $arResult = [
+            'type'    => 'balloon-selector',
+            'options' => $arValueList,
+        ];
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "tag list"
+     * @return array
+     */
+    protected function getTagListSettings() : array
+    {
+        //Get property variants
+        $arValueList = $this->getPropertyVariants();
+        if (empty($arValueList)) {
+            return [];
+        }
+
+        $arResult = [
+            'type'    => 'taglist',
+            'options' => $arValueList,
+        ];
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "select"
+     * @return array
+     */
+    protected function getSelectSettings() : array
+    {
+        //Get property variants
+        $arValueList = $this->getPropertyVariants();
+        if (empty($arValueList)) {
+            return [];
+        }
+
+        $arResult = [
+            'type'        => 'dropdown',
+            'emptyOption' => 'lovata.toolbox::lang.field.empty',
+            'options'     => $arValueList,
+        ];
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "radio"
+     * @return array
+     */
+    protected function getRadioSettings() : array
+    {
+        //Get property variants
+        $arValueList = $this->getPropertyVariants();
+        if (empty($arValueList)) {
+            return [];
+        }
+
+        $arResult = [
+            'type'    => 'radio',
+            'options' => $arValueList,
+        ];
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "date"
+     * @return array
+     */
+    protected function getDateSettings() : array
+    {
+        $sMode = $this->getSettingValue('datepicker');
+        if (!in_array($sMode, ['date', 'time', 'datetime'])) {
+            return [];
+        }
+
+        $arResult = [
+            'type' => 'datepicker',
+            'mode' => $sMode,
+        ];
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "color picker"
+     * @return array
+     */
+    protected function getColorPickerSettings() : array
+    {
+        $arResult = [
+            'type' => self::TYPE_COLOR_PICKER,
+        ];
+
+        return $arResult;
+    }
+
+    /**
+     * Get field setting with type "media finder"
+     * @return array
+     */
+    protected function getMediaFinderSettings() : array
+    {
+        $sMode = $this->getSettingValue(self::TYPE_MEDIA_FINDER);
+        if (!in_array($sMode, ['file', 'image'])) {
+            return [];
+        }
+
+        $arResult = [
+            'type' => self::TYPE_MEDIA_FINDER,
+            'mode' => $sMode,
+        ];
+
+        return $arResult;
+    }
+
+    /**
+     * Get default config field settings
+     * @return array
+     */
+    protected function getDefaultConfigSettings() : array
+    {
+        $arResult = [
+            'tab'   => 'lovata.toolbox::lang.tab.properties',
+            'span'  => 'left',
+            'label' => $this->name,
+        ];
+
+        //Get property tab
+        $sTabName = $this->getSettingValue('tab');
+        if (!empty($sTabName)) {
+            $arResult['tab'] = $sTabName;
+        }
+
+        return $arResult;
+    }
     /**
      * Get property settings value
      * @param string $sKey

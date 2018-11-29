@@ -1,7 +1,10 @@
 <?php namespace Lovata\Toolbox\Classes\Component;
 
+use System\Classes\PluginManager;
 use Cms\Classes\ComponentBase;
+use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Traits\Helpers\TraitComponentNotFoundResponse;
+use Lovata\Toolbox\Traits\Helpers\TraitInitActiveLang;
 
 /**
  * Class ElementPage
@@ -10,6 +13,7 @@ use Lovata\Toolbox\Traits\Helpers\TraitComponentNotFoundResponse;
  */
 abstract class ElementPage extends ComponentBase
 {
+    use TraitInitActiveLang;
     use TraitComponentNotFoundResponse;
 
     /** @var \Model */
@@ -20,6 +24,8 @@ abstract class ElementPage extends ComponentBase
 
     /** @var array Component property list */
     protected $arPropertyList = [];
+
+    protected $bNeedSmartURLCheck = false;
 
     /**
      * @return array
@@ -70,6 +76,10 @@ abstract class ElementPage extends ComponentBase
 
         //Get element item
         $this->obElementItem = $this->makeItem($this->obElement->id, $this->obElement);
+        if ($this->bNeedSmartURLCheck && $this->property('smart_url_check') && !$this->smartUrlCheck()) {
+            $this->obElement = null;
+            $this->obElementItem = null;
+        }
     }
 
     /**
@@ -95,4 +105,47 @@ abstract class ElementPage extends ComponentBase
      * @return \Lovata\Toolbox\Classes\Item\ElementItem
      */
     abstract protected function makeItem($iElementID, $obElement);
+
+    /**
+     * Checks trans value, if value is not form active lang, then return false
+     * @param \Model $obElement
+     * @param string $sElementSlug
+     * @return bool
+     */
+    protected function checkTransSlug($obElement, $sElementSlug)
+    {
+        if (empty($obElement) || empty($sElementSlug)) {
+            return false;
+        }
+
+        $bResult = $obElement->slug == $sElementSlug;
+
+        return $bResult;
+    }
+
+    /**
+     * Smart check URL with additional checking
+     * @return bool
+     */
+    protected function smartUrlCheck()
+    {
+        if (empty($this->obElementItem)) {
+            return false;
+        }
+
+        $sCurrentURL = $this->currentPageUrl();
+        $sValidURL = $this->obElementItem->getPageUrl($this->page->id);
+        $bResult = $sCurrentURL == $sValidURL;
+
+        return $bResult;
+    }
+
+    /**
+     * Return true, if slug is translatable
+     * @return bool
+     */
+    protected function isSlugTranslatable()
+    {
+        return (bool) Settings::getValue('slug_is_translatable') && PluginManager::instance()->hasPlugin('RainLab.Translate');
+    }
 }

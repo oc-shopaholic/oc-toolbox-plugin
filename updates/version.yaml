@@ -50,3 +50,17 @@
     - 'Added natsort() for property value variants.'
 1.15.0:
     - 'Added AbstractBackendColumnHandler, AbstractBackendFieldHandler, AbstractBackendMenuHandler, AbstractExtendRelationConfigHandler, AbstractModelRelationHandler classes.'
+1.16.0:
+    - 'Add package information to composer.json. Thanks for contribution pikanji.'
+1.17.0:
+    - 'Added processing of "limit" parameter for the pagination component.'
+1.18.0:
+    - 'Added AbstractImportModel class.'
+1.19.0:
+    - 'Added supported property types: number, rich editor, single checkbox, switch, balloon selector, tag list, radio.'
+1.20.0:
+    - 'Added Japanese language. Thanks for contribution pikanji.'
+1.20.1:
+    - 'Fixed deletion of old images for improt from CSV file.'
+1.21.0:
+    - 'Added support translatable slug in ElementPage class. Added German language. Thanks for contribution Gerald.'

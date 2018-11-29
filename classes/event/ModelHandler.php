@@ -17,6 +17,7 @@ abstract class ModelHandler
 
     protected $obListStore;
 
+    protected $bWithRestore = false;
     protected $sIdentifierField = 'id';
 
     /**
@@ -48,6 +49,15 @@ abstract class ModelHandler
                 $this->init();
                 $this->afterDelete();
             }, $this->iPriority);
+
+            if ($this->bWithRestore) {
+                /** @var \Model $obElement */
+                $obElement->bindEvent('model.afterRestore', function () use ($obElement) {
+                    $this->obElement = $obElement;
+                    $this->init();
+                    $this->afterRestore();
+                }, $this->iPriority);
+            }
         });
     }
 
@@ -91,6 +101,13 @@ abstract class ModelHandler
     protected function afterDelete()
     {
         $this->clearItemCache();
+    }
+
+    /**
+     * After restore event handler
+     */
+    protected function afterRestore()
+    {
     }
 
     /**

@@ -14,8 +14,6 @@ class CommonCreateFile extends Command
 {
     use Logo;
 
-    const GROUP_NAME = 'LOVATA Group';
-
     const CODE_DEVELOPER              = 'developer';
     const CODE_AUTHOR                 = 'author';
     const CODE_PLUGIN                 = 'plugin';

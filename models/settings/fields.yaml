@@ -1,5 +1,10 @@
 tabs:
     fields:
+        slug_is_translatable:
+            tab: lovata.toolbox::lang.tab.settings
+            span: left
+            label: lovata.toolbox::lang.settings.slug_is_translatable
+            type: checkbox
         queue_on:
             tab: lovata.toolbox::lang.tab.mail
             span: left
@@ -30,3 +35,13 @@ tabs:
             options:
                 together: lovata.toolbox::lang.field.together
                 space: lovata.toolbox::lang.field.space
+        import_queue_on:
+            tab: lovata.toolbox::lang.tab.import
+            span: left
+            label: lovata.toolbox::lang.field.import_queue_on
+            type: checkbox
+        import_queue_name:
+            tab: lovata.toolbox::lang.tab.import
+            span: left
+            label: lovata.toolbox::lang.field.import_queue_name
+            type: text

@@ -7,7 +7,9 @@ use October\Rain\Exception\AjaxException;
 /**
  * Class TraitComponentNotFoundResponse
  * @package Lovata\Toolbox\Traits\Helpers
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ *
+ * @property bool $bNeedSmartURLCheck
  */
 trait TraitComponentNotFoundResponse
 {
@@ -17,7 +19,7 @@ trait TraitComponentNotFoundResponse
      */
     public function getElementPageProperties()
     {
-        return [
+        $arResult = [
             'slug'          => [
                 'title'   => 'lovata.toolbox::lang.component.property_slug',
                 'type'    => 'string',
@@ -29,6 +31,16 @@ trait TraitComponentNotFoundResponse
                 'default' => 1,
             ],
         ];
+
+        if ($this->bNeedSmartURLCheck) {
+            $arResult['smart_url_check'] = [
+                'title'   => 'lovata.toolbox::lang.component.property_url_check',
+                'type'    => 'checkbox',
+                'default' => 0,
+            ];
+        }
+
+        return $arResult;
     }
 
     /**
