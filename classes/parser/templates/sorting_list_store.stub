@@ -1,0 +1,25 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}};
+
+use Lovata\Toolbox\Classes\Store\AbstractStoreWithoutParam;
+use {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}};
+
+/**
+ * Class SortingListStore
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}
+ * @author  {{developer}}
+ */
+class SortingListStore extends AbstractStoreWithoutParam
+{
+    protected static $instance;
+
+    /**
+     * Get ID list from database
+     * @return array
+     */
+    protected function getIDListFromDB() : array
+    {
+        $arElementIDList = (array) {{studly_model}}::orderBy('id', 'desc')->lists('id');
+
+        return $arElementIDList;
+    }
+}

@@ -1,0 +1,15 @@
+scopes:
+[[active]]    active:
+        label: 'lovata.toolbox::lang.field.active'
+        type: switch
+        conditions:
+            - active <> true
+            - active = true
+[[active]]    created_at:
+        label: 'lovata.toolbox::lang.field.created_at'
+        type: daterange
+        conditions: created_at >= ':after' AND created_at <= ':before'
+    updated_at:
+        label: 'lovata.toolbox::lang.field.updated_at'
+        type: daterange
+        conditions: updated_at >= ':after' AND updated_at <= ':before'

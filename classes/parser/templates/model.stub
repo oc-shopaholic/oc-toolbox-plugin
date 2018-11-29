@@ -1,0 +1,98 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Models;
+
+use Model;
+[[empty_fields]][[slug]]use October\Rain\Database\Traits\Sluggable;
+[[slug]][[trait_validation]]use October\Rain\Database\Traits\Validation;
+[[trait_validation]][[active]]use Kharanenka\Scope\ActiveField;
+[[active]][[name]]use Kharanenka\Scope\NameField;
+[[name]][[slug]]use Kharanenka\Scope\SlugField;
+[[slug]][[code]]use Kharanenka\Scope\CodeField;
+[[code]][[external_id]]use Kharanenka\Scope\ExternalIDField;
+[[external_id]]use Lovata\Toolbox\Traits\Helpers\TraitCached;
+[[empty_fields]]
+/**
+ * Class {{studly_model}}
+ * @package {{studly_author}}\{{studly_plugin}}\Models
+ * @author  {{developer}}
+ *
+ * @mixin    \October\Rain\Database\Builder
+ * @mixin    \Eloquent
+ *
+ * @property integer                                                 $id
+[[active]] * @property bool                                                    $active
+[[active]][[name]] * @property string                                                  $name
+[[name]][[slug]] * @property string                                                  $slug
+[[slug]][[code]] * @property string                                                  $code
+[[code]][[external_id]] * @property string                                                  $external_id
+[[external_id]][[preview_text]] * @property string                                                  $preview_text
+[[preview_text]][[description]] * @property string                                                  $description
+[[description]] * @property \October\Rain\Argon\Argon                               $created_at
+ * @property \October\Rain\Argon\Argon                               $updated_at
+[[preview_image]] * @property \System\Models\File                                     $preview_image
+[[preview_image]][[images]] * @property \October\Rain\Database\Collection|\System\Models\File[] $images
+[[images]] */
+class {{studly_model}} extends Model
+{
+[[empty_fields]][[slug]]    use Sluggable;
+[[slug]][[trait_validation]]    use Validation;
+[[trait_validation]][[active]]    use ActiveField;
+[[active]][[name]]    use NameField;
+[[name]][[slug]]    use SlugField;
+[[slug]][[code]]    use CodeField;
+[[code]][[external_id]]    use ExternalIDField;
+[[external_id]]    use TraitCached;
+
+[[empty_fields]]    /** @var string */
+    public $table = '{{lower_author}}_{{lower_plugin}}_{{lower_controller}}';
+    /** @var array */
+    public $implement = [];
+    /** @var array */
+    public $attributeNames = [[[trait_validation]]
+[[name]]        'name' => 'lovata.toolbox::lang.field.name',
+[[name]][[slug]]        'slug' => 'lovata.toolbox::lang.field.slug',
+[[slug]]    [[trait_validation]]];
+    /** @var array */
+    public $rules = [[[trait_validation]]
+[[name]]        'name' => 'required',
+[[name]][[slug]]        'slug' => 'required|unique:{{lower_author}}_{{lower_plugin}}_{{lower_controller}}',
+[[slug]]    [[trait_validation]]];
+    /** @var array */
+    public $slugs = [[[slug]]'slug' => 'name'[[slug]]];
+    /** @var array */
+    public $jsonable = [];
+    /** @var array */
+    public $fillable = [[[empty_fields]]
+[[active]]        'active',
+[[active]][[name]]        'name',
+[[name]][[slug]]        'slug',
+[[slug]][[code]]        'code',
+[[code]][[external_id]]        'external_id',
+[[external_id]][[preview_text]]        'preview_text',
+[[preview_text]][[description]]        'description',
+[[description]]    [[empty_fields]]];
+    /** @var array */
+    public $cached = [[[empty_fields]]
+        'id',
+[[active]]        'active',
+[[active]][[name]]        'name',
+[[name]][[slug]]        'slug',
+[[slug]][[code]]        'code',
+[[code]][[external_id]]        'external_id',
+[[external_id]][[preview_text]]        'preview_text',
+[[preview_text]][[description]]        'description',
+[[description]][[preview_image]]        'preview_image',
+[[preview_image]][[images]]        'images',
+[[images]]    [[empty_fields]]];
+    /** @var array */
+    public $dates = ['created_at', 'updated_at'];
+    /** @var array Relations */
+    public $hasOne        = [];
+    public $hasMany       = [];
+    public $belongsTo     = [];
+    public $belongsToMany = [];
+    public $morphTo       = [];
+    public $morphOne      = [];
+    public $morphMany     = [];
+    public $attachOne     = [[[preview_image]]'preview_image' => 'System\Models\File'[[preview_image]]];
+    public $attachMany    = [[[images]]'images' => 'System\Models\File'[[images]]];
+}

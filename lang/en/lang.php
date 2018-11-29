@@ -118,6 +118,22 @@
         'restore_confirm'       => 'Do you want to restore selected items?',
         'restore_success'       => 'Restore elements was successfully',
         'e_not_correct_request' => 'Request is not correct',
+
+        'table_toolbox_helper' => 'Display command list.',
+        'table_toolbox_create' => 'Create :description',
+
+        'choice_developer'      => 'Choice developer',
+        'choice_field_list'     => 'Choose available fields (Example: 1,2,3,4)',
+        'set_developer'         => 'Set developer',
+        'set'                   => 'Set :name (Example: :example)',
+        'create'                => 'Create :name?',
+        'force_file'            => 'File :file already exists. Create forced?',
+        'component_page_active' => 'Get element object by active?',
+        'active_list'           => 'Add filter by active field for :class?',
+        'sort_list'             => 'Add default sort list for :class?',
+        'filter_active'         => 'Add filter by active?',
+        'add_side_menu'         => 'Add side menu to plugin.yaml?',
+        'version_up'            => 'Add new version to version.yaml?',
     ],
     'settings'   => [
         'count_per_page'          => 'Count elements per page',

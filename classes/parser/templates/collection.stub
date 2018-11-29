@@ -1,0 +1,37 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Collection;
+
+use Lovata\Toolbox\Classes\Collection\ElementCollection;
+use {{studly_author}}\{{studly_plugin}}\Classes\Item\{{studly_model}}Item;
+use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}ListStore;
+
+/**
+ * Class {{studly_model}}Collection
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Collection
+ * @author  {{developer}}
+ */
+class {{studly_model}}Collection extends ElementCollection
+{
+    const ITEM_CLASS = {{studly_model}}Item::class;
+[[active]]
+    /**
+     * Apply filter by active field
+     * @return $this
+     */
+    public function active()
+    {
+        $arResultIDList = {{studly_model}}ListStore::instance()->active->get();
+
+        return $this->intersect($arResultIDList);
+    }
+[[active]][[sort]]
+    /**
+     * Sort list
+     * @return $this
+     */
+    public function sort()
+    {
+        $arResultIDList = {{studly_model}}ListStore::instance()->sorting->get();
+
+        return $this->applySorting($arResultIDList);
+    }
+[[sort]]}
