@@ -64,3 +64,5 @@
     - 'Fixed deletion of old images for improt from CSV file.'
 1.21.0:
     - 'Added support translatable slug in ElementPage class. Added German language. Thanks for contribution Gerald.'
+1.21.1:
+    - 'Removed Iterator interface from ElementCollection class. Added IteratorAggregate interface to ElementCollection class.'
