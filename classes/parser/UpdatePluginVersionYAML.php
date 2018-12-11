@@ -23,7 +23,7 @@ class UpdatePluginVersionYAML
     /** @var array  */
     protected $arMigrationList = [];
     /** @var string */
-    protected $sVersion = '1.0.1';
+    protected $sVersion = '1.0.0';
     /** @var bool */
     protected $bVersionUp = true;
     /** @var bool */
@@ -44,7 +44,7 @@ class UpdatePluginVersionYAML
             return;
         }
 
-        $this->sPluginVersionPath = plugins_path($sAuthor .'/'.$sPlugin.'/updates/'.$this->sFile);
+        $this->sPluginVersionPath = plugins_path($sAuthor.'/'.$sPlugin.'/updates/'.$this->sFile);
 
         if (!file_exists($this->sPluginVersionPath)) {
             $obPluginYAMLFile = new PluginVersionFile($this->arData);

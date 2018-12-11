@@ -1,4 +1,4 @@
-<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Event;
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\{{studly_model}}\Event;
 
 use Lovata\Toolbox\Classes\Event\AbstractBackendColumnHandler;
 use {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}};
@@ -6,19 +6,37 @@ use {{studly_author}}\{{studly_plugin}}\Controllers\{{studly_controller}};
 
 /**
  * Class Extend{{studly_model}}ColumnsHandler
- * @package {{studly_author}}\{{studly_plugin}}\Classes\Event
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\{{studly_model}}\Event
  * @author  {{developer}}
  */
 class Extend{{studly_model}}ColumnsHandler extends AbstractBackendColumnHandler
 {
     /**
-     * Extend model columns
+     * Extend columns model
      * @param \Backend\Widgets\Lists $obWidget
      */
     protected function extendColumns($obWidget)
     {
-//        $obWidget->addColumns([]);
-//        $obWidget->removeColumn('');
+        $this->removeColumn($obWidget);
+        $this->addColumn($obWidget);
+    }
+
+    /**
+     * Remove columns model
+     * @param \Backend\Widgets\Lists $obWidget
+     */
+    protected function removeColumn($obWidget)
+    {
+        $obWidget->removeColumn('');
+    }
+
+    /**
+     * Add columns model
+     * @param \Backend\Widgets\Lists $obWidget
+     */
+    protected function addColumn($obWidget)
+    {
+        $obWidget->addColumns([]);
     }
 
     /**

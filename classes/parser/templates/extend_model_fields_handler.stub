@@ -1,4 +1,4 @@
-<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Event;
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\{{studly_model}}\Event;
 
 use Lovata\Toolbox\Classes\Event\AbstractBackendFieldHandler;
 use {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}};
@@ -6,7 +6,7 @@ use {{studly_author}}\{{studly_plugin}}\Controllers\{{studly_controller}};
 
 /**
  * Class Extend{{studly_model}}FieldsHandler
- * @package {{studly_author}}\{{studly_plugin}}\Classes\Event
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\{{studly_model}}\Event
  * @author  {{developer}}
  */
 class Extend{{studly_model}}FieldsHandler extends AbstractBackendFieldHandler
@@ -17,8 +17,26 @@ class Extend{{studly_model}}FieldsHandler extends AbstractBackendFieldHandler
      */
     protected function extendFields($obWidget)
     {
-//        $obWidget->addTabFields([]);
-//        $obWidget->removeField('');
+        $this->removeField($obWidget);
+        $this->addField($obWidget);
+    }
+
+    /**
+     * Remove fields model
+     * @param \Backend\Widgets\Form $obWidget
+     */
+    protected function removeField($obWidget)
+    {
+        $obWidget->removeField('');
+    }
+
+    /**
+     * Add fields model
+     * @param \Backend\Widgets\Form $obWidget
+     */
+    protected function addField($obWidget)
+    {
+        $obWidget->addTabFields([]);
     }
 
     /**

@@ -10,9 +10,11 @@ use October\Rain\Filesystem\Filesystem;
  */
 class UpdatePluginYAML
 {
-    const NAVIGATION  = 'navigation';
-    const PERMISSIONS = 'permissions';
-    const SIDE_MENU   = 'sideMenu';
+    const PLUGIN_NAVIGATION  = 'navigation';
+    const PLUGIN_PERMISSIONS = 'permissions';
+    const PLUGIN_SIDE_MENU   = 'sideMenu';
+
+    const PREFIX_MENU = '-menu-';
 
     /** @var string */
     protected $sFile = 'plugin.yaml';
@@ -23,25 +25,11 @@ class UpdatePluginYAML
     /** @var array */
     protected $arYAML = [];
     /** @var array */
-    protected $arMainMenu = [
-        'label'       => '',
-        'url'         => '',
-        'icon'        => 'icon-smile-o',
-        'permissions' => [],
-        'sideMenu'    => [],
-    ];
+    protected $arMainMenu = [];
     /** @var array */
-    protected $arSideMenu = [
-        'label'       => '',
-        'url'         => '',
-        'icon'        => 'icon-paw',
-        'permissions' => [],
-    ];
+    protected $arSideMenu = [];
     /** @var array */
-    protected $arPermission = [
-        'tab'   => '',
-        'label' => '',
-    ];
+    protected   $arPermission = [];
     /** @var bool */
     protected $bSave = true;
 
@@ -82,33 +70,33 @@ class UpdatePluginYAML
         $sLowerController = array_get($this->arData, 'replace.lower_controller');
         $sLowerModel      = array_get($this->arData, 'replace.lower_model');
 
-        $sKeyMainMenu   = $sLowerPlugin.'-menu-main';
-        $sKeySideMenu   = $sLowerPlugin.'-menu-' . $sLowerController;
-        $sKeyPermission = $sLowerPlugin.'-menu-' . $sLowerController;
+        $sKeyMainMenu   = $sLowerPlugin.self::PREFIX_MENU.'main';
+        $sKeySideMenu   = $sLowerPlugin.self::PREFIX_MENU.$sLowerController;
+        $sKeyPermission = $sLowerPlugin.self::PREFIX_MENU.$sLowerController;
 
-        $arNavigation  = array_get($this->arYAML, self::NAVIGATION);
-        $arPermissions = array_get($this->arYAML, self::PERMISSIONS);
+        $arNavigation  = array_get($this->arYAML, self::PLUGIN_NAVIGATION);
+        $arPermissions = array_get($this->arYAML, self::PLUGIN_PERMISSIONS);
 
-        $arMainMenu    = array_get($arNavigation, $sKeyMainMenu);
-        $arSideMenu    = array_get($arMainMenu, self::SIDE_MENU.'.'.$sKeySideMenu);
-        $arPermission  = array_get($arPermissions, $sKeyPermission);
+        $arMainMenuCurrent   = array_get($arNavigation, $sKeyMainMenu);
+        $arSideMenuCurrent   = array_get($arMainMenuCurrent, self::PLUGIN_SIDE_MENU.'.'.$sKeySideMenu);
+        $arPermissionCurrent = array_get($arPermissions, $sKeyPermission);
 
-        if (empty($arNavigation) || count($arNavigation) == 0 || empty($arMainMenu)) {
+        if (empty($arNavigation) || count($arNavigation) == 0 || empty($arMainMenuCurrent)) {
             $this->setMainMenu($sLowerAuthor, $sLowerPlugin, $sLowerController);
         } else {
-            $this->arMainMenu = $arMainMenu;
+            $this->arMainMenu = $arMainMenuCurrent;
         }
 
-        if (empty($arSideMenu)) {
+        if (empty($arSideMenuCurrent)) {
             $this->setSideMenu($sLowerAuthor, $sLowerPlugin, $sLowerController);
         } else {
-            $this->arSideMenu = $arSideMenu;
+            $this->arSideMenu = $arSideMenuCurrent;
         }
 
-        if (empty($arPermission)) {
+        if (empty($arPermissionCurrent)) {
             $this->setPermission($sLowerAuthor, $sLowerPlugin, $sLowerModel);
         } else {
-            $this->arPermission = $arPermission;
+            $this->arPermission = $arPermissionCurrent;
         }
 
         $this->setYAML($sKeyMainMenu, $sKeySideMenu, $sKeyPermission);
@@ -135,6 +123,7 @@ class UpdatePluginYAML
 
         $this->arMainMenu['label']         = $sLabel;
         $this->arMainMenu['url']           = $sURL;
+        $this->arMainMenu['icon']          = 'icon-smile-o';
         $this->arMainMenu['permissions'][] = $sPermission;
     }
 
@@ -154,10 +143,11 @@ class UpdatePluginYAML
 
         $sLabel      = $sLowerAuthor.'.'.$sLowerPlugin.'::lang.menu.'.$sLowerController;
         $sURL        = $sLowerAuthor.'/'.$sLowerPlugin.'/'.$sLowerController;
-        $sPermission = $sLowerPlugin.'-menu-'.$sLowerController;
+        $sPermission = $sLowerPlugin.self::PREFIX_MENU.$sLowerController;
 
         $this->arSideMenu['label']         = $sLabel;
         $this->arSideMenu['url']           = $sURL;
+        $this->arSideMenu['icon']          = 'icon-paw';
         $this->arSideMenu['permissions'][] = $sPermission;
     }
 
@@ -177,8 +167,8 @@ class UpdatePluginYAML
         $sTab   = $sLowerAuthor.'.'.$sLowerPlugin.'::lang.tab.permissions';
         $sLabel = $sLowerAuthor.'.'.$sLowerPlugin.'::lang.permission.'.$sLowerModel;
 
-        array_set($this->arPermission, 'tab', $sTab);
-        array_set($this->arPermission, 'label', $sLabel);
+        $this->arPermission['label'] = $sLabel;
+        $this->arPermission['tab']   = $sTab;
     }
 
     /**
@@ -195,9 +185,9 @@ class UpdatePluginYAML
             return;
         }
 
-        array_set($this->arMainMenu, self::SIDE_MENU.'.'.$sKeySideMenu, $this->arSideMenu);
-        array_set($this->arYAML, self::NAVIGATION.'.'.$sKeyMainMenu, $this->arMainMenu);
-        array_set($this->arYAML, self::PERMISSIONS.'.'.$sKeyPermission, $this->arPermission);
+        array_set($this->arMainMenu, self::PLUGIN_SIDE_MENU.'.'.$sKeySideMenu, $this->arSideMenu);
+        array_set($this->arYAML, self::PLUGIN_NAVIGATION.'.'.$sKeyMainMenu, $this->arMainMenu);
+        array_set($this->arYAML, self::PLUGIN_PERMISSIONS.'.'.$sKeyPermission, $this->arPermission);
     }
 
     /**

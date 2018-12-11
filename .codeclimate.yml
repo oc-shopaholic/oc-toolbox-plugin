@@ -5,7 +5,7 @@ plugins:
     config:
       languages:
         php:
-          mass_threshold: 45
+          mass_threshold: 50
   fixme:
     enabled: true
   phpmd:

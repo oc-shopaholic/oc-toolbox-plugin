@@ -10,6 +10,7 @@ use Lovata\Toolbox\Classes\Event\AbstractBackendMenuHandler;
  */
 class ExtendBackendMenuHandler extends AbstractBackendMenuHandler
 {
+    /** @var int */
     protected $iPriority = 100;
 
     /**

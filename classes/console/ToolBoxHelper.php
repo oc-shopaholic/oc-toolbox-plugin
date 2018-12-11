@@ -84,12 +84,12 @@ class ToolBoxHelper extends Command
                 Lang::get('lovata.toolbox::lang.message.table_toolbox_create', ['description' => 'collection.']),
             ],
             [
-                'toolbox:create.event.model',
-                Lang::get('lovata.toolbox::lang.message.table_toolbox_create', ['description' => 'event model.']),
-            ],
-            [
                 'toolbox:create.store',
                 Lang::get('lovata.toolbox::lang.message.table_toolbox_create', ['description' => 'store.']),
+            ],
+            [
+                'toolbox:create.event.model',
+                Lang::get('lovata.toolbox::lang.message.table_toolbox_create', ['description' => 'event model.']),
             ],
             [
                 'toolbox:create.event.menu',
