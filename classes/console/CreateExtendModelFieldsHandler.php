@@ -1,7 +1,7 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
 use Lovata\Toolbox\Classes\Parser\ExtendModelFieldsHandlerFile;
-use Lovata\Toolbox\Traits\Console\TraitLogo;
+use Lovata\Toolbox\Traits\Console\LogoTrait;
 
 /**
  * Class CreateExtendModelFieldsHandler
@@ -10,8 +10,6 @@ use Lovata\Toolbox\Traits\Console\TraitLogo;
  */
 class CreateExtendModelFieldsHandler extends CommonCreateFile
 {
-    use TraitLogo;
-
     /** @var string The console command name. */
     protected $name = 'toolbox:create.event.fields';
     /** @var string The console command description. */
@@ -22,12 +20,12 @@ class CreateExtendModelFieldsHandler extends CommonCreateFile
      */
     public function handle()
     {
-        $this->logoToolBox();
-        $this->setAuthor();
-        $this->setPlugin();
+        parent::handle();
+
+        $this->setAuthor(true);
+        $this->setPlugin(true);
         $this->setModel();
         $this->setController();
-
         $this->createFile(ExtendModelFieldsHandlerFile::class);
     }
 }

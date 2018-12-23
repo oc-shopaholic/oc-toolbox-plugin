@@ -60,6 +60,7 @@
         'count'                    => 'Compter',
         'length'                   => 'Longueur',
         'amount'                   => 'Montant',
+        'view_count'               => 'Nombre de vues',
 
         'sort_order' => 'Tri',
         'created_at' => 'Créé',
@@ -87,6 +88,7 @@
         'preview_content' => 'Prévisualiser le contenu',
         'full_content'    => 'Contenu',
         'images'          => 'Images',
+        'files'           => 'Des dossiers',
         'settings'        => 'Paramètres',
         'description'     => 'Description',
         'properties'      => 'Propriétés',

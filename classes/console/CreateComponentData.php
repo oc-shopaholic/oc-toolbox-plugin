@@ -21,16 +21,7 @@ class CreateComponentData extends CommonCreateFile
     {
         parent::handle();
 
-        if (empty($this->arInoutData)) {
-            $this->logoToolBox();
-            $this->setAuthor();
-            $this->setPlugin();
-        }
-
-        if (!$this->checkAddition(self::CODE_MODEL)) {
-            $this->setModel();
-        }
-
+        $this->setModel();
         $this->createFile(ComponentData::class);
     }
 }

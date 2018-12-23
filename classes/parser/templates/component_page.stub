@@ -1,17 +1,18 @@
 <?php namespace {{studly_author}}\{{studly_plugin}}\Components;
 
-use {{studly_author}}\{{studly_plugin}}\Classes\Item\{{studly_model}}Item;
 use Lovata\Toolbox\Classes\Component\ElementPage;
 use {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}};
+use {{studly_author}}\{{studly_plugin}}\Classes\Item\{{studly_model}}Item;
 
 /**
  * Class {{studly_model}}Page
  * @package {{studly_author}}\{{studly_plugin}}\Components
- * @author  {{developer}}
- */
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
 class {{studly_model}}Page extends ElementPage
 {
     /**
+     * Component details
      * @return array
      */
     public function componentDetails()
@@ -35,12 +36,17 @@ class {{studly_model}}Page extends ElementPage
 
         $obElement = {{studly_model}}::[[active]]active()->[[active]]getBySlug($sElementSlug)->first();
 
-        return $obElement;
+[[view_count]]        if(!empty($obElement)) {
+            $obElement->view_count++;
+            $obElement->save();
+        }
+
+[[view_count]]        return $obElement;
     }
 
     /**
      * Make new element item
-     * @param int   $iElementID
+     * @param int $iElementID
      * @param {{studly_model}} $obElement
      * @return {{studly_model}}Item
      */

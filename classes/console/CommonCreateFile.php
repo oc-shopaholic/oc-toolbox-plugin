@@ -3,7 +3,7 @@
 use Lang;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
-use Lovata\Toolbox\Traits\Console\TraitLogo;
+use Lovata\Toolbox\Traits\Console\LogoTrait;
 
 /**
  * Class CommonCreateFile
@@ -12,34 +12,52 @@ use Lovata\Toolbox\Traits\Console\TraitLogo;
  */
 class CommonCreateFile extends Command
 {
-    use TraitLogo;
-
-    const CODE_DEVELOPER              = 'developer';
-    const CODE_AUTHOR                 = 'author';
-    const CODE_PLUGIN                 = 'plugin';
-    const CODE_MODEL                  = 'model';
-    const CODE_CONTROLLER             = 'controller';
-    const CODE_ITEM                   = 'item';
-    const CODE_COLLECTION             = 'collection';
-    const CODE_STORE                  = 'store';
-    const CODE_COMPONENT_PAGE         = 'component page';
-    const CODE_COMPONENT_DATA         = 'component data';
-    const CODE_COMPONENT_LIST         = 'component list';
-    const CODE_EVENT                  = 'event';
-    const CODE_CREATION_MIGRATION     = 'creation migration';
-    const CODE_CREATION_MODEL_COLUMNS = 'model columns';
-    const CODE_CREATION_MODEL_FIELDS  = 'model fields';
-    const CODE_EMPTY_FIELD            = 'empty_fields';
-    const CODE_SORT                   = 'sort';
-    const CODE_ACTIVE                 = 'active';
-    const CODE_NAME                   = 'name';
-    const CODE_SLUG                   = 'slug';
-    const CODE_FIELDS                 = 'fields';
-    const CODE_SET_NAME               = 'Set developer';
-    const CODE_DEFAULT                = 'Default';
+    use LogoTrait;
 
     const PREFIX_LOWER   = 'lower_';
     const PREFIX_STUDLY  = 'studly_';
+
+    const CODE_DEFAULT                    = 'Default';
+    const CODE_EMPTY_FIELD                = 'empty_fields';
+    const CODE_EMPTY_VALIDATE             = 'empty_validate';
+    const CODE_EMPTY_ATTACH_ONE           = 'empty_attach_one';
+    const CODE_EMPTY_ATTACH_MANY          = 'empty_attach_many';
+    const CODE_SLUG                       = 'slug';
+    const CODE_NAME                       = 'name';
+    const CODE_PREVIEW_IMAGE              = 'preview_image';
+    const CODE_FILE                       = 'file';
+    const CODE_IMAGES                     = 'images';
+    const CODE_FIELDS                     = 'fields';
+    const CODE_DEVELOPER                  = 'developer';
+    const CODE_AUTHOR                     = 'author';
+    const CODE_EXPANSION_AUTHOR           = 'expansion_author';
+    const CODE_EXPANSION_PLUGIN           = 'expansion_plugin';
+    const CODE_PLUGIN                     = 'plugin';
+    const CODE_MODEL                      = 'model';
+    const CODE_CONTROLLER                 = 'controller';
+    const CODE_LOGO                       = 'logo';
+    const CODE_IMPORT_SVG                 = 'import_svg';
+    const CODE_EXPORT_SVG                 = 'export_svg';
+    const CODE_EMPTY_IMPORT_EXPORT_SVG    = 'empty_import_export_svg';
+    const CODE_IMPORT_EXPORT_SVG          = 'import_export_svg';
+    const CODE_NESTED_TREE                = 'nested_tree';
+    const CODE_SORTABLE                   = 'sortable';
+    const CODE_DEFAULT_SORTING            = 'default_sorting';
+    const CODE_SORTING                    = 'sorting';
+    const CODE_EMPTY_SORTABLE_NESTED_TREE = 'empty_sortable_nested_tree';
+    const CODE_VIEW_COUNT                 = 'view_count';
+    const CODE_ACTIVE                     = 'active';
+    const CODE_COMMAND_CREATE_ALL         = 'create_all';
+    const CODE_ITEM                       = 'item';
+    const CODE_COLLECTION                 = 'collection';
+    const CODE_STORE                      = 'store';
+    const CODE_COMPONENT_PAGE             = 'component page';
+    const CODE_COMPONENT_DATA             = 'component data';
+    const CODE_COMPONENT_LIST             = 'component list';
+    const CODE_EVENT                      = 'event';
+    const CODE_CREATION_MODEL_COLUMNS     = 'model columns';
+    const CODE_CREATION_MODEL_FIELDS      = 'model fields';
+    const CODE_CREATION_MIGRATION         = 'creation migration';
 
     /** @var array */
     protected $arFieldList = [
@@ -52,6 +70,8 @@ class CommonCreateFile extends Command
         'description',
         'preview_image',
         'images',
+        'file',
+        'view_count',
     ];
     /** @var array */
     protected $arInoutData = [];
@@ -64,16 +84,6 @@ class CommonCreateFile extends Command
     ];
 
     /**
-     * CommonCreateFile constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        array_set($this->arData, 'replace.developer', env('DEVELOPER', ''));
-    }
-
-    /**
      * Execute the console command.
      */
     public function handle()
@@ -82,7 +92,14 @@ class CommonCreateFile extends Command
 
         if (!empty($this->arInoutData)) {
             $this->arData = $this->arInoutData;
+        } else {
+            $this->setDisableList();
         }
+
+        $this->setLogo();
+        $this->setAuthor();
+        $this->setPlugin();
+        $this->setDeveloper();
     }
 
     /**
@@ -97,117 +114,102 @@ class CommonCreateFile extends Command
     }
 
     /**
-     * Choice field list
-     * @param array $arException
+     * Set logo
      */
-    protected function choiceFieldList($arException = [])
+    protected function setLogo()
     {
-        if (!empty($arException)) {
-            $this->arFieldList = array_diff($this->arFieldList, $arException);
-        }
-
-        $sMessage = Lang::get('lovata.toolbox::lang.message.choice_field_list');
-        $this->choiceByList($this->arFieldList, $sMessage);
-
-        $arEnableList = array_get($this->arData, 'enable');
-
-        if (empty($arEnableList)) {
-            $this->arData['disable'][] = self::CODE_EMPTY_FIELD;
-        }
-
-        foreach ($this->arFieldList as $sField) {
-            if (in_array($sField, $arEnableList)) {
-                $this->arData['addition'][] = self::CODE_EMPTY_FIELD;
-            }
-        }
-
-        $this->arData['enable'][] = self::CODE_EMPTY_FIELD;
-    }
-
-    /**
-     * Choice by list
-     * @param array $arList
-     * @param string $sMessage
-     */
-    protected function choiceByList($arList, $sMessage)
-    {
-        if (empty($arList) || empty($sMessage)) {
+        if ($this->checkAdditionList(self::CODE_LOGO)) {
             return;
         }
 
-        $sMessage = '<info>'.$sMessage.'</info>';
-        $arChoice = [$sMessage];
-
-        foreach ($arList as $sKey => $sField) {
-            $arChoice[] = '[<info>'.$sKey.'</info>] '.$sField;
-        }
-
-        $this->output->writeln($arChoice);
-
-        $sKeyList = (string) $this->ask('', self::CODE_DEFAULT);
-
-        if (!preg_match('/(^([0-9]+\,)+([0-9]+)$)|(^([0-9]+)$)/', $sKeyList) && $sKeyList != self::CODE_DEFAULT) {
-            $this->choiceByList($arList, $sMessage);
-        }
-
-        $this->processingListByAnswer($sKeyList, $arList);
+        $this->setAdditionList(self::CODE_LOGO);
+        $this->logoToolBox();
     }
 
     /**
-     * Processing list by answer
-     * @param string $sKeyList
-     * @param array $arValueList
+     * Set developer
      */
-    protected function processingListByAnswer($sKeyList, $arValueList)
+    protected function setDeveloper()
     {
-        if (empty($arValueList)) {
+        if ($this->checkAdditionList(self::CODE_DEVELOPER)) {
             return;
         }
 
-        $arKeyList = explode(',', $sKeyList);
-        $arKeyList = array_unique($arKeyList);
+        $this->setAdditionList(self::CODE_DEVELOPER);
+        $sDeveloper = env('DEVELOPER', '');
 
-        $arEnableList  = [];
-
-        foreach ($arKeyList as $iKey) {
-            $sValue = array_get($arValueList, $iKey);
-
-            if (!empty($sValue)) {
-                $arEnableList[] = $sValue;
-            }
+        if (empty($sDeveloper)) {
+            return;
         }
 
-        $arDisableList = array_diff($arValueList, $arEnableList);
-        array_set($this->arData, 'enable', $arEnableList);
-        array_set($this->arData, 'disable', $arDisableList);
+        array_set($this->arData, 'replace.developer'.self::CODE_DEVELOPER, $sDeveloper);
     }
 
     /**
      * Set author
+     * @param boolean $bExpansion
      */
-    protected function setAuthor()
+    protected function setAuthor($bExpansion = false)
     {
-        $sMessage = Lang::get('lovata.toolbox::lang.message.set', [
-            'name'    => self::CODE_AUTHOR,
-            'example' => 'Lovata',
-        ]);
-
-        $sAuthor = $this->validationAskByName($sMessage);
-        $this->setRegisterString($sAuthor, self::CODE_AUTHOR);
+        $this->setAuthorAndPlugin(
+            $bExpansion,
+            self::CODE_AUTHOR,
+            self::CODE_EXPANSION_AUTHOR,
+            'Lovata'
+        );
     }
 
     /**
      * Set plugin
+     * @param boolean $bExpansion
      */
-    protected function setPlugin()
+    protected function setPlugin($bExpansion = false)
     {
-        $sMessage = Lang::get('lovata.toolbox::lang.message.set', [
-            'name'    => self::CODE_PLUGIN,
-            'example' => 'Shopaholic',
-        ]);
+        $this->setAuthorAndPlugin(
+            $bExpansion,
+            self::CODE_PLUGIN,
+            self::CODE_EXPANSION_PLUGIN,
+            'Shopaholic'
+        );
+    }
 
-        $sPlugin = $this->validationAskByName($sMessage);
-        $this->setRegisterString($sPlugin, self::CODE_PLUGIN);
+    /**
+     * Set author and plugin
+     * @param bool $bExpansion
+     * @param string $sCode
+     * @param string $sExpansionCode
+     * @param string $sExample
+     */
+    protected function setAuthorAndPlugin($bExpansion, $sCode, $sExpansionCode, $sExample)
+    {
+        if (empty($sCode) || empty($sExpansionCode) || empty($sExample) || !is_bool($bExpansion)) {
+            return;
+        }
+
+        $bCheckCreateAll = $this->checkAdditionList(self::CODE_COMMAND_CREATE_ALL);
+
+        if (!$this->checkAdditionList($sCode) || !$bCheckCreateAll) {
+            if (!$bCheckCreateAll && $bExpansion) {
+                $sCode = $sExpansionCode;
+            }
+
+            $sMessage = Lang::get('lovata.toolbox::lang.message.set', [
+                'name'    => $sCode,
+                'example' => $sExample,
+            ]);
+
+            $sValue = $this->validationAskByName($sMessage);
+
+            if (!$bCheckCreateAll && $bExpansion) {
+                $this->setRegisterString($sValue, $sExpansionCode);
+
+                return;
+            }
+
+            $this->setAdditionList($sCode);
+            $this->setRegisterString($sValue, $sCode);
+            $this->setRegisterString($sValue, $sExpansionCode);
+        }
     }
 
     /**
@@ -215,6 +217,11 @@ class CommonCreateFile extends Command
      */
     protected function setModel()
     {
+        if ($this->checkAdditionList(self::CODE_MODEL)) {
+            return;
+        }
+
+        $this->setAdditionList(self::CODE_MODEL);
         $sMessage = Lang::get('lovata.toolbox::lang.message.set', [
             'name'    => self::CODE_MODEL,
             'example' => 'Product',
@@ -222,7 +229,6 @@ class CommonCreateFile extends Command
 
         $sModel = $this->validationAskByName($sMessage);
         $this->setRegisterString($sModel, self::CODE_MODEL);
-        $this->arData['addition'][] = self::CODE_MODEL;
     }
 
     /**
@@ -230,6 +236,11 @@ class CommonCreateFile extends Command
      */
     protected function setController()
     {
+        if ($this->checkAdditionList(self::CODE_CONTROLLER)) {
+            return;
+        }
+
+        $this->setAdditionList(self::CODE_CONTROLLER);
         $sMessage = Lang::get('lovata.toolbox::lang.message.set', [
             'name'    => self::CODE_CONTROLLER,
             'example' => 'Products',
@@ -237,9 +248,129 @@ class CommonCreateFile extends Command
 
         $sController = $this->validationAskByName($sMessage);
         $this->setRegisterString($sController, self::CODE_CONTROLLER);
-        $this->arData['addition'][] = self::CODE_CONTROLLER;
     }
 
+    /**
+     * Set field list
+     * @param array $arException
+     * @param array $arOnlyThis
+     */
+    protected function setFieldList($arException = [], $arOnlyThis = [])
+    {
+        if ($this->checkAdditionList(self::CODE_FIELDS)) {
+            return;
+        }
+
+        $this->setAdditionList(self::CODE_FIELDS);
+        $sMessage = Lang::get('lovata.toolbox::lang.message.choice_field_list');
+        $arChoiceList = [self::CODE_DEFAULT];
+        $arChoiceList = array_merge($this->arFieldList, $arChoiceList);
+        $arChoiceList = $this->exceptionByList($arChoiceList, $arException, $arOnlyThis);
+        $this->arFieldList = $this->choice($sMessage, $arChoiceList, null, null, true);
+
+        if (empty($this->arFieldList) || in_array(self::CODE_DEFAULT, $this->arFieldList)) {
+            return;
+        }
+
+        $bCheckName         = in_array(self::CODE_NAME, $this->arFieldList);
+        $bCheckSlug         = in_array(self::CODE_SLUG, $this->arFieldList);
+        $bCheckPreviewImage = in_array(self::CODE_PREVIEW_IMAGE, $this->arFieldList);
+        $bCheckImages       = in_array(self::CODE_IMAGES, $this->arFieldList);
+        $bCheckFile         = in_array(self::CODE_FILE, $this->arFieldList);
+
+        $this->setEnableList(self::CODE_EMPTY_FIELD);
+        $this->setEnableList($this->arFieldList);
+
+        if ($bCheckName || $bCheckSlug) {
+            $this->setEnableList(self::CODE_EMPTY_VALIDATE);
+        }
+
+        if ($bCheckPreviewImage || $bCheckFile) {
+            $this->setEnableList(self::CODE_EMPTY_ATTACH_ONE);
+        }
+
+        if ($bCheckImages) {
+            $this->setEnableList(self::CODE_EMPTY_ATTACH_MANY);
+        }
+    }
+
+    /**
+     * Set import export csv extends for model
+     */
+    protected function setImportExportCSV()
+    {
+        if ($this->checkAdditionList(self::CODE_IMPORT_EXPORT_SVG)) {
+            return;
+        }
+
+        $this->setAdditionList(self::CODE_IMPORT_EXPORT_SVG);
+        $sMessage = Lang::get('lovata.toolbox::lang.message.choice_extend_model');
+        $arChoiceList = [
+            self::CODE_MODEL,
+            self::CODE_IMPORT_SVG,
+            self::CODE_EXPORT_SVG,
+        ];
+
+        $sResult = $this->choice($sMessage, $arChoiceList);
+
+        if ($sResult != self::CODE_MODEL) {
+            $this->setEnableList([self::CODE_EMPTY_IMPORT_EXPORT_SVG, $sResult, self::CODE_EMPTY_ATTACH_ONE]);
+        } else {
+            $this->setEnableList(self::CODE_MODEL);
+        }
+    }
+
+    /**
+     * Set sorting
+     * @param array $arException
+     * @param array $arOnlyThis
+     */
+    protected function setSorting($arException = [], $arOnlyThis = [])
+    {
+        if ($this->checkAdditionList(self::CODE_SORTING)) {
+            return;
+        }
+
+        $this->setAdditionList(self::CODE_SORTING);
+        $sMessage = Lang::get('lovata.toolbox::lang.message.choice_sorting');
+        $arChoiceList = [
+            self::CODE_NESTED_TREE,
+            self::CODE_SORTABLE,
+            self::CODE_DEFAULT_SORTING,
+            self::CODE_DEFAULT,
+        ];
+
+        $arChoiceList = $this->exceptionByList($arChoiceList, $arException, $arOnlyThis);
+        $sResult = $this->choice($sMessage, $arChoiceList);
+
+        if ($sResult == self::CODE_DEFAULT) {
+            return;
+        } elseif ($sResult == self::CODE_NESTED_TREE || $sResult == self::CODE_SORTABLE) {
+            $this->setEnableList(self::CODE_EMPTY_SORTABLE_NESTED_TREE);
+        }
+
+        $this->setEnableList($sResult);
+    }
+
+    /**
+     * Exception by list
+     * @param array $arList
+     * @param array $arException
+     * @param array $arOnlyThis
+     * @return array
+     */
+    protected function exceptionByList($arList = [], $arException = [], $arOnlyThis = [])
+    {
+        if (empty($arException) && empty($arOnlyThis)) {
+            return $arList;
+        } elseif (empty($arException) && !empty($arOnlyThis)) {
+            return $arOnlyThis;
+        }
+
+        $arChoiceList = array_diff($arList, $arException);
+
+        return array_values($arChoiceList);
+    }
     /**
      * Validation answer to a question by name
      * @param string $sMessage
@@ -291,11 +422,11 @@ class CommonCreateFile extends Command
     }
 
     /**
-     * Check addition config
+     * Check addition list
      * @param string $sCode
      * @return bool
      */
-    protected function checkAddition($sCode)
+    protected function checkAdditionList($sCode)
     {
         $arAdditionList = array_get($this->arData, 'addition');
 
@@ -307,23 +438,92 @@ class CommonCreateFile extends Command
     }
 
     /**
-     * Set additional list
+     * Check enable list
+     * @param string $sCode
+     * @return bool
      */
-    protected function setAdditionalList()
+    protected function checkEnableList($sCode)
     {
-        $arEnableList  = array_get($this->arData, 'enable');
+        $arEnableList = array_get($this->arData, 'enable');
+
+        if (!empty($sCode) && !empty($arEnableList) && in_array($sCode, $arEnableList)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Set disable list
+     */
+    protected function setDisableList()
+    {
+        $arDisableList = [
+            self::CODE_DEVELOPER,
+            self::CODE_EMPTY_FIELD,
+            self::CODE_EMPTY_VALIDATE,
+            self::CODE_EMPTY_ATTACH_ONE,
+            self::CODE_EMPTY_ATTACH_MANY,
+            self::CODE_EMPTY_IMPORT_EXPORT_SVG,
+            self::CODE_IMPORT_SVG,
+            self::CODE_EXPORT_SVG,
+            self::CODE_MODEL,
+            self::CODE_NESTED_TREE,
+            self::CODE_SORTABLE,
+            self::CODE_DEFAULT_SORTING,
+            self::CODE_EMPTY_SORTABLE_NESTED_TREE,
+        ];
+
+        $arDisableList = array_merge($arDisableList, $this->arFieldList);
+        array_set($this->arData, 'disable', $arDisableList);
+    }
+
+    /**
+     * Set addition list
+     * @param string $sValue
+     */
+    protected function setAdditionList($sValue)
+    {
+        if (!empty($sValue)) {
+            $this->arData['addition'][] = $sValue;
+        }
+    }
+
+    /**
+     * Set enable list
+     * @param string|array
+     */
+    protected function setEnableList($arData)
+    {
+        if (empty($arData)) {
+            return;
+        }
+
+        $arResult = [];
+
+        if (!is_array($arData)) {
+            $arData = [$arData];
+        }
+
+        foreach ($arData as $mixData) {
+            if (is_array($mixData)) {
+                $arResult = array_merge($arResult, $mixData);
+            }
+            $arResult[] = $mixData;
+        }
+
+        $arResult = array_unique($arResult);
         $arDisableList = array_get($this->arData, 'disable');
 
-        if (in_array(self::CODE_ACTIVE, $arEnableList) || in_array(self::CODE_ACTIVE, $arDisableList)) {
-            $this->arData['addition'][] = self::CODE_ACTIVE;
-        }
+        foreach ($arResult as $sValue) {
+            $mixKey = array_search($sValue, $arDisableList);
+            if (!$mixKey) {
+                continue;
+            }
 
-        if (in_array(self::CODE_SORT, $arEnableList) || in_array(self::CODE_SORT, $arDisableList)) {
-            $this->arData['addition'][] = self::CODE_SORT;
-        }
-
-        if (in_array(self::CODE_EMPTY_FIELD, $arEnableList) || in_array(self::CODE_EMPTY_FIELD, $arDisableList)) {
-            $this->arData['addition'][] = self::CODE_EMPTY_FIELD;
+            $sValue = $arDisableList[$mixKey];
+            $this->arData['enable'][] = $sValue;
+            array_forget($this->arData, 'disable.'.$mixKey);
         }
     }
 }

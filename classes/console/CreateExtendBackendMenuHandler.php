@@ -1,7 +1,6 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
 use Lovata\Toolbox\Classes\Parser\ExtendBackendMenuHandlerFile;
-use Lovata\Toolbox\Traits\Console\TraitLogo;
 
 /**
  * Class CreateExtendBackendMenuHandler
@@ -10,8 +9,6 @@ use Lovata\Toolbox\Traits\Console\TraitLogo;
  */
 class CreateExtendBackendMenuHandler extends CommonCreateFile
 {
-    use TraitLogo;
-
     /** @var string The console command name. */
     protected $name = 'toolbox:create.event.menu';
     /** @var string The console command description. */
@@ -22,9 +19,7 @@ class CreateExtendBackendMenuHandler extends CommonCreateFile
      */
     public function handle()
     {
-        $this->logoToolBox();
-        $this->setAuthor();
-        $this->setPlugin();
+        parent::handle();
 
         $this->createFile(ExtendBackendMenuHandlerFile::class);
     }

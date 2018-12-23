@@ -7,8 +7,8 @@ use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}ListStore;
 /**
  * Class {{studly_model}}Collection
  * @package {{studly_author}}\{{studly_plugin}}\Classes\Collection
- * @author  {{developer}}
- */
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
 class {{studly_model}}Collection extends ElementCollection
 {
     const ITEM_CLASS = {{studly_model}}Item::class;
@@ -23,7 +23,7 @@ class {{studly_model}}Collection extends ElementCollection
 
         return $this->intersect($arResultIDList);
     }
-[[active]][[sort]]
+[[active]][[sortable]]
     /**
      * Sort list
      * @return $this
@@ -34,4 +34,27 @@ class {{studly_model}}Collection extends ElementCollection
 
         return $this->applySorting($arResultIDList);
     }
-[[sort]]}
+[[sortable]][[default_sorting]]
+    /**
+     * Sort list by
+     * @param string $sSorting
+     * @return $this
+     */
+    public function sort($sSorting)
+    {
+        $arResultIDList = {{studly_model}}ListStore::instance()->sorting->get($sSorting);
+
+        return $this->applySorting($arResultIDList);
+    }
+[[default_sorting]][[nested_tree]]
+    /**
+     * Sort list
+     * @return $this
+     */
+    public function tree()
+    {
+        $arResultIDList = {{studly_model}}ListStore::instance()->top_level->get();
+
+        return $this->applySorting($arResultIDList);
+    }
+[[nested_tree]]}

@@ -13,22 +13,4 @@ class ControllerIndexFile extends CommonFile
     protected $sPathFolder = '/{{lower_author}}/{{lower_plugin}}/controllers/{{lower_controller}}/';
     /** @var string */
     protected $sPathTemplate = '/lovata/toolbox/classes/parser/templates/controller_index.stub';
-
-    /**
-     * Create file
-     * @param bool $bForce
-     * @return null|string
-     */
-    public function create($bForce = false)
-    {
-        if (!$this->bForce && !$bForce) {
-            return $this->sPathFile;
-        }
-
-        if ($bForce || $this->bForce) {
-            $this->obFile->put($this->sPathFile, $this->sContent);
-        }
-
-        return null;
-    }
 }

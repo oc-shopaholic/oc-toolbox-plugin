@@ -1,9 +1,9 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
-use Lang;
 use Lovata\Toolbox\Classes\Parser\ListStoreFile;
 use Lovata\Toolbox\Classes\Parser\ActiveListStoreFile;
 use Lovata\Toolbox\Classes\Parser\SortingListStoreFile;
+use Lovata\Toolbox\Classes\Parser\TopLevelListStoreFile;
 
 /**
  * Class CreateStore
@@ -24,54 +24,23 @@ class CreateStore extends CommonCreateFile
     {
         parent::handle();
 
-        $arEnableList = array_get($this->arInoutData, 'enable');
-
-        if (empty($this->arInoutData)) {
-            $this->logoToolBox();
-            $this->setAuthor();
-            $this->setPlugin();
-        }
-
-        if (!$this->checkAddition(self::CODE_MODEL)) {
-            $this->setModel();
-        }
-
-        $this->createAdditionalFile(
-            self::CODE_ACTIVE,
-            ActiveListStoreFile::class,
-            'lovata.toolbox::lang.message.active_list',
-            $arEnableList
-        );
-        $this->createAdditionalFile(
-            self::CODE_SORT,
-            SortingListStoreFile::class,
-            'lovata.toolbox::lang.message.sort_list',
-            $arEnableList
-        );
-
+        $this->setAuthor(true);
+        $this->setPlugin(true);
+        $this->setModel();
+        $this->setFieldList(null, [self::CODE_ACTIVE, self::CODE_VIEW_COUNT, self::CODE_DEFAULT]);
+        $this->setSorting();
         $this->createFile(ListStoreFile::class);
-    }
 
-    /**
-     * Create additional file
-     * @param string $sCode
-     * @param string $sClass
-     * @param array $arEnableList
-     * @param string $sCodeMessage
-     */
-    protected function createAdditionalFile($sCode, $sClass, $sCodeMessage, $arEnableList)
-    {
-        $this->arData['enable'][] = $sCode;
+        if ($this->checkEnableList(self::CODE_ACTIVE)) {
+            $this->createFile(ActiveListStoreFile::class);
+        }
 
-        if (!$this->checkAddition($sCode)) {
-            $sMessage = Lang::get($sCodeMessage, ['class' => self::CODE_STORE]);
-            if (!$this->confirm($sMessage, true)) {
-                $this->arData['disable'][] = $sCode;
-            } else {
-                $this->createFile($sClass);
-            }
-        } elseif (!empty($arEnableList) && in_array($sCode, $arEnableList)) {
-            $this->createFile($sClass);
+        if ($this->checkEnableList(self::CODE_SORTABLE) || $this->checkEnableList(self::CODE_DEFAULT_SORTING)) {
+            $this->createFile(SortingListStoreFile::class);
+        }
+
+        if ($this->checkEnableList(self::CODE_NESTED_TREE)) {
+            $this->createFile(TopLevelListStoreFile::class);
         }
     }
 }

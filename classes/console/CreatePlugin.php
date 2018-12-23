@@ -1,6 +1,5 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
-use Lovata\Toolbox\Traits\Console\TraitLogo;
 use Lovata\Toolbox\Classes\Parser\PluginPHPFile;
 use Lovata\Toolbox\Classes\Parser\PluginYAMLFile;
 use Lovata\Toolbox\Classes\Parser\PluginVersionFile;
@@ -15,8 +14,6 @@ use Lovata\Toolbox\Classes\Parser\PluginLangFRFile;
  */
 class CreatePlugin extends CommonCreateFile
 {
-    use TraitLogo;
-
     /** @var string The console command name. */
     protected $name = 'toolbox:create.plugin';
     /** @var string The console command description. */
@@ -28,12 +25,6 @@ class CreatePlugin extends CommonCreateFile
     public function handle()
     {
         parent::handle();
-
-        if (empty($this->arInoutData)) {
-            $this->logoToolBox();
-            $this->setAuthor();
-            $this->setPlugin();
-        }
 
         $this->createFile(PluginPHPFile::class);
         $this->createFile(PluginYAMLFile::class);

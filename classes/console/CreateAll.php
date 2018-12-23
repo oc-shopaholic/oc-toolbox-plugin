@@ -1,7 +1,6 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
 use Lang;
-use Lovata\Toolbox\Traits\Console\TraitLogo;
 
 /**
  * Class CreateAll
@@ -10,8 +9,6 @@ use Lovata\Toolbox\Traits\Console\TraitLogo;
  */
 class CreateAll extends CommonCreateFile
 {
-    use TraitLogo;
-
     /** @var string The console command name. */
     protected $name = 'toolbox:create.all';
     /** @var string The console command description. */
@@ -22,32 +19,15 @@ class CreateAll extends CommonCreateFile
      */
     public function handle()
     {
+        parent::handle();
 
-        $this->logoToolBox();
-        $this->setAuthor();
-        $this->setPlugin();
         $this->setModel();
         $this->setController();
-        $this->choiceFieldList();
-        $this->confirmSort();
-        $this->setAdditionalList();
-
+        $this->setFieldList();
+        $this->setSorting();
+        $this->setImportExportCSV();
+        $this->setAdditionList(self::CODE_COMMAND_CREATE_ALL);
         $this->callCommandList();
-    }
-
-    /**
-     * Add sort1
-     */
-    protected function confirmSort()
-    {
-        $sMessage = Lang::get('lovata.toolbox::lang.message.sort_list', ['class' => self::CODE_COLLECTION]);
-
-
-        if ($this->confirm($sMessage, true)) {
-            $this->arData['enable'][] = self::CODE_SORT;
-        } else {
-            $this->arData['disable'][] = self::CODE_SORT;
-        }
     }
 
     /**

@@ -2,18 +2,27 @@
 
 use Lovata\Toolbox\Classes\Store\AbstractListStore;
 [[active]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}\ActiveListStore;
-[[active]][[sort]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}\SortingListStore;
-[[sort]]
+[[active]][[default_sorting]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}\SortingListStore;
+[[default_sorting]][[sortable]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}\SortingListStore;
+[[sortable]][[nested_tree]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}\TopLevelListStore;
+[[nested_tree]]
 /**
  * Class {{studly_model}}ListStore
  * @package {{studly_author}}\{{studly_plugin}}\Classes\Store
- * @author  {{developer}}
-[[active]] * @property ActiveListStore  $active
-[[active]][[sort]] * @property SortingListStore $sorting
-[[sort]] */
+[[developer]] * @author {{developer}}
+[[developer]][[active]] * @property ActiveListStore  $active
+[[active]][[default_sorting]] * @property SortingListStore $sorting
+[[default_sorting]][[sortable]] * @property SortingListStore $sorting
+[[sortable]][[nested_tree]] * @property TopLevelListStore $top_level
+[[nested_tree]] */
 class {{studly_model}}ListStore extends AbstractListStore
 {
-    protected static $instance;
+[[default_sorting]]    const SORT_PUBLISH_ASC     = 'publish|asc';
+    const SORT_PUBLISH_DESC    = 'publish|desc';
+[[view_count]]    const SORT_VIEW_COUNT_ASC  = 'view|asc';
+    const SORT_VIEW_COUNT_DESC = 'view|desc';
+[[view_count]]
+[[default_sorting]]    protected static $instance;
 
     /**
      * Init store method
@@ -21,6 +30,8 @@ class {{studly_model}}ListStore extends AbstractListStore
     protected function init()
     {
 [[active]]        $this->addToStoreList('active', ActiveListStore::class);
-[[active]][[sort]]        $this->addToStoreList('sorting', SortingListStore::class);
-[[sort]]    }
+[[active]][[default_sorting]]        $this->addToStoreList('sorting', SortingListStore::class);
+[[default_sorting]][[sortable]]        $this->addToStoreList('sorting', SortingListStore::class);
+[[sortable]][[nested_tree]]        $this->addToStoreList('top_level', TopLevelListStore::class);
+[[nested_tree]]    }
 }

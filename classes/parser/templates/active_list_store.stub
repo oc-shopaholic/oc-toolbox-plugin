@@ -1,13 +1,13 @@
 <?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}};
 
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithoutParam;
-use {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}};
+use {{studly_expansion_author}}\{{studly_expansion_plugin}}\Models\{{studly_model}};
 
 /**
  * Class ActiveListStore
  * @package {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}
- * @author  {{developer}}
- */
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
 class ActiveListStore extends AbstractStoreWithoutParam
 {
     protected static $instance;

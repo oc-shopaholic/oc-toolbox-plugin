@@ -6,11 +6,12 @@ use {{studly_author}}\{{studly_plugin}}\Classes\Item\{{studly_model}}Item;
 /**
  * Class {{studly_model}}Data
  * @package {{studly_author}}\{{studly_plugin}}\Components
- * @author  {{developer}}
- */
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
 class {{studly_model}}Data extends ElementData
 {
     /**
+     * Component details
      * @return array
      */
     public function componentDetails()

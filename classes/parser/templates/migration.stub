@@ -7,8 +7,8 @@ use October\Rain\Database\Updates\Migration;
 /**
  * Class CreateTable{{studly_controller}}
  * @package {{studly_author}}\{{studly_plugin}}\Classes\Console
- * @author  {{developer}}
- */
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
 class CreateTable{{studly_controller}} extends Migration
 {
     const TABLE = '{{lower_author}}_{{lower_plugin}}_{{lower_controller}}';
@@ -33,7 +33,13 @@ class CreateTable{{studly_controller}} extends Migration
 [[code]][[external_id]]            $obTable->string('external_id')->nullable()->index();
 [[external_id]][[preview_text]]            $obTable->text('preview_text')->nullable();
 [[preview_text]][[description]]            $obTable->text('description')->nullable();
-[[description]][[empty_fields]]            $obTable->timestamps();
+[[description]][[view_count]]            $obTable->integer('view_count')->nullable()->default(0);
+[[view_count]][[empty_fields]][[nested_tree]]            $obTable->integer('parent_id')->nullable()->unsigned();
+            $obTable->integer('nest_left')->nullable()->unsigned();
+            $obTable->integer('nest_right')->nullable()->unsigned();
+            $obTable->integer('nest_depth')->nullable()->unsigned();
+[[nested_tree]][[sortable]]            $obTable->integer('sort_order')->nullable()->dafault(0);
+[[sortable]]            $obTable->timestamps();
         });
     }
 

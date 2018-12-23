@@ -63,6 +63,7 @@
         'amount'                   => 'Сумма',
         'author'                   => 'Автор',
         'link'                     => 'Ссылка',
+        'view_count'               => 'Количество просмотров',
 
         'sort_order' => 'Сортировка',
         'created_at' => 'Создано',
@@ -94,6 +95,7 @@
         'preview_content' => 'Превью-контент',
         'full_content'    => 'Полный контент',
         'images'          => 'Изображения',
+        'files'           => 'Файлы',
         'settings'        => 'Настройки',
         'description'     => 'Описание',
         'properties'      => 'Свойства',

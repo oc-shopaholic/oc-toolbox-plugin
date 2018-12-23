@@ -21,20 +21,9 @@ class CreateItem extends CommonCreateFile
     {
         parent::handle();
 
-        if (empty($this->arInoutData)) {
-            $this->logoToolBox();
-            $this->setAuthor();
-            $this->setPlugin();
-        }
-
-        if (!$this->checkAddition(self::CODE_MODEL)) {
-            $this->setModel();
-        }
-
-        if (!$this->checkAddition(self::CODE_EMPTY_FIELD)) {
-            $this->choiceFieldList();
-        }
-
+        $this->setModel();
+        $this->setFieldList();
+        $this->setSorting([self::CODE_DEFAULT_SORTING]);
         $this->createFile(ItemFile::class);
     }
 }

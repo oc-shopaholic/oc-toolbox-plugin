@@ -21,20 +21,8 @@ class CreateModelField extends CommonCreateFile
     {
         parent::handle();
 
-        if (empty($this->arInoutData)) {
-            $this->logoToolBox();
-            $this->setAuthor();
-            $this->setPlugin();
-        }
-
-        if (!$this->checkAddition(self::CODE_MODEL)) {
-            $this->setModel();
-        }
-
-        if (!$this->checkAddition(self::CODE_EMPTY_FIELD)) {
-            $this->choiceFieldList();
-        }
-
+        $this->setModel();
+        $this->setFieldList();
         $this->createFile(ModelFieldFile::class);
     }
 }

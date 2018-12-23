@@ -1,12 +1,12 @@
 <?php namespace Lovata\Toolbox\Traits\Console;
 
 /**
- * Trait Logo
+ * Trait LogoTrait
  * @package Lovata\Toolbox\Traits\Console
  * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  *
  */
-trait TraitLogo
+trait LogoTrait
 {
     /** @var array */
     protected $arLogoToolBox = [

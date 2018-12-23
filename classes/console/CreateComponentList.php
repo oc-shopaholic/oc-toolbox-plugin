@@ -21,16 +21,8 @@ class CreateComponentList extends CommonCreateFile
     {
         parent::handle();
 
-        if (empty($this->arInoutData)) {
-            $this->logoToolBox();
-            $this->setAuthor();
-            $this->setPlugin();
-        }
-
-        if (!$this->checkAddition(self::CODE_MODEL)) {
-            $this->setModel();
-        }
-
+        $this->setModel();
+        $this->setSorting([self::CODE_NESTED_TREE, self::CODE_SORTABLE]);
         $this->createFile(ComponentList::class);
     }
 }

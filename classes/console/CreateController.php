@@ -10,6 +10,11 @@ use Lovata\Toolbox\Classes\Parser\ControllerIndexFile;
 use Lovata\Toolbox\Classes\Parser\ControllerPreviewFile;
 use Lovata\Toolbox\Classes\Parser\ControllerUpdateFile;
 use Lovata\Toolbox\Classes\Parser\ControllerConfirmFilterFile;
+use Lovata\Toolbox\Classes\Parser\ControllerImport;
+use Lovata\Toolbox\Classes\Parser\ControllerExport;
+use Lovata\Toolbox\Classes\Parser\ControllerConfigImportExport;
+use Lovata\Toolbox\Classes\Parser\ControllerReorder;
+use Lovata\Toolbox\Classes\Parser\ControllerConfigReorder;
 use Lovata\Toolbox\Classes\Parser\UpdatePluginYAML;
 
 /**
@@ -31,28 +36,11 @@ class CreateController extends CommonCreateFile
     {
         parent::handle();
 
-        if (empty($this->arInoutData)) {
-            $this->logoToolBox();
-            $this->setAuthor();
-            $this->setPlugin();
-        }
-
-        if (!$this->checkAddition(self::CODE_MODEL)) {
-            $this->setModel();
-        }
-
-        if (!$this->checkAddition(self::CODE_CONTROLLER)) {
-            $this->setController();
-        }
-
-        if (!$this->checkAddition(self::CODE_ACTIVE)) {
-            $this->arData['enable'][] = self::CODE_ACTIVE;
-            $sMessage = Lang::get('lovata.toolbox::lang.message.filter_active');
-            if (!$this->confirm($sMessage, true)) {
-                $this->arData['disable'][] = self::CODE_ACTIVE;
-            }
-        };
-
+        $this->setModel();
+        $this->setController();
+        $this->setFieldList(null, [self::CODE_ACTIVE, self::CODE_DEFAULT]);
+        $this->setImportExportCSV();
+        $this->setSorting([self::CODE_DEFAULT_SORTING]);
         $this->createAdditionalFile();
     }
 
@@ -70,6 +58,23 @@ class CreateController extends CommonCreateFile
         $this->createFile(ControllerPreviewFile::class);
         $this->createFile(ControllerUpdateFile::class);
         $this->createFile(ControllerConfirmFilterFile::class);
+
+        if ($this->checkEnableList(self::CODE_IMPORT_SVG)) {
+            $this->createFile(ControllerImport::class);
+        }
+
+        if ($this->checkEnableList(self::CODE_EXPORT_SVG)) {
+            $this->createFile(ControllerExport::class);
+        }
+
+        if ($this->checkEnableList(self::CODE_EMPTY_IMPORT_EXPORT_SVG)) {
+            $this->createFile(ControllerConfigImportExport::class);
+        }
+
+        if ($this->checkEnableList(self::CODE_EMPTY_SORTABLE_NESTED_TREE)) {
+            $this->createFile(ControllerReorder::class);
+            $this->createFile(ControllerConfigReorder::class);
+        }
 
         $this->updatePluginYAML();
     }

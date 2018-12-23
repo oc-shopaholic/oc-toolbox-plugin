@@ -61,6 +61,42 @@ class CommonFile
     }
 
     /**
+     * Create file
+     * @param bool $bForce
+     * @return null|string
+     */
+    public function create($bForce = false)
+    {
+        if (!$this->bForce && !$bForce) {
+            return $this->sPathFile;
+        }
+
+        $arReplace          = array_get($this->arData, 'replace');
+        $arEnableFieldList  = array_get($this->arData, 'enable');
+        $arDisableFieldList = array_get($this->arData, 'disable');
+
+
+        if (!empty($arDisableFieldList)) {
+            $this->sContent = $this->parseByWrapper($arDisableFieldList, $this->sContent);
+        }
+
+        if (!empty($arEnableFieldList)) {
+            $this->sContent = $this->parseByNameWrapper($arEnableFieldList, $this->sContent);
+        }
+
+        if (!empty($arReplace)) {
+            $this->sContent = $this->parseByName($arReplace, $this->sContent);
+        }
+
+
+        if ($bForce || $this->bForce) {
+            $this->obFile->put($this->sPathFile, $this->sContent);
+        }
+
+        return null;
+    }
+
+    /**
      * Parse content by name
      * @param array $arNameList
      * @param string $sContent

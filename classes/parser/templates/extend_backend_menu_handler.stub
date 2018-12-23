@@ -6,8 +6,8 @@ use Lovata\Toolbox\Classes\Event\AbstractBackendMenuHandler;
 /**
  * Class ProductControllerHandler
  * @package {{studly_author}}\{{studly_plugin}}\Classes\Event
- * @author  {{developer}}
- */
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
 class ExtendBackendMenuHandler extends AbstractBackendMenuHandler
 {
     /** @var int */

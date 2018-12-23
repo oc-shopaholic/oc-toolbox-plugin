@@ -21,23 +21,9 @@ class CreateModelColumn extends CommonCreateFile
     {
         parent::handle();
 
-        if (empty($this->arInoutData)) {
-            $this->logoToolBox();
-            $this->setAuthor();
-            $this->setPlugin();
-        }
-
-        if (!$this->checkAddition(self::CODE_MODEL)) {
-            $this->setModel();
-        }
-
-        if (!$this->checkAddition(self::CODE_EMPTY_FIELD)) {
-            $this->choiceFieldList([
-                'preview_image',
-                'images',
-            ]);
-        }
-
+        $this->setModel();
+        $this->setFieldList([self::CODE_PREVIEW_IMAGE, self::CODE_IMAGES, self::CODE_FILE]);
+        $this->setSorting([self::CODE_DEFAULT_SORTING, self::CODE_NESTED_TREE]);
         $this->createFile(ModelColumnFile::class);
     }
 }

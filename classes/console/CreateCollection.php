@@ -22,41 +22,9 @@ class CreateCollection extends CommonCreateFile
     {
         parent::handle();
 
-        if (empty($this->arInoutData)) {
-            $this->logoToolBox();
-            $this->setAuthor();
-            $this->setPlugin();
-        }
-
-        if (!$this->checkAddition(self::CODE_MODEL)) {
-            $this->setModel();
-        }
-
-        $this->additionalProperty(
-            self::CODE_ACTIVE,
-            'lovata.toolbox::lang.message.active_list'
-        );
-        $this->additionalProperty(
-            self::CODE_SORT,
-            'lovata.toolbox::lang.message.sort_list'
-        );
-
+        $this->setModel();
+        $this->setFieldList(null, [self::CODE_ACTIVE, self::CODE_DEFAULT]);
+        $this->setSorting();
         $this->createFile(CollectionFile::class);
-    }
-
-    /**
-     * Add additional property list
-     * @param string $sCode
-     * @param string $sCodeMessage
-     */
-    protected function additionalProperty($sCode, $sCodeMessage)
-    {
-        $this->arData['enable'][] = $sCode;
-        if (!$this->checkAddition($sCode)) {
-            $sMessage = Lang::get($sCodeMessage, ['class' => self::CODE_COLLECTION]);
-            if (!$this->confirm($sMessage, true)) {
-                $this->arData['disable'][] = $sCode;
-            }
-        }
     }
 }

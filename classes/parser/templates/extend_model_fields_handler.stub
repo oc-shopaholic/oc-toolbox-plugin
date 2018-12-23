@@ -1,14 +1,14 @@
-<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\{{studly_model}}\Event;
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Event\{{studly_model}};
 
 use Lovata\Toolbox\Classes\Event\AbstractBackendFieldHandler;
-use {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}};
-use {{studly_author}}\{{studly_plugin}}\Controllers\{{studly_controller}};
+use {{studly_expansion_author}}\{{studly_expansion_plugin}}\Models\{{studly_model}};
+use {{studly_expansion_author}}\{{studly_expansion_plugin}}\Controllers\{{studly_controller}};
 
 /**
  * Class Extend{{studly_model}}FieldsHandler
- * @package {{studly_author}}\{{studly_plugin}}\Classes\{{studly_model}}\Event
- * @author  {{developer}}
- */
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Event\{{studly_model}}
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
 class Extend{{studly_model}}FieldsHandler extends AbstractBackendFieldHandler
 {
     /**

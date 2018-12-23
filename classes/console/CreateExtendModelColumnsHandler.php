@@ -1,7 +1,6 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
 use Lovata\Toolbox\Classes\Parser\ExtendModelColumnsHandlerFile;
-use Lovata\Toolbox\Traits\Console\TraitLogo;
 
 /**
  * Class CreateExtendModelColumnsHandler
@@ -10,8 +9,6 @@ use Lovata\Toolbox\Traits\Console\TraitLogo;
  */
 class CreateExtendModelColumnsHandler extends CommonCreateFile
 {
-    use TraitLogo;
-
     /** @var string The console command name. */
     protected $name = 'toolbox:create.event.columns';
     /** @var string The console command description. */
@@ -22,12 +19,12 @@ class CreateExtendModelColumnsHandler extends CommonCreateFile
      */
     public function handle()
     {
-        $this->logoToolBox();
-        $this->setAuthor();
-        $this->setPlugin();
+        parent::handle();
+
+        $this->setAuthor(true);
+        $this->setPlugin(true);
         $this->setModel();
         $this->setController();
-
         $this->createFile(ExtendModelColumnsHandlerFile::class);
     }
 }

@@ -9,10 +9,12 @@ fields:
         span: auto
         required: 1
         type: text
+        placeholder: 'lovata.toolbox::lang.field.name'
 [[name]][[slug]]    slug:
         label: 'lovata.toolbox::lang.field.slug'
         span: auto
         required: 1
+        placeholder: 'lovata.toolbox::lang.field.slug'
         preset:
             field: name
             type: slug
@@ -23,17 +25,20 @@ fields:
             label: 'lovata.toolbox::lang.field.code'
             span: left
             type: text
+            placeholder: 'lovata.toolbox::lang.field.code'
             tab: 'lovata.toolbox::lang.tab.settings'
 [[code]][[external_id]]        external_id:
             label: 'lovata.toolbox::lang.field.external_id'
             span: left
             type: text
+            placeholder: 'lovata.toolbox::lang.field.external_id'
             tab: 'lovata.toolbox::lang.tab.settings'
 [[external_id]][[preview_text]]        preview_text:
             label: 'lovata.toolbox::lang.field.preview_text'
             size: large
             span: full
             type: textarea
+            placeholder: 'lovata.toolbox::lang.field.preview_text'
             tab: 'lovata.toolbox::lang.tab.description'
 [[preview_text]][[description]]        description:
             label: 'lovata.toolbox::lang.field.description'
@@ -60,4 +65,11 @@ fields:
                 extension: auto
             span: left
             type: fileupload
-            tab: 'lovata.toolbox::lang.tab.images'[[images]]
+            tab: 'lovata.toolbox::lang.tab.images'
+[[images]][[file]]        file:
+            label: 'lovata.toolbox::lang.field.file'
+            type: fileupload
+            span: left
+            required: 0
+            mode: file
+            tab: 'lovata.toolbox::lang.tab.files'[[file]]

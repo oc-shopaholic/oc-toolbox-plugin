@@ -63,6 +63,7 @@
         'amount'                   => 'Betrag',
         'author'                   => 'Autor',
         'link'                     => 'Link',
+        'view_count'               => 'Anzahl anzeigen',
 
         'sort_order' => 'Sortierung',
         'created_at' => 'Erstellt',
@@ -94,6 +95,7 @@
         'preview_content' => 'Inhaltsvorschau',
         'full_content'    => 'Inhalt',
         'images'          => 'Bilder',
+        'files'           => 'Dateien',
         'settings'        => 'Einstellungen',
         'description'     => 'Beschreibung',
         'properties'      => 'Eigenschaften',

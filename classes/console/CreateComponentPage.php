@@ -22,24 +22,8 @@ class CreateComponentPage extends CommonCreateFile
     {
         parent::handle();
 
-        if (empty($this->arInoutData)) {
-            $this->logoToolBox();
-            $this->setAuthor();
-            $this->setPlugin();
-        }
-
-        if (!$this->checkAddition(self::CODE_MODEL)) {
-            $this->setModel();
-        }
-
-        if (!$this->checkAddition(self::CODE_ACTIVE)) {
-            $this->arData['enable'][] = self::CODE_ACTIVE;
-            $sMessage = Lang::get('lovata.toolbox::lang.message.component_page_active');
-            if (!$this->confirm($sMessage, true)) {
-                $this->arData['disable'][] = self::CODE_ACTIVE;
-            }
-        };
-
+        $this->setModel();
+        $this->setFieldList(null, [self::CODE_ACTIVE, self::CODE_VIEW_COUNT, self::CODE_DEFAULT]);
         $this->createFile(ComponentPage::class);
     }
 }

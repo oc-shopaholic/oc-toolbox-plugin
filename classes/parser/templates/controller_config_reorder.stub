@@ -1,0 +1,3 @@
+title: 'backend::lang.reorder.default_title'
+modelClass: {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}}
+nameFrom: name

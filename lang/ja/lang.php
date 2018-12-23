@@ -62,6 +62,7 @@
         'length'                   => '長さ',
         'amount'                   => '量',
         'author'                   => '作者',
+        'view_count'               => 'ビュー数',
 
         'sort_order' => '並び順',
         'created_at' => '作成日時',
@@ -93,6 +94,7 @@
         'preview_content' => 'プレビュー',
         'full_content'    => 'コンテンツ',
         'images'          => '画像',
+        'files'           => 'ファイル',
         'settings'        => '設定',
         'description'     => '説明',
         'properties'      => 'プロパティ',

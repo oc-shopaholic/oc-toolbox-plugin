@@ -10,8 +10,6 @@ use Lovata\Toolbox\Classes\Parser\ModelFile;
  */
 class CreateModel extends CommonCreateFile
 {
-    const CODE_TRAIT_VALIDATOR = 'trait_validation';
-
     /** @var string The console command name. */
     protected $name = 'toolbox:create.model';
     /** @var string The console command description. */
@@ -24,30 +22,13 @@ class CreateModel extends CommonCreateFile
     {
         parent::handle();
 
-        $this->arData['enable'][] = self::CODE_TRAIT_VALIDATOR;
-
-        if (empty($this->arInoutData)) {
-            $this->logoToolBox();
-            $this->setAuthor();
-            $this->setPlugin();
-        }
-
-        if (!$this->checkAddition(self::CODE_MODEL)) {
-            $this->setModel();
-        }
-
-        if (!$this->checkAddition(self::CODE_CONTROLLER)) {
-            $this->setController();
-        }
-
-        if (!$this->checkAddition(self::CODE_EMPTY_FIELD)) {
-            $this->choiceFieldList();
-            $this->addValidationData();
-            $this->setAdditionalList();
-        }
-
+        $this->setModel();
+        $this->setController();
+        $this->setFieldList();
+        $this->setImportExportCSV();
+        $this->setSorting([self::CODE_DEFAULT_SORTING]);
+        $this->setAdditionList(self::CODE_COMMAND_CREATE_ALL);
         $this->createFile(ModelFile::class);
-
         $this->callCommandList();
     }
 
@@ -72,18 +53,6 @@ class CreateModel extends CommonCreateFile
 
         if ($this->confirm($sMessage, true)) {
             $this->call('toolbox:create.model.fields', ['data' => $this->arData]);
-        }
-    }
-
-    /**
-     * Add validate data for $this->data
-     */
-    protected function addValidationData() {
-        $bFieldName = in_array('name', $this->arData['enable']);
-        $bFieldSlug = in_array('slug', $this->arData['enable']);
-
-        if (empty($bFieldName) && empty($bFieldSlug)) {
-            $this->arData['disable'][] = self::CODE_TRAIT_VALIDATOR;
         }
     }
 }
