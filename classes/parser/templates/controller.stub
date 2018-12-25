@@ -3,7 +3,7 @@
 [[empty_sortable_nested_tree]]use Event;
 [[empty_sortable_nested_tree]]use BackendMenu;
 use Backend\Classes\Controller;
-[[empty_sortable_nested_tree]]use {{studly_author}}\{{studly_plugin}}\Classes\Event\{{studly_model}}ModelHandler;
+[[empty_sortable_nested_tree]]use {{studly_author}}\{{studly_plugin}}\Classes\Event\{{studly_model}}\{{studly_model}}ModelHandler;
 [[empty_sortable_nested_tree]]
 /**
  * Class {{studly_controller}}

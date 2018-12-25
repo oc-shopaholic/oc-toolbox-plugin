@@ -140,6 +140,7 @@
 
         'choice_field_list'     => 'Choice available fields (Example: 1,2,3,4)',
         'choice_sorting'        => 'Choice sorting',
+        'choice_lang_list'      => 'Choice lang',
         'choice_extend_model'   => 'Choice extend model',
         'set'                   => 'Set :name (Example: :example)',
         'create'                => 'Create :name?',

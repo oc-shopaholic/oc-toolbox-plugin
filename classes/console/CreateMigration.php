@@ -1,13 +1,13 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
 use Lang;
-use Lovata\Toolbox\Classes\Parser\MigrationFile;
-use Lovata\Toolbox\Classes\Parser\UpdatePluginVersionYAML;
+use Lovata\Toolbox\Classes\Parser\Create\MigrationCreateFile;
+use Lovata\Toolbox\Classes\Parser\Update\PluginVersionYAMLUpdateFile;
 
 /**
  * Class CreateMigration
  * @package Lovata\Toolbox\Classes\Console
- * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
+ * @author Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
 class CreateMigration extends CommonCreateFile
 {
@@ -26,7 +26,7 @@ class CreateMigration extends CommonCreateFile
         $this->setController();
         $this->setFieldList([self::CODE_PREVIEW_IMAGE, self::CODE_IMAGES, self::CODE_FILE]);
         $this->setSorting([self::CODE_DEFAULT_SORTING]);
-        $this->createFile(MigrationFile::class);
+        $this->createFile(MigrationCreateFile::class);
         $this->updatePluginVersionYAML();
     }
 
@@ -38,6 +38,7 @@ class CreateMigration extends CommonCreateFile
         $sMessage = Lang::get('lovata.toolbox::lang.message.version_up');
         $bConfirm = $this->confirm($sMessage, false);
         array_set($this->arData, 'addition.version_up', $bConfirm);
-        new UpdatePluginVersionYAML($this->arData);
+        $obUpdate = new PluginVersionYAMLUpdateFile($this->arData);
+        $obUpdate->update();
     }
 }

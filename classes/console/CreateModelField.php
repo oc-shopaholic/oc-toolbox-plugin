@@ -1,11 +1,11 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
-use Lovata\Toolbox\Classes\Parser\ModelFieldFile;
+use Lovata\Toolbox\Classes\Parser\Create\ModelFieldCreateFile;
 
 /**
  * Class CreateModelField
  * @package Lovata\Toolbox\Classes\Console
- * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
+ * @author Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
 class CreateModelField extends CommonCreateFile
 {
@@ -23,6 +23,6 @@ class CreateModelField extends CommonCreateFile
 
         $this->setModel();
         $this->setFieldList();
-        $this->createFile(ModelFieldFile::class);
+        $this->createFile(ModelFieldCreateFile::class);
     }
 }

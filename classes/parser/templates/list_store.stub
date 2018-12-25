@@ -17,8 +17,8 @@ use Lovata\Toolbox\Classes\Store\AbstractListStore;
 [[nested_tree]] */
 class {{studly_model}}ListStore extends AbstractListStore
 {
-[[default_sorting]]    const SORT_PUBLISH_ASC     = 'publish|asc';
-    const SORT_PUBLISH_DESC    = 'publish|desc';
+[[default_sorting]]    const SORT_CREATED_AT_ASC  = 'created_at|asc';
+    const SORT_CREATED_AT_DESC = 'created_at|desc';
 [[view_count]]    const SORT_VIEW_COUNT_ASC  = 'view|asc';
     const SORT_VIEW_COUNT_DESC = 'view|desc';
 [[view_count]]

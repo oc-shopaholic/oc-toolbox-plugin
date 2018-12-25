@@ -1,4 +1,4 @@
-<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Event;
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Event\{{studly_model}};
 
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 use {{studly_expansion_author}}\{{studly_expansion_plugin}}\Models\{{studly_model}};
@@ -7,7 +7,7 @@ use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}ListStore;
 
 /**
  * Class {{studly_model}}ModelHandler
- * @package {{studly_author}}\{{studly_plugin}}\Classes\Event
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Event\{{studly_model}}
  [[developer]]* @author {{developer}}
  [[developer]]*/
 class {{studly_model}}ModelHandler extends ModelHandler
@@ -115,8 +115,8 @@ class {{studly_model}}ModelHandler extends ModelHandler
      */
     protected function clearBySortingPublished()
     {
-        {{studly_model}}ListStore::instance()->sorting->clear({{studly_model}}ListStore::SORT_PUBLISH_ASC);
-        {{studly_model}}ListStore::instance()->sorting->clear({{studly_model}}ListStore::SORT_PUBLISH_DESC);
+        {{studly_model}}ListStore::instance()->sorting->clear({{studly_model}}ListStore::SORT_CREATED_AT_ASC);
+        {{studly_model}}ListStore::instance()->sorting->clear({{studly_model}}ListStore::SORT_CREATED_AT_DESC);
     }
 [[view_count]]
     /**

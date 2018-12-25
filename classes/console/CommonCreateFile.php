@@ -8,7 +8,7 @@ use Lovata\Toolbox\Traits\Console\LogoTrait;
 /**
  * Class CommonCreateFile
  * @package Lovata\Toolbox\Classes\Console
- * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
+ * @author Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
 class CommonCreateFile extends Command
 {
@@ -47,7 +47,7 @@ class CommonCreateFile extends Command
     const CODE_EMPTY_SORTABLE_NESTED_TREE = 'empty_sortable_nested_tree';
     const CODE_VIEW_COUNT                 = 'view_count';
     const CODE_ACTIVE                     = 'active';
-    const CODE_COMMAND_CREATE_ALL         = 'create_all';
+    const CODE_COMMAND_PARENT             = 'command_parent';
     const CODE_ITEM                       = 'item';
     const CODE_COLLECTION                 = 'collection';
     const CODE_STORE                      = 'store';
@@ -81,6 +81,7 @@ class CommonCreateFile extends Command
         'enable'   => [],
         'disable'  => [],
         'addition' => [],
+        'lang'     => [],
     ];
 
     /**
@@ -88,18 +89,13 @@ class CommonCreateFile extends Command
      */
     public function handle()
     {
-        $this->arInoutData = $this->argument('data');
-
-        if (!empty($this->arInoutData)) {
-            $this->arData = $this->arInoutData;
-        } else {
-            $this->setDisableList();
-        }
-
+        $this->initData();
         $this->setLogo();
+        $this->setDeveloper();
         $this->setAuthor();
         $this->setPlugin();
-        $this->setDeveloper();
+
+        $this->call('toolbox:create.plugin', ['data' => $this->arData]);
     }
 
     /**
@@ -111,6 +107,20 @@ class CommonCreateFile extends Command
         return [
             ['data', InputArgument::OPTIONAL],
         ];
+    }
+
+    /**
+     * Init data
+     */
+    protected function initData()
+    {
+        $this->arInoutData = $this->argument('data');
+
+        if (!empty($this->arInoutData)) {
+            $this->arData = $this->arInoutData;
+        } else {
+            $this->setDisableList();
+        }
     }
 
     /**
@@ -186,7 +196,7 @@ class CommonCreateFile extends Command
             return;
         }
 
-        $bCheckCreateAll = $this->checkAdditionList(self::CODE_COMMAND_CREATE_ALL);
+        $bCheckCreateAll = $this->checkAdditionList(self::CODE_COMMAND_PARENT);
 
         if (!$this->checkAdditionList($sCode) || !$bCheckCreateAll) {
             if (!$bCheckCreateAll && $bExpansion) {
@@ -394,47 +404,15 @@ class CommonCreateFile extends Command
      */
     protected function setRegisterString($sString, $sArrayKey)
     {
+        if (empty($sString) || empty($sArrayKey)) {
+            return;
+        }
+
         $sStringCase   = snake_case($sString);
         $sStringStudly = studly_case($sStringCase);
         $sStringLower  = mb_strtolower($sString);
         array_set($this->arData, 'replace.'.self::PREFIX_STUDLY.$sArrayKey, $sStringStudly);
         array_set($this->arData, 'replace.'.self::PREFIX_LOWER.$sArrayKey, $sStringLower);
-    }
-
-    /**
-     * Create file
-     * @param string $sClass
-     */
-    protected function createFile($sClass)
-    {
-        if (empty($sClass)) {
-            return;
-        }
-
-        $obFile = new $sClass($this->arData);
-        $sFile = $obFile->create();
-        if (!empty($sFile)) {
-            $sMessage = Lang::get('lovata.toolbox::lang.message.force_file', ['file' => $sFile]);
-            if ($this->confirm($sMessage, true)) {
-                $obFile->create(true);
-            }
-        }
-    }
-
-    /**
-     * Check addition list
-     * @param string $sCode
-     * @return bool
-     */
-    protected function checkAdditionList($sCode)
-    {
-        $arAdditionList = array_get($this->arData, 'addition');
-
-        if (!empty($sCode) && !empty($arAdditionList) && in_array($sCode, $arAdditionList)) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -446,7 +424,23 @@ class CommonCreateFile extends Command
     {
         $arEnableList = array_get($this->arData, 'enable');
 
-        if (!empty($sCode) && !empty($arEnableList) && in_array($sCode, $arEnableList)) {
+        if (!empty($sCode) && !empty($arEnableList) && is_array($arEnableList) && in_array($sCode, $arEnableList)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check addition list
+     * @param string $sCode
+     * @return bool
+     */
+    protected function checkAdditionList($sCode)
+    {
+        $arAdditionList = array_get($this->arData, 'addition');
+
+        if (!empty($sCode) && !empty($arAdditionList) && is_array($arAdditionList) && in_array($sCode, $arAdditionList)) {
             return true;
         }
 
@@ -474,7 +468,10 @@ class CommonCreateFile extends Command
             self::CODE_EMPTY_SORTABLE_NESTED_TREE,
         ];
 
-        $arDisableList = array_merge($arDisableList, $this->arFieldList);
+        if (!empty($this->arFieldList) && is_array($this->arFieldList)) {
+            $arDisableList = array_merge($arDisableList, $this->arFieldList);
+        }
+
         array_set($this->arData, 'disable', $arDisableList);
     }
 
@@ -524,6 +521,26 @@ class CommonCreateFile extends Command
             $sValue = $arDisableList[$mixKey];
             $this->arData['enable'][] = $sValue;
             array_forget($this->arData, 'disable.'.$mixKey);
+        }
+    }
+
+    /**
+     * Create file
+     * @param string $sClass
+     */
+    protected function createFile($sClass)
+    {
+        if (empty($sClass)) {
+            return;
+        }
+
+        $obFile = new $sClass($this->arData);
+        $sFile = $obFile->create();
+        if (!empty($sFile)) {
+            $sMessage = Lang::get('lovata.toolbox::lang.message.force_file', ['file' => $sFile]);
+            if ($this->confirm($sMessage, true)) {
+                $obFile->create(true);
+            }
         }
     }
 }

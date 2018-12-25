@@ -1,14 +1,14 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
-use Lovata\Toolbox\Classes\Parser\ListStoreFile;
-use Lovata\Toolbox\Classes\Parser\ActiveListStoreFile;
-use Lovata\Toolbox\Classes\Parser\SortingListStoreFile;
-use Lovata\Toolbox\Classes\Parser\TopLevelListStoreFile;
+use Lovata\Toolbox\Classes\Parser\Create\ListStoreCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ActiveListStoreCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\SortingListStoreCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\TopLevelListStoreCreateFile;
 
 /**
  * Class CreateStore
  * @package Lovata\Toolbox\Classes\Console
- * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
+ * @author Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
 class CreateStore extends CommonCreateFile
 {
@@ -29,18 +29,18 @@ class CreateStore extends CommonCreateFile
         $this->setModel();
         $this->setFieldList(null, [self::CODE_ACTIVE, self::CODE_VIEW_COUNT, self::CODE_DEFAULT]);
         $this->setSorting();
-        $this->createFile(ListStoreFile::class);
+        $this->createFile(ListStoreCreateFile::class);
 
         if ($this->checkEnableList(self::CODE_ACTIVE)) {
-            $this->createFile(ActiveListStoreFile::class);
+            $this->createFile(ActiveListStoreCreateFile::class);
         }
 
         if ($this->checkEnableList(self::CODE_SORTABLE) || $this->checkEnableList(self::CODE_DEFAULT_SORTING)) {
-            $this->createFile(SortingListStoreFile::class);
+            $this->createFile(SortingListStoreCreateFile::class);
         }
 
         if ($this->checkEnableList(self::CODE_NESTED_TREE)) {
-            $this->createFile(TopLevelListStoreFile::class);
+            $this->createFile(TopLevelListStoreCreateFile::class);
         }
     }
 }

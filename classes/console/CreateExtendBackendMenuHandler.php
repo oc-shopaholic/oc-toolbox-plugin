@@ -1,11 +1,11 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
-use Lovata\Toolbox\Classes\Parser\ExtendBackendMenuHandlerFile;
+use Lovata\Toolbox\Classes\Parser\Create\ExtendBackendMenuHandlerCreateFile;
 
 /**
  * Class CreateExtendBackendMenuHandler
  * @package Lovata\Toolbox\Classes\Console
- * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
+ * @author Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
 class CreateExtendBackendMenuHandler extends CommonCreateFile
 {
@@ -21,6 +21,6 @@ class CreateExtendBackendMenuHandler extends CommonCreateFile
     {
         parent::handle();
 
-        $this->createFile(ExtendBackendMenuHandlerFile::class);
+        $this->createFile(ExtendBackendMenuHandlerCreateFile::class);
     }
 }

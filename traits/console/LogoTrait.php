@@ -3,8 +3,7 @@
 /**
  * Trait LogoTrait
  * @package Lovata\Toolbox\Traits\Console
- * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
- *
+ * @author Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
 trait LogoTrait
 {

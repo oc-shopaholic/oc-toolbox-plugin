@@ -1,11 +1,11 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
-use Lovata\Toolbox\Classes\Parser\ExtendModelColumnsHandlerFile;
+use Lovata\Toolbox\Classes\Parser\Create\ExtendModelColumnsHandlerCreateFile;
 
 /**
  * Class CreateExtendModelColumnsHandler
  * @package Lovata\Toolbox\Classes\Console
- * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
+ * @author Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
 class CreateExtendModelColumnsHandler extends CommonCreateFile
 {
@@ -25,6 +25,6 @@ class CreateExtendModelColumnsHandler extends CommonCreateFile
         $this->setPlugin(true);
         $this->setModel();
         $this->setController();
-        $this->createFile(ExtendModelColumnsHandlerFile::class);
+        $this->createFile(ExtendModelColumnsHandlerCreateFile::class);
     }
 }

@@ -68,7 +68,7 @@ class {{studly_model}} extends [[model]]Model[[model]][[import_svg]]ImportModel[
     public $translatable = [[[empty_fields]]
         [[name]]'name',
         [[name]][[preview_text]]'preview_text',
-        [[description]]'description',
+        [[preview_text]][[description]]'description',
 [[description]]    [[empty_fields]]];
     /** @var array */
     public $attributeNames = [[[empty_validate]]

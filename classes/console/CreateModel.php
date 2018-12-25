@@ -1,12 +1,12 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
 use Lang;
-use Lovata\Toolbox\Classes\Parser\ModelFile;
+use Lovata\Toolbox\Classes\Parser\Create\ModelCreateFile;
 
 /**
  * Class CreateModel
  * @package Lovata\Toolbox\Classes\Console
- * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
+ * @author Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
 class CreateModel extends CommonCreateFile
 {
@@ -27,8 +27,8 @@ class CreateModel extends CommonCreateFile
         $this->setFieldList();
         $this->setImportExportCSV();
         $this->setSorting([self::CODE_DEFAULT_SORTING]);
-        $this->setAdditionList(self::CODE_COMMAND_CREATE_ALL);
-        $this->createFile(ModelFile::class);
+        $this->setAdditionList(self::CODE_COMMAND_PARENT);
+        $this->createFile(ModelCreateFile::class);
         $this->callCommandList();
     }
 

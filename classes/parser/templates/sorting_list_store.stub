@@ -31,10 +31,10 @@ class SortingListStore extends [[sortable]]AbstractStoreWithoutParam[[sortable]]
     protected function getIDListFromDB() : array
     {
         switch ($this->sValue) {
-            case {{studly_model}}ListStore::SORT_PUBLISH_ASC:
+            case {{studly_model}}ListStore::SORT_CREATED_AT_ASC:
                 $arElementIDList = $this->getByPublishASC();
                 break;
-            case {{studly_model}}ListStore::SORT_PUBLISH_DESC:
+            case {{studly_model}}ListStore::SORT_CREATED_AT_DESC:
                 $arElementIDList = $this->getByPublishDESC();
                 break;
 [[view_count]]            case {{studly_model}}ListStore::SORT_VIEW_COUNT_ASC:

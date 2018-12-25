@@ -1,12 +1,11 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
-use Lang;
-use Lovata\Toolbox\Classes\Parser\EventModelFile;
+use Lovata\Toolbox\Classes\Parser\Create\EventModelCreateFile;
 
 /**
  * Class CreateEventModel
  * @package Lovata\Toolbox\Classes\Console
- * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
+ * @author Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
 class CreateEventModel extends CommonCreateFile
 {
@@ -27,6 +26,6 @@ class CreateEventModel extends CommonCreateFile
         $this->setModel();
         $this->setFieldList(null, [self::CODE_ACTIVE, self::CODE_VIEW_COUNT, self::CODE_DEFAULT]);
         $this->setSorting();
-        $this->createFile(EventModelFile::class);
+        $this->createFile(EventModelCreateFile::class);
     }
 }

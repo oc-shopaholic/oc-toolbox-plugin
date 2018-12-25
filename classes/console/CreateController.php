@@ -1,33 +1,49 @@
 <?php namespace Lovata\Toolbox\Classes\Console;
 
 use Lang;
-use Lovata\Toolbox\Classes\Parser\ControllerFile;
-use Lovata\Toolbox\Classes\Parser\ControllerListToolbarFile;
-use Lovata\Toolbox\Classes\Parser\ControllerConfirmFormFile;
-use Lovata\Toolbox\Classes\Parser\ControllerConfirmListFile;
-use Lovata\Toolbox\Classes\Parser\ControllerCreateFile;
-use Lovata\Toolbox\Classes\Parser\ControllerIndexFile;
-use Lovata\Toolbox\Classes\Parser\ControllerPreviewFile;
-use Lovata\Toolbox\Classes\Parser\ControllerUpdateFile;
-use Lovata\Toolbox\Classes\Parser\ControllerConfirmFilterFile;
-use Lovata\Toolbox\Classes\Parser\ControllerImport;
-use Lovata\Toolbox\Classes\Parser\ControllerExport;
-use Lovata\Toolbox\Classes\Parser\ControllerConfigImportExport;
-use Lovata\Toolbox\Classes\Parser\ControllerReorder;
-use Lovata\Toolbox\Classes\Parser\ControllerConfigReorder;
-use Lovata\Toolbox\Classes\Parser\UpdatePluginYAML;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerCreateCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerListToolbarCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerConfirmFormCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerConfirmListCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerIndexCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerPreviewCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerUpdateCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerConfirmFilterCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerImportCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerExportCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerConfigImportExportCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerReorderCreateFile;
+use Lovata\Toolbox\Classes\Parser\Create\ControllerConfigReorderCreateFile ;
+use Lovata\Toolbox\Classes\Parser\Update\PluginYAMLUpdateFile;
+use Lovata\Toolbox\Traits\Console\UpdateLangFile;
 
 /**
  * Class CreateController
  * @package Lovata\Toolbox\Classes\Console
- * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
+ * @author Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
 class CreateController extends CommonCreateFile
 {
+    use UpdateLangFile;
+
     /** @var string The console command name. */
     protected $name = 'toolbox:create.controller';
     /** @var string The console command description. */
     protected $description = 'Create a new controller.';
+    /** @var array */
+    protected $arLangData = [
+        'menu' => [
+            '{{lower_controller}}' => '{{studly_model}} list',
+        ],
+        'permission' => [
+            '{{lower_model}}' => 'Manage {{lower_model}}',
+        ],
+        '{{lower_model}}' => [
+            'name' => '{{lower_model}}',
+            'list_title' => '{{studly_model}} list',
+        ],
+    ];
 
     /**
      * Execute the console command.
@@ -49,34 +65,35 @@ class CreateController extends CommonCreateFile
      */
     protected function createAdditionalFile()
     {
-        $this->createFile(ControllerFile::class);
-        $this->createFile(ControllerListToolbarFile::class);
-        $this->createFile(ControllerConfirmFormFile::class);
-        $this->createFile(ControllerConfirmListFile::class);
         $this->createFile(ControllerCreateFile::class);
-        $this->createFile(ControllerIndexFile::class);
-        $this->createFile(ControllerPreviewFile::class);
-        $this->createFile(ControllerUpdateFile::class);
-        $this->createFile(ControllerConfirmFilterFile::class);
+        $this->createFile(ControllerListToolbarCreateFile::class);
+        $this->createFile(ControllerConfirmFormCreateFile::class);
+        $this->createFile(ControllerConfirmListCreateFile::class);
+        $this->createFile(ControllerCreateCreateFile::class);
+        $this->createFile(ControllerIndexCreateFile::class);
+        $this->createFile(ControllerPreviewCreateFile::class);
+        $this->createFile(ControllerUpdateCreateFile::class);
+        $this->createFile(ControllerConfirmFilterCreateFile::class);
 
         if ($this->checkEnableList(self::CODE_IMPORT_SVG)) {
-            $this->createFile(ControllerImport::class);
+            $this->createFile(ControllerImportCreateFile::class);
         }
 
         if ($this->checkEnableList(self::CODE_EXPORT_SVG)) {
-            $this->createFile(ControllerExport::class);
+            $this->createFile(ControllerExportCreateFile::class);
         }
 
         if ($this->checkEnableList(self::CODE_EMPTY_IMPORT_EXPORT_SVG)) {
-            $this->createFile(ControllerConfigImportExport::class);
+            $this->createFile(ControllerConfigImportExportCreateFile::class);
         }
 
         if ($this->checkEnableList(self::CODE_EMPTY_SORTABLE_NESTED_TREE)) {
-            $this->createFile(ControllerReorder::class);
-            $this->createFile(ControllerConfigReorder::class);
+            $this->createFile(ControllerReorderCreateFile::class);
+            $this->createFile(ControllerConfigReorderCreateFile::class);
         }
 
         $this->updatePluginYAML();
+        $this->updatePluginLang($this->arLangData);
     }
 
     /**
@@ -86,7 +103,8 @@ class CreateController extends CommonCreateFile
     {
         $sMessage = Lang::get('lovata.toolbox::lang.message.add_side_menu');
         if ($this->confirm($sMessage, true)) {
-            new UpdatePluginYAML($this->arData);
+            $obUpdate = new PluginYAMLUpdateFile($this->arData);
+            $obUpdate->update();
         }
     }
 }

@@ -7,7 +7,7 @@ use Lovata\Toolbox\Traits\Console\LogoTrait;
 /**
  * Class ToolBoxHelper
  * @package Lovata\Toolbox\Classes\Console
- * @author  Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
+ * @author Sergey Zakharevich, s.zakharevich@lovata.com, LOVATA Group
  */
 class ToolBoxHelper extends Command
 {
