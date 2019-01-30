@@ -40,6 +40,21 @@ class Plugin extends PluginBase
     }
 
     /**
+     * Register twig functions
+     * @return array
+     */
+    public function registerMarkupTags()
+    {
+        return [
+            'filters' => [
+                'phone' => function($sPhone) {
+                    return preg_replace('%\D%', '', $sPhone);
+                },
+            ]
+        ];
+    }
+
+    /**
      * Plugin boot method
      */
     public function boot()
