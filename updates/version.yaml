@@ -66,3 +66,5 @@
     - 'Added support translatable slug in ElementPage class. Added German language. Thanks for contribution Gerald.'
 1.21.1:
     - 'Removed Iterator interface from ElementCollection class. Added IteratorAggregate interface to ElementCollection class.'
+1.22.0:
+    - 'Replace array_intersect function with array_intersect_key in ElementCollection class.'
