@@ -193,7 +193,10 @@ abstract class ElementCollection extends Extendable implements \IteratorAggregat
             return $this->returnThis();
         }
 
-        $this->arElementIDList = array_intersect($this->arElementIDList, $arElementIDList);
+        $this->arElementIDList = array_combine($this->arElementIDList, $this->arElementIDList);
+        $arElementIDList = array_combine($arElementIDList, $arElementIDList);
+
+        $this->arElementIDList = array_intersect_key($this->arElementIDList, $arElementIDList);
 
         return $this->returnThis();
     }
@@ -219,7 +222,10 @@ abstract class ElementCollection extends Extendable implements \IteratorAggregat
             return $this->returnThis();
         }
 
-        $this->arElementIDList = array_intersect($arResultIDList, $this->arElementIDList);
+        $this->arElementIDList = array_combine($this->arElementIDList, $this->arElementIDList);
+        $arResultIDList = array_combine($arResultIDList, $arResultIDList);
+
+        $this->arElementIDList = array_intersect_key($arResultIDList, $this->arElementIDList);
 
         return $this->returnThis();
     }

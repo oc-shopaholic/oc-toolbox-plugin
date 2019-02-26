@@ -32,7 +32,7 @@ abstract class CommonTest extends PluginTestCase
             $obManager->refreshPlugin($sPluginKey);
         }
 
-        $obManager->bootAll();
-        $obManager->registerAll();
+        $obManager->bootAll(true);
+        $obManager->registerAll(true);
     }
 }
