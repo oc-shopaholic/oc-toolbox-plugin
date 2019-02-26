@@ -63,6 +63,8 @@
         'amount'                   => 'Amount',
         'author'                   => 'Author',
         'link'                     => 'Link',
+        'is_default'               => 'Is default',
+        'symbol'                   => 'Symbol',
 
         'sort_order' => 'Sorting',
         'created_at' => 'Created',
