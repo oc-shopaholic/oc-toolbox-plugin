@@ -63,6 +63,8 @@
         'amount'                   => 'Montant',
         'author'                   => 'Author',
         'link'                     => 'Link',
+        'is_default'               => 'Is default',
+        'symbol'                   => 'Symbol',
 
         'sort_order' => 'Tri',
         'created_at' => 'Créé',
