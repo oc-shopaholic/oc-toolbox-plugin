@@ -469,6 +469,7 @@ class CommonProperty extends ImportModel
             'tab'   => 'lovata.toolbox::lang.tab.properties',
             'span'  => 'left',
             'label' => $this->name,
+            'comment' => $this->description,
         ];
 
         //Get property tab
