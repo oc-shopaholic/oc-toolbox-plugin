@@ -62,6 +62,9 @@
         'length'                   => '長さ',
         'amount'                   => '量',
         'author'                   => '作者',
+        'link'                     => 'Link',
+        'is_default'               => 'Is default',
+        'symbol'                   => 'Symbol',
 
         'sort_order' => '並び順',
         'created_at' => '作成日時',
@@ -105,6 +108,7 @@
         'property_name_error_404' => '404ページ表示',
         'property_slug'           => 'Slug',
         'property_slug_required'  => 'Slugは必須です',
+        'property_url_check'      => 'Smart url check',
         'pagination'              => 'ページネーション',
         'pagination_desc'         => 'ページネーションボタン表示',
 
@@ -153,6 +157,7 @@
         'first_button'                  => '"First"ボタン',
         'first-more_button'             => '"More" ("First"の後)',
         'main_button'                   => '"Main"ボタン',
+        'slug_is_translatable'          => 'URL is translatable',
     ],
     'button'     => [
         'add_property_value' => '値を追加',
