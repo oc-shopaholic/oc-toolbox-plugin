@@ -63,6 +63,8 @@
         'amount'                   => '量',
         'author'                   => '作者',
         'link'                     => 'Link',
+        'is_default'               => 'Is default',
+        'symbol'                   => 'Symbol',
 
         'sort_order' => '並び順',
         'created_at' => '作成日時',
