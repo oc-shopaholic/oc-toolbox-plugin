@@ -117,7 +117,7 @@
         'property_redirect_fail_page'    => 'Страница перенаправления после не успешного выполнения',
         'property_redirect_on'           => 'Перенаправление вкл.',
         'property_flash_on'              => 'Уведомление вкл.',
-        'property_mode'                  => 'Режим работы',
+        'property_mode'                  => 'Режим работы компонента',
         'mode_submit'                    => 'Отправка формы',
         'mode_ajax'                      => 'Ajax',
     ],
