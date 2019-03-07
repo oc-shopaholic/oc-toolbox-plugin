@@ -1,12 +1,12 @@
 <?php return [
     'plugin'     => [
         'name'        => 'Toolbox',
-        'description' => 'Toolbox is a set of helpers for faster development for October CMS.',
+        'description' => 'Toolbox là tập hợp các helper giúp phát triển dự án nhanh hơn bằng October CMS.',
     ],
     'field'      => [
         'id'                       => 'ID',
-        'name'                     => 'Name',
-        'title'                    => 'Title',
+        'name'                     => 'Tên',
+        'title'                    => 'Tiêu đề',
         'active'                   => 'Active',
         'hidden'                   => 'Hidden',
         'code'                     => 'Code',
