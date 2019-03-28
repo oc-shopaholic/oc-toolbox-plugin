@@ -393,7 +393,7 @@ abstract class ElementCollection extends Extendable implements \IteratorAggregat
             $iCount = count($this->arElementIDList);
         }
 
-        $obThis = $this->clone();
+        $obThis = $this->copy();
         shuffle($obThis->arElementIDList);
 
         return $obThis->take($iCount);
@@ -731,7 +731,7 @@ abstract class ElementCollection extends Extendable implements \IteratorAggregat
      * Clone collection object
      * @return $this
      */
-    public function clone()
+    public function copy()
     {
         return static::make($this->getIDList());
     }
