@@ -48,10 +48,10 @@ class Plugin extends PluginBase
     {
         return [
             'functions' => [
-                'choice' => function($sLangString, $iNumber) {
+                'choice' => function ($sLangString, $iNumber) {
                     return $this->twigChoice($sLangString, $iNumber);
                 }
-            ]
+            ],
         ];
     }
 
