@@ -393,7 +393,7 @@ abstract class ElementCollection extends Extendable implements \IteratorAggregat
             $iCount = count($this->arElementIDList);
         }
 
-        $obThis = clone $this;
+        $obThis = $this->clone();
         shuffle($obThis->arElementIDList);
 
         return $obThis->take($iCount);
@@ -698,7 +698,7 @@ abstract class ElementCollection extends Extendable implements \IteratorAggregat
         }
 
         $sKey = static::class.'@'.$sKey;
-        CollectionStore::instance()->save($sKey, clone $this);
+        CollectionStore::instance()->save($sKey, $this);
 
         return $this->returnThis();
     }
@@ -724,7 +724,16 @@ abstract class ElementCollection extends Extendable implements \IteratorAggregat
             return null;
         }
 
-        return clone $obCollection;
+        return $obCollection;
+    }
+
+    /**
+     * Clone collection object
+     * @return $this
+     */
+    public function clone()
+    {
+        return static::make($this->getIDList());
     }
 
     /**

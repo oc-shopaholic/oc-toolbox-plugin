@@ -1,5 +1,6 @@
 <?php namespace Lovata\Toolbox;
 
+use Lang;
 use System\Classes\PluginBase;
 use Lovata\Toolbox\Components\Pagination;
 
@@ -40,6 +41,21 @@ class Plugin extends PluginBase
     }
 
     /**
+     * Extending twig
+     * @return array
+     */
+    public function registerMarkupTags()
+    {
+        return [
+            'functions' => [
+                'choice' => function($sLangString, $iNumber) {
+                    return $this->twigChoice($sLangString, $iNumber);
+                }
+            ]
+        ];
+    }
+
+    /**
      * Plugin boot method
      */
     public function boot()
@@ -48,5 +64,16 @@ class Plugin extends PluginBase
             $this->app->bind(\Lovata\Toolbox\Classes\Item\TestItem::class, \Lovata\Toolbox\Classes\Item\TestItem::class);
             $this->app->bind(\Lovata\Toolbox\Classes\Collection\TestCollection::class, \Lovata\Toolbox\Classes\Collection\TestCollection::class);
         }
+    }
+
+    /**
+     * Apply Lang::choice method to string
+     * @param string $sLangString
+     * @param int $iNumber
+     * @return string
+     */
+    protected function twigChoice($sLangString, $iNumber)
+    {
+        return Lang::choice($sLangString, $iNumber);
     }
 }
