@@ -26,7 +26,7 @@ class CollectionStore
             return;
         }
 
-        $this->arStore[$sKey] = clone $obCollection;
+        $this->arStore[$sKey] = $obCollection->copy();
     }
 
     /**
@@ -41,7 +41,7 @@ class CollectionStore
             return null;
         }
 
-        return clone $this->arStore[$sKey];
+        return $this->arStore[$sKey]->copy();
     }
 
     /**

@@ -68,3 +68,5 @@
     - 'Removed Iterator interface from ElementCollection class. Added IteratorAggregate interface to ElementCollection class.'
 1.22.0:
     - 'Replace array_intersect function with array_intersect_key in ElementCollection class.'
+1.23.0:
+    - 'Added copy() method to ElementCollection class. Added choice twig function.'
