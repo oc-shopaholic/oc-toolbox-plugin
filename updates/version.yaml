@@ -70,3 +70,5 @@
     - 'Replace array_intersect function with array_intersect_key in ElementCollection class.'
 1.23.0:
     - 'Added copy() method to ElementCollection class. Added choice twig function.'
+1.24.0:
+    - 'Added caching of uploaded file objects as an array.'
