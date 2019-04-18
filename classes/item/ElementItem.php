@@ -304,6 +304,7 @@ abstract class ElementItem extends MainItem
             return;
         }
 
+        $this->getActiveLangList();
         foreach ($arFieldList as $sField) {
             if (array_key_exists($sField, (array) $this->obElement->attachOne)) {
                 $arFileData = $this->getUploadFileData($this->obElement->$sField);
