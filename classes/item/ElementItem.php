@@ -513,12 +513,13 @@ abstract class ElementItem extends MainItem
 
         //Convert image data to array
         $arFileData = $obFile->toArray();
-        if (empty(self::$arActiveLangList) || !$obFile->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
+        $arLangList = $this->getActiveLangList();
+        if (empty($arLangList) || !$obFile->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
             return $arFileData;
         }
 
         //Add lang fields to array
-        foreach (self::$arActiveLangList as $sLangCode) {
+        foreach ($arLangList as $sLangCode) {
             $arFileData[$sLangCode] = [];
             foreach ($obFile->translatable as $sLangField) {
                 $arFileData[$sLangCode][$sLangField] = $obFile->lang($sLangCode)->$sLangField;
