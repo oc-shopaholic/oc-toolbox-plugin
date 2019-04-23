@@ -733,7 +733,7 @@ abstract class ElementCollection extends Extendable implements \IteratorAggregat
      */
     public function copy()
     {
-        return static::make($this->getIDList());
+        return static::make()->intersect($this->getIDList());
     }
 
     /**
