@@ -72,3 +72,5 @@
     - 'Added copy() method to ElementCollection class. Added choice twig function.'
 1.24.0:
     - 'Added caching of uploaded file objects as an array.'
+1.24.1:
+    - 'Fixed copy() method in ElementCollection class.'
