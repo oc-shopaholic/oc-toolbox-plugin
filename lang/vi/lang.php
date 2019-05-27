@@ -1,12 +1,12 @@
 <?php return [
     'plugin'     => [
         'name'        => 'Toolbox',
-        'description' => 'Toolbox is a set of helpers for faster development for October CMS.',
+        'description' => 'Toolbox là tập hợp các helper giúp phát triển dự án nhanh hơn bằng October CMS.',
     ],
     'field'      => [
         'id'                       => 'ID',
-        'name'                     => 'Name',
-        'title'                    => 'Title',
+        'name'                     => 'Tên',
+        'title'                    => 'Tiêu đề',
         'active'                   => 'Active',
         'hidden'                   => 'Hidden',
         'code'                     => 'Code',
@@ -122,11 +122,11 @@
         'mode_ajax'                      => 'Ajax',
     ],
     'message'    => [
-        'create_success'                  => 'Create :name was successfully',
-        'update_success'                  => 'Update :name was successfully',
-        'delete_success'                  => 'Delete :name was successfully',
+        'create_success'                  => 'Create :name was successful',
+        'update_success'                  => 'Update :name was successful',
+        'delete_success'                  => 'Delete :name was successful',
         'restore_confirm'                 => 'Do you want to restore selected items?',
-        'restore_success'                 => 'Restore elements was successfully',
+        'restore_success'                 => 'Restore elements was successful',
         'e_not_correct_request'           => 'Request is not correct',
         'row_is_empty'                    => 'Row is empty.',
         'external_id_is_empty'            => 'External ID is empty.',
