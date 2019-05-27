@@ -65,6 +65,7 @@
         'link'                     => 'Ссылка',
         'is_default'               => 'По-умолчанию',
         'symbol'                   => 'Символ',
+        'field'                    => 'Поле',
 
         'sort_order' => 'Сортировка',
         'created_at' => 'Создано',
@@ -91,6 +92,18 @@
         'address1' => 'Адрес 1',
         'address2' => 'Адрес 2',
         'postcode' => 'Индекс',
+
+        'import_enable'                => 'Включить импорт',
+        'import_enable_comment'        => 'Отображать кнопку импорта',
+        'import_file_list'             => 'Список файлов импорта',
+        'import_from_file'             => 'Импорт из файла',
+        'import_file_path'             => 'Относительный путь из папки "storage" к файлу импорта',
+        'import_image_folder'          => 'Относительный путь из папки "storage" к папке с изображениями',
+        'import_path_to_list'          => 'Путь к узлу со списком элементов',
+        'import_path_to_list_example'  => 'main/elements/element',
+        'import_field_list'            => 'Список полей',
+        'import_path_to_field'         => 'Путь к узлу поля',
+        'import_path_to_field_example' => 'fields/field[@code="active"]',
     ],
     'tab'        => [
         'preview_content' => 'Превью-контент',

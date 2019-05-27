@@ -42,7 +42,7 @@ class CommonSettings extends Model
         }
 
         $sValue = $obSettings->$sCode;
-        if (empty($sValue)) {
+        if ($sValue === null) {
             return $sDefaultValue;
         }
 
