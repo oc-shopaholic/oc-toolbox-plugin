@@ -1,15 +1,16 @@
 <?php namespace Lovata\Toolbox\Classes\Collection;
 
+use ArrayIterator;
 use October\Rain\Extension\Extendable;
 
 /**
  * Class ElementCollection
  * @package Lovata\Toolbox\Classes\Collection
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection
+ * @link    https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection
  */
-abstract class ElementCollection extends Extendable implements \Iterator, \Countable
+abstract class ElementCollection extends Extendable implements \IteratorAggregate, \Countable
 {
     const COUNT_PER_PAGE = 10;
     const ITEM_CLASS = \Lovata\Toolbox\Classes\Item\ElementItem::class;
@@ -32,7 +33,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Make new list store
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testMakeMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testMakeMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#makearelementidlist--
      * @param array $arElementIDList - element ID list
      * @return $this
@@ -115,7 +116,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Checking, has collection ID
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testHasMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testHasMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#hasielementid
      * @param int $iElementID
      * @return bool
@@ -131,7 +132,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Get element item with ID
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testFindMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testFindMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#findielementid
      * @param int $iElementID
      * @return \Lovata\Toolbox\Classes\Item\ElementItem
@@ -147,7 +148,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Set clear array to element list
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testClearMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testClearMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#clear
      * @return $this
      */
@@ -160,7 +161,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Get element count
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testCountMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testCountMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#count
      * @return int
      */
@@ -175,7 +176,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Apply array_intersect for element array list
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testIntersectMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testIntersectMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#intersectarelementidlist
      * @param array $arElementIDList
      * @return $this
@@ -192,7 +193,10 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
             return $this->returnThis();
         }
 
-        $this->arElementIDList = array_intersect($this->arElementIDList, $arElementIDList);
+        $this->arElementIDList = array_combine($this->arElementIDList, $this->arElementIDList);
+        $arElementIDList = array_combine($arElementIDList, $arElementIDList);
+
+        $this->arElementIDList = array_intersect_key($this->arElementIDList, $arElementIDList);
 
         return $this->returnThis();
     }
@@ -218,14 +222,17 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
             return $this->returnThis();
         }
 
-        $this->arElementIDList = array_intersect($arResultIDList, $this->arElementIDList);
+        $this->arElementIDList = array_combine($this->arElementIDList, $this->arElementIDList);
+        $arResultIDList = array_combine($arResultIDList, $arResultIDList);
+
+        $this->arElementIDList = array_intersect_key($arResultIDList, $this->arElementIDList);
 
         return $this->returnThis();
     }
 
     /**
      * Apply array_merge for element array list
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testMergeMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testMergeMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#mergearelementidlist
      * @param array $arElementIDList
      * @return $this
@@ -250,7 +257,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Apply array_diff for element array list
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testDiffMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testDiffMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#diffarelementidlist
      * @param array $arExcludeIDList
      * @return $this
@@ -268,7 +275,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Get element item list
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testAllMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testAllMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#all
      * @return array|\Lovata\Toolbox\Classes\Item\ElementItem[]
      */
@@ -293,7 +300,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Set skip element count
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testTakeMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testTakeMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#skipicount
      * Used in "take" method
      * @param int $iCount
@@ -308,7 +315,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Take array with element items
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testTakeMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testTakeMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#takeicount--0
      * @param int $iCount
      * @return array|\Lovata\Toolbox\Classes\Item\ElementItem[]
@@ -344,7 +351,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Exclude element id from collection
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testExcludeMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testExcludeMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#excludeielementid
      * @param int $iElementID
      * @return $this
@@ -386,7 +393,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
             $iCount = count($this->arElementIDList);
         }
 
-        $obThis = clone $this;
+        $obThis = $this->copy();
         shuffle($obThis->arElementIDList);
 
         return $obThis->take($iCount);
@@ -394,7 +401,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Apply pagination for item collection
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testPageMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testPageMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#pageipage-ielementonpage--10
      * @param int $iPage
      * @param int $iElementOnPage
@@ -419,7 +426,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Get first element item
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testFirstMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testFirstMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#first
      * @return \Lovata\Toolbox\Classes\Item\ElementItem|null
      */
@@ -438,7 +445,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Get last element item
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testLastMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testLastMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#last
      * @return \Lovata\Toolbox\Classes\Item\ElementItem|null
      */
@@ -457,7 +464,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Apply array_shift to element ID list and get first element item
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testShiftMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testShiftMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#shift
      * @return \Lovata\Toolbox\Classes\Item\ElementItem|null
      */
@@ -475,7 +482,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
     /**
      * Apply array_unshift to element ID
      * @param int $iElementID
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testUnshiftMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testUnshiftMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#unshiftielementid
      * @return $this
      */
@@ -498,7 +505,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Apply array_pop to element ID list and get first element item
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testPopMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testPopMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#pop
      * @return \Lovata\Toolbox\Classes\Item\ElementItem|null
      */
@@ -516,7 +523,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
     /**
      * Push element ID to end of list
      * @param int $iElementID
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testUnshiftMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testUnshiftMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#pushielementid
      * @return $this
      */
@@ -539,7 +546,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Get array with item field value
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testPluckMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testPluckMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#plucksfieldname
      * @param string $sFieldName
      *
@@ -568,7 +575,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Get implode string with item field value
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testImplodeMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testImplodeMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#implodesfieldname-sdelimiter---
      * @param string $sFieldName
      * @param string $sDelimiter
@@ -678,7 +685,7 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
 
     /**
      * Save item collection in store
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testSaveMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testSaveMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#saveskeysavedskey
      * @param string $sKey
      *
@@ -691,14 +698,14 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
         }
 
         $sKey = static::class.'@'.$sKey;
-        CollectionStore::instance()->save($sKey, clone $this);
+        CollectionStore::instance()->save($sKey, $this);
 
         return $this->returnThis();
     }
 
     /**
      * Get saved item collection
-     * @see \Lovata\Toolbox\Tests\Unit\CollectionTest::testSaveMethod()
+     * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testSaveMethod()
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#saveskeysavedskey
      * @param string $sKey
      *
@@ -717,7 +724,16 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
             return null;
         }
 
-        return clone $obCollection;
+        return $obCollection;
+    }
+
+    /**
+     * Clone collection object
+     * @return $this
+     */
+    public function copy()
+    {
+        return static::make()->intersect($this->getIDList());
     }
 
     /**
@@ -731,76 +747,18 @@ abstract class ElementCollection extends Extendable implements \Iterator, \Count
     }
 
     /**
-     * Iterator method rewind
+     * Get an iterator for the items.
+     *
+     * @return \ArrayIterator
      */
-    public function rewind()
+    public function getIterator()
     {
-        $this->iPosition = 0;
+        return new ArrayIterator($this->all());
     }
-
-    /**
-     * Iterator method current
-     * @return \Lovata\Toolbox\Classes\Item\ElementItem
-     */
-    public function current()
-    {
-        if ($this->isEmpty()) {
-            return null;
-        }
-
-        $arResultIDList = array_values($this->arElementIDList);
-        if (!isset($arResultIDList[$this->iPosition])) {
-            return null;
-        }
-
-        return $this->makeItem($arResultIDList[$this->iPosition]);
-    }
-
-    /**
-     * Iterator method key
-     * @return string
-     */
-    public function key()
-    {
-        if ($this->isEmpty()) {
-            return null;
-        }
-
-        $arResultIDList = array_values($this->arElementIDList);
-        if (!isset($arResultIDList[$this->iPosition])) {
-            return null;
-        }
-
-        return $arResultIDList[$this->iPosition];
-    }
-
-    /**
-     * Iterator method next
-     */
-    public function next()
-    {
-        $this->iPosition++;
-    }
-
-    /**
-     * Iterator method valid
-     * @return string
-     */
-    public function valid()
-    {
-        if ($this->isEmpty()) {
-            return null;
-        }
-
-        $arResultIDList = array_values($this->arElementIDList);
-
-        return isset($arResultIDList[$this->iPosition]);
-    }
-
 
     /**
      * Make element item
-     * @param int                             $iElementID
+     * @param int    $iElementID
      * @param \Model $obElement
      *
      * @return \Lovata\Toolbox\Classes\Item\ElementItem

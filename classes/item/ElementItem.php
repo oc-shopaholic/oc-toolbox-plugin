@@ -130,12 +130,12 @@ abstract class ElementItem extends MainItem
 
     /**
      * Make new element item
-     * @see  \Lovata\Toolbox\Tests\Unit\ItemTest::testItem()
-     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#makeielementid-obelement--null
      * @param int|string $iElementID
      * @param \Model     $obElement
      *
      * @return $this
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#makeielementid-obelement--null
+     * @see  \Lovata\Toolbox\Tests\Unit\ItemTest::testItem()
      */
     public static function make($iElementID, $obElement = null)
     {
@@ -162,12 +162,12 @@ abstract class ElementItem extends MainItem
 
     /**
      * Make new element item (no cache)
-     * @see  \Lovata\Toolbox\Tests\Unit\ItemTest::testItem()
-     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#makenocacheielementid-obelement--null
      * @param int    $iElementID
      * @param \Model $obElement
      *
      * @return $this
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#makenocacheielementid-obelement--null
+     * @see  \Lovata\Toolbox\Tests\Unit\ItemTest::testItem()
      */
     public static function makeNoCache($iElementID, $obElement = null)
     {
@@ -305,7 +305,23 @@ abstract class ElementItem extends MainItem
         }
 
         foreach ($arFieldList as $sField) {
-            $this->setAttribute($sField, $this->obElement->$sField);
+            if (array_key_exists($sField, (array) $this->obElement->attachOne)) {
+                $arFileData = $this->getUploadFileData($this->obElement->$sField);
+                $sFieldName = 'attachOne|'.$sField;
+                $this->setAttribute($sFieldName, $arFileData);
+            } elseif (array_key_exists($sField, (array) $this->obElement->attachMany)) {
+                $arFileList = [];
+                $obFileList = $this->obElement->$sField;
+                foreach ($obFileList as $obFile) {
+                    $arFileData = $this->getUploadFileData($obFile);
+                    $arFileList[] = $arFileData;
+                }
+
+                $sFieldName = 'attachMany|'.$sField;
+                $this->setAttribute($sFieldName, $arFileList);
+            } else {
+                $this->setAttribute($sField, $this->obElement->$sField);
+            }
         }
     }
 
@@ -466,7 +482,7 @@ abstract class ElementItem extends MainItem
                 $sField = array_shift($sField);
             }
 
-            if (!isset($this->arModelData[$sField])) {
+            if (!isset($this->arModelData[$sField]) || array_key_exists($sField, (array) $this->obElement->attachOne) || array_key_exists($sField, (array) $this->obElement->attachMany)) {
                 continue;
             }
 
@@ -477,5 +493,39 @@ abstract class ElementItem extends MainItem
                 $this->setAttribute($sLangField, $sValue);
             }
         }
+    }
+
+    /**
+     * Get image data from image object
+     * @param \System\Models\File $obFile
+     * @return []
+     */
+    private function getUploadFileData($obFile) : array
+    {
+        if (empty($obFile)) {
+            return [];
+        }
+
+        //Set default lang in image object
+        if (!empty(self::$sDefaultLang) && $obFile->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
+            $obFile->lang(self::$sDefaultLang);
+        }
+
+        //Convert image data to array
+        $arFileData = $obFile->toArray();
+        $arLangList = $this->getActiveLangList();
+        if (empty($arLangList) || !$obFile->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
+            return $arFileData;
+        }
+
+        //Add lang fields to array
+        foreach ($arLangList as $sLangCode) {
+            $arFileData[$sLangCode] = [];
+            foreach ($obFile->translatable as $sLangField) {
+                $arFileData[$sLangCode][$sLangField] = $obFile->lang($sLangCode)->$sLangField;
+            }
+        }
+
+        return $arFileData;
     }
 }

@@ -1,12 +1,14 @@
 <?php namespace Lovata\Toolbox\Classes\Item;
 
+use System\Models\File;
+
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
 use Lovata\Toolbox\Traits\Helpers\TraitInitActiveLang;
 
 /**
  * Class MainItem
  * @package Lovata\Toolbox\Classes\Item
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @mixin \October\Rain\Extension\ExtendableTrait
  */
@@ -17,7 +19,7 @@ abstract class MainItem
     /** @var array Array with model data */
     protected $arModelData = [];
 
-    /** @var array  */
+    /** @var array */
     public $arRelationList = [];
 
     /**
@@ -35,6 +37,16 @@ abstract class MainItem
         $sMethodName = 'get'.studly_case($sName).'Attribute';
         if (method_exists(static::class, $sMethodName) || $this->methodExists($sMethodName)) {
             return $this->$sMethodName();
+        }
+
+        $sAttachOneField = 'attachOne|'.$sName;
+        if (isset($this->arModelData[$sAttachOneField])) {
+            return $this->getUploadFileField($sName, $sAttachOneField);
+        }
+
+        $sAttachManyField = 'attachMany|'.$sName;
+        if (isset($this->arModelData[$sAttachManyField])) {
+            return $this->getUploadFileListField($sName, $sAttachManyField);
         }
 
         if (!empty(self::$sActiveLang)) {
@@ -138,7 +150,7 @@ abstract class MainItem
     /**
      * Get "Has one" item object or get "Has many" collection object
      * @param string $sName
-     * @param array $arRelationData
+     * @param array  $arRelationData
      *
      * @return null|ElementItem|\Lovata\Toolbox\Classes\Collection\ElementCollection
      */
@@ -174,5 +186,77 @@ abstract class MainItem
         $this->setAttribute($sName, $obValue);
 
         return $this->getAttribute($sName);
+    }
+
+    /**
+     * Get image object form field with image array
+     * @param string $sField
+     * @param string $sFakeField
+     *
+     * @return File|null
+     */
+    protected function getUploadFileField($sField, $sFakeField)
+    {
+        $obFile = $this->getAttribute($sField);
+        if (!empty($obFile)) {
+            return $obFile;
+        }
+
+        $arFileData = $this->getAttribute($sFakeField);
+        $obFile = $this->initUploadFileObject($arFileData);
+        $this->setAttribute($sField, $obFile);
+
+        return $obFile;
+    }
+
+    /**
+     * Get image object form field with image array
+     * @param string $sField
+     * @param string $sFakeField
+     * @return File[]|null
+     */
+    protected function getUploadFileListField($sField, $sFakeField)
+    {
+        $arFileList = $this->getAttribute($sField);
+        if (!empty($arFileList)) {
+            return $arFileList;
+        }
+
+        $arFileList = [];
+
+        $arCachedFileList = (array) $this->getAttribute($sFakeField);
+        foreach ($arCachedFileList as $arFileData) {
+            $obFile = $this->initUploadFileObject($arFileData);
+            if (empty($obFile)) {
+                continue;
+            }
+
+            $arFileList[] = $obFile;
+        }
+
+        $this->setAttribute($sField, $arFileList);
+
+        return $arFileList;
+    }
+
+    /**
+     * @param array $arFileData
+     * @return File|null
+     */
+    protected function initUploadFileObject($arFileData)
+    {
+        if (empty($arFileData)) {
+            return null;
+        }
+
+        $obFile = File::make($arFileData);
+        $obFile->disk_name = array_get($arFileData, 'disk_name');
+        if (!empty(self::$sActiveLang) && self::$sActiveLang != self::$sDefaultLang && $obFile->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
+            foreach ($obFile->translatable as $sLangField) {
+                $obFile->$sLangField = array_get($arFileData, self::$sActiveLang.'.'.$sLangField, $obFile->$sLangField);
+            }
+        }
+
+        return $obFile;
     }
 }

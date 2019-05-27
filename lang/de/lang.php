@@ -64,6 +64,8 @@
         'author'                   => 'Autor',
         'link'                     => 'Link',
         'view_count'               => 'Anzahl anzeigen',
+        'is_default'               => 'Is default',
+        'symbol'                   => 'Symbol',
 
         'sort_order' => 'Sortierung',
         'created_at' => 'Erstellt',
@@ -108,6 +110,7 @@
         'property_name_error_404' => '404 Seite anzeigen',
         'property_slug'           => 'Slug',
         'property_slug_required'  => 'Slug wird benötigt',
+        'property_url_check'      => 'Smart url check',
         'pagination'              => 'Seitennavigation',
         'pagination_desc'         => 'Rendert Button für Seitennavigation',
 
@@ -156,6 +159,7 @@
         'first_button'                  => '"Zuerst" Button',
         'first-more_button'             => '"Mehr" (nach "Zuerst")',
         'main_button'                   => '"Haupt" Button',
+        'slug_is_translatable'          => 'URL is translatable',
     ],
     'button'     => [
         'add_property_value' => 'Eigenschaftswert hinzufügen',
