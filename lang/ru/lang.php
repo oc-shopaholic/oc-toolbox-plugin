@@ -95,7 +95,12 @@
         'postcode' => 'Индекс',
 
         'import_enable'                => 'Включить импорт',
-        'import_enable_comment'        => 'Отображать кнопку импорта',
+        'import_price_disable'         => 'Отключить импорт цен',
+        'import_offer_disable'         => 'Отключить импорт товарных предложений',
+        'import_product_disable'       => 'Отключить импорт товаров',
+        'import_category_disable'      => 'Отключить импорт категорий',
+        'import_brand_disable'         => 'Отключить импорт брендов',
+        'import_disable_comment'       => 'Скрыть кнопку импорта',
         'import_file_list'             => 'Список файлов импорта',
         'import_from_file'             => 'Импорт из файла',
         'import_file_path'             => 'Относительный путь из папки "storage" к файлу импорта',
