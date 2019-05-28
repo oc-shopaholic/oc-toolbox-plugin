@@ -74,3 +74,5 @@
     - 'Added caching of uploaded file objects as an array.'
 1.24.1:
     - 'Fixed copy() method in ElementCollection class.'
+1.25.0:
+    - 'Added classes for import elements from xml file'
