@@ -20,6 +20,7 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
 
     /** @var ImportXMLNode */
     protected $obMainXMLFile;
+    protected $arFieldList = [];
 
     protected $sMainFilePath;
     protected $sElementListPath;
@@ -39,7 +40,13 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
      * Get model fields
      * @return array
      */
-    abstract static function getFields() : array;
+    public function getFields() : array
+    {
+        $this->arFieldList = $this->extendImportFields($this->arFieldList);
+        $this->arFieldList = $this->initLangFields($this->arFieldList);
+
+        return $this->arFieldList;
+    }
 
     /**
      * Get created count
@@ -93,6 +100,7 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
      */
     public function import($obProgressBar = null)
     {
+        $this->openMainFile();
         if (empty($this->arElementList)) {
             return;
         }
@@ -152,7 +160,7 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
      */
     protected function createItem()
     {
-        $sModelClass = $this->getModelClass();
+        $sModelClass = static::MODEL_CLASS;
         try {
             $this->obModel = $sModelClass::create($this->arImportData);
         } catch (\Exception $obException) {
@@ -289,7 +297,7 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
      * @param array $arFieldList
      * @return array
      */
-    protected static function extendImportFields($arFieldList)
+    protected function extendImportFields($arFieldList)
     {
         $arEventData = Event::fire(static::EXTEND_FIELD_LIST, [$arFieldList]);
         if (empty($arEventData)) {
@@ -313,7 +321,7 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
      * @param ParseXMLNode $obParseNode
      * @return array
      */
-    protected static function extendImportData($arImportData, $obParseNode)
+    protected function extendImportData($arImportData, $obParseNode)
     {
         $arEventData = Event::fire(static::EXTEND_IMPORT_DATA, [$arImportData, $obParseNode]);
         if (empty($arEventData)) {
@@ -329,5 +337,37 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
         }
 
         return $arImportData;
+    }
+
+    /**
+     * Add lang fields
+     * @param array $arFieldList
+     * @return array
+     */
+    protected function initLangFields($arFieldList)
+    {
+        $arActiveLangList = $this->getActiveLangList();
+        if (empty($arActiveLangList)) {
+            return $arFieldList;
+        }
+
+        $sModelClass = static::MODEL_CLASS;
+        $obModel = new $sModelClass();
+        $arLangFieldList = $obModel->translatable;
+        if (empty($arLangFieldList)) {
+            return $arFieldList;
+        }
+
+        foreach ($arLangFieldList as $sFieldName) {
+            if (!array_key_exists($sFieldName, $arFieldList)) {
+                continue;
+            }
+
+            foreach ($arActiveLangList as $sLangCode) {
+                $arFieldList[$sLangCode.'.'.$sFieldName] = $arFieldList[$sFieldName]." ($sLangCode)";
+            }
+        }
+
+        return $arFieldList;
     }
 }

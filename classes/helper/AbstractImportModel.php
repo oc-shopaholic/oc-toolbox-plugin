@@ -5,6 +5,7 @@ use Queue;
 use System\Models\File;
 use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Classes\Queue\ImportItemQueue;
+use Lovata\Toolbox\Traits\Helpers\TraitInitActiveLang;
 
 /**
  * Class AbstractImportModel
@@ -13,8 +14,12 @@ use Lovata\Toolbox\Classes\Queue\ImportItemQueue;
  */
 abstract class AbstractImportModel
 {
+    use TraitInitActiveLang;
+
     const EVENT_BEFORE_IMPORT = 'model.beforeImport';
     const EVENT_AFTER_IMPORT = 'model.afterImport';
+
+    const MODEL_CLASS = '';
 
     /** @var array */
     protected $arImportData = [];
@@ -44,6 +49,14 @@ abstract class AbstractImportModel
     protected $arProcessedIDList = [];
 
     /**
+     * ImportBrandModelFromCSV constructor.
+     */
+    public function __construct()
+    {
+        $this->initActiveLang();
+    }
+
+    /**
      * Deactivate active elements
      */
     public function deactivateElements()
@@ -58,19 +71,13 @@ abstract class AbstractImportModel
         }
 
         //Get element list
-        $sModelClass = $this->getModelClass();
+        $sModelClass = static::MODEL_CLASS;
         $obElementList = $sModelClass::whereIn('external_id', $arDeactivateIDList)->get();
         foreach ($obElementList as $obElement) {
             $obElement->active = false;
             $obElement->save();
         }
     }
-
-    /**
-     * Get model class
-     * @return string
-     */
-    abstract protected function getModelClass() : string;
 
     /**
      * Create new item
@@ -89,6 +96,7 @@ abstract class AbstractImportModel
     {
         $this->prepareImportData();
         $this->fireBeforeImportEvent();
+        $this->prepareImportDataBeforeSave();
 
         $this->findByExternalID();
         if (!empty($this->obModel)) {
@@ -110,7 +118,7 @@ abstract class AbstractImportModel
      */
     protected function findByExternalID()
     {
-        $sModelClass = $this->getModelClass();
+        $sModelClass = static::MODEL_CLASS;
         if ($this->bWithTrashed) {
             $this->obModel = $sModelClass::withTrashed()->getByExternalID($this->sExternalID)->first();
         } else {
@@ -123,17 +131,29 @@ abstract class AbstractImportModel
      */
     protected function prepareImportData()
     {
+    }
+
+    /**
+     * Prepare array of import data
+     */
+    protected function prepareImportDataBeforeSave()
+    {
         if (empty($this->arImportData)) {
             return;
         }
 
+        $arResult = [];
         foreach ($this->arImportData as $sKey => $sValue) {
             if (is_string($sValue)) {
-                $this->arImportData[$sKey] = trim($sValue);
+                $sValue = trim($sValue);
             } elseif (is_array($sValue)) {
-                $this->arImportData[$sKey] = array_filter($sValue);
+                $sValue = array_filter($sValue);
             }
+
+            array_set($arResult, $sKey, $sValue);
         }
+
+        $this->arImportData = $arResult;
     }
 
     /**
@@ -141,6 +161,22 @@ abstract class AbstractImportModel
      */
     protected function processModelObject()
     {
+        $arActiveLangList = $this->getActiveLangList();
+        if (empty($arActiveLangList) || empty($this->obModel)) {
+            return;
+        }
+
+        foreach ($arActiveLangList as $sLangCode) {
+            if (!array_key_exists($sLangCode, $this->arImportData)) {
+                continue;
+            }
+
+            foreach ($this->arImportData[$sLangCode] as $sField => $sValue) {
+                $this->obModel->setTranslateAttribute($sField, $sValue, $sLangCode);
+            }
+        }
+
+        $this->obModel->save();
     }
 
     /**
@@ -148,7 +184,7 @@ abstract class AbstractImportModel
      */
     protected function fireBeforeImportEvent()
     {
-        $arEventData = [$this->getModelClass(), $this->arImportData];
+        $arEventData = [static::MODEL_CLASS, $this->arImportData];
 
         $arEventData = Event::fire(self::EVENT_BEFORE_IMPORT, $arEventData);
         if (empty($arEventData)) {
