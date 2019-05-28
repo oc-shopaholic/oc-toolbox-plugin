@@ -1,0 +1,109 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Item;
+
+use Cms\Classes\Page as CmsPage;
+
+use Lovata\Toolbox\Classes\Item\ElementItem;
+use Lovata\Toolbox\Classes\Helper\PageHelper;
+
+[[nested_tree]]use {{studly_author}}\{{studly_plugin}}\Classes\Collection\{{studly_model}}Collection;
+[[nested_tree]]use {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}};
+
+/**
+ * Class {{studly_model}}Item
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Item
+[[developer]] * @author {{developer}}
+[[developer]] *
+ * @property integer $id
+[[active]] * @property bool $active
+[[active]][[name]] * @property string $name
+[[name]][[slug]] * @property string $slug
+[[slug]][[code]] * @property string $code
+[[code]][[external_id]] * @property string $external_id
+[[external_id]][[preview_text]] * @property string $preview_text
+[[preview_text]][[description]] * @property string $description
+[[description]][[view_count]] * @property int $view_count
+[[view_count]][[sortable]] * @property int $sort_order
+[[sortable]][[nested_tree]] * @property int $parent_id
+ * @property int $nest_left
+ * @property int $nest_right
+ * @property int $nest_depth
+ * @property array $children_id_list
+ * @property {{studly_model}} $parent
+ * @property \October\Rain\Database\Collection|{{studly_model}}[] $children
+[[nested_tree]] * @property \October\Rain\Argon\Argon $created_at
+ * @property \October\Rain\Argon\Argon $updated_at
+[[file]] * @property \System\Models\File $file
+[[file]][[preview_image]] * @property \System\Models\File $preview_image
+[[preview_image]][[images]] * @property \October\Rain\Database\Collection|\System\Models\File[] $images
+[[images]] */
+class {{studly_model}}Item extends ElementItem
+{
+    const MODEL_CLASS = {{studly_model}}::class;
+
+    /** @var {{studly_model}} */
+    protected $obElement = null;
+[[nested_tree]]    /** @var array */
+    public $arRelationList = [
+        'parent'   => [
+            'class' => {{studly_model}}Item::class,
+            'field' => 'parent_id',
+        ],
+        'children' => [
+            'class' => {{studly_model}}Collection::class,
+            'field' => 'children_id_list',
+        ],
+    ];
+[[nested_tree]]
+    /**
+     * Returns URL of a brand page.
+     * @param string $sPageCode
+     * @return string
+     */
+    public function getPageUrl($sPageCode = '{{lower_model}}')
+    {
+        //Get URL params
+        $arParamList = $this->getPageParamList($sPageCode);
+
+        //Generate page URL
+        $sURL = CmsPage::url($sPageCode, $arParamList);
+
+        return $sURL;
+    }
+
+    /**
+     * Get URL param list by page code
+     * @param string $sPageCode
+     * @return array
+     */
+    public function getPageParamList($sPageCode) : array
+    {
+        $arPageParamList = [];
+
+        //Get URL params for page
+        $arParamList = PageHelper::instance()->getUrlParamList($sPageCode, '{{studly_model}}Page');
+        if (!empty($arParamList)) {
+            $sPageParam = array_shift($arParamList);
+            $arPageParamList[$sPageParam] = $this->slug;
+        }
+
+        return $arPageParamList;
+    }
+[[nested_tree]]
+    /**
+     * Set element data from model object
+     * @return array
+     */
+    protected function getElementData()
+    {
+        $arResult = [
+            'nest_depth' => $this->obElement->getDepth(),
+        ];
+
+        $arResult['children_id_list'] = $this->obElement->children()
+            ->active()
+            ->orderBy('nest_left', 'asc')
+            ->lists('id');
+
+        return $arResult;
+    }
+[[nested_tree]]}

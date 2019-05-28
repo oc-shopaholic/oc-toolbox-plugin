@@ -1,0 +1,40 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Event;
+
+use Backend;
+use Lovata\Toolbox\Classes\Event\AbstractBackendMenuHandler;
+
+/**
+ * Class ProductControllerHandler
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Event
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
+class ExtendBackendMenuHandler extends AbstractBackendMenuHandler
+{
+    /** @var int */
+    protected $iPriority = 100;
+
+    /**
+     * Add/remove menu items
+     * @param \Backend\Classes\NavigationManager $obManager
+     */
+    protected function addMenuItems($obManager)
+    {
+//        $obManager->removeSideMenuItem('Lovata.Shopaholic', 'shopaholic-menu-main', 'shopaholic-menu-products');
+//        $obManager->addSideMenuItem('Lovata.Shopaholic', 'shopaholic-menu-main', 'shopaholic-menu-products', $this->dataMenuProduct());
+    }
+
+//    /**
+//     * Data menu product
+//     * @return array
+//     */
+//    protected function dataMenuProduct()
+//    {
+//        return [
+//            'label'       => 'lovata.shopaholic::lang.menu.products',
+//            'url'         => Backend::url('lovata/shopaholic/products'),
+//            'icon'        => 'icon-smile-o',
+//            'permissions' => ['shopaholic-menu-products'],
+//            'order'       => 1000,
+//        ];
+//    }
+}

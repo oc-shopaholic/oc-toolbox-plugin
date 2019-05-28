@@ -1,0 +1,205 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Models;
+
+use [[model]]Model[[model]][[import_svg]]Backend\Models\ImportModel[[import_svg]][[export_svg]]Backend\Models\ExportModel[[export_svg]];
+[[empty_fields]][[slug]]use October\Rain\Database\Traits\Sluggable;
+[[slug]][[empty_validate]]use October\Rain\Database\Traits\Validation;
+[[empty_validate]][[active]]use Kharanenka\Scope\ActiveField;
+[[active]][[name]]use Kharanenka\Scope\NameField;
+[[name]][[slug]]use Kharanenka\Scope\SlugField;
+[[slug]][[code]]use Kharanenka\Scope\CodeField;
+[[code]][[external_id]]use Kharanenka\Scope\ExternalIDField;
+[[external_id]][[nested_tree]]use October\Rain\Database\Traits\NestedTree;
+[[nested_tree]][[sortable]]use October\Rain\Database\Traits\Sortable;
+[[sortable]]use Lovata\Toolbox\Traits\Helpers\TraitCached;
+[[empty_fields]]
+/**
+ * Class {{studly_model}}
+ * @package {{studly_author}}\{{studly_plugin}}\Models
+ [[developer]]* @author {{developer}}
+ [[developer]]*
+ * @mixin \October\Rain\Database\Builder
+ * @mixin \Eloquent
+ *
+ * @property integer $id
+[[active]] * @property bool $active
+[[active]][[name]] * @property string $name
+[[name]][[slug]] * @property string $slug
+[[slug]][[code]] * @property string $code
+[[code]][[external_id]] * @property string $external_id
+[[external_id]][[preview_text]] * @property string $preview_text
+[[preview_text]][[description]] * @property string $description
+[[description]][[view_count]] * @property int $view_count
+[[view_count]][[sortable]] * @property int $sort_order
+[[sortable]][[nested_tree]] * @property int $parent_id
+ * @property int $nest_left
+ * @property int $nest_right
+ * @property int $nest_depth
+ * @property {{studly_model}} $parent
+ * @property \October\Rain\Database\Collection|{{studly_model}}[] $children
+[[nested_tree]] * @property \October\Rain\Argon\Argon $created_at
+ * @property \October\Rain\Argon\Argon $updated_at
+[[file]] * @property \System\Models\File $file
+[[file]][[preview_image]] * @property \System\Models\File $preview_image
+[[preview_image]][[images]] * @property \October\Rain\Database\Collection|\System\Models\File[] $images
+[[images]][[nested_tree]] *
+ * @method static $this children()
+ * @method static $this getByParentID(int $iParentID)
+[[nested_tree]] */
+class {{studly_model}} extends [[model]]Model[[model]][[import_svg]]ImportModel[[import_svg]][[export_svg]]ExportModel[[export_svg]]
+{
+[[empty_fields]][[slug]]    use Sluggable;
+[[slug]][[empty_validate]]    use Validation;
+[[empty_validate]][[active]]    use ActiveField;
+[[active]][[name]]    use NameField;
+[[name]][[slug]]    use SlugField;
+[[slug]][[code]]    use CodeField;
+[[code]][[external_id]]    use ExternalIDField;
+[[external_id]][[nested_tree]]    use NestedTree;
+[[nested_tree]][[sortable]]    use Sortable;
+[[sortable]]    use TraitCached;
+
+[[empty_fields]]    /** @var string */
+    public $table = '{{lower_author}}_{{lower_plugin}}_{{lower_controller}}';
+    /** @var array */
+    public $implement = [
+        '@RainLab.Translate.Behaviors.TranslatableModel',
+    ];
+    /** @var array */
+    public $translatable = [[[empty_fields]]
+        [[name]]'name',
+        [[name]][[preview_text]]'preview_text',
+        [[preview_text]][[description]]'description',
+[[description]]    [[empty_fields]]];
+    /** @var array */
+    public $attributeNames = [[[empty_validate]]
+[[name]]        'name' => 'lovata.toolbox::lang.field.name',
+[[name]][[slug]]        'slug' => 'lovata.toolbox::lang.field.slug',
+[[slug]]    [[empty_validate]]];
+    /** @var array */
+    public $rules = [[[empty_validate]]
+[[name]]        'name' => 'required',
+[[name]][[slug]]        'slug' => 'required|unique:{{lower_author}}_{{lower_plugin}}_{{lower_controller}}',
+[[slug]]    [[empty_validate]]];
+    /** @var array */
+    public $slugs = [[[slug]]
+        'slug' => 'name'
+    [[slug]]];
+    /** @var array */
+    public $jsonable = [];
+    /** @var array */
+    public $fillable = [[[empty_fields]]
+[[active]]        'active',
+[[active]][[name]]        'name',
+[[name]][[slug]]        'slug',
+[[slug]][[code]]        'code',
+[[code]][[external_id]]        'external_id',
+[[external_id]][[preview_text]]        'preview_text',
+[[preview_text]][[description]]        'description',
+[[description]]    [[empty_fields]]];
+    /** @var array */
+    public $cached = [[[empty_fields]]
+        'id',
+[[nested_tree]]        'parent_id',
+[[nested_tree]][[active]]        'active',
+[[active]][[name]]        'name',
+[[name]][[slug]]        'slug',
+[[slug]][[code]]        'code',
+[[code]][[external_id]]        'external_id',
+[[external_id]][[view_count]]        'view_count',
+[[view_count]][[preview_text]]        'preview_text',
+[[preview_text]][[description]]        'description',
+[[description]][[preview_image]]        'preview_image',
+[[preview_image]][[file]]        'file',
+[[file]][[images]]        'images',
+[[images]]    [[empty_fields]]];
+    /** @var array */
+    public $dates = [
+        'created_at',
+        'updated_at',
+    ];
+    /** @var array */
+    public $casts = [];
+    /** @var array */
+    public $visible = [];
+    /** @var array */
+    public $hidden = [];
+    /** @var array */
+    public $hasOne = [];
+    /** @var array */
+    public $hasMany = [];
+    /** @var array */
+    public $belongsTo = [];
+    /** @var array */
+    public $belongsToMany = [];
+    /** @var array */
+    public $morphTo = [];
+    /** @var array */
+    public $morphOne = [];
+    /** @var array */
+    public $morphMany = [];
+    /** @var array */
+    public $attachOne = [[[empty_attach_one]]
+        [[preview_image]]'preview_image' => 'System\Models\File',
+        [[preview_image]][[file]]'file' => 'System\Models\File',
+        [[file]][[import_svg]]'import_file' => [\System\Models\File::class, 'public' => false],
+        [[import_svg]][[export_svg]]'import_file' => [\System\Models\File::class, 'public' => false],
+    [[export_svg]][[empty_attach_one]]];
+    /** @var array */
+    public $attachMany = [[[empty_attach_many]]
+        [[images]]'images' => 'System\Models\File'[[images]]
+    [[empty_attach_many]]];
+[[nested_tree]]
+    /**
+     * Get by parent ID
+     * @param {{studly_model}} $obQuery
+     * @param string   $sData
+     * @return {{studly_model}}
+     */
+    public function scopeGetByParentID($obQuery, $sData)
+    {
+        return $obQuery->where('parent_id', $sData);
+    }
+[[nested_tree]][[import_svg]]
+    /**
+     * Parse CSV file
+     * @param array $arResults
+     * @param null|string $sSessionKey
+     */
+    public function importData($arResults, $sSessionKey = null)
+    {
+        if (empty($arResults)) {
+            return;
+        }
+
+        foreach ($arResults as $sRow => $arData) {
+            try {
+                $ob{{studly_model}} = new {{studly_model}}();
+                $ob{{studly_model}}->fill($arData);
+                $ob{{studly_model}}->save();
+                $this->logCreated();
+            } catch (\Exception $obException) {
+                $this->logError($sRow, $obException->getMessage());
+            }
+        }
+    }
+[[import_svg]][[export_svg]]
+    /**
+     * Parse CSV file
+     * @param array $arColumns
+     * @param null|string $sSessionKey
+     * @return array
+     */
+    public function exportData($arColumns, $sSessionKey = null)
+    {
+        if (empty($arColumns)) {
+            return [];
+        }
+
+        $ob{{studly_model}}List = {{studly_model}}::all();
+        $ob{{studly_model}}List->each(function($ob{{studly_model}}List) use ($arColumns) {
+            $ob{{studly_model}}List->addVisible($arColumns);
+        });
+
+        return $ob{{studly_model}}List->toArray();
+    }
+[[export_svg]]}

@@ -1,0 +1,53 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Updates;
+
+use Schema;
+use Illuminate\Database\Schema\Blueprint;
+use October\Rain\Database\Updates\Migration;
+
+/**
+ * Class CreateTable{{studly_controller}}
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Console
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
+class CreateTable{{studly_controller}} extends Migration
+{
+    const TABLE = '{{lower_author}}_{{lower_plugin}}_{{lower_controller}}';
+
+    /**
+     * Apply migration
+     */
+    public function up()
+    {
+        if (Schema::hasTable(self::TABLE)) {
+            return;
+        }
+
+        Schema::create(self::TABLE, function (Blueprint $obTable)
+        {
+            $obTable->engine = 'InnoDB';
+            $obTable->increments('id')->unsigned();
+[[empty_fields]][[active]]            $obTable->boolean('active')->default(0);
+[[active]][[name]]            $obTable->string('name')->index();
+[[name]][[slug]]            $obTable->string('slug')->unique()->index();
+[[slug]][[code]]            $obTable->string('code')->nullable()->index();
+[[code]][[external_id]]            $obTable->string('external_id')->nullable()->index();
+[[external_id]][[preview_text]]            $obTable->text('preview_text')->nullable();
+[[preview_text]][[description]]            $obTable->text('description')->nullable();
+[[description]][[view_count]]            $obTable->integer('view_count')->nullable()->default(0);
+[[view_count]][[empty_fields]][[nested_tree]]            $obTable->integer('parent_id')->nullable()->unsigned();
+            $obTable->integer('nest_left')->nullable()->unsigned();
+            $obTable->integer('nest_right')->nullable()->unsigned();
+            $obTable->integer('nest_depth')->nullable()->unsigned();
+[[nested_tree]][[sortable]]            $obTable->integer('sort_order')->nullable()->dafault(0);
+[[sortable]]            $obTable->timestamps();
+        });
+    }
+
+    /**
+     * Rollback migration
+     */
+    public function down()
+    {
+        Schema::dropIfExists(self::TABLE);
+    }
+}

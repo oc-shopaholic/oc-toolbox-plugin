@@ -1,0 +1,12 @@
+<?php namespace {{studly_author}}\{{studly_plugin}};
+
+use System\Classes\PluginBase;
+
+/**
+ * Class Plugin
+ * @package {{studly_author}}\{{studly_plugin}}
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
+class Plugin extends PluginBase
+{
+}

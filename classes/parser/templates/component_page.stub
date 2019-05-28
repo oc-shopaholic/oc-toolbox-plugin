@@ -1,0 +1,57 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Components;
+
+use Lovata\Toolbox\Classes\Component\ElementPage;
+use {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}};
+use {{studly_author}}\{{studly_plugin}}\Classes\Item\{{studly_model}}Item;
+
+/**
+ * Class {{studly_model}}Page
+ * @package {{studly_author}}\{{studly_plugin}}\Components
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
+class {{studly_model}}Page extends ElementPage
+{
+    /**
+     * Component details
+     * @return array
+     */
+    public function componentDetails()
+    {
+        return [
+            'name'        => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_page_name',
+            'description' => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_page_description',
+        ];
+    }
+
+    /**
+     * Get element object
+     * @param string $sElementSlug
+     * @return {{studly_model}}
+     */
+    protected function getElementObject($sElementSlug)
+    {
+        if (empty($sElementSlug)) {
+            return null;
+        }
+
+        $obElement = {{studly_model}}::[[active]]active()->[[active]]getBySlug($sElementSlug)->first();
+
+[[view_count]]        if(!empty($obElement)) {
+            $obElement->view_count++;
+            $obElement->save();
+        }
+
+[[view_count]]        return $obElement;
+    }
+
+    /**
+     * Make new element item
+     * @param int $iElementID
+     * @param {{studly_model}} $obElement
+     * @return {{studly_model}}Item
+     */
+    protected function makeItem($iElementID, $obElement)
+    {
+        return {{studly_model}}Item::make($iElementID, $obElement);
+    }
+}

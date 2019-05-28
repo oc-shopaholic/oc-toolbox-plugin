@@ -1,0 +1,8 @@
+plugin:
+    name: '{{lower_author}}.{{lower_plugin}}::lang.plugin.name'
+    description: '{{lower_author}}.{{lower_plugin}}::lang.plugin.description'
+    author: {{studly_author}}
+    icon: icon-smile-o
+    homepage: ''
+navigation:
+permissions:

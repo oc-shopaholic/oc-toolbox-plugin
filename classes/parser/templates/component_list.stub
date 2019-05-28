@@ -1,0 +1,43 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Components;
+
+use Cms\Classes\ComponentBase;
+use {{studly_author}}\{{studly_plugin}}\Classes\Collection\{{studly_model}}Collection;
+
+/**
+ * Class {{studly_model}}List
+ * @package {{studly_author}}\{{studly_plugin}}\Components
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
+class {{studly_model}}List extends ComponentBase
+{
+    /**
+     * Component details
+     * @return array
+     */
+    public function componentDetails()
+    {
+        return [
+            'name'        => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_list_name',
+            'description' => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_list_description',
+        ];
+    }
+
+    /**
+     * Make element collection
+     * @param array $arElementIDList
+     * @return {{studly_model}}Collection
+     */
+    public function make($arElementIDList = null)
+    {
+        return {{studly_model}}Collection::make($arElementIDList);
+    }
+
+    /**
+     * Method for ajax request with empty response
+     * @return bool
+     */
+    public function onAjaxRequest()
+    {
+        return true;
+    }
+}

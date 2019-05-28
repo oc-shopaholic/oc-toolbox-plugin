@@ -1,0 +1,18 @@
+[[import_svg]]import:
+    title: '{{lower_author}}.toolbox::lang.button.import_from_csv'
+    list: $/{{lower_author}}/{{lower_plugin}}/models/{{lower_model}}/columns.yaml
+#    form: $/{{lower_author}}/{{lower_plugin}}/models/{{lower_model}}/fields.yaml
+#    form:
+#        fields:
+    modelClass: {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}}
+    redirect: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}
+[[import_svg]][[export_svg]]export:
+    title: '{{lower_author}}.toolbox::lang.button.export_in_csv'
+    list: $/{{lower_author}}/{{lower_plugin}}/models/{{lower_model}}/columns.yaml
+#    form: $/{{lower_author}}/{{lower_plugin}}/models/{{lower_model}}/fields.yaml
+#    form:
+#        fields:
+    fileName: export.csv
+    modelClass: {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}}
+    redirect: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}
+[[export_svg]]

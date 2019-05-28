@@ -1,0 +1,50 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Controllers;
+
+[[empty_sortable_nested_tree]]use Event;
+[[empty_sortable_nested_tree]]use BackendMenu;
+use Backend\Classes\Controller;
+[[empty_sortable_nested_tree]]use {{studly_author}}\{{studly_plugin}}\Classes\Event\{{studly_model}}\{{studly_model}}ModelHandler;
+[[empty_sortable_nested_tree]]
+/**
+ * Class {{studly_controller}}
+ * @package {{studly_author}}\{{studly_plugin}}\Controllers
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
+class {{studly_controller}} extends Controller
+{
+    /** @var array */
+    public $implement = [
+        'Backend.Behaviors.ListController',
+[[empty_sortable_nested_tree]]        'Backend\Behaviors\ReorderController',
+[[empty_sortable_nested_tree]][[empty_import_export_svg]]        'Backend.Behaviors.ImportExportController',
+[[empty_import_export_svg]]        'Backend.Behaviors.FormController',
+    ];
+    /** @var string */
+    public $listConfig = 'config_list.yaml';
+[[empty_sortable_nested_tree]]    /** @var string */
+    public $reorderConfig = 'config_reorder.yaml';
+[[empty_sortable_nested_tree]][[empty_import_export_svg]]    /** @var string */
+    public $importExportConfig = 'config_import_export.yaml';
+[[empty_import_export_svg]]    /** @var string */
+    public $formConfig = 'config_form.yaml';
+
+    /**
+     * {{studly_controller}} constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        BackendMenu::setContext('{{studly_author}}.{{studly_plugin}}', '{{lower_plugin}}-menu-main', '{{lower_plugin}}-menu-{{lower_controller}}');
+    }
+[[empty_sortable_nested_tree]]
+    /**
+     * Ajax handler onReorder event
+     */
+    public function onReorder()
+    {
+        $obResult = parent::onReorder();
+        Event::fire({{studly_model}}ModelHandler::EVENT_UPDATE_SORTING);
+
+        return $obResult;
+    }
+[[empty_sortable_nested_tree]]}

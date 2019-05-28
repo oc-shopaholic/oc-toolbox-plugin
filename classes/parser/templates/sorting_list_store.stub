@@ -1,0 +1,108 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}};
+
+use Lovata\Toolbox\Classes\Store\[[sortable]]AbstractStoreWithoutParam[[sortable]][[default_sorting]]AbstractStoreWithParam[[default_sorting]];
+use {{studly_expansion_author}}\{{studly_expansion_plugin}}\Models\{{studly_model}};
+[[default_sorting]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}ListStore;
+[[default_sorting]]
+/**
+ * Class SortingListStore
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
+class SortingListStore extends [[sortable]]AbstractStoreWithoutParam[[sortable]][[default_sorting]]AbstractStoreWithParam[[default_sorting]]
+{
+    protected static $instance;
+[[sortable]]
+    /**
+     * Get ID list from database
+     * @return array
+     */
+    protected function getIDListFromDB() : array
+    {
+        $arElementIDList = (array) {{studly_model}}::orderBy('sort_order', 'asc')->lists('id');
+
+        return $arElementIDList;
+    }
+[[sortable]][[default_sorting]]
+    /**
+     * Get ID list from database
+     * @return array
+     */
+    protected function getIDListFromDB() : array
+    {
+        switch ($this->sValue) {
+            case {{studly_model}}ListStore::SORT_CREATED_AT_ASC:
+                $arElementIDList = $this->getByPublishASC();
+                break;
+            case {{studly_model}}ListStore::SORT_CREATED_AT_DESC:
+                $arElementIDList = $this->getByPublishDESC();
+                break;
+[[view_count]]            case {{studly_model}}ListStore::SORT_VIEW_COUNT_ASC:
+                $arElementIDList = $this->getByViewsASC();
+                break;
+            case {{studly_model}}ListStore::SORT_VIEW_COUNT_DESC:
+                $arElementIDList = $this->getByViewsDESC();
+                break;
+[[view_count]]            default:
+                $arElementIDList = $this->getDefaultList();
+                break;
+        }
+
+        return $arElementIDList;
+    }
+
+    /**
+     * Get default list
+     * @return array
+     */
+    protected function getDefaultList() : array
+    {
+        $arElementIDList = (array) {{studly_model}}::lists('id');
+
+        return $arElementIDList;
+    }
+
+    /**
+     * Get sorting ID list by published (ASC)
+     * @return array
+     */
+    protected function getByPublishASC() : array
+    {
+        $arElementIDList = (array) {{studly_model}}::orderBy('created_at', 'asc')->lists('id');
+
+        return $arElementIDList;
+    }
+
+    /**
+     * Get sorting ID list by published (DESC)
+     * @return array
+     */
+    protected function getByPublishDESC() : array
+    {
+        $arElementIDList = (array) {{studly_model}}::orderBy('created_at', 'desc')->lists('id');
+
+        return $arElementIDList;
+    }
+[[view_count]]
+    /**
+     * Get sorting ID list by views (ASC)
+     * @return array
+     */
+    protected function getByViewsASC() : array
+    {
+        $arElementIDList = (array) {{studly_model}}::orderBy('view_count', 'asc')->lists('id');
+
+        return $arElementIDList;
+    }
+
+    /**
+     * Get sorting ID list by views (DESC)
+     * @return array
+     */
+    protected function getByViewsDESC() : array
+    {
+        $arElementIDList = (array) {{studly_model}}::orderBy('view_count', 'desc')->lists('id');
+
+        return $arElementIDList;
+    }
+[[view_count]][[default_sorting]]}

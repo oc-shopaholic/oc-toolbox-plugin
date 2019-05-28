@@ -1,0 +1,59 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Event\{{studly_model}};
+
+use Lovata\Toolbox\Classes\Event\AbstractBackendColumnHandler;
+use {{studly_expansion_author}}\{{studly_expansion_plugin}}\Models\{{studly_model}};
+use {{studly_expansion_author}}\{{studly_expansion_plugin}}\Controllers\{{studly_controller}};
+
+/**
+ * Class Extend{{studly_model}}ColumnsHandler
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Event\{{studly_model}}
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
+class Extend{{studly_model}}ColumnsHandler extends AbstractBackendColumnHandler
+{
+    /**
+     * Extend columns model
+     * @param \Backend\Widgets\Lists $obWidget
+     */
+    protected function extendColumns($obWidget)
+    {
+        $this->removeColumn($obWidget);
+        $this->addColumn($obWidget);
+    }
+
+    /**
+     * Remove columns model
+     * @param \Backend\Widgets\Lists $obWidget
+     */
+    protected function removeColumn($obWidget)
+    {
+        $obWidget->removeColumn('');
+    }
+
+    /**
+     * Add columns model
+     * @param \Backend\Widgets\Lists $obWidget
+     */
+    protected function addColumn($obWidget)
+    {
+        $obWidget->addColumns([]);
+    }
+
+    /**
+     * Get model class name
+     * @return string
+     */
+    protected function getModelClass() : string
+    {
+        return {{studly_model}}::class;
+    }
+
+    /**
+     * Get controller class name
+     * @return string
+     */
+    protected function getControllerClass() : string
+    {
+        return {{studly_controller}}::class;
+    }
+}

@@ -1,0 +1,41 @@
+# Record name
+name: '{{lower_author}}.{{lower_plugin}}::lang.{{lower_model}}.name'
+
+# Model Form Field configuration
+form: $/{{lower_author}}/{{lower_plugin}}/models/{{lower_model}}/fields.yaml
+
+# Model Class name
+modelClass: {{studly_author}}\{{studly_plugin}}\Models\{{studly_model}}
+
+# Default redirect location
+defaultRedirect: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}
+
+# Create page
+create:
+    title: 'backend::lang.form.create_title'
+    redirect: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}/update/:id
+    redirectClose: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}
+    flashSave: 'lovata.toolbox::lang.message.create_success'
+
+# Update page
+update:
+    title: 'backend::lang.form.update_title'
+    redirect: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}
+    redirectClose: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
+[[import_svg]]
+# Import page
+import:
+    title: 'backend::lang.form.update_title'
+    redirect: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}/import
+    redirectClose: {{lower_author}}/{{lower_plugin}}/emails
+[[import_svg]][[export_svg]]
+# Export page
+export:
+    title: 'backend::lang.form.update_title'
+    redirect: {{lower_author}}/{{lower_plugin}}/emails/export
+    redirectClose: {{lower_author}}/{{lower_plugin}}/{{lower_controller}}
+[[export_svg]]
+# Preview page
+preview: {  }
