@@ -62,4 +62,4 @@ jobs:
         skip_cleanup: true
         on:
           tags: true
-          repo: lovata/oc-toolbox-plugin
+          repo: oc-shopaholic/oc-toolbox-plugin
