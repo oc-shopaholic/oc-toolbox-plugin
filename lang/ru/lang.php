@@ -94,8 +94,6 @@
         'address2' => 'Адрес 2',
         'postcode' => 'Индекс',
 
-        'import_enable'                => 'Включить импорт',
-        'import_enable_comment'        => 'Отображать кнопку импорта',
         'import_file_list'             => 'Список файлов импорта',
         'import_from_file'             => 'Импорт из файла',
         'import_file_path'             => 'Относительный путь из папки "storage" к файлу импорта',
@@ -149,6 +147,8 @@
         'import_active_field_info'        => 'Значение поля "Активность" будет уставлено в true, если его не передавать в файле CSV.',
         'import_preview_image_field_info' => 'Путь к файлу превью-изображения должен быть указан относительно директории хранилища в вашем проекте. Например: "app/media/image.jpg".',
         'import_images_field_info'        => 'Путь к файлам изображениЙ должен быть указан относительно директории хранилища в вашем проекте. Например: "app/media/image.jpg". Пути к файлам должны быть указаны через запятую.',
+        'import_from_xml_confirm'         => 'Начать импорт из XML файла?',
+        'import_from_xml_report'          => 'Результаты импорта: создано - :created, обновлено - :updated, пропущено - :skipped, обработано - :processed.',
     ],
     'settings'   => [
         'count_per_page'                => 'Количество элементов на странице',
@@ -179,6 +179,7 @@
         'import_from_csv'    => 'Импорт из CSV',
         'export_in_csv'      => 'Экспорт в CSV',
         'import_button'      => 'Импортировать записи',
+        'import_from_xml'    => 'Импорт из XML',
     ],
     'type'       => [
         'input'            => 'Текстовое поле (input)',
