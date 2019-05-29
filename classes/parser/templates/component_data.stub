@@ -1,0 +1,34 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Components;
+
+use Lovata\Toolbox\Classes\Component\ElementData;
+use {{studly_author}}\{{studly_plugin}}\Classes\Item\{{studly_model}}Item;
+
+/**
+ * Class {{studly_model}}Data
+ * @package {{studly_author}}\{{studly_plugin}}\Components
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
+class {{studly_model}}Data extends ElementData
+{
+    /**
+     * Component details
+     * @return array
+     */
+    public function componentDetails()
+    {
+        return [
+            'name'        => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_data_name',
+            'description' => '{{lower_author}}.{{lower_plugin}}::lang.component.{{lower_model}}_data_description',
+        ];
+    }
+
+    /**
+     * Make new element item
+     * @param int $iElementID
+     * @return {{studly_model}}Item
+     */
+    protected function makeItem($iElementID)
+    {
+        return {{studly_model}}Item::make($iElementID);
+    }
+}

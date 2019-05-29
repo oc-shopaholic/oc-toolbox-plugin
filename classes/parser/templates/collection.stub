@@ -1,0 +1,83 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Collection;
+
+use Lovata\Toolbox\Classes\Collection\ElementCollection;
+use {{studly_author}}\{{studly_plugin}}\Classes\Item\{{studly_model}}Item;
+use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}ListStore;
+
+/**
+ * Class {{studly_model}}Collection
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Collection
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
+class {{studly_model}}Collection extends ElementCollection
+{
+    const ITEM_CLASS = {{studly_model}}Item::class;
+[[active]]
+    /**
+     * Apply filter by active field
+     * @return $this
+     */
+    public function active()
+    {
+        $arResultIDList = {{studly_model}}ListStore::instance()->active->get();
+
+        return $this->intersect($arResultIDList);
+    }
+[[active]][[sortable]]
+    /**
+     * Sort list
+     * @return $this
+     */
+    public function sort()
+    {
+        $arResultIDList = {{studly_model}}ListStore::instance()->sorting->get();
+
+        return $this->applySorting($arResultIDList);
+    }
+[[sortable]][[default_sorting]]
+    /**
+     * Sort list by
+     * @param string $sSorting
+     * @return $this
+     */
+    public function sort($sSorting)
+    {
+        $arResultIDList = {{studly_model}}ListStore::instance()->sorting->get($sSorting);
+
+        return $this->applySorting($arResultIDList);
+    }
+[[default_sorting]][[nested_tree]]
+    /**
+     * Sort list
+     * @return $this
+     */
+    public function tree()
+    {
+        $arResultIDList = {{studly_model}}ListStore::instance()->top_level->get();
+
+        return $this->applySorting($arResultIDList);
+    }
+[[nested_tree]][[code]]
+    /**
+     * Get item by code
+     * @param string $sCode
+     * @return {{studly_model}}Item
+     */
+    public function getByCode($sCode)
+    {
+        if ($this->isEmpty() || empty($sCode)) {
+            return {{studly_model}}Item::make(null);
+        }
+
+        $ar{{studly_model}}List = $this->all();
+
+        /** @var {{studly_model}}Item $ob{{studly_model}}Item */
+        foreach ($ar{{studly_model}}List as $ob{{studly_model}}Item) {
+            if ($ob{{studly_model}}Item->code == $sCode) {
+                return $ob{{studly_model}}Item;
+            }
+        }
+
+        return {{studly_model}}Item::make(null);
+    }
+[[code]]}

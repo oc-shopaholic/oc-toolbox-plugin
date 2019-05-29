@@ -1,0 +1,37 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Store;
+
+use Lovata\Toolbox\Classes\Store\AbstractListStore;
+[[active]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}\ActiveListStore;
+[[active]][[default_sorting]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}\SortingListStore;
+[[default_sorting]][[sortable]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}\SortingListStore;
+[[sortable]][[nested_tree]]use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}\TopLevelListStore;
+[[nested_tree]]
+/**
+ * Class {{studly_model}}ListStore
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Store
+[[developer]] * @author {{developer}}
+[[developer]][[active]] * @property ActiveListStore  $active
+[[active]][[default_sorting]] * @property SortingListStore $sorting
+[[default_sorting]][[sortable]] * @property SortingListStore $sorting
+[[sortable]][[nested_tree]] * @property TopLevelListStore $top_level
+[[nested_tree]] */
+class {{studly_model}}ListStore extends AbstractListStore
+{
+[[default_sorting]]    const SORT_CREATED_AT_ASC  = 'created_at|asc';
+    const SORT_CREATED_AT_DESC = 'created_at|desc';
+[[view_count]]    const SORT_VIEW_COUNT_ASC  = 'view|asc';
+    const SORT_VIEW_COUNT_DESC = 'view|desc';
+[[view_count]]
+[[default_sorting]]    protected static $instance;
+
+    /**
+     * Init store method
+     */
+    protected function init()
+    {
+[[active]]        $this->addToStoreList('active', ActiveListStore::class);
+[[active]][[default_sorting]]        $this->addToStoreList('sorting', SortingListStore::class);
+[[default_sorting]][[sortable]]        $this->addToStoreList('sorting', SortingListStore::class);
+[[sortable]][[nested_tree]]        $this->addToStoreList('top_level', TopLevelListStore::class);
+[[nested_tree]]    }
+}

@@ -1,0 +1,27 @@
+<div data-control="toolbar">
+    <a href="<?= Backend::url('{{lower_author}}/{{lower_plugin}}/{{lower_controller}}/create') ?>" class="btn btn-primary oc-icon-plus">
+        <?= e(trans('backend::lang.form.create')) ?>
+    </a>
+    <button
+            class="btn btn-danger oc-icon-trash-o"
+            disabled="disabled"
+            onclick="$(this).data('request-data', {checked: $('.control-list').listWidget('getChecked')})"
+            data-request="onDelete"
+            data-request-confirm="<?= e(trans('backend::lang.list.delete_selected_confirm')) ?>"
+            data-trigger-action="enable"
+            data-trigger=".control-list input[type=checkbox]"
+            data-trigger-condition="checked"
+            data-request-success="$(this).prop('disabled', 'disabled')"
+            data-stripe-load-indicator>
+        <?= e(trans('backend::lang.list.delete_selected')) ?>
+    </button>
+[[import_svg]]    <a href="<?= Backend::url('{{lower_author}}/{{lower_plugin}}/{{lower_controller}}/import') ?>" class="btn btn-primary oc-icon-file-text-o">
+        <?= e(trans('lovata.toolbox::lang.button.import_from_csv')) ?>
+    </a>
+[[import_svg]][[export_svg]]    <a href="<?= Backend::url('{{lower_author}}/{{lower_plugin}}/{{lower_controller}}/export') ?>" class="btn btn-primary oc-icon-file-text-o">
+        <?= e(trans('lovata.toolbox::lang.button.export_in_csv')) ?>
+    </a>
+[[export_svg]][[empty_sortable_nested_tree]]    <a href="<?= Backend::url('{{lower_author}}/{{lower_plugin}}/{{lower_controller}}/reorder') ?>" class="btn btn-info oc-icon-exchange">
+        <?= e(trans('backend::lang.reorder.default_title')) ?>
+    </a>
+[[empty_sortable_nested_tree]]</div>

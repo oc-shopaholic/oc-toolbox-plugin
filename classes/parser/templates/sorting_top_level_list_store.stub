@@ -1,0 +1,27 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}};
+
+use Lovata\Toolbox\Classes\Store\AbstractStoreWithoutParam;
+use {{studly_expansion_author}}\{{studly_expansion_plugin}}\Models\{{studly_model}};
+
+/**
+ * Class TopLevelListStore
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}
+[[developer]]* @author {{developer}}
+[[developer]]*/
+class TopLevelListStore extends AbstractStoreWithoutParam
+{
+    protected static $instance;
+
+    /**
+     * Get ID list from database
+     * @return array
+     */
+    protected function getIDListFromDB() : array
+    {
+        $arElementIDList = (array) {{studly_model}}::where('nest_depth', 0)
+            ->orderBy('nest_left', 'asc')
+            ->lists('id');
+
+        return $arElementIDList;
+    }
+}

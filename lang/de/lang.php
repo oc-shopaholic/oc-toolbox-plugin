@@ -63,6 +63,7 @@
         'amount'                   => 'Betrag',
         'author'                   => 'Autor',
         'link'                     => 'Link',
+        'view_count'               => 'Anzahl anzeigen',
         'is_default'               => 'Is default',
         'symbol'                   => 'Symbol',
 
@@ -96,6 +97,7 @@
         'preview_content' => 'Inhaltsvorschau',
         'full_content'    => 'Inhalt',
         'images'          => 'Bilder',
+        'files'           => 'Dateien',
         'settings'        => 'Einstellungen',
         'description'     => 'Beschreibung',
         'properties'      => 'Eigenschaften',

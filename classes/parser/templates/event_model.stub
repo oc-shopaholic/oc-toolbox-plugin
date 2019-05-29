@@ -1,0 +1,130 @@
+<?php namespace {{studly_author}}\{{studly_plugin}}\Classes\Event\{{studly_model}};
+
+use Lovata\Toolbox\Classes\Event\ModelHandler;
+use {{studly_expansion_author}}\{{studly_expansion_plugin}}\Models\{{studly_model}};
+use {{studly_author}}\{{studly_plugin}}\Classes\Item\{{studly_model}}Item;
+use {{studly_author}}\{{studly_plugin}}\Classes\Store\{{studly_model}}ListStore;
+
+/**
+ * Class {{studly_model}}ModelHandler
+ * @package {{studly_author}}\{{studly_plugin}}\Classes\Event\{{studly_model}}
+ [[developer]]* @author {{developer}}
+ [[developer]]*/
+class {{studly_model}}ModelHandler extends ModelHandler
+{
+[[empty_sortable_nested_tree]]    const EVENT_UPDATE_SORTING = '{{lower_plugin}}.{{lower_model}}.update.sorting';
+
+[[empty_sortable_nested_tree]]    /** @var {{studly_model}} */
+    protected $obElement;
+
+    /**
+     * Get model class name
+     * @return string
+     */
+    protected function getModelClass()
+    {
+        return {{studly_model}}::class;
+    }
+
+    /**
+     * Get item class name
+     * @return string
+     */
+    protected function getItemClass()
+    {
+        return {{studly_model}}Item::class;
+    }
+[[empty_sortable_nested_tree]]
+    /**
+     * Add listeners
+     * @param \Illuminate\Events\Dispatcher $obEvent
+     */
+    public function subscribe($obEvent)
+    {
+        parent::subscribe($obEvent);
+
+        $obEvent->listen(self::EVENT_UPDATE_SORTING, function () {
+[[nested_tree]]            {{studly_model}}ListStore::instance()->top_level->clear();
+
+            //Get category ID list
+            $ar{{studly_model}}IDList = {{studly_model}}::lists('id');
+            if (empty($ar{{studly_model}}IDList)) {
+                return;
+            }
+
+            //Clear cache for all
+            foreach ($ar{{studly_model}}IDList as $i{{studly_model}}ID) {
+                {{studly_model}}Item::clearCache($i{{studly_model}}ID);
+            }
+[[nested_tree]][[sortable]]            {{studly_model}}ListStore::instance()->sorting->clear();
+[[sortable]]        });
+    }
+
+[[empty_sortable_nested_tree]]    /**
+     * After create event handler
+     */
+    protected function afterCreate()
+    {
+        parent::afterCreate();
+[[default_sorting]]
+        $this->clearBySortingPublished();
+[[view_count]]        $this->clearBySortingViews();
+[[view_count]][[default_sorting]]    }
+
+    /**
+     * After save event handler
+     */
+    protected function afterSave()
+    {
+        parent::afterSave();
+[[default_sorting]][[view_count]]
+        if ($this->isFieldChanged('view_count')) {
+            $this->clearBySortingViews();
+        }
+[[view_count]][[default_sorting]][[active]]
+        $this->checkFieldChanges('active', {{studly_model}}ListStore::instance()->active);
+[[active]][[nested_tree]]        {{studly_model}}ListStore::instance()->top_level->clear();
+[[nested_tree]]    }
+
+    /**
+     * After delete event handler
+     */
+    protected function afterDelete()
+    {
+        parent::afterDelete();
+[[active]]
+        if ($this->obElement->active) {
+            {{studly_model}}ListStore::instance()->active->clear();
+        }
+[[active]][[nested_tree]]
+        {{studly_model}}ListStore::instance()->top_level->clear();
+
+        //Clear parent item cache
+        if (!empty($this->obElement->parent_id)) {
+            {{studly_model}}Item::clearCache($this->obElement->parent_id);
+        }
+[[nested_tree]][[sortable]]
+        {{studly_model}}ListStore::instance()->sorting->clear();
+[[sortable]][[default_sorting]]
+        $this->clearBySortingPublished();
+[[view_count]]        $this->clearBySortingViews();
+[[view_count]][[default_sorting]]    }
+[[default_sorting]]
+    /**
+     * Clear cache by created_at
+     */
+    protected function clearBySortingPublished()
+    {
+        {{studly_model}}ListStore::instance()->sorting->clear({{studly_model}}ListStore::SORT_CREATED_AT_ASC);
+        {{studly_model}}ListStore::instance()->sorting->clear({{studly_model}}ListStore::SORT_CREATED_AT_DESC);
+    }
+[[view_count]]
+    /**
+     * Clear cache by views
+     */
+    protected function clearBySortingViews()
+    {
+        {{studly_model}}ListStore::instance()->sorting->clear({{studly_model}}ListStore::SORT_VIEW_COUNT_ASC);
+        {{studly_model}}ListStore::instance()->sorting->clear({{studly_model}}ListStore::SORT_VIEW_COUNT_DESC);
+    }
+[[view_count]][[default_sorting]]}
