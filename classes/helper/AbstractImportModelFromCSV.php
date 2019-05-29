@@ -82,7 +82,7 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
      */
     protected function createItem()
     {
-        $sModelClass = $this->getModelClass();
+        $sModelClass = static::MODEL_CLASS;
         try {
             $this->obModel = $sModelClass::create($this->arImportData);
         } catch (\Exception $obException) {
