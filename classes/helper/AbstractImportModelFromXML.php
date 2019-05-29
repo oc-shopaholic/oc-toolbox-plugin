@@ -156,6 +156,28 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
     }
 
     /**
+     * Open XML file and read file
+     */
+    public function openMainFile()
+    {
+        if (!empty($this->obMainXMLFile)) {
+            return;
+        }
+
+        $sFilePath = storage_path($this->sMainFilePath);
+        if (empty($this->sMainFilePath) || !file_exists($sFilePath)) {
+            return;
+        }
+
+        $this->obMainXMLFile = new ImportXMLNode(file_get_contents($sFilePath));
+        if (empty($this->obMainXMLFile)) {
+            return;
+        }
+
+        $this->arElementList = $this->obMainXMLFile->findListByPath($this->sElementListPath);
+    }
+
+    /**
      * Create new item
      */
     protected function createItem()
@@ -272,24 +294,6 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
 
         Result::setFalse()->setMessage($sMessage);
         $this->iSkippedCount++;
-    }
-
-    /**
-     * Open XML file and read file
-     */
-    protected function openMainFile()
-    {
-        $sFilePath = storage_path($this->sMainFilePath);
-        if (empty($this->sMainFilePath) || !file_exists($sFilePath)) {
-            return;
-        }
-
-        $this->obMainXMLFile = new ImportXMLNode(file_get_contents($sFilePath));
-        if (empty($this->obMainXMLFile)) {
-            return;
-        }
-
-        $this->arElementList = $this->obMainXMLFile->findListByPath($this->sElementListPath);
     }
 
     /**
