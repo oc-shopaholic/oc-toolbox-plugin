@@ -78,3 +78,5 @@
     - 'Added classes for import elements from xml file.'
 1.25.1:
     - 'Fixed openMainFile method in AbstractImportModelFromXML class.'
+1.25.2:
+    - 'Added try->catch section for removing images in AbstractImportModel class.'

@@ -226,12 +226,16 @@ abstract class AbstractImportModel
 
                 //Check image
                 if (!empty($sFilePath) && (!file_exists($obImage->getLocalPath()) || md5_file($sFilePath) != md5_file($obImage->getLocalPath()))) {
-                    $obImage->deleteThumbs();
+                    try {
+                        $obImage->deleteThumbs();
+                    } catch (\Exception $obException) {}
                     $obImage->fromFile($sFilePath);
                     $obImage->save();
                 } elseif (empty($sFilePath)) {
-                    $obImage->deleteThumbs();
-                    $obImage->delete();
+                    try {
+                        $obImage->deleteThumbs();
+                        $obImage->delete();
+                    } catch (\Exception $obException) {}
                 }
             }
         }
@@ -279,8 +283,10 @@ abstract class AbstractImportModel
             $obPreviewImage->fromFile($this->sPreviewImage);
             $obPreviewImage->save();
         } elseif (!empty($obPreviewImage) && empty($this->sPreviewImage)) {
-            $obPreviewImage->deleteThumbs();
-            $obPreviewImage->delete();
+            try {
+                $obPreviewImage->deleteThumbs();
+                $obPreviewImage->delete();
+            } catch (\Exception $obException) {}
         }
     }
 
@@ -297,8 +303,10 @@ abstract class AbstractImportModel
 
         /** @var \System\Models\File $obFile */
         foreach ($obImageList as $obFile) {
-            $obFile->deleteThumbs();
-            $obFile->delete();
+            try {
+                $obFile->deleteThumbs();
+                $obFile->delete();
+            } catch (\Exception $obException) {}
         }
     }
 
