@@ -354,7 +354,5 @@ abstract class AbstractImportModel
         } else {
             Queue::pushOn($sQueueName, ImportItemQueue::class, $arQueueData);
         }
-
-        $this->setResultMethod();
     }
 }

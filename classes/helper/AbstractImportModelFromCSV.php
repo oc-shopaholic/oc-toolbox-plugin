@@ -52,6 +52,7 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
         $bQueueOn = Settings::getValue('import_queue_on');
         if ($bQueueOn && $bWithQueue) {
             $this->createJob();
+            $this->setResultMethod();
 
             return;
         }
