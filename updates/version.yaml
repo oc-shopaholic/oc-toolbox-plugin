@@ -80,3 +80,5 @@
     - 'Fixed openMainFile method in AbstractImportModelFromXML class.'
 1.25.2:
     - 'Added try->catch section for removing images in AbstractImportModel class.'
+1.25.3:
+    - 'Fixed bug with import through queues.'

@@ -1,5 +1,8 @@
 <?php namespace Lovata\Toolbox\Classes\Queue;
 
+use Lovata\Toolbox\Classes\Helper\AbstractImportModelFromCSV;
+use Lovata\Toolbox\Classes\Helper\AbstractImportModelFromXML;
+
 /**
  * Class ImportItemQueue
  * @package Lovata\Toolbox\Classes\Queue
@@ -36,6 +39,11 @@ class ImportItemQueue
 
         /** @var \Lovata\Toolbox\Classes\Helper\AbstractImportModel $obImport */
         $obImport = new $sImportClass();
-        $obImport->import($arImportData, false);
+        if ($obImport instanceof AbstractImportModelFromCSV) {
+            $obImport->import($arImportData, false);
+        } elseif($obImport instanceof AbstractImportModelFromXML) {
+            $obImport->importRow($arImportData, false);
+        }
+
     }
 }
