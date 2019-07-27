@@ -100,15 +100,16 @@
         'address2' => 'Адреса 2',
         'postcode' => 'Поштовий індекс',
 
-        'import_file_list'             => 'Import file list',
+        'import_file_list'             => 'Імпортувати файли',
         'import_from_file'             => 'Імпортувати з файлу',
-        'import_file_path'             => 'Relative path from storage folder to file',
-        'import_image_folder'          => 'Relative path from storage folder to image folder',
-        'import_path_to_list'          => 'Path to node with list of elements',
+        'import_file_path'             => 'Відносний шлях від папки зберігання до файлу',
+        'import_image_folder'          => 'Відносний шлях від папки зберігання до папки зображень',
+        'import_path_to_list'          => 'Шлях до вузла зі списком елементів',
         'import_path_to_list_example'  => 'main/elements/element',
-        'import_field_list'            => 'Field list',
+        'import_field_list'            => 'Список полів',
         'import_path_to_field'         => 'Path to field node',
-        'import_path_to_field_example' => 'fields/field[@code="active"]',
+        'import_path_to_field_example' => 'fields/field[@code="active"]
+',
     ],
     'tab'        => [
         'preview_content' => 'Попередній перегляд контенту',
@@ -157,13 +158,13 @@
         'import_images_field_info'        => '
 Шлях до файлу зображення повинен бути встановлений відносно каталогу зберігання вашого проекту. Наприклад: "app / media / image.jpg". Шляхи до файлів зображень повинні бути розділені комами.',
         'import_from_xml_confirm'         => 'Почати імпорт з XML-файла?',
-        'import_from_xml_report'          => 'Import results: created - :created, updated - :updated, skipped - :skipped, processed - :processed.',
+        'import_from_xml_report'          => 'Результати імпорту: created - :created, updated - :updated, skipped - :skipped, processed - :processed.',
 
         'table_toolbox_helper' => 'Відображати команду',
-        'table_toolbox_create' => 'Create :description',
+        'table_toolbox_create' => 'Створити :description',
 
-        'choice_field_list'   => 'Choice available fields (Example: 1,2,3,4)',
-        'choice_sorting'      => 'Choice sorting',
+        'choice_field_list'   => 'Вибір доступних полів (Наприклад: 1,2,3,4)',
+        'choice_sorting'      => 'Вибір сортування',
         'choice_lang_list'    => 'Вибрати lang',
         'choice_extend_model' => 'Вибрати extend model',
         'set'                 => 'Встановити :name (Example: :example)',
