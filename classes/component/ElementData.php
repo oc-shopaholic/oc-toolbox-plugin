@@ -36,6 +36,7 @@ abstract class ElementData extends ComponentBase
 
     /**
      * Ajax listener
+     * @deprecated
      * @return bool
      */
     public function onAjaxRequest()
