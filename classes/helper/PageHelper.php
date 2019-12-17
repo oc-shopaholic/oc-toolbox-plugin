@@ -73,6 +73,11 @@ class PageHelper
             $sValue = trim($arMatches[1]);
             $sValue = ltrim($sValue, ':');
             $arResult[] = $sValue;
+
+            if (array_get($arPropertyList, 'is_wildcard')) {
+                $arResult = [$sValue];
+                break;
+            }
         }
 
         $this->setCachedData($sCacheKey, $arResult);
@@ -106,6 +111,35 @@ class PageHelper
         $this->arPageNameList = $arResult;
 
         return $arResult;
+    }
+
+    /**
+     * Check is wildcard
+     * @param string $sPageCode
+     * @param string $sComponentName
+     * @return bool
+     */
+    public function isWildcard($sPageCode, $sComponentName)
+    {
+        $arComponentList = $this->getFullComponentList($sPageCode);
+
+        if (empty($arComponentList)) {
+            return false;
+        }
+
+        foreach ($arComponentList as $sKey => $arValue) {
+            if (!preg_match('%^'.$sComponentName.'%', $sKey)) {
+                continue;
+            }
+
+            $bWildcard = array_get($arValue, 'is_wildcard');
+
+            if ($bWildcard) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
