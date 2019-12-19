@@ -133,6 +133,8 @@
         'property_mode'                  => 'Режим работы',
         'mode_submit'                    => 'Отправка формы',
         'mode_ajax'                      => 'Ajax',
+        'has_wildcard'                   => 'Часть URL является wildcard параметром',
+        'skip_error'                     => 'Пропустить ошибку "Не найдено"',
     ],
     'message'    => [
         'create_success'                  => 'Создание :name было успешно выполнено',

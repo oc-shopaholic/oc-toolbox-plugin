@@ -172,7 +172,7 @@ abstract class AbstractImportModel
             }
 
             foreach ($this->arImportData[$sLangCode] as $sField => $sValue) {
-                $this->obModel->setTranslateAttribute($sField, $sValue, $sLangCode);
+                $this->obModel->setAttributeTranslated($sField, $sValue, $sLangCode);
             }
         }
 
