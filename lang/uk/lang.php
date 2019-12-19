@@ -140,6 +140,8 @@
         'property_mode'                  => 'Режим роботи',
         'mode_submit'                    => 'Відправлення форми',
         'mode_ajax'                      => 'Ajax',
+        'has_wildcard'                   => 'URL section is wildcard',
+        'skip_error'                     => 'Skip "Not found" error',
     ],
     'message'    => [
         'create_success'                  => 'Створення:name was виконано',
