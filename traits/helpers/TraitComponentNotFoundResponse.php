@@ -48,7 +48,7 @@ trait TraitComponentNotFoundResponse
      * @throws AjaxException
      * @return \Illuminate\Http\Response
      */
-    protected function getErrorResponse()
+    public function getErrorResponse()
     {
         if (Request::ajax()) {
             throw new AjaxException('Element not found');

@@ -32,10 +32,11 @@ class PageHelper
      * @param string $sPageCode
      * @param string $sComponentName
      * @param string $sParamName
+     * @param bool   $bFindWildcard
      *
      * @return array
      */
-    public function getUrlParamList($sPageCode, $sComponentName, $sParamName = 'slug')
+    public function getUrlParamList($sPageCode, $sComponentName, $sParamName = 'slug', $bFindWildcard = false)
     {
         $sCacheKey = implode('_', [$sPageCode, $sComponentName, $sParamName]);
         if ($this->hasCache($sCacheKey)) {
@@ -43,7 +44,7 @@ class PageHelper
         }
 
         $arResult = [];
-        if (empty($sPageCode) || empty($sComponentName) || empty($sParamName)) {
+        if (empty($sPageCode) || empty($sParamName)) {
             return $arResult;
         }
 
@@ -54,7 +55,7 @@ class PageHelper
         }
 
         foreach ($arComponentList as $sKey => $arPropertyList) {
-            if (!preg_match('%^'.$sComponentName.'%', $sKey)) {
+            if (!empty($sComponentName) && !preg_match('%^'.$sComponentName.'%', $sKey)) {
                 continue;
             }
 
@@ -74,7 +75,7 @@ class PageHelper
             $sValue = ltrim($sValue, ':');
             $arResult[] = $sValue;
 
-            if (array_get($arPropertyList, 'is_wildcard')) {
+            if ($bFindWildcard && array_get($arPropertyList, 'has_wildcard')) {
                 $arResult = [$sValue];
                 break;
             }
@@ -111,35 +112,6 @@ class PageHelper
         $this->arPageNameList = $arResult;
 
         return $arResult;
-    }
-
-    /**
-     * Check is wildcard
-     * @param string $sPageCode
-     * @param string $sComponentName
-     * @return bool
-     */
-    public function isWildcard($sPageCode, $sComponentName)
-    {
-        $arComponentList = $this->getFullComponentList($sPageCode);
-
-        if (empty($arComponentList)) {
-            return false;
-        }
-
-        foreach ($arComponentList as $sKey => $arValue) {
-            if (!preg_match('%^'.$sComponentName.'%', $sKey)) {
-                continue;
-            }
-
-            $bWildcard = array_get($arValue, 'is_wildcard');
-
-            if ($bWildcard) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

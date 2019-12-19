@@ -26,6 +26,7 @@ abstract class ElementPage extends ComponentBase
     protected $arPropertyList = [];
 
     protected $bNeedSmartURLCheck = false;
+    protected $bHasWildCard = false;
 
     /**
      * @return array
@@ -33,6 +34,19 @@ abstract class ElementPage extends ComponentBase
     public function defineProperties()
     {
         $this->arPropertyList = array_merge($this->arPropertyList, $this->getElementPageProperties());
+        if ($this->bHasWildCard) {
+            $this->arPropertyList['has_wildcard'] = [
+                'title'   => 'lovata.toolbox::lang.component.has_wildcard',
+                'type'    => 'checkbox',
+                'default' => 0,
+            ];
+        }
+
+        $this->arPropertyList['skip_error'] = [
+            'title'   => 'lovata.toolbox::lang.component.skip_error',
+            'type'    => 'checkbox',
+            'default' => 0,
+        ];
 
         return $this->arPropertyList;
     }
@@ -50,7 +64,7 @@ abstract class ElementPage extends ComponentBase
             return null;
         }
 
-        if (empty($this->obElement)) {
+        if (empty($this->obElement) && !$this->property('skip_error')) {
             return $this->getErrorResponse();
         }
 
@@ -135,7 +149,7 @@ abstract class ElementPage extends ComponentBase
 
         $sCurrentURL = $this->currentPageUrl();
         $sValidURL = $this->obElementItem->getPageUrl($this->page->id);
-        $bResult = $sCurrentURL == $sValidURL;
+        $bResult = preg_match("%^{$sValidURL}%", $sCurrentURL);
 
         return $bResult;
     }
