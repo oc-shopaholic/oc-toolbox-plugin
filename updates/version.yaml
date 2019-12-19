@@ -82,3 +82,5 @@
     - 'Added try->catch section for removing images in AbstractImportModel class.'
 1.25.3:
     - 'Fixed bug with import through queues.'
+1.26.0:
+    - 'Added support of wildcard params to ElementPage class.'
