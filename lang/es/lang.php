@@ -133,6 +133,8 @@
         'property_mode'                  => 'Component mode',
         'mode_submit'                    => 'Form submit',
         'mode_ajax'                      => 'Ajax',
+        'has_wildcard'                   => 'URL section is wildcard',
+        'skip_error'                     => 'Skip "Not found" error',
     ],
     'message'    => [
         'create_success'                  => 'Create :name was successful',
