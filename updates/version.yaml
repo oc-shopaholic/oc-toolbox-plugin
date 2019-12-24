@@ -84,3 +84,5 @@
     - 'Fixed bug with import through queues.'
 1.26.0:
     - 'Added support of wildcard params to ElementPage class.'
+1.26.1:
+    - 'Fixed support of wildcard params in ElementPage class.'
