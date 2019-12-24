@@ -71,6 +71,9 @@ class Plugin extends PluginBase
                     return $this->twigChoice($sLangString, $iNumber);
                 },
             ],
+            'filters' => [
+                'phone' => [$this, 'applyPhoneFilter'],
+            ],
         ];
     }
 
@@ -119,5 +122,14 @@ class Plugin extends PluginBase
     protected function twigChoice($sLangString, $iNumber)
     {
         return Lang::choice($sLangString, $iNumber);
+    }
+
+    /**
+     * Deletes all characters from string except digits and plus
+     * @param $sValue
+     * @return string
+     */
+    public function applyPhoneFilter($sValue) {
+        return preg_replace("%[^\d\+]%", '', $sValue);
     }
 }
