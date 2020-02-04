@@ -21,7 +21,7 @@ abstract class AbstractBackendFieldHandler
             $sModelName = $this->getModelClass();
 
             /** @var \Backend\Widgets\Form $obWidget */
-            if (!$obWidget->getController() instanceof $sControllerClass || $obWidget->isNested) {
+            if (!$obWidget->getController() instanceof $sControllerClass || $obWidget->isNested || empty($obWidget->context)) {
                 return;
             }
 
