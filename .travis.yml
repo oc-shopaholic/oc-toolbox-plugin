@@ -9,12 +9,6 @@ php:
   - 7.1
   - nightly
 
-matrix:
-  allow_failures:
-    - php: nightly
-
-sudo: false
-
 install:
   - composer install
   - if [[ "$BUILD" != true ]]; then
