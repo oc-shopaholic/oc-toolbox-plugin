@@ -1,19 +1,15 @@
 language: php
 
+os: linux
+
 cache:
   directories:
     - $HOME/.composer/cache/files
 
 php:
-  - 7.0
-  - 7.1
-  - nightly
-
-matrix:
-  allow_failures:
-    - php: nightly
-
-sudo: false
+  - 7.2
+  - 7.3
+  - 7.4
 
 install:
   - composer install
@@ -56,10 +52,9 @@ jobs:
           fi
       deploy:
         provider: releases
-        api_key:
+        token:
           secure: eCTtgt5DtMjdN9Si6DoSJ6TW80wvsZNgqH72y/V6qFz1Eoh7pVXsrJdBnvW/IOV5VgcsjkPCQYGDjX1dqPXkjMvTmKUsmq3z26RREI6TsSrECysdRTEJReHB5QFCEF5tWXzFgAcjS/xmu1Fw0Xpw03+emCC2wfSjBjac7s6r9K6ISTH5uJJEmJwbuGv2jE/koydA11CrdN4xAJifA/Jmvmo7te6KM7RipiyXvgzZLb04RovmdcieNx2VKlwHmxJPCylkqAWbuQk0Z1TWpebjSE9So/F945qluvnziffchV9OwPJE4bSKd9nu5HwJGNjDn6k1Aohj4LdYKPve0X/0gsDPTSiRb79q9JXhiBtUWj00OItroZ+oMhApyrIWymlfD2JlL+nSr4hsvw2fnOYtJtqjCOkXvUCwsju6ksA5Zy5PrdQLSdzPyPRrqTNGGeB4CYrElZPdZ9UBodhKlEwtUyUvWi3b2KnP5zltrzohxCYmSjv1lP6uXOOQgHb26XzRuiunG9Ko6E1WKm2+tS73GRTqgRWbVzqCOoIWn8p//QN0P9kMjKZdx2JadAb+qwuCK2+9/9wCFKGuMGaOYIvfIIJU20DX3rsYZ4XzSf0uF/Z3I9X8OegfrRSnYswhafrASm9gnxbr8xDa9CGTzlsjNuGb0ZrBUAIGww6xkfwjvH0=
         file: "$NEW_NAME.zip"
-        skip_cleanup: true
         on:
           tags: true
           repo: oc-shopaholic/oc-toolbox-plugin
