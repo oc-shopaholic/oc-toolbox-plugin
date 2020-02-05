@@ -88,3 +88,5 @@
     - 'Fixed support of wildcard params in ElementPage class.'
 1.26.2:
     - 'Added validation widget context field in AbstractBackendFieldHandler class.'
+1.27.0:
+    - 'Added redirect to error page, if result status is false and redirect URL is not empty.'
