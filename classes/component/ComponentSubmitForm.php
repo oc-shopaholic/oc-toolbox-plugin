@@ -129,7 +129,9 @@ abstract class ComponentSubmitForm extends ComponentBase
      */
     protected function getResponseModeForm($sRedirectURL = null)
     {
-        if (!Result::status()) {
+        if (!Result::status() && !empty($sRedirectURL)) {
+            return Redirect::to($sRedirectURL)->withInput()->with(Result::get());
+        } elseif (!Result::status()) {
             return Redirect::back()->withInput()->with(Result::get());
         }
 
@@ -161,7 +163,9 @@ abstract class ComponentSubmitForm extends ComponentBase
     {
         $this->sendFlashMessage();
 
-        if (!Result::status()) {
+        if (!Result::status() && !empty($sRedirectURL)) {
+            return Redirect::to($sRedirectURL);
+        } elseif (!Result::status()) {
             return Result::get();
         }
 
