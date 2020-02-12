@@ -59,7 +59,6 @@
         'priority'                 => 'Priority',
         'group'                    => 'Group',
         'count'                    => 'Count',
-        'length'                   => 'Length',
         'amount'                   => 'Amount',
         'author'                   => 'Author',
         'link'                     => 'Link',
@@ -67,6 +66,10 @@
         'is_default'               => 'Is default',
         'symbol'                   => 'Symbol',
         'field'                    => 'Field',
+        'weight'                   => 'Weight',
+        'height'                   => 'Height',
+        'length'                   => 'Length',
+        'width'                    => 'Width',
 
         'sort_order' => 'Sorting',
         'created_at' => 'Created',
