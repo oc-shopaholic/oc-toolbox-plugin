@@ -36,7 +36,7 @@ abstract class MainItem
 
         $sMethodName = 'get'.studly_case($sName).'Attribute';
         if (method_exists(static::class, $sMethodName) || $this->methodExists($sMethodName)) {
-            return $this->$sMethodName();
+            return $this->$sMethodName($this);
         }
 
         $sAttachOneField = 'attachOne|'.$sName;

@@ -2,6 +2,7 @@
 
 use Model;
 use Illuminate\Support\Str;
+use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Classes\Helper\PriceHelper;
 
 /**
@@ -83,15 +84,26 @@ trait PriceHelperTrait
             return;
         }
 
-        $obElement->addDynamicMethod($sMethodName, function () use ($sFieldName, $obElement) {
+        if ($obElement instanceof ElementItem) {
+            $obElement->addDynamicMethod($sMethodName, function ($obElement) use ($sFieldName) {
+                /** @var \Model|\Eloquent|\Lovata\Toolbox\Classes\Item\ElementItem $obElement */
+                $fPrice = 0;
+                if (isset($obElement->attributes[$sFieldName])) {
+                    $fPrice = $obElement->attributes[$sFieldName];
+                }
 
-            $fPrice = 0;
-            if (isset($obElement->attributes[$sFieldName])) {
-                $fPrice = $obElement->attributes[$sFieldName];
-            }
+                return $fPrice;
+            });
+        } else {
+            $obElement->addDynamicMethod($sMethodName, function () use ($sFieldName, $obElement) {
+                $fPrice = 0;
+                if (isset($obElement->attributes[$sFieldName])) {
+                    $fPrice = $obElement->attributes[$sFieldName];
+                }
 
-            return $fPrice;
-        });
+                return $fPrice;
+            });
+        }
     }
 
     /**
@@ -107,15 +119,26 @@ trait PriceHelperTrait
             return;
         }
 
-        $obElement->addDynamicMethod($sMethodName, function () use ($sFieldName, $obElement) {
+        if ($obElement instanceof ElementItem) {
+            $obElement->addDynamicMethod($sMethodName, function ($obElement) use ($sFieldName) {
+                /** @var \Model|\Eloquent|\Lovata\Toolbox\Classes\Item\ElementItem $obElement */
+                $sFieldName .= '_value';
+                $fPrice = $obElement->$sFieldName;
 
-            $sFieldName .= '_value';
-            $fPrice = $obElement->$sFieldName;
+                $sPrice = PriceHelper::format($fPrice);
 
-            $sPrice = PriceHelper::format($fPrice);
+                return $sPrice;
+            });
+        } else {
+            $obElement->addDynamicMethod($sMethodName, function () use ($sFieldName, $obElement) {
+                $sFieldName .= '_value';
+                $fPrice = $obElement->$sFieldName;
 
-            return $sPrice;
-        });
+                $sPrice = PriceHelper::format($fPrice);
+
+                return $sPrice;
+            });
+        }
     }
 
     /**
