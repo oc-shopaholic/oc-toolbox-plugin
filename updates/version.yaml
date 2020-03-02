@@ -92,3 +92,5 @@
     - 'Added redirect to error page, if result status is false and redirect URL is not empty.'
 1.28.0:
     - 'Added dimension fields to lang files'
+1.28.1:
+    - 'Added passing $this param to get[FieldName]Attribute() method in ElementItem class. It is recommended to use parameter from callback function in the dynamic methods get[FieldName]Attribute in ElementItem class.'
