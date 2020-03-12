@@ -394,9 +394,17 @@ abstract class ElementCollection extends Extendable implements \IteratorAggregat
         }
 
         $obThis = $this->copy();
-        shuffle($obThis->arElementIDList);
 
-        return $obThis->take($iCount);
+        $arElementIDList = $obThis->getIDList();
+        $arKeyList = array_rand($arElementIDList, $iCount);
+        if (!is_array($arKeyList)) {
+            $arKeyList = [$arKeyList];
+        }
+
+        $arKeyList = array_combine($arKeyList, $arKeyList);
+        $arElementIDList = array_intersect_key($arElementIDList, $arKeyList);
+
+        return $obThis->intersect($arElementIDList)->all();
     }
 
     /**
