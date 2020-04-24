@@ -1,6 +1,5 @@
 <?php namespace Lovata\Toolbox;
 
-use Event;
 use Lang;
 use System\Classes\PluginBase;
 use Lovata\Toolbox\Components\Pagination;
@@ -23,10 +22,6 @@ use Lovata\Toolbox\Classes\Console\CreateStore;
 use Lovata\Toolbox\Classes\Console\CreateExtendBackendMenuHandler;
 use Lovata\Toolbox\Classes\Console\CreateExtendModelFieldsHandler;
 use Lovata\Toolbox\Classes\Console\CreateExtendModelColumnsHandler;
-
-//Events
-//Settings events
-use Lovata\Toolbox\Classes\Event\Settings\ExtendSettingsFieldHandler;
 
 /**
  * Class Plugin
@@ -91,8 +86,6 @@ class Plugin extends PluginBase
             $this->app->bind(\Lovata\Toolbox\Classes\Item\TestItem::class, \Lovata\Toolbox\Classes\Item\TestItem::class);
             $this->app->bind(\Lovata\Toolbox\Classes\Collection\TestCollection::class, \Lovata\Toolbox\Classes\Collection\TestCollection::class);
         }
-
-        $this->addEventListener();
     }
 
     /**
@@ -138,14 +131,5 @@ class Plugin extends PluginBase
      */
     public function applyPhoneFilter($sValue) {
         return preg_replace("%[^\d\+]%", '', $sValue);
-    }
-
-    /**
-     * Add event listeners
-     */
-    protected function addEventListener()
-    {
-        //Status events
-        Event::subscribe(ExtendSettingsFieldHandler::class);
     }
 }

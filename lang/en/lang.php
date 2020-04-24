@@ -106,11 +106,6 @@
         'import_field_list'            => 'Field list',
         'import_path_to_field'         => 'Path to field node',
         'import_path_to_field_example' => 'fields/field[@code="active"]',
-
-        'set_page_for_product'     => 'Set page for product',
-        'set_page_for_category'    => 'Set page for category',
-        'set_page_for_brand'       => 'Set page for brand',
-        'set_page_for_promo_block' => 'Set page for promo block',
     ],
     'tab'        => [
         'preview_content' => 'Preview content',
