@@ -19,9 +19,6 @@ class ExtendSettingsFieldHandler extends AbstractBackendFieldHandler
     protected function extendFields($obWidget)
     {
         $arTabFields = $this->getAvailablePageList();
-
-
-
         $obWidget->addTabFields($arTabFields);
     }
 

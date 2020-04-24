@@ -2,7 +2,6 @@
 
 use Event;
 use Lang;
-use Lovata\Toolbox\Classes\Event\Settings\ExtendSettingsFieldHandler;
 use System\Classes\PluginBase;
 use Lovata\Toolbox\Components\Pagination;
 
@@ -24,6 +23,10 @@ use Lovata\Toolbox\Classes\Console\CreateStore;
 use Lovata\Toolbox\Classes\Console\CreateExtendBackendMenuHandler;
 use Lovata\Toolbox\Classes\Console\CreateExtendModelFieldsHandler;
 use Lovata\Toolbox\Classes\Console\CreateExtendModelColumnsHandler;
+
+//Events
+//Settings events
+use Lovata\Toolbox\Classes\Event\Settings\ExtendSettingsFieldHandler;
 
 /**
  * Class Plugin
