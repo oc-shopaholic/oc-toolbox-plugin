@@ -116,6 +116,10 @@ abstract class ModelHandler
     protected function clearItemCache()
     {
         $sItemClass = $this->getItemClass();
+        if (empty($sItemClass)) {
+            return;
+        }
+        
         $sField = $this->sIdentifierField;
 
         $sItemClass::clearCache($this->obElement->$sField);
