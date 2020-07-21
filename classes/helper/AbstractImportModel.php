@@ -94,8 +94,8 @@ abstract class AbstractImportModel
      */
     protected function run()
     {
-        $this->prepareImportData();
         $this->fireBeforeImportEvent();
+        $this->prepareImportData();
         $this->prepareImportDataBeforeSave();
 
         $this->findByExternalID();
