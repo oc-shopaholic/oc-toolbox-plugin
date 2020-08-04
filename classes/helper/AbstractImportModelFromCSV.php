@@ -139,7 +139,6 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
 
         foreach ($this->arImageList as $iKey => $sPath) {
             $sPath = $this->checkForRemoteFile(trim($sPath));
-
             if (empty($sPath)) {
                 unset($this->arImageList[$iKey]);
                 continue;
