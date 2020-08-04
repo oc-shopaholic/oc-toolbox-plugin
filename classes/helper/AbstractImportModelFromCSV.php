@@ -138,9 +138,7 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
         }
 
         foreach ($this->arImageList as $iKey => $sPath) {
-            $sPath = trim($sPath);
-
-            $sPath = $this->checkForRemoteFile($sPath);
+            $sPath = $this->checkForRemoteFile(trim($sPath));
 
             if (empty($sPath)) {
                 unset($this->arImageList[$iKey]);
@@ -168,8 +166,8 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
         }
 
         $this->bNeedUpdatePreviewImage = true;
-        $this->sPreviewImage = trim(array_get($this->arImportData, 'preview_image'));
-        $this->sPreviewImage = $this->checkForRemoteFile($this->sPreviewImage);
+        $sTrimmedImage = trim(array_get($this->arImportData, 'preview_image'));
+        $this->sPreviewImage = $this->checkForRemoteFile($sTrimmedImage);
 
         if (empty($this->sPreviewImage)) {
             return;
