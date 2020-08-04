@@ -2,6 +2,8 @@
 
 use Input;
 use Lang;
+use Exception;
+use System\Models\File;
 use Lovata\Toolbox\Models\Settings;
 
 /**
@@ -137,6 +139,9 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
 
         foreach ($this->arImageList as $iKey => $sPath) {
             $sPath = trim($sPath);
+
+            $sPath = $this->checkForRemoteFile($sPath);
+
             if (empty($sPath)) {
                 unset($this->arImageList[$iKey]);
                 continue;
@@ -164,6 +169,8 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
 
         $this->bNeedUpdatePreviewImage = true;
         $this->sPreviewImage = trim(array_get($this->arImportData, 'preview_image'));
+        $this->sPreviewImage = $this->checkForRemoteFile($this->sPreviewImage);
+
         if (empty($this->sPreviewImage)) {
             return;
         }
@@ -171,6 +178,28 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
         $this->sPreviewImage = storage_path($this->sPreviewImage);
         if (!file_exists($this->sPreviewImage)) {
             $this->sPreviewImage = null;
+        }
+    }
+
+    /**
+     * Check for remote file and downloads it if possible
+     */
+    protected function checkForRemoteFile($sPotentialUrl)
+    {
+        if (!preg_match('/https?:\/\//', $sPotentialUrl)) {
+            return $sPotentialUrl;
+        }
+
+        try {
+            $file = new File;
+            $file->fromUrl($sPotentialUrl);
+            $file->save();
+
+            $sValue = 'app/' . $file->getDiskPath();
+
+            return $sValue;
+        } catch(Exception $obException) {
+            return $sPotentialUrl;
         }
     }
 
