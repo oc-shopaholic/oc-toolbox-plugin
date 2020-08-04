@@ -167,7 +167,6 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
         $this->bNeedUpdatePreviewImage = true;
         $sTrimmedImage = trim(array_get($this->arImportData, 'preview_image'));
         $this->sPreviewImage = $this->checkForRemoteFile($sTrimmedImage);
-
         if (empty($this->sPreviewImage)) {
             return;
         }
@@ -188,11 +187,11 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
         }
 
         try {
-            $file = new File;
-            $file->fromUrl($sPotentialUrl);
-            $file->save();
+            $obFile = new File;
+            $obFile->fromUrl($sPotentialUrl);
+            $obFile->save();
 
-            $sValue = 'app/' . $file->getDiskPath();
+            $sValue = 'app/' . $obFile->getDiskPath();
 
             return $sValue;
         } catch(Exception $obException) {
