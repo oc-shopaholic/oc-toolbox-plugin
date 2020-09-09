@@ -200,6 +200,7 @@
         'import_from_csv'    => 'Import from CSV',
         'export_in_csv'      => 'Export in CSV',
         'import_button'      => 'Import records',
+        'export_button'      => 'Export records',
         'import_from_xml'    => 'Import from XML',
     ],
     'type'       => [

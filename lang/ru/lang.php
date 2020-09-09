@@ -187,6 +187,7 @@
         'import_from_csv'    => 'Импорт из CSV',
         'export_in_csv'      => 'Экспорт в CSV',
         'import_button'      => 'Импортировать записи',
+        'export_button'      => 'Экспортировать записи',
         'import_from_xml'    => 'Импорт из XML',
     ],
     'type'       => [
