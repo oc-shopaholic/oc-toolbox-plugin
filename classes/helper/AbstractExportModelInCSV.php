@@ -75,18 +75,21 @@ abstract class AbstractExportModelInCSV extends ExportModel
                 $this->arColumnList[] = $sColumn;
             }
         }
+
+        $this->initPropertyColumnList();
     }
 
     /**
-     * Init property column list for product or offer.
+     * Init property column list.
      */
-    protected function initPropertyColumnListForProductOrOffer()
+    protected function initPropertyColumnList()
     {
         if (empty($this->arPropertyColumnList)) {
             return;
         }
 
         $arPropertyColumnListTemp = [];
+
         foreach ($this->arPropertyColumnList as $sPropertyColumn) {
             $arPropertyColumn   = explode('.', $sPropertyColumn);
             $iPropertyColumnKey = array_pop($arPropertyColumn);
@@ -178,6 +181,16 @@ abstract class AbstractExportModelInCSV extends ExportModel
      */
     protected function prepareModelPropertiesData($obModel) : array
     {
-        return [];
+        $arResult = [];
+
+        if (empty($this->arPropertyColumnList) || !isset($obModel->property) || empty($obModel->property)) {
+            return $arResult;
+        }
+
+        foreach ($this->arPropertyColumnList as $sKey => $sField) {
+            $arResult[$sKey] = array_get($obModel->property, $sField);
+        }
+
+        return $arResult;
     }
 }
