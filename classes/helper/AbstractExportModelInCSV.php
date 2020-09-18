@@ -1,7 +1,7 @@
 <?php namespace Lovata\Toolbox\Classes\Helper;
 
-use Backend\Models\ExportModel;
 use Event;
+use Backend\Models\ExportModel;
 
 /**
  * Class AbstractExportModelInCSV
@@ -18,6 +18,8 @@ abstract class AbstractExportModelInCSV extends ExportModel
     protected $arColumnList = [];
     /** @var array */
     protected $arRelationColumnList = [];
+    /** @var array */
+    protected $arPropertyColumnList = [];
 
     /**
      * Export data.
@@ -62,13 +64,46 @@ abstract class AbstractExportModelInCSV extends ExportModel
             return;
         }
 
+        $arPropertyList = $this->getPropertyList();
+
         foreach ($arColumns as $sColumn) {
             if (in_array($sColumn, static::RELATION_LIST)) {
                 $this->arRelationColumnList[] = $sColumn;
+            } elseif (in_array($sColumn, $arPropertyList)) {
+                $this->arPropertyColumnList[] = $sColumn;
             } else {
                 $this->arColumnList[] = $sColumn;
             }
         }
+    }
+
+    /**
+     * Init property column list for product or offer.
+     */
+    protected function initPropertyColumnListForProductOrOffer()
+    {
+        if (empty($this->arPropertyColumnList)) {
+            return;
+        }
+
+        $arPropertyColumnListTemp = [];
+        foreach ($this->arPropertyColumnList as $sPropertyColumn) {
+            $arPropertyColumn   = explode('.', $sPropertyColumn);
+            $iPropertyColumnKey = array_pop($arPropertyColumn);
+
+            $arPropertyColumnListTemp[$sPropertyColumn] = $iPropertyColumnKey;
+        }
+
+        $this->arPropertyColumnList = $arPropertyColumnListTemp;
+    }
+
+    /**
+     * Get property list.
+     * @return array
+     */
+    protected function getPropertyList() : array
+    {
+        return [];
     }
 
     /**
@@ -137,7 +172,7 @@ abstract class AbstractExportModelInCSV extends ExportModel
     }
 
     /**
-     * Prepare model property data.
+     * Prepare model properties data.
      * @param \Model $obModel
      * @return array
      */
