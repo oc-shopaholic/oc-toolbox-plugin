@@ -17,6 +17,8 @@ class SendMailHelper
     use Singleton;
     use TraitInitActiveLang;
 
+    const EVENT_BEFORE_SEND_EMAIL = 'email.before.send';
+
     /** @var bool */
     protected $bUseQueue = false;
 
@@ -85,18 +87,32 @@ class SendMailHelper
             return;
         }
 
+        $arEventData = [$this->sMailTemplate, $sEmail, $this->arMailData];
+        $arEventData = Event::fire(self::EVENT_BEFORE_SEND_EMAIL, $arEventData);
+
+        $arAttachList = $this->getAttachList($arEventData);
+
         //Send restore mail
         if ($this->bUseQueue && empty($this->sQueueName)) {
-            Mail::queue($this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail) {
+            Mail::queue($this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail, $arAttachList) {
                 $obMessage->to($sEmail);
+                foreach ($arAttachList as $sFilePath) {
+                    $obMessage->attach($sFilePath);
+                }
             });
         } elseif ($this->bUseQueue && !empty($this->sQueueName)) {
-            Mail::queueOn($this->sQueueName, $this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail) {
+            Mail::queueOn($this->sQueueName, $this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail, $arAttachList) {
                 $obMessage->to($sEmail);
+                foreach ($arAttachList as $sFilePath) {
+                    $obMessage->attach($sFilePath);
+                }
             });
         } else {
-            Mail::send($this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail) {
+            Mail::send($this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail, $arAttachList) {
                 $obMessage->to($sEmail);
+                foreach ($arAttachList as $sFilePath) {
+                    $obMessage->attach($sFilePath);
+                }
             });
         }
     }
@@ -129,5 +145,39 @@ class SendMailHelper
         }
 
         return $arResult;
+    }
+
+    /**
+     * Get attach list.
+     * @param array|null $arEventData
+     * @return array
+     */
+    protected function getAttachList($arEventData) : array
+    {
+        $arAttachList = [];
+
+        if (empty($arEventData) || !is_array($arEventData)) {
+            return $arAttachList;
+        }
+
+        foreach ($arEventData as $arAttachData) {
+            if (empty($arAttachData)) {
+                continue;
+            }
+
+            foreach ($arAttachData as $sKey => $sValue) {
+                $arAttachList[] = $sValue;
+            }
+        }
+
+        $arAttachList = array_unique($arAttachList);
+
+        foreach ($arAttachList as $iKey => $sFilePath) {
+            if (!file_exists($sFilePath)) {
+                array_forget($arAttachList, $iKey);
+            }
+        }
+
+        return $arAttachList;
     }
 }
