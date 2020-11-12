@@ -14,6 +14,10 @@ abstract class AbstractExportModelInCSV extends ExportModel
 
     const RELATION_LIST = [];
 
+    const EVENT_EXTEND_GET_PROPERTY_LIST = 'model.getPropertyList';
+
+    /** @var array */
+    protected $arDefaultColumnList = [];
     /** @var array */
     protected $arColumnList = [];
     /** @var array */
@@ -42,8 +46,8 @@ abstract class AbstractExportModelInCSV extends ExportModel
             return $arList;
         }
 
-        foreach ($obItemList as $obOrderPosition) {
-            $arRow = $this->prepareRow($obOrderPosition);
+        foreach ($obItemList as $obItem) {
+            $arRow = $this->prepareRow($obItem);
             if (empty($arRow)) {
                 continue;
             }
@@ -64,6 +68,7 @@ abstract class AbstractExportModelInCSV extends ExportModel
             return;
         }
 
+        $this->arDefaultColumnList = $arColumns;
         $arPropertyList = $this->getPropertyList();
 
         foreach ($arColumns as $sColumn) {
@@ -77,6 +82,30 @@ abstract class AbstractExportModelInCSV extends ExportModel
         }
 
         $this->initPropertyColumnList();
+    }
+
+    /**
+     * Get property list.
+     * @return array
+     */
+    protected function getPropertyList() : array
+    {
+        $arEventData    = Event::fire(self::EVENT_EXTEND_GET_PROPERTY_LIST, [static::class]);
+        $arPropertyList = [];
+
+        if (empty($arEventData) || !is_array($arEventData)) {
+            return $arPropertyList;
+        }
+
+        foreach ($arEventData as $arAdditionData) {
+            if (empty($arAdditionData) || !is_array($arAdditionData)) {
+                continue;
+            }
+
+            $arPropertyList = array_merge($arPropertyList, $arAdditionData);
+        }
+
+        return $arPropertyList;
     }
 
     /**
@@ -101,15 +130,6 @@ abstract class AbstractExportModelInCSV extends ExportModel
     }
 
     /**
-     * Get property list.
-     * @return array
-     */
-    protected function getPropertyList() : array
-    {
-        return [];
-    }
-
-    /**
      * Get item list.
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
@@ -128,7 +148,7 @@ abstract class AbstractExportModelInCSV extends ExportModel
 
         $arData = array_merge($arModelData, $arModelRelationsData, $arModelPropertiesData);
 
-        $arEventData = [static::class, $arData];
+        $arEventData = [static::class, $obModel, $arData, $this->arDefaultColumnList];
         $arEventData = Event::fire(self::EVENT_BEFORE_EXPORT, $arEventData);
 
         foreach ($arEventData as $arModelData) {
