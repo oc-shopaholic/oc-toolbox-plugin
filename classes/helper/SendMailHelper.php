@@ -33,15 +33,15 @@ class SendMailHelper
 
     /**
      * Send email
-     * @param string $sMailTemplate
-     * @param string $sEmailList
-     * @param array  $arDefaultEmailData
-     * @param string $sEmailDataEventName
-     * @param bool   $bCheckActiveLang
+     * @param string       $sMailTemplate
+     * @param string|array $mEmailList
+     * @param array        $arDefaultEmailData
+     * @param string       $sEmailDataEventName
+     * @param bool         $bCheckActiveLang
      */
-    public function send($sMailTemplate, $sEmailList, $arDefaultEmailData = [], $sEmailDataEventName = null, $bCheckActiveLang = false)
+    public function send($sMailTemplate, $mEmailList, $arDefaultEmailData = [], $sEmailDataEventName = null, $bCheckActiveLang = false)
     {
-        if (empty($sEmailList) || (!is_string($sEmailList) && !is_array($sEmailList))) {
+        if (empty($mEmailList) || (!is_string($mEmailList) && !is_array($mEmailList))) {
             return;
         }
 
@@ -55,10 +55,10 @@ class SendMailHelper
         $this->arMailData = $this->getMailData($sEmailDataEventName, $arDefaultEmailData);
 
         //Process email list
-        if (is_string($sEmailList)) {
-            $arEmailList = explode(',', $sEmailList);
+        if (is_string($mEmailList)) {
+            $arEmailList = explode(',', $mEmailList);
         } else {
-            $arEmailList = $sEmailList;
+            $arEmailList = $mEmailList;
         }
 
         foreach ($arEmailList as $sEmail) {
