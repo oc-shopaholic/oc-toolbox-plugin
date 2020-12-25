@@ -96,3 +96,5 @@
     - 'Added passing $this param to get[FieldName]Attribute() method in ElementItem class. It is recommended to use parameter from callback function in the dynamic methods get[FieldName]Attribute in ElementItem class.'
 1.29.0:
     - 'Improved speed of random method in ElementCollection class.'
+1.30.0:
+    - 'The ability to specify URL for downloading images has been added to the abstract import class. Thanks for contribution Sebastiaan Kloos.'
