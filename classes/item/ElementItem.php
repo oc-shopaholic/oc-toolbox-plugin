@@ -294,7 +294,7 @@ abstract class ElementItem extends MainItem
      */
     protected function setCachedFieldList()
     {
-        if (!method_exists($this->obElement, 'getCachedField')) {
+        if (!$this->obElement->methodExists('getCachedField')) {
             return;
         }
 
