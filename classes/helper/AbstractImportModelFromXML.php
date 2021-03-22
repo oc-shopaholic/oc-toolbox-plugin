@@ -111,7 +111,7 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
         foreach ($this->arElementList as $obElementNode) {
 
             /** @var ParseXMLNode $obParseNode */
-            $obParseNode = new $sParseNodeClass($obElementNode, $this->arImportSettings);
+            $obParseNode = new $sParseNodeClass($obElementNode, $this->arImportSettings, $this->sPrefix, $this->sNamespace);
             $arImportData = $obParseNode->get();
 
             $arImportData = $this->extendImportData($arImportData, $obParseNode);

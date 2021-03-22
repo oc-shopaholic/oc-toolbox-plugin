@@ -15,14 +15,20 @@ class ParseXMLNode
 
     protected $arImportSettings = [];
 
+    protected $sPrefix;
+
+    protected $sNamespace;
+
     /**
      * @param ImportXMLNode $obNode
      * @param array $arSettings
      */
-    public function __construct($obNode, $arSettings)
+    public function __construct($obNode, $arSettings, $sPrefix, $sNamespace)
     {
         $this->obElementNode = $obNode;
         $this->arImportSettings = $arSettings;
+        $this->sPrefix = $sPrefix;
+        $this->sNamespace = $sNamespace;
 
         $this->parse();
     }
@@ -59,9 +65,9 @@ class ParseXMLNode
 
             $sMethodName = 'parse'.studly_case($sFieldName).'Attribute';
             if (method_exists(static::class, $sMethodName)) {
-                $sValue = $this->$sMethodName($sFieldPath);
+                $sValue = $this->$sMethodName($sFieldPath, $this->sPrefix, $this->sNamespace);
             } else {
-                $sValue = $this->obElementNode->getValueByPath($sFieldPath);
+                $sValue = $this->obElementNode->getValueByPath($sFieldPath, $this->sPrefix, $this->sNamespace);
             }
 
             if ($sValue === null) {
