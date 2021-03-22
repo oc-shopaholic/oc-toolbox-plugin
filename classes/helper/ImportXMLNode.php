@@ -12,15 +12,20 @@ class ImportXMLNode extends SimpleXMLElement
     /**
      * Find elements by path
      * @param string $sPath
+     * @param string|null $sPrefix
+     * @param string|null $sNamespace
      * @return array|null|ImportXMLNode[]
      */
-    public function findListByPath($sPath)
+    public function findListByPath($sPath, $sPrefix = null, $sNamespace = null)
     {
         $sPath = trim($sPath);
         if (empty($sPath)) {
             return null;
         }
 
+        if (!empty($sPrefix) && !empty($sNamespace)) {
+            $this->registerXPathNamespace($sPrefix, $sNamespace);
+        }
         $arResult = $this->xpath($sPath);
 
         return $arResult;

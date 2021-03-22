@@ -27,6 +27,8 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
     protected $sImageFolderPath = '';
     protected $arImportSettings = [];
     protected $arXMLFileList = [];
+    protected $sPrefix = null;
+    protected $sNamespace = null;
 
     protected $iCreatedCount = 0;
     protected $iUpdatedCount = 0;
@@ -174,7 +176,7 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
             return;
         }
 
-        $this->arElementList = $this->obMainXMLFile->findListByPath($this->sElementListPath);
+        $this->arElementList = $this->obMainXMLFile->findListByPath($this->sElementListPath, $this->sPrefix, $this->sNamespace);
     }
 
     /**

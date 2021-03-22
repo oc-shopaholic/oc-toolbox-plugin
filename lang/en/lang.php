@@ -103,6 +103,8 @@
         'import_file_list'             => 'Import file list',
         'import_from_file'             => 'Import from file',
         'import_file_path'             => 'Relative path from storage folder to file',
+        'import_path_prefix'           => 'Prefix for fields paths',
+        'import_file_namespace'        => 'File namespace',
         'import_image_folder'          => 'Relative path from storage folder to image folder',
         'import_path_to_list'          => 'Path to node with list of elements',
         'import_path_to_list_example'  => 'main/elements/element',
