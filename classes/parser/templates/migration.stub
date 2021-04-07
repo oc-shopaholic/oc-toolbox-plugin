@@ -38,7 +38,7 @@ class CreateTable{{studly_controller}} extends Migration
             $obTable->integer('nest_left')->nullable()->unsigned();
             $obTable->integer('nest_right')->nullable()->unsigned();
             $obTable->integer('nest_depth')->nullable()->unsigned();
-[[nested_tree]][[sortable]]            $obTable->integer('sort_order')->nullable()->dafault(0);
+[[nested_tree]][[sortable]]            $obTable->integer('sort_order')->nullable()->default(0);
 [[sortable]]            $obTable->timestamps();
         });
     }
