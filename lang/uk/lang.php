@@ -16,6 +16,7 @@
         'preview_image'            => 'Preview image',
         'image'                    => 'Image',
         'images'                   => 'Images (gallery)',
+        'icon'                     => 'Icon',
         'description'              => 'Description',
         'category'                 => 'Категорія',
         'category_parent_id'       => 'ID батьківської категорії',

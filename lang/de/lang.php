@@ -16,6 +16,7 @@
         'preview_image'            => 'Vorschau des Bildes',
         'image'                    => 'Bild',
         'images'                   => 'Bilder (Galerie)',
+        'icon'                     => 'Icon',
         'description'              => 'Beschreibung',
         'category'                 => 'Kategorie',
         'category_parent_id'       => 'Parent category ID',
