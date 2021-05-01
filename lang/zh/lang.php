@@ -16,6 +16,7 @@
         'preview_image'            => '预览图片',
         'image'                    => '图片',
         'images'                   => '图片库',
+        'icon'                     => 'Icon',
         'description'              => '描述',
         'category'                 => '类别',
         'category_parent_id'       => '父类别ID',

@@ -16,6 +16,7 @@
         'preview_image'            => 'プレビュー画像',
         'image'                    => '画像',
         'images'                   => '画像 (ギャラリー)',
+        'icon'                     => 'Icon',
         'description'              => '説明',
         'category'                 => 'カテゴリ',
         'category_parent_id'       => '親カテゴリID',
