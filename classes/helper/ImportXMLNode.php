@@ -11,14 +11,28 @@ class ImportXMLNode extends SimpleXMLElement
 {
     /**
      * Find elements by path
-     * @param string $sPath
+     * @param string      $sPath
+     * @param string|null $sPrefix
+     * @param string|null $sNamespace
      * @return array|null|ImportXMLNode[]
      */
-    public function findListByPath($sPath)
+    public function findListByPath($sPath, $sPrefix = null, $sNamespace = null)
     {
         $sPath = trim($sPath);
         if (empty($sPath)) {
             return null;
+        }
+
+        if (!empty($sPrefix) && !empty($sNamespace)) {
+            $this->registerXPathNamespace($sPrefix, $sNamespace);
+
+            // Split string to array to add prefix. If there is no separator, array_walk will work anyway.
+            $arPaths = explode('/', $sPath);
+            array_walk($arPaths, function (&$sSection) use ($sPrefix) {
+                $sSection = sprintf("%s:%s", $sPrefix, $sSection);
+            });
+
+            $sPath = implode('/', $arPaths);
         }
 
         $arResult = $this->xpath($sPath);
@@ -29,15 +43,17 @@ class ImportXMLNode extends SimpleXMLElement
     /**
      * @param \SimpleXMLElement $obNode
      * @param string            $sFieldPath
+     * @param string|null       $sPrefix
+     * @param string|null       $sNamespace
      * @return string|null|array
      */
-    public function getValueByPath($sFieldPath)
+    public function getValueByPath($sFieldPath, $sPrefix = null, $sNamespace = null)
     {
         if (empty($sFieldPath)) {
             return null;
         }
 
-        $arValueNodeList = $this->findListByPath($sFieldPath);
+        $arValueNodeList = $this->findListByPath($sFieldPath, $sPrefix, $sNamespace);
         if (empty($arValueNodeList)) {
             return null;
         }

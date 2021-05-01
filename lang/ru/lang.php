@@ -104,6 +104,8 @@
         'import_file_list'             => 'Список файлов импорта',
         'import_from_file'             => 'Импорт из файла',
         'import_file_path'             => 'Относительный путь из папки "storage" к файлу импорта',
+        'import_path_prefix'           => 'Префикс полей для этого файла',
+        'import_file_namespace'        => 'Пространство имен файла',
         'import_image_folder'          => 'Относительный путь из папки "storage" к папке с изображениями',
         'import_path_to_list'          => 'Путь к узлу со списком элементов',
         'import_path_to_list_example'  => 'main/elements/element',
