@@ -18,7 +18,7 @@ abstract class CommonTest extends PluginTestCase
     /**
      * Set up test method
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -34,5 +34,16 @@ abstract class CommonTest extends PluginTestCase
 
         $obManager->bootAll(true);
         $obManager->registerAll(true);
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+
+        // Get the plugin manager
+        $obManager = PluginManager::instance();
+
+        // Ensure that plugins are registered again for the next test
+        $obManager->unregisterAll();
     }
 }

@@ -17,6 +17,9 @@ abstract class ElementItem extends MainItem
     use ExtendableTrait;
 
     const MODEL_CLASS = Model::class;
+    const QUERY_FIELD = 'id';
+
+    public static $arQueryWith = [];
 
     public $implement = [];
 
@@ -161,10 +164,42 @@ abstract class ElementItem extends MainItem
     }
 
     /**
+     * Make new element item
+     * @param int|string $iElementID
+     * @param Model      $obElement
+     * @return $this
+     * @throws \Exception
+     */
+    public static function makeOnlyCache($iElementID, $obElement = null)
+    {
+        $arParamList = [
+            'iElementID' => $iElementID,
+            'obElement'  => $obElement,
+        ];
+
+        $obItem = ItemStorage::get(static::class, $iElementID);
+        if (!empty($obItem)) {
+            return $obItem;
+        }
+
+        /** @var $this $obItem */
+        $obItem = app()->make(static::class, $arParamList);
+
+        //Init cached array model data
+        $obItem->setCachedData(false);
+        if ($obItem->isEmpty()) {
+            return $obItem;
+        }
+
+        ItemStorage::set(static::class, $iElementID, $obItem);
+
+        return $obItem;
+    }
+
+    /**
      * Make new element item (no cache)
      * @param int    $iElementID
      * @param \Model $obElement
-     *
      * @return $this
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementItem#makenocacheielementid-obelement--null
      * @see  \Lovata\Toolbox\Tests\Unit\ItemTest::testItem()
@@ -176,7 +211,7 @@ abstract class ElementItem extends MainItem
             'obElement'  => $obElement,
         ];
 
-        /** @var ElementItem $obItem */
+        /** @var $this $obItem */
         $obItem = app()->make(static::class, $arParamList);
 
         //Init array model data (no cache)
@@ -347,8 +382,9 @@ abstract class ElementItem extends MainItem
 
     /**
      * Set cached brand data
+     * @param bool $bWithQuery
      */
-    protected function setCachedData()
+    protected function setCachedData($bWithQuery = true)
     {
         if (empty($this->iElementID)) {
             return;
@@ -358,7 +394,7 @@ abstract class ElementItem extends MainItem
         $sCacheKey = $this->iElementID;
 
         $this->arModelData = CCache::get($arCacheTags, $sCacheKey);
-        if (!$this->isEmpty()) {
+        if (!$this->isEmpty() || !$bWithQuery) {
             return;
         }
 
@@ -439,7 +475,17 @@ abstract class ElementItem extends MainItem
     protected function setElementObject()
     {
         $sModelClass = static::MODEL_CLASS;
-        $this->obElement = $sModelClass::find($this->iElementID);
+
+        $obQuery = $sModelClass::where(static::QUERY_FIELD, $this->iElementID);
+        if (method_exists($sModelClass, 'trashed')) {
+            $obQuery->withTrashed();
+        }
+
+        if (!empty(static::$arQueryWith)) {
+            $obQuery->with(static::$arQueryWith);
+        }
+
+        $this->obElement = $obQuery->first();
     }
 
     /**

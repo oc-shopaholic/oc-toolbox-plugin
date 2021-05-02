@@ -100,3 +100,5 @@
     - 'The ability to specify URL for downloading images has been added to the abstract import class. Thanks for contribution Sebastiaan Kloos.'
 1.31.0:
     - 'Added composer.json to plugin'
+1.32.0:
+    - 'Reduced count of database queries, if cache is empty'
