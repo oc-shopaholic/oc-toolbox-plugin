@@ -251,6 +251,7 @@ abstract class MainItem
 
         $obFile = File::make($arFileData);
         $obFile->disk_name = array_get($arFileData, 'disk_name');
+        $obFile->id = array_get($arFileData, 'id');
         if (!empty(self::$sActiveLang) && self::$sActiveLang != self::$sDefaultLang && $obFile->isClassExtendedWith('RainLab.Translate.Behaviors.TranslatableModel')) {
             foreach ($obFile->translatable as $sLangField) {
                 $obFile->$sLangField = array_get($arFileData, self::$sActiveLang.'.'.$sLangField, $obFile->$sLangField);
