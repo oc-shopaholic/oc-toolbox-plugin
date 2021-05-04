@@ -104,3 +104,5 @@
     - 'Reduced count of database queries, if cache is empty'
 1.33.0:
     - 'Fixed $sFilterValue condition in AbstractStoreWithParam and AbstractStoreWithTwoParam classes'
+1.33.1:
+    - 'Fixed error with cache images with same disk_name'
