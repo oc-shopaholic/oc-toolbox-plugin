@@ -102,3 +102,5 @@
     - 'Added composer.json to plugin'
 1.32.0:
     - 'Reduced count of database queries, if cache is empty'
+1.33.0:
+    - 'Fixed $sFilterValue condition in AbstractStoreWithParam and AbstractStoreWithTwoParam classes'
