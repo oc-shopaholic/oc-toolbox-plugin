@@ -24,7 +24,7 @@ abstract class AbstractStoreWithTwoParam extends AbstractStore
      */
     public function get($sFilterValue, $sAdditionalParam = null) : array
     {
-        if (empty($sFilterValue)) {
+        if (empty($sFilterValue) && $sFilterValue !== 0 && $sFilterValue !== '0') {
             return [];
         }
 
@@ -48,7 +48,7 @@ abstract class AbstractStoreWithTwoParam extends AbstractStore
      */
     public function getNoCache($sFilterValue, $sAdditionalParam = null) : array
     {
-        if (empty($sFilterValue)) {
+        if (empty($sFilterValue) && $sFilterValue !== 0 && $sFilterValue !== '0') {
             return [];
         }
 
@@ -67,7 +67,7 @@ abstract class AbstractStoreWithTwoParam extends AbstractStore
      */
     public function clear($sFilterValue, $sAdditionalParam = null)
     {
-        if (empty($sFilterValue)) {
+        if (empty($sFilterValue) && $sFilterValue !== 0 && $sFilterValue !== '0') {
             return;
         }
 
