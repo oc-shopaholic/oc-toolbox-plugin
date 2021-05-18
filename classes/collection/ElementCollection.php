@@ -747,6 +747,18 @@ abstract class ElementCollection extends Extendable implements \IteratorAggregat
     }
 
     /**
+     * Make element item from cache only
+     * @param int $iElementID
+     * @return \Lovata\Toolbox\Classes\Item\ElementItem
+     */
+    protected function makeItemOnlyCache($iElementID)
+    {
+        $sItemClass = static::ITEM_CLASS;
+
+        return $sItemClass::makeOnlyCache($iElementID);
+    }
+
+    /**
      * Prepare item list
      * @param array $arElementIDList
      * @return array
@@ -758,12 +770,11 @@ abstract class ElementCollection extends Extendable implements \IteratorAggregat
             return $arResult;
         }
 
-        $sItemClass = static::ITEM_CLASS;
         $arEmptyIDList = [];
 
         foreach ($arElementIDList as $iElementID) {
             /** @var \Lovata\Toolbox\Classes\Item\ElementItem $obElementItem */
-            $obElementItem = $sItemClass::makeOnlyCache($iElementID);
+            $obElementItem = static::makeItemOnlyCache($iElementID);
             if ($obElementItem->isEmpty()) {
                 $arEmptyIDList[] = $iElementID;
                 $arResult[$iElementID] = null;
