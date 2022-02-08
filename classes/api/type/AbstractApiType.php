@@ -91,7 +91,7 @@ abstract class AbstractApiType
      *
      * @throws \GraphQL\Error\Error
      */
-    protected function getRelationType(string $sTypeAlias)
+    public function getRelationType(string $sTypeAlias)
     {
         return TypeFactory::instance()->get($sTypeAlias);
     }
