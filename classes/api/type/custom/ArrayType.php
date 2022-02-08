@@ -9,7 +9,7 @@ use GraphQL\Language\AST\IntValueNode;
 use GraphQL\Language\AST\Node;
 use GraphQL\Error\Error;
 use Exception;
-use Arr;
+use Illuminate\Support\Arr;
 
 /**
  * Class ArrayType
