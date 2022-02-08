@@ -10,7 +10,7 @@ class QueryType extends AbstractApiType
     const TYPE_ALIAS = 'query';
 
     /** @var QueryType */
-    protected static $obThis;
+    protected static $instance;
 
     /**
      * Get type fields
