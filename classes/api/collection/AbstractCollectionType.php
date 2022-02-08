@@ -1,14 +1,13 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Collection;
 
 use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
-use Lovata\Toolbox\Classes\Api\QueryContainer;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
-use App\Classes\Collection\AbstractElementCollection;
-use App\Classes\Item\AbstractElementItem;
-use Arr;
+use Lovata\Toolbox\Classes\Collection\ElementCollection;
+use Lovata\Toolbox\Classes\Item\ElementItem;
+use Illuminate\Support\Arr;
 use Str;
 
 /**
@@ -41,7 +40,7 @@ abstract class AbstractCollectionType extends AbstractApiType
                 foreach ($arMethodList as $sMethodName) {
                     // Save counter value before applying collection method
                     if (in_array($sMethodName, static::METHOD_LIST_BEFORE_COUNT)
-                        && $obList instanceof AbstractElementCollection
+                        && $obList instanceof ElementCollection
                     ) {
                         $iCount = $obList->count();
                     }
@@ -67,11 +66,11 @@ abstract class AbstractCollectionType extends AbstractApiType
                 'count' => $iCount,
             ];
 
-            if ($obList instanceof AbstractElementItem) {
+            if ($obList instanceof ElementItem) {
                 $arResult['item'] = $obList;
             } elseif (is_string($obList)) {
                 $arResult['implode_string'] = $obList;
-            } elseif ($obList instanceof AbstractElementCollection) {
+            } elseif ($obList instanceof ElementCollection) {
                 $arResult['list'] = $obList->all();
                 if ($arResult['count'] == 0) {
                     $arResult['count'] = $obList->count();
@@ -221,20 +220,6 @@ abstract class AbstractCollectionType extends AbstractApiType
             $arResult[] = $iCount;
             $arResult[] = Arr::get($arArgumentList, 'nearestPrevCyclic');
         }
-
-        return $arResult;
-    }
-
-    /**
-     * Get params for city() collection method
-     * @param array $arArgumentList
-     * @return array
-     */
-    protected function getCityParam($arArgumentList): array
-    {
-        $sCitySlug = Arr::get($arArgumentList, 'city');
-        $iActiveCityID = QueryContainer::instance()->getActiveCityID($sCitySlug);
-        $arResult = [$iActiveCityID];
 
         return $arResult;
     }
