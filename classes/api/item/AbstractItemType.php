@@ -127,11 +127,12 @@ abstract class AbstractItemType extends AbstractApiType
         }
 
         $arEventFieldList = Event::fire(static::EVENT_EXTEND_TYPE_FIELDS, [static::instance()]);
+        if (empty($arEventFieldList)) {
+            return $arFieldList;
+        }
 
-        if (!empty($arEventFieldList)) {
-            foreach ($arEventFieldList as $arEventFields) {
-                $arFieldList = array_merge($arFieldList, $arEventFields);
-            }
+        foreach ($arEventFieldList as $arEventFields) {
+            $arFieldList = array_merge($arFieldList, $arEventFields);
         }
 
         return $arFieldList;

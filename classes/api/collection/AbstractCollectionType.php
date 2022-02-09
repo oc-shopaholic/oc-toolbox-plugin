@@ -18,7 +18,7 @@ use Str;
 abstract class AbstractCollectionType extends AbstractApiType
 {
     const COLLECTION_CLASS = '';
-    const METHOD_LIST_BEFORE_COUNT = ['getIDList', 'find', 'all', 'take', 'page', 'pagePremium', 'first', 'last'];
+    const METHOD_LIST_BEFORE_COUNT = ['getIDList', 'find', 'all', 'take', 'page', 'first', 'last'];
 
     /**
      * Get resolve method for type
