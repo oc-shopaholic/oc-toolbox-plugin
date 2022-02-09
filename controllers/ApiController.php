@@ -1,4 +1,4 @@
-<?php namespace Lovata\Toolbox\Classes\Api;
+<?php namespace Lovata\Toolbox\Controllers;
 
 use Log;
 use Auth;
@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 
 use Lovata\Toolbox\Classes\Api\Response\ApiDataResponse;
 use Lovata\Toolbox\Classes\Api\Type\FrontendTypeFactory;
+use Lovata\Toolbox\Classes\Api\QueryProcessor;
 
 class ApiController
 {

@@ -1,6 +1,6 @@
 <?php
 
-use Lovata\Toolbox\Classes\Api\ApiController;
+use Lovata\Toolbox\Controllers\ApiController;
 
 Route::post(config('lovata.toolbox::route_name'), function () {
     $obApiController = new ApiController(Request::instance());
