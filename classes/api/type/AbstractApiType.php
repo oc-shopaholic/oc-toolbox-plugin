@@ -38,8 +38,8 @@ abstract class AbstractApiType
      */
     protected function init()
     {
-        $this->extendableConstruct();
         $this->arFieldList = $this->getFieldList();
+        $this->extendableConstruct();
     }
 
     /**
