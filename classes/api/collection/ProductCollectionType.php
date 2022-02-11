@@ -43,7 +43,8 @@ class ProductCollectionType extends AbstractCollectionType
         $arArgumentList = parent::getArguments();
         $arArgumentList['brand'] = Type::int();
         $arArgumentList['campaign'] = Type::int();
-        $arArgumentList['category'] = CustomType::array(); // TODO: add $bWithChildren param
+        $arArgumentList['categoryList'] = CustomType::array();
+        $arArgumentList['categoryWithChildren'] = Type::boolean();
         $arArgumentList['couponGroup'] = Type::int();
         $arArgumentList['discount'] = Type::int();
         $arArgumentList['filterByBrandList'] = CustomType::array();
@@ -59,5 +60,17 @@ class ProductCollectionType extends AbstractCollectionType
         $arArgumentList['tag'] = Type::int();
 
         return $arArgumentList;
+    }
+
+    protected function getCategoryParam($arArgumentList) {
+        $arResult = array_get($arArgumentList, 'categoryList');
+        $bWithChildren = (boolean) array_get($arArgumentList, 'categoryWithChildren');
+
+        if ($bWithChildren) {
+            $arResult[] = true;
+        }
+
+
+        return $arResult;
     }
 }
