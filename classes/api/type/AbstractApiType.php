@@ -1,8 +1,11 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Type;
 
+use Closure;
+
 use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\ObjectType;
 
+use October\Rain\Extension\ExtendableTrait;
 use October\Rain\Support\Traits\Singleton;
 
 /**
@@ -12,14 +15,32 @@ use October\Rain\Support\Traits\Singleton;
  */
 abstract class AbstractApiType
 {
+    use ExtendableTrait;
     use Singleton;
 
     const TYPE_ALIAS = '';
     const PERMISSION = [];
     const IS_INPUT_TYPE = false;
 
+    /**
+     * @var array Behaviors implemented by this class.
+     */
+    public $implement;
+
     /** @var ObjectType */
     protected $obTypeObject;
+
+    /** @var array $arFieldList */
+    protected $arFieldList = [];
+
+    /**
+     * @throws \Exception
+     */
+    protected function init()
+    {
+        $this->extendableConstruct();
+        $this->arFieldList = $this->getFieldList();
+    }
 
     /**
      * Return new object type
@@ -47,6 +68,16 @@ abstract class AbstractApiType
     }
 
     /**
+     * Add fields
+     * @param array $arFieldList
+     * @return void
+     */
+    public function addFields(array $arFieldList)
+    {
+        $this->arFieldList = array_merge($this->arFieldList, $arFieldList);
+    }
+
+    /**
      * Get type fields
      * @return array
      */
@@ -60,7 +91,7 @@ abstract class AbstractApiType
     {
         $arTypeConfig = [
             'name'   => static::TYPE_ALIAS,
-            'fields' => $this->getFieldList(),
+            'fields' => $this->arFieldList,
         ];
 
         return $arTypeConfig;
@@ -94,6 +125,56 @@ abstract class AbstractApiType
     public function getRelationType(string $sTypeAlias)
     {
         return TypeFactory::instance()->get($sTypeAlias);
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    public function __get($name)
+    {
+        return $this->extendableGet($name);
+    }
+
+    /**
+     * @param $name
+     * @param $value
+     * @return void
+     */
+    public function __set($name, $value)
+    {
+        $this->extendableSet($name, $value);
+    }
+
+    /**
+     * @param $name
+     * @param $params
+     * @return mixed
+     */
+    public function __call($name, $params)
+    {
+        return $this->extendableCall($name, $params);
+    }
+
+    /**
+     * @param $name
+     * @param $params
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function __callStatic($name, $params)
+    {
+        return self::extendableCallStatic($name, $params);
+    }
+
+    /**
+     * Extend this object properties upon construction.
+     * @param Closure $callback
+     * @return void
+     */
+    public static function extend(Closure $callback)
+    {
+        self::extendableExtendCallback($callback);
     }
 
     /**
