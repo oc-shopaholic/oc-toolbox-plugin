@@ -1,6 +1,7 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Type;
 
 use Closure;
+use October\Rain\Extension\ExtendableTrait;
 
 /**
  * Class TypeFactory
@@ -9,7 +10,7 @@ use Closure;
  */
 class TypeFactory
 {
-    use \October\Rain\Extension\ExtendableTrait;
+    use ExtendableTrait;
 
     /**
      * @var array Behaviors implemented by this class.
@@ -26,6 +27,7 @@ class TypeFactory
 
     /**
      * __construct
+     * @throws \Exception
      */
     final protected function __construct()
     {
@@ -59,7 +61,49 @@ class TypeFactory
     }
 
     /**
+     * @param $name
+     * @return string
+     */
+    public function __get($name)
+    {
+        return $this->extendableGet($name);
+    }
+
+    /**
+     * @param $name
+     * @param $value
+     * @return void
+     */
+    public function __set($name, $value)
+    {
+        $this->extendableSet($name, $value);
+    }
+
+    /**
+     * @param $name
+     * @param $params
+     * @return mixed
+     */
+    public function __call($name, $params)
+    {
+        return $this->extendableCall($name, $params);
+    }
+
+    /**
+     * @param $name
+     * @param $params
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function __callStatic($name, $params)
+    {
+        return self::extendableCallStatic($name, $params);
+    }
+
+    /**
      * Extend this object properties upon construction.
+     * @param Closure $callback
+     * @return void
      */
     public static function extend(Closure $callback)
     {
