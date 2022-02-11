@@ -4,6 +4,7 @@ use GraphQL\Error\Error;
 use GraphQL\Type\Definition\ObjectType;
 
 /** Collection types */
+use Lovata\Toolbox\Classes\Api\Collection\BrandCollectionType;
 use Lovata\Toolbox\Classes\Api\Collection\CategoryCollectionType;
 use Lovata\Toolbox\Classes\Api\Collection\OfferCollectionType;
 use Lovata\Toolbox\Classes\Api\Collection\ProductCollectionType;
@@ -35,6 +36,7 @@ class FrontendTypeFactory extends TypeFactory
         ProductCollectionType::class,
         OfferCollectionType::class,
         CategoryCollectionType::class,
+        BrandCollectionType::class,
     ];
 
     /** @var string[] */
@@ -48,6 +50,7 @@ class FrontendTypeFactory extends TypeFactory
         ProductCollectionType::class,
         OfferCollectionType::class,
         CategoryCollectionType::class,
+        BrandCollectionType::class,
     ];
 
     /**
