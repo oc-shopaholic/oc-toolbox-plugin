@@ -13,7 +13,6 @@ class ProductItemType extends AbstractItemType
 {
     const ITEM_CLASS = ProductItem::class;
     const TYPE_ALIAS = 'product';
-    const EVENT_EXTEND_TYPE_FIELDS = 'lovata.toolbox.api.extend.product_item_type';
 
     /* @var ProductItemType */
     protected static $instance;
@@ -89,6 +88,6 @@ class ProductItemType extends AbstractItemType
             'is_file_access'         => Type::boolean(),
         ];
 
-        return $this->extendFieldList($arFieldList);
+        return $arFieldList;
     }
 }

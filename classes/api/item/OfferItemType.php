@@ -14,7 +14,6 @@ class OfferItemType extends AbstractItemType
 {
     const ITEM_CLASS = OfferItem::class;
     const TYPE_ALIAS = 'offer';
-    const EVENT_EXTEND_TYPE_FIELDS = 'lovata.toolbox.api.extend.offer_item_type';
 
     /* @var OfferItemType */
     protected static $instance;
@@ -99,6 +98,6 @@ class OfferItemType extends AbstractItemType
 //            //                        'downloadable_file'          => Type::int(), ///
         ];
 
-        return $this->extendFieldList($arFieldList);
+        return $arFieldList;
     }
 }

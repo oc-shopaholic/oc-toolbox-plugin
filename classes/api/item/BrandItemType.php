@@ -51,6 +51,6 @@ class BrandItemType extends AbstractItemType
             'description'   => Type::string(),
         ];
 
-        return $this->extendFieldList($arFieldList);
+        return $arFieldList;
     }
 }

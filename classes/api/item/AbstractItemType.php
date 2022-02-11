@@ -1,7 +1,5 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Item;
 
-use Event;
-
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
@@ -17,7 +15,6 @@ use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
 abstract class AbstractItemType extends AbstractApiType
 {
     const ITEM_CLASS = '';
-    const EVENT_EXTEND_TYPE_FIELDS = '';
 
     /**
      * Get resolve method for type
@@ -107,34 +104,16 @@ abstract class AbstractItemType extends AbstractApiType
         return $arImageList;
     }
 
+    /**
+     * Get image data
+     * @param $obImage
+     * @return array
+     */
     protected function getImageData($obImage): array
     {
         return [
             'url' => $obImage->getPath(),
             'attributes' => $obImage->attributes
         ];
-    }
-
-    /**
-     * Extend api item type field list
-     * @param $arFieldList
-     * @return array
-     */
-    protected function extendFieldList($arFieldList): array
-    {
-        if (empty(static::EVENT_EXTEND_TYPE_FIELDS)) {
-            return $arFieldList;
-        }
-
-        $arEventFieldList = Event::fire(static::EVENT_EXTEND_TYPE_FIELDS, [static::instance()]);
-        if (empty($arEventFieldList)) {
-            return $arFieldList;
-        }
-
-        foreach ($arEventFieldList as $arEventFields) {
-            $arFieldList = array_merge($arFieldList, $arEventFields);
-        }
-
-        return $arFieldList;
     }
 }
