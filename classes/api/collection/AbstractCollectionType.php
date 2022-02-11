@@ -20,6 +20,19 @@ abstract class AbstractCollectionType extends AbstractApiType
     const COLLECTION_CLASS = '';
     const METHOD_LIST_BEFORE_COUNT = ['getIDList', 'find', 'all', 'take', 'page', 'first', 'last'];
 
+    /** @var array $arArgumentList */
+    protected $arCustomArgumentList = [];
+
+    /**
+     * Add arguments
+     * @param array $arArgumentList
+     * @return void
+     */
+    public function addArguments(array $arArgumentList)
+    {
+        $this->arCustomArgumentList = array_merge($this->arCustomArgumentList, $arArgumentList);
+    }
+
     /**
      * Get resolve method for type
      * @return callable|null
@@ -47,7 +60,7 @@ abstract class AbstractCollectionType extends AbstractApiType
 
                     $arParamList = [];
                     $sParamMethodName = 'get'.Str::studly($sMethodName).'Param';
-                    if (method_exists($this, $sParamMethodName)) {
+                    if ($this->methodExists($sParamMethodName)) {
                         $arParamList = $this->$sParamMethodName($arArgumentList);
                     } else {
                         $sValue = Arr::get($arArgumentList, $sMethodName);
@@ -124,6 +137,8 @@ abstract class AbstractCollectionType extends AbstractApiType
             'nearestPrevCyclic' => Type::boolean(),
         ];
 
+        $arArgumentList = array_merge($arArgumentList, $this->arCustomArgumentList);
+
         return $arArgumentList;
     }
 
@@ -142,7 +157,7 @@ abstract class AbstractCollectionType extends AbstractApiType
     }
 
     /**
-     * Get params for page()  collection method
+     * Get params for page() collection method
      * @param array $arArgumentList
      * @return array
      */
