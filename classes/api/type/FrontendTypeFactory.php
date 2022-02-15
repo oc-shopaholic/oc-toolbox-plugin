@@ -3,22 +3,6 @@
 use GraphQL\Error\Error;
 use GraphQL\Type\Definition\ObjectType;
 
-/** Collection types */
-use Lovata\Toolbox\Classes\Api\Collection\BrandCollectionType;
-use Lovata\Toolbox\Classes\Api\Collection\CategoryCollectionType;
-use Lovata\Toolbox\Classes\Api\Collection\OfferCollectionType;
-use Lovata\Toolbox\Classes\Api\Collection\ProductCollectionType;
-
-/** Item types */
-use Lovata\Toolbox\Classes\Api\Item\CategoryItemType;
-use Lovata\Toolbox\Classes\Api\Item\OfferItemType;
-use Lovata\Toolbox\Classes\Api\Item\ProductItemType;
-use Lovata\Toolbox\Classes\Api\Item\BrandItemType;
-
-/** Page types */
-
-/** Mutation types */
-
 /**
  * Class ContentTypeFactory
  * @package Lovata\Toolbox\Classes\Api\Type
@@ -26,32 +10,10 @@ use Lovata\Toolbox\Classes\Api\Item\BrandItemType;
 class FrontendTypeFactory extends TypeFactory
 {
     /** @var string[] */
-    protected $arTypeClassList = [
-        /** Item types */
-        ProductItemType::class,
-        OfferItemType::class,
-        CategoryItemType::class,
-        BrandItemType::class,
-        /** Collection types */
-        ProductCollectionType::class,
-        OfferCollectionType::class,
-        CategoryCollectionType::class,
-        BrandCollectionType::class,
-    ];
+    protected $arTypeClassList = [];
 
     /** @var string[] */
-    protected $arQueryClassList = [
-        /** Item types */
-        ProductItemType::class,
-        OfferItemType::class,
-        CategoryItemType::class,
-        BrandItemType::class,
-        /** Collection types */
-        ProductCollectionType::class,
-        OfferCollectionType::class,
-        CategoryCollectionType::class,
-        BrandCollectionType::class,
-    ];
+    protected $arQueryClassList = [];
 
     /**
      * Get type object by class name
@@ -108,7 +70,6 @@ class FrontendTypeFactory extends TypeFactory
 
         $this->arQueryClassList = array_merge($this->arQueryClassList, self::toArray($mClassName));
     }
-
 
     /**
      * Convert string to array
