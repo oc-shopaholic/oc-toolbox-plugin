@@ -66,54 +66,31 @@ abstract class AbstractItemType extends AbstractApiType
     }
 
     /**
-     * Get element item image
+     * Get image list
      * @param $obItem
      * @param $sFieldName
-     * @return array|null
-     */
-    protected function getImage($obItem, $sFieldName): ?array
-    {
-        $obImage = $obItem->{$sFieldName};
-        if (empty($obImage)) {
-            return null;
-        }
-
-        return $this->getImageData($obImage);
-    }
-
-    /**
-     * Get element item image list
-     * @param $obItem
-     * @param $sFieldName
-     * @return array|null
-     */
-    protected function getImageList($obItem, $sFieldName): ?array
-    {
-        $obImageList = $obItem->{$sFieldName};
-
-        if (empty($obImageList)) {
-            return null;
-        }
-
-        $arImageList = [];
-
-        foreach ($obImageList as $obImage) {
-            $arImageList[] = $this->getImageData($obImage);
-        }
-
-        return $arImageList;
-    }
-
-    /**
-     * Get image data
-     * @param $obImage
      * @return array
      */
-    protected function getImageData($obImage): array
+    protected function getImageList($obItem, $sFieldName): array
     {
-        return [
-            'url' => $obImage->getPath(),
-            'attributes' => $obImage->attributes
-        ];
+        $obImages = $obItem->{$sFieldName};
+        $arImages = [];
+
+        if (empty($obImages)) {
+            return $arImages;
+        }
+
+        foreach ($obImages as $obImage) {
+            $arImageData = [
+                "url"         => $obImage->getPath(),
+                "title"       => Arr::get($obImage->attributes, 'title'),
+                "description" => Arr::get($obImage->attributes, 'description'),
+                "file_name"   => Arr::get($obImage->attributes, 'file_name'),
+            ];
+
+            $arImages[] = $arImageData;
+        }
+
+        return $arImages;
     }
 }
