@@ -3,9 +3,10 @@
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
-use Illuminate\Support\Arr;
-
 use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
+
+use Illuminate\Support\Arr;
+use Str;
 
 /**
  * Class AbstractItemType
@@ -28,6 +29,25 @@ abstract class AbstractItemType extends AbstractApiType
             $obItem = $this->findElement($iElementID);
             if (empty($obItem) || $obItem->isEmpty()) {
                 return null;
+            }
+
+            //Get method list from arguments
+            $arMethodList = Arr::get($arArgumentList, 'method');
+            if (!empty($arMethodList) && is_array($arMethodList)) {
+                foreach ($arMethodList as $sMethodName) {
+                    $arParamList = [];
+                    $sParamMethodName = 'get'.Str::studly($sMethodName).'Param';
+                    if ($this->methodExists($sParamMethodName)) {
+                        $arParamList = $this->$sParamMethodName($arArgumentList);
+                    } else {
+                        $sValue = Arr::get($arArgumentList, $sMethodName);
+                        if (!empty($sValue)) {
+                            $arParamList[] = $sValue;
+                        }
+                    }
+
+                    $obItem = call_user_func_array([$obItem, $sMethodName], $arParamList);
+                }
             }
 
             return $obItem;
@@ -59,7 +79,8 @@ abstract class AbstractItemType extends AbstractApiType
     protected function getArguments(): ?array
     {
         $arArgumentList = [
-            'id' => Type::id(),
+            'id'     => Type::id(),
+            'method' => Type::listOf(Type::string()),
         ];
 
         return $arArgumentList;
