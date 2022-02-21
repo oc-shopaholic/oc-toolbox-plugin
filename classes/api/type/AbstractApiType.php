@@ -1,6 +1,7 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Type;
 
 use Closure;
+use Event;
 
 use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\ObjectType;
@@ -21,6 +22,7 @@ abstract class AbstractApiType
     const TYPE_ALIAS = '';
     const PERMISSION = [];
     const IS_INPUT_TYPE = false;
+    const EVENT_EXTEND_FIELD_LIST = 'lovata.api.extend.fields';
 
     /**
      * @var array Behaviors implemented by this class.
@@ -40,6 +42,7 @@ abstract class AbstractApiType
     {
         $this->arFieldList = $this->getFieldList();
         $this->extendableConstruct();
+        $this->fireEventExtendFields();
     }
 
     /**
@@ -78,6 +81,22 @@ abstract class AbstractApiType
     }
 
     /**
+     * Remove fields
+     * @param array $arFieldList
+     * @return void
+     */
+    public function removeFields(array $arFieldList)
+    {
+        if (empty($arFieldList)) {
+            return;
+        }
+
+        foreach ($arFieldList as $sKey) {
+            unset($this->arFieldList[$sKey]);
+        }
+    }
+
+    /**
      * Get type fields
      * @return array
      */
@@ -113,6 +132,15 @@ abstract class AbstractApiType
     protected function getArguments(): ?array
     {
         return null;
+    }
+
+    /**
+     * Fire event extend fields
+     * @return void
+     */
+    protected function fireEventExtendFields()
+    {
+        Event::fire(self::EVENT_EXTEND_FIELD_LIST, [$this]);
     }
 
     /**
