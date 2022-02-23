@@ -4,6 +4,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
 use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
+use Lovata\Toolbox\Classes\Api\Type\Custom\Type as CustomType;
 
 use Illuminate\Support\Arr;
 use Str;
@@ -87,11 +88,11 @@ abstract class AbstractItemType extends AbstractApiType
     }
 
     /**
-     * Get image fields
+     * Get attachOne file fields
      * @param $sFieldName
      * @return array[]
      */
-    protected function getImageFields($sFieldName): array
+    protected function getAttachOneFileFields($sFieldName): array
     {
         return [
             $sFieldName . '_url'         => [
@@ -122,12 +123,28 @@ abstract class AbstractItemType extends AbstractApiType
     }
 
     /**
-     * Get image list
+     * Get attachMany file fields
+     * @return array[]
+     */
+    protected function getAttachManyFileFields($sFieldName): array
+    {
+        return [
+            $sFieldName => [
+                'type'    => CustomType::array(),
+                'resolve' => function ($obItem) use ($sFieldName) {
+                    return $this->getFileListData($obItem, $sFieldName);
+                },
+            ],
+        ];
+    }
+
+    /**
+     * Get file list data
      * @param $obItem
      * @param $sFieldName
      * @return array
      */
-    protected function getImageList($obItem, $sFieldName): array
+    protected function getFileListData($obItem, $sFieldName): array
     {
         $obImages = $obItem->{$sFieldName};
         $arImages = [];
