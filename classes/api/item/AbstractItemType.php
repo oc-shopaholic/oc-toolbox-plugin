@@ -146,24 +146,24 @@ abstract class AbstractItemType extends AbstractApiType
      */
     protected function getFileListData($obItem, $sFieldName): array
     {
-        $obImages = $obItem->{$sFieldName};
-        $arImages = [];
+        $obFileList = $obItem->{$sFieldName};
+        $arFileList = [];
 
-        if (empty($obImages)) {
-            return $arImages;
+        if (empty($obFileList)) {
+            return $arFileList;
         }
 
-        foreach ($obImages as $obImage) {
-            $arImageData = [
-                "url"         => $obImage->getPath(),
-                "title"       => Arr::get($obImage->attributes, 'title'),
-                "description" => Arr::get($obImage->attributes, 'description'),
-                "file_name"   => Arr::get($obImage->attributes, 'file_name'),
+        foreach ($obFileList as $obFile) {
+            $arFileData = [
+                "url"         => $obFile->getPath(),
+                "title"       => Arr::get($obFile->attributes, 'title'),
+                "description" => Arr::get($obFile->attributes, 'description'),
+                "file_name"   => Arr::get($obFile->attributes, 'file_name'),
             ];
 
-            $arImages[] = $arImageData;
+            $arFileList[] = $arFileData;
         }
 
-        return $arImages;
+        return $arFileList;
     }
 }
