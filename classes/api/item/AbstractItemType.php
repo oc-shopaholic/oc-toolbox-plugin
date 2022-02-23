@@ -87,6 +87,41 @@ abstract class AbstractItemType extends AbstractApiType
     }
 
     /**
+     * Get image fields
+     * @param $sFieldName
+     * @return array[]
+     */
+    protected function getImageFields($sFieldName): array
+    {
+        return [
+            $sFieldName . '_url'         => [
+                'type'    => Type::string(),
+                'resolve' => function ($obItem) use ($sFieldName) {
+                    return ($obItem->$sFieldName) ? $obItem->$sFieldName->getPath() : null;
+                }
+            ],
+            $sFieldName . '_title'       => [
+                'type'    => Type::string(),
+                'resolve' => function ($obItem) use ($sFieldName) {
+                    return ($obItem->$sFieldName) ? $obItem->$sFieldName->attributes['title'] : null;
+                },
+            ],
+            $sFieldName . '_description' => [
+                'type'    => Type::string(),
+                'resolve' => function ($obItem) use ($sFieldName) {
+                    return ($obItem->$sFieldName) ? $obItem->$sFieldName->attributes['description'] : null;
+                },
+            ],
+            $sFieldName . '_file_name'   => [
+                'type'    => Type::string(),
+                'resolve' => function ($obItem) use ($sFieldName) {
+                    return ($obItem->$sFieldName) ? $obItem->$sFieldName->attributes['file_name']  : null;
+                },
+            ],
+        ];
+    }
+
+    /**
      * Get image list
      * @param $obItem
      * @param $sFieldName
