@@ -1,5 +1,6 @@
 <?php namespace Lovata\Toolbox\Http\Controllers;
 
+use App;
 use Log;
 use Auth;
 use Illuminate\Support\Arr;
@@ -52,8 +53,8 @@ class ApiController
             $obFirstError = array_shift($arErrorList);
             $this->obApiResponse->setErrorMessage(
                 ApiDataResponse::CODE_ERROR,
-                env('APP_ENV') == 'production' ? Arr::get($arResult, 'errors.0.message') : $obFirstError->getMessage(),
-                env('APP_ENV') == 'production' ? $obResult->toArray() : $obResult->errors
+                App::environment('production') ? Arr::get($arResult, 'errors.0.message') : $obFirstError->getMessage(),
+                App::environment('production') ? $obResult->toArray() : $obResult->errors
             );
 
             $obPrevious = $obFirstError->getPrevious();
