@@ -95,30 +95,17 @@ abstract class AbstractItemType extends AbstractApiType
     protected function getAttachOneFileFields($sFieldName): array
     {
         return [
-            $sFieldName . '_url'         => [
-                'type'    => Type::string(),
+            $sFieldName => [
+                'type'    => CustomType::array(),
                 'resolve' => function ($obItem) use ($sFieldName) {
-                    return ($obItem->$sFieldName) ? $obItem->$sFieldName->getPath() : null;
+                    return [
+                        'url'         => ($obItem->$sFieldName) ? $obItem->$sFieldName->getPath() : null,
+                        'title'       => Arr::get($obItem->$sFieldName, 'title'),
+                        'description' => Arr::get($obItem->$sFieldName, 'description'),
+                        'file_name'   => Arr::get($obItem->$sFieldName, 'file_name'),
+                    ];
                 }
-            ],
-            $sFieldName . '_title'       => [
-                'type'    => Type::string(),
-                'resolve' => function ($obItem) use ($sFieldName) {
-                    return ($obItem->$sFieldName) ? $obItem->$sFieldName->attributes['title'] : null;
-                },
-            ],
-            $sFieldName . '_description' => [
-                'type'    => Type::string(),
-                'resolve' => function ($obItem) use ($sFieldName) {
-                    return ($obItem->$sFieldName) ? $obItem->$sFieldName->attributes['description'] : null;
-                },
-            ],
-            $sFieldName . '_file_name'   => [
-                'type'    => Type::string(),
-                'resolve' => function ($obItem) use ($sFieldName) {
-                    return ($obItem->$sFieldName) ? $obItem->$sFieldName->attributes['file_name']  : null;
-                },
-            ],
+            ]
         ];
     }
 
@@ -155,10 +142,10 @@ abstract class AbstractItemType extends AbstractApiType
 
         foreach ($obFileList as $obFile) {
             $arFileData = [
-                "url"         => $obFile->getPath(),
-                "title"       => Arr::get($obFile->attributes, 'title'),
-                "description" => Arr::get($obFile->attributes, 'description'),
-                "file_name"   => Arr::get($obFile->attributes, 'file_name'),
+                'url'         => $obFile->getPath(),
+                'title'       => Arr::get($obFile->attributes, 'title'),
+                'description' => Arr::get($obFile->attributes, 'description'),
+                'file_name'   => Arr::get($obFile->attributes, 'file_name'),
             ];
 
             $arFileList[] = $arFileData;
