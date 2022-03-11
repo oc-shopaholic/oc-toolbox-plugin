@@ -25,6 +25,9 @@ abstract class AbstractMutationType extends AbstractApiType
     /** @var array */
     protected $arResultData = [];
 
+    /** @var October\Rain\Database\Model */
+    protected $obModel;
+
     /** @var string Error message */
     protected $sErrorMessage = null;
 
@@ -82,7 +85,13 @@ abstract class AbstractMutationType extends AbstractApiType
             'code'    => $this->iErrorCode,
         ];
 
-        return $arResult;
+        if (empty($this->obModel)) {
+            return $arResult;
+        }
+
+        $arModelData = $this->obModel->toArray();
+
+        return array_merge($arResult, $arModelData);
     }
 
     /**
