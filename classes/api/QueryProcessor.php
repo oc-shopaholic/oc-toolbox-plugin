@@ -1,8 +1,10 @@
 <?php namespace Lovata\Toolbox\Classes\Api;
 
+use Event;
 use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
 use GraphQL\Executor\ExecutionResult;
+use GraphQL\Validator\DocumentValidator;
 
 use Lovata\Toolbox\Classes\Api\Type\QueryType;
 use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
@@ -16,6 +18,8 @@ use Lovata\Toolbox\Classes\Api\Type\Custom\Type;
  */
 class QueryProcessor
 {
+    const EVENT_EXTEND_GLOBAL_VALIDATION_RULES = 'lovata.api.extend.globalQueryValidationRules';
+
     /** @var string */
     protected $sRequestQuery;
 
@@ -27,6 +31,7 @@ class QueryProcessor
      */
     public function __construct(string $sQuery, $sFactoryClass)
     {
+        $this->addGlobalValidationRules();
         $this->sRequestQuery = $sQuery;
         TypeFactory::init($sFactoryClass);
     }
@@ -70,5 +75,22 @@ class QueryProcessor
         );
 
         return $obSchema;
+    }
+
+    /**
+     * Add global validation rules
+     * @return void
+     */
+    protected function addGlobalValidationRules()
+    {
+        $arGlobalRules = Event::fire(self::EVENT_EXTEND_GLOBAL_VALIDATION_RULES);
+
+        if (empty($arGlobalRules)) {
+            return;
+        }
+
+        foreach ($arGlobalRules as $sRule) {
+            DocumentValidator::addRule($sRule);
+        }
     }
 }
