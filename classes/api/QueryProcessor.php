@@ -6,6 +6,7 @@ use GraphQL\Type\Schema;
 use GraphQL\Executor\ExecutionResult;
 use GraphQL\Validator\DocumentValidator;
 
+use Lovata\Toolbox\Classes\Api\Type\MutationType;
 use Lovata\Toolbox\Classes\Api\Type\QueryType;
 use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 
@@ -67,6 +68,7 @@ class QueryProcessor
         $obSchema = new Schema(
             [
                 'query'      => QueryType::instance()->getTypeObject(),
+                'mutation'   => MutationType::instance()->getTypeObject(),
                 'typeLoader' => function ($sTypeName) {
                     return TypeFactory::instance()->get($sTypeName);
                 },
