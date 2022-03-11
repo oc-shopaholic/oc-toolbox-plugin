@@ -11,7 +11,7 @@ return [
     |
      */
 
-    'route_name' => 'graphql',
+    'route_name' => env('TOOLBOX_API_ROUTE', 'graphql'),
 
 
     /*
