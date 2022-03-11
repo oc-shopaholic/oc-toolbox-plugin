@@ -95,7 +95,7 @@ abstract class AbstractApiResponse
             $iCode = self::CODE_UNKNOWN_ERROR;
         }
 
-        $sMessage = Lang::get('message.'.$iCode, $arMessageData);
+        $sMessage = Lang::get('lovata.toolbox::lang.message.'.$iCode, $arMessageData);
         Result::setFalse($arResponseData)->setMessage($sMessage)->setCode($iCode);
 
         return $this;
