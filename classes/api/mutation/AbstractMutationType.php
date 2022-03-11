@@ -181,7 +181,7 @@ abstract class AbstractMutationType extends AbstractApiType
         $this->bStatus = false;
         $this->iErrorCode = $iCode;
         if (empty($sMessage)) {
-            $this->sErrorMessage = Lang::get('message.'.$iCode, $arReplace);
+            $this->sErrorMessage = Lang::get('lovata.toolbox::lang.message.'.$iCode, $arReplace);
         } else {
             $this->sErrorMessage = Lang::get($sMessage, $arReplace);
         }
