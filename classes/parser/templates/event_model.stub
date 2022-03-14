@@ -47,7 +47,7 @@ class {{studly_model}}ModelHandler extends ModelHandler
 [[nested_tree]]            {{studly_model}}ListStore::instance()->top_level->clear();
 
             //Get category ID list
-            $ar{{studly_model}}IDList = {{studly_model}}::lists('id');
+            $ar{{studly_model}}IDList = {{studly_model}}::pluck('id')->all();
             if (empty($ar{{studly_model}}IDList)) {
                 return;
             }
