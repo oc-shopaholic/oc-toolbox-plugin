@@ -54,7 +54,7 @@ class FrontendTypeFactory extends TypeFactory
             return;
         }
 
-        $this->arTypeClassList = array_merge($this->arQueryClassList, self::toArray($mClassName));
+        $this->arTypeClassList = array_merge($this->arTypeClassList, self::toArray($mClassName));
     }
 
     /**
