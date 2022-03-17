@@ -1,10 +1,14 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Type;
 
-use Closure;
 use Event;
+use Closure;
+use Illuminate\Support\Arr;
 
 use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\ObjectType;
+
+use Lovata\Toolbox\Classes\Api\PermissionContainer;
+use Lovata\Toolbox\Classes\Helper\UserHelper;
 
 use October\Rain\Extension\ExtendableTrait;
 use October\Rain\Support\Traits\Singleton;
@@ -19,10 +23,12 @@ abstract class AbstractApiType
     use ExtendableTrait;
     use Singleton;
 
+    const PERMISSION = '';
     const TYPE_ALIAS = '';
-    const PERMISSION = [];
     const IS_INPUT_TYPE = false;
     const EVENT_EXTEND_FIELD_LIST = 'lovata.api.extend.fields';
+    const EVENT_EXTEND_PERMISSION_LIST = 'lovata.api.extend.permissions';
+    const EVENT_EXTEND_ACCESS_LOGIC = 'lovata.api.extend.access_logic';
 
     /**
      * @var array Behaviors implemented by this class.
@@ -31,6 +37,9 @@ abstract class AbstractApiType
 
     /** @var ObjectType */
     protected $obTypeObject;
+
+    /** @var \Lovata\Buddies\Models\User|\RainLab\User\Models\User|null */
+    protected $obClient = null;
 
     /** @var array $arFieldList */
     protected $arFieldList = [];
@@ -43,6 +52,8 @@ abstract class AbstractApiType
         $this->arFieldList = $this->getFieldList();
         $this->extendableConstruct();
         $this->fireEventExtendFields();
+        $this->initClient();
+        $this->initClientPermissions();
     }
 
     /**
@@ -68,6 +79,45 @@ abstract class AbstractApiType
     public static function make()
     {
         return static::instance();
+    }
+
+    /**
+     * Init client
+     * @return \Lovata\Buddies\Models\User|\RainLab\User\Models\User|null
+     */
+    protected function initClient()
+    {
+        return $this->obClient = UserHelper::instance()->getUser();
+    }
+
+    /**
+     * Check permissions
+     * @param array $arPermissionList
+     * @param null $obObject
+     * @param null $arActions
+     * @return bool
+     */
+    protected function checkAccess(array $arPermissionList, $obObject = null, $arActions = null): bool
+    {
+        $sTypePermissions = implode('.', $arPermissionList);
+        $arClientPermissionList = PermissionContainer::instance()->getPermissions();
+
+        if (!Arr::get($arClientPermissionList, $sTypePermissions)) {
+            return false;
+        }
+
+        $arEventData = [
+            'permissions' => $sTypePermissions,
+            'subject'     => $this->obClient,
+            'object'      => $obObject,
+            'action'      => $arActions
+        ];
+
+        $mEventAccessLogic = Event::fire(self::EVENT_EXTEND_ACCESS_LOGIC, $arEventData, true);
+
+        $bResult = (is_bool($mEventAccessLogic)) ? $mEventAccessLogic : true;
+
+        return $bResult;
     }
 
     /**
@@ -153,6 +203,22 @@ abstract class AbstractApiType
     public function getRelationType(string $sTypeAlias)
     {
         return TypeFactory::instance()->get($sTypeAlias);
+    }
+
+    /**
+     * Init client permissions
+     * @return void
+     */
+    protected function initClientPermissions()
+    {
+        switch (static::PERMISSION) {
+            case PermissionContainer::PERMISSION_CODE_GUEST:
+                PermissionContainer::instance()->addGuestPermissions([static::TYPE_ALIAS => 1]);
+                break;
+            case PermissionContainer::PERMISSION_CODE_USER:
+                PermissionContainer::instance()->addUserPermissions([static::TYPE_ALIAS => 1]);
+                break;
+        }
     }
 
     /**
