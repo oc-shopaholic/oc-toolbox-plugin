@@ -38,7 +38,7 @@ abstract class AbstractItemType extends AbstractApiType
             if (!$this->checkAccess($obResolveInfo->path, $obItem, $arMethodList)) {
                 ApiDataResponse::instance()->setErrorMessage(
                     ApiDataResponse::CODE_NOT_AUTHORIZED,
-                    Lang::get('lovata.toolbox::lang.message.'.AbstractApiResponse::CODE_NOT_AUTHORIZED),
+                    Lang::get('lovata.toolbox::lang.message.'.ApiDataResponse::CODE_NOT_AUTHORIZED),
                 );
 
                 return null;
@@ -47,7 +47,7 @@ abstract class AbstractItemType extends AbstractApiType
             if (empty($obItem) || $obItem->isEmpty()) {
                 ApiDataResponse::instance()->setErrorMessage(
                     ApiDataResponse::CODE_NOT_FOUND,
-                    Lang::get('lovata.toolbox::lang.message.'.AbstractApiResponse::CODE_NOT_FOUND),
+                    Lang::get('lovata.toolbox::lang.message.'.ApiDataResponse::CODE_NOT_FOUND),
                 );
 
                 return null;
