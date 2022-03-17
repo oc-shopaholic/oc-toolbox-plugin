@@ -1,5 +1,7 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Type;
 
+use Lovata\Toolbox\Classes\Api\Mutation\AbstractMutationType;
+
 /**
  * Class MutationType
  * @package Lovata\Toolbox\Classes\Api\Type
@@ -22,6 +24,11 @@ class MutationType extends AbstractApiType
         $arFieldList = [];
         foreach ($arAvailableTypeList as $sTypeName => $sClassName) {
             $obTypeObject = TypeFactory::instance()->get($sTypeName);
+
+            if (!is_a($sClassName, AbstractMutationType::class, true)) {
+                continue;
+            }
+
             $arFieldList[$sClassName::TYPE_ALIAS] = [
                 'type'    => $obTypeObject,
                 'args'    => $sClassName::instance()->getArguments(),
