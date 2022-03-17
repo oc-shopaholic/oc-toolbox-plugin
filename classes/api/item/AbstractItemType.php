@@ -3,10 +3,12 @@
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
+use Lovata\Toolbox\Classes\Api\Response\ApiDataResponse;
 use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
 use Lovata\Toolbox\Classes\Api\Type\Custom\Type as CustomType;
 
 use Illuminate\Support\Arr;
+use Lang;
 use Str;
 
 /**
@@ -28,12 +30,30 @@ abstract class AbstractItemType extends AbstractApiType
             $iElementID = Arr::get($arArgumentList, 'id');
 
             $obItem = $this->findElement($iElementID);
-            if (empty($obItem) || $obItem->isEmpty()) {
-                return null;
-            }
 
             //Get method list from arguments
             $arMethodList = Arr::get($arArgumentList, 'method');
+
+            //Check client access
+            if (!$this->checkAccess($obResolveInfo->path, $obItem, $arMethodList)) {
+                ApiDataResponse::instance()->setErrorMessage(
+                    ApiDataResponse::CODE_NOT_AUTHORIZED,
+                    Lang::get('lovata.toolbox::lang.message.'.AbstractApiResponse::CODE_NOT_AUTHORIZED),
+                );
+
+                return null;
+            }
+
+            if (empty($obItem) || $obItem->isEmpty()) {
+                ApiDataResponse::instance()->setErrorMessage(
+                    ApiDataResponse::CODE_NOT_FOUND,
+                    Lang::get('lovata.toolbox::lang.message.'.AbstractApiResponse::CODE_NOT_FOUND),
+                );
+
+                return null;
+            }
+
+            //Apply methods to ElementItem
             if (!empty($arMethodList) && is_array($arMethodList)) {
                 foreach ($arMethodList as $sMethodName) {
                     $arParamList = [];
