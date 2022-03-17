@@ -1,8 +1,8 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Response;
 
 use Response;
-
 use Kharanenka\Helper\Result;
+use October\Rain\Support\Traits\Singleton;
 
 /**
  * Class ApiDataResponse
@@ -11,6 +11,8 @@ use Kharanenka\Helper\Result;
  */
 class ApiDataResponse extends AbstractApiResponse
 {
+    use Singleton;
+
     /**
      * Set response data
      * @param array $arResponseData

@@ -2,7 +2,6 @@
 
 use App;
 use Log;
-use Auth;
 use Illuminate\Support\Arr;
 
 use Lovata\Toolbox\Classes\Api\Response\ApiDataResponse;
@@ -21,7 +20,7 @@ class ApiController
     public function __construct($obRequest)
     {
         $this->obRequest = $obRequest;
-        $this->obApiResponse = new ApiDataResponse();
+        $this->obApiResponse = ApiDataResponse::instance();
     }
 
     /**
