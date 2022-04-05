@@ -29,19 +29,25 @@ class SendMailHelper
     /** @var array */
     protected $arMailData = [];
 
+    /** @var \DateTimeInterface|\DateInterval|int */
+    protected $mDelay;
+
     /**
      * Send email
-     * @param string       $sMailTemplate
-     * @param string|array $mEmailList
-     * @param array        $arDefaultEmailData
-     * @param string       $sEmailDataEventName
-     * @param bool         $bCheckActiveLang
+     * @param string                               $sMailTemplate
+     * @param string|array                         $mEmailList
+     * @param array                                $arDefaultEmailData
+     * @param string                               $sEmailDataEventName
+     * @param bool                                 $bCheckActiveLang
+     * @param \DateTimeInterface|\DateInterval|int $mDelay
      */
-    public function send($sMailTemplate, $mEmailList, $arDefaultEmailData = [], $sEmailDataEventName = null, $bCheckActiveLang = false)
+    public function send($sMailTemplate, $mEmailList, $arDefaultEmailData = [], $sEmailDataEventName = null, $bCheckActiveLang = false, $mDelay = null)
     {
         if (empty($mEmailList) || (!is_string($mEmailList) && !is_array($mEmailList))) {
             return;
         }
+
+        $this->mDelay = $mDelay;
 
         //Get template name
         $this->sMailTemplate = $sMailTemplate;
@@ -87,13 +93,25 @@ class SendMailHelper
 
         //Send restore mail
         if ($this->bUseQueue && empty($this->sQueueName)) {
-            Mail::queue($this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail) {
-                $obMessage->to($sEmail);
-            });
+            if (!empty($this->mDelay)) {
+                Mail::later($this->mDelay, $this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail) {
+                    $obMessage->to($sEmail);
+                });
+            } else {
+                Mail::queue($this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail) {
+                    $obMessage->to($sEmail);
+                });
+            }
         } elseif ($this->bUseQueue && !empty($this->sQueueName)) {
-            Mail::queueOn($this->sQueueName, $this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail) {
-                $obMessage->to($sEmail);
-            });
+            if (!empty($this->mDelay)) {
+                Mail::laterOn($this->sQueueName, $this->mDelay, $this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail) {
+                    $obMessage->to($sEmail);
+                });
+            } else {
+                Mail::queueOn($this->sQueueName, $this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail) {
+                    $obMessage->to($sEmail);
+                });             
+            }
         } else {
             Mail::send($this->sMailTemplate, $this->arMailData, function ($obMessage) use ($sEmail) {
                 $obMessage->to($sEmail);
