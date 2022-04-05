@@ -19,7 +19,7 @@ class SortingListStore extends [[sortable]]AbstractStoreWithoutParam[[sortable]]
      */
     protected function getIDListFromDB() : array
     {
-        $arElementIDList = (array) {{studly_model}}::orderBy('sort_order', 'asc')->lists('id');
+        $arElementIDList = (array) {{studly_model}}::orderBy('sort_order', 'asc')->pluck('id')->all();
 
         return $arElementIDList;
     }
@@ -57,7 +57,7 @@ class SortingListStore extends [[sortable]]AbstractStoreWithoutParam[[sortable]]
      */
     protected function getDefaultList() : array
     {
-        $arElementIDList = (array) {{studly_model}}::lists('id');
+        $arElementIDList = (array) {{studly_model}}::pluck('id')->all();
 
         return $arElementIDList;
     }
@@ -68,7 +68,7 @@ class SortingListStore extends [[sortable]]AbstractStoreWithoutParam[[sortable]]
      */
     protected function getByPublishASC() : array
     {
-        $arElementIDList = (array) {{studly_model}}::orderBy('created_at', 'asc')->lists('id');
+        $arElementIDList = (array) {{studly_model}}::orderBy('created_at', 'asc')->pluck('id')->all();
 
         return $arElementIDList;
     }
@@ -79,7 +79,7 @@ class SortingListStore extends [[sortable]]AbstractStoreWithoutParam[[sortable]]
      */
     protected function getByPublishDESC() : array
     {
-        $arElementIDList = (array) {{studly_model}}::orderBy('created_at', 'desc')->lists('id');
+        $arElementIDList = (array) {{studly_model}}::orderBy('created_at', 'desc')->pluck('id')->all();
 
         return $arElementIDList;
     }
@@ -90,7 +90,7 @@ class SortingListStore extends [[sortable]]AbstractStoreWithoutParam[[sortable]]
      */
     protected function getByViewsASC() : array
     {
-        $arElementIDList = (array) {{studly_model}}::orderBy('view_count', 'asc')->lists('id');
+        $arElementIDList = (array) {{studly_model}}::orderBy('view_count', 'asc')->pluck('id')->all();
 
         return $arElementIDList;
     }
@@ -101,7 +101,7 @@ class SortingListStore extends [[sortable]]AbstractStoreWithoutParam[[sortable]]
      */
     protected function getByViewsDESC() : array
     {
-        $arElementIDList = (array) {{studly_model}}::orderBy('view_count', 'desc')->lists('id');
+        $arElementIDList = (array) {{studly_model}}::orderBy('view_count', 'desc')->pluck('id')->all();
 
         return $arElementIDList;
     }

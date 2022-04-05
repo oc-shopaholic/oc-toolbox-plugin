@@ -18,7 +18,7 @@ class ActiveListStore extends AbstractStoreWithoutParam
      */
     protected function getIDListFromDB() : array
     {
-        $arElementIDList = (array) {{studly_model}}::active()->lists('id');
+        $arElementIDList = (array) {{studly_model}}::active()->pluck('id')->all();
 
         return $arElementIDList;
     }
