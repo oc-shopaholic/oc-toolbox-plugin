@@ -23,6 +23,8 @@ class QueryProcessor
 
     /** @var string */
     protected $sRequestQuery;
+    /** @var array */
+    protected $arRequestVariables;
 
     /**
      * QueryProcessor constructor
@@ -30,10 +32,11 @@ class QueryProcessor
      * @param string $sQuery
      * @param string $sFactoryClass
      */
-    public function __construct(string $sQuery, $sFactoryClass)
+    public function __construct(string $sQuery, array $arVariables, $sFactoryClass)
     {
         $this->addGlobalValidationRules();
-        $this->sRequestQuery = $sQuery;
+        $this->sRequestQuery      = $sQuery;
+        $this->arRequestVariables = $arVariables;
         TypeFactory::init($sFactoryClass);
     }
 
@@ -44,7 +47,7 @@ class QueryProcessor
      */
     public function execute(): ExecutionResult
     {
-        $obResult = GraphQL::executeQuery($this->getSchemaObject(), $this->sRequestQuery);
+        $obResult = GraphQL::executeQuery($this->getSchemaObject(), $this->sRequestQuery, null, null, $this->arRequestVariables);
 
         return $obResult;
     }

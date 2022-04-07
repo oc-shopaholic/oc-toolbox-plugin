@@ -30,9 +30,10 @@ class ApiController
     public function query()
     {
         $sQuery = $this->obRequest->get('query');
+        $arVariables = $this->obRequest->get('variables');
 
         //Execute query and get result object
-        $obQueryProcessor = new QueryProcessor($sQuery, FrontendTypeFactory::class);
+        $obQueryProcessor = new QueryProcessor($sQuery, $arVariables, FrontendTypeFactory::class);
         $this->executeQuery($obQueryProcessor);
 
         return $this->obApiResponse->response();
