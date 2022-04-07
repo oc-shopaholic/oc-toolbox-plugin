@@ -61,6 +61,11 @@ class QueryProcessor
         return $this->sRequestQuery;
     }
 
+    public function getVariables()
+    {
+        return $this->arRequestVariables;
+    }
+
     /**
      * Create schema object
      *
