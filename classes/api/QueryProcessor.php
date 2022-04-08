@@ -30,9 +30,10 @@ class QueryProcessor
      * QueryProcessor constructor
      *
      * @param string $sQuery
+     * @param array|null $arVariables
      * @param string $sFactoryClass
      */
-    public function __construct(string $sQuery, array $arVariables, $sFactoryClass)
+    public function __construct(string $sQuery, ?array $arVariables, string $sFactoryClass)
     {
         $this->addGlobalValidationRules();
         $this->sRequestQuery      = $sQuery;
@@ -54,14 +55,20 @@ class QueryProcessor
 
     /**
      * Get request query string
+     *
      * @return string
      */
-    public function getQuery()
+    public function getQuery(): string
     {
         return $this->sRequestQuery;
     }
 
-    public function getVariables()
+    /**
+     * Get request variables
+     *
+     * @return array|null
+     */
+    public function getVariables(): ?array
     {
         return $this->arRequestVariables;
     }
@@ -89,9 +96,10 @@ class QueryProcessor
 
     /**
      * Add global validation rules
+     *
      * @return void
      */
-    protected function addGlobalValidationRules()
+    protected function addGlobalValidationRules(): void
     {
         $arGlobalRules = Event::fire(self::EVENT_EXTEND_GLOBAL_VALIDATION_RULES);
 
