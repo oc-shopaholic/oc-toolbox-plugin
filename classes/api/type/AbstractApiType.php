@@ -44,12 +44,16 @@ abstract class AbstractApiType
     /** @var array $arFieldList */
     protected $arFieldList = [];
 
+    /** @var string $sDescription */
+    protected $sDescription = '';
+
     /**
      * @throws \Exception
      */
     protected function init()
     {
-        $this->arFieldList = $this->getFieldList();
+        $this->arFieldList  = $this->getFieldList();
+        $this->sDescription = $this->getDescription();
         $this->extendableConstruct();
         $this->fireEventExtendFields();
         $this->initClient();
@@ -153,14 +157,24 @@ abstract class AbstractApiType
     abstract protected function getFieldList(): array;
 
     /**
+     * Get type description
+     * @return string
+     */
+    protected function getDescription(): string
+    {
+        return '';
+    }
+
+    /**
      * Get type config
      * @return array
      */
     protected function getTypeConfig(): array
     {
         $arTypeConfig = [
-            'name'   => static::TYPE_ALIAS,
-            'fields' => $this->arFieldList,
+            'name'        => static::TYPE_ALIAS,
+            'fields'      => $this->arFieldList,
+            'description' => $this->sDescription,
         ];
 
         return $arTypeConfig;

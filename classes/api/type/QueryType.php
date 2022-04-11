@@ -31,9 +31,10 @@ class QueryType extends AbstractApiType
             }
 
             $arFieldList[$sClassName::TYPE_ALIAS] = [
-                'type'    => $obTypeObject,
-                'args'    => $sClassName::instance()->getArguments(),
-                'resolve' => $sClassName::instance()->getResolveMethod(),
+                'type'        => $obTypeObject,
+                'args'        => $sClassName::instance()->getArguments(),
+                'resolve'     => $sClassName::instance()->getResolveMethod(),
+                'description' => $sClassName::instance()->getdescription(),
             ];
         }
 
