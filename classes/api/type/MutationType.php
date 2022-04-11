@@ -8,7 +8,7 @@ use Lovata\Toolbox\Classes\Api\Mutation\AbstractMutationType;
  */
 class MutationType extends AbstractApiType
 {
-    const TYPE_ALIAS = 'mutation';
+    const TYPE_ALIAS = 'Mutation';
 
     /** @var MutationType */
     protected static $instance;

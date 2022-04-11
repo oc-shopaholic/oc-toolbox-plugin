@@ -9,7 +9,7 @@ use Lovata\Toolbox\Classes\Api\Mutation\AbstractMutationType;
  */
 class QueryType extends AbstractApiType
 {
-    const TYPE_ALIAS = 'query';
+    const TYPE_ALIAS = 'Query';
 
     /** @var QueryType */
     protected static $instance;
