@@ -183,6 +183,8 @@
         '504' => 'Gateway Timeout',
         '520' => 'Unknown Error',
         '523' => 'Origin Is Unreachable',
+
+        'client_not_logged_in' => 'Client not logged in',
     ],
     'settings'   => [
         'count_per_page'                => 'Count elements per page',

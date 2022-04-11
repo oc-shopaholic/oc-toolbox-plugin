@@ -7,7 +7,9 @@ use Illuminate\Support\Arr;
 use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\ObjectType;
 
+use Lang;
 use Lovata\Toolbox\Classes\Api\PermissionContainer;
+use Lovata\Toolbox\Classes\Api\Response\ApiDataResponse;
 use Lovata\Toolbox\Classes\Helper\UserHelper;
 
 use October\Rain\Extension\ExtendableTrait;
@@ -23,10 +25,10 @@ abstract class AbstractApiType
     use ExtendableTrait;
     use Singleton;
 
-    const PERMISSION = '';
-    const TYPE_ALIAS = '';
-    const IS_INPUT_TYPE = false;
-    const EVENT_EXTEND_FIELD_LIST = 'lovata.api.extend.fields';
+    const TYPE_ALIAS                = '';
+    const IS_INPUT_TYPE             = false;
+    const PERMISSION                = PermissionContainer::PERMISSION_CODE_GUEST;
+    const EVENT_EXTEND_FIELD_LIST   = 'lovata.api.extend.fields';
     const EVENT_EXTEND_PERMISSION_LIST = 'lovata.api.extend.permissions';
     const EVENT_EXTEND_ACCESS_LOGIC = 'lovata.api.extend.access_logic';
 
@@ -95,6 +97,26 @@ abstract class AbstractApiType
     }
 
     /**
+     * Checking client authorization if object type are not guest permissions
+     * @return bool
+     */
+    protected function checkAuth(): bool
+    {
+        $bResult = true;
+
+        if (static::PERMISSION !== PermissionContainer::PERMISSION_CODE_GUEST && empty($this->obClient)) {
+            ApiDataResponse::instance()->setErrorMessage(
+                ApiDataResponse::CODE_NOT_AUTHORIZED,
+                Lang::get('lovata.toolbox::lang.message.client_not_logged_in'),
+            );
+
+            $bResult = false;
+        }
+
+        return $bResult;
+    }
+
+    /**
      * Check permissions
      * @param array $arPermissionList
      * @param null $obObject
@@ -106,7 +128,13 @@ abstract class AbstractApiType
         $sTypePermissions = implode('.', $arPermissionList);
         $arClientPermissionList = PermissionContainer::instance()->getPermissions();
 
+        //Check if the resolve method permission code is in the client's permission list
         if (!Arr::get($arClientPermissionList, $sTypePermissions)) {
+            ApiDataResponse::instance()->setErrorMessage(
+                ApiDataResponse::CODE_NOT_AUTHORIZED,
+                Lang::get('lovata.toolbox::lang.message.'.ApiDataResponse::CODE_NOT_AUTHORIZED),
+            );
+
             return false;
         }
 
@@ -117,6 +145,7 @@ abstract class AbstractApiType
             'action'      => $arActions
         ];
 
+        //Extending the access check logic
         $mEventAccessLogic = Event::fire(self::EVENT_EXTEND_ACCESS_LOGIC, $arEventData, true);
 
         $bResult = (is_bool($mEventAccessLogic)) ? $mEventAccessLogic : true;

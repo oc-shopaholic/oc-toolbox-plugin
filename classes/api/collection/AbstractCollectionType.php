@@ -20,6 +20,12 @@ abstract class AbstractCollectionType extends AbstractApiType
     const COLLECTION_CLASS = '';
     const METHOD_LIST_BEFORE_COUNT = ['getIDList', 'find', 'all', 'take', 'page', 'first', 'last'];
 
+    /** @var ElementCollection|null */
+    protected $obList = null;
+
+    /** @var array */
+    protected $arMethodList = [];
+
     /** @var array $arArgumentList */
     protected $arCustomArgumentList = [];
 
@@ -40,22 +46,32 @@ abstract class AbstractCollectionType extends AbstractApiType
     protected function getResolveMethod(): ?callable
     {
         return function ($obValue, $arArgumentList, $sContext, ResolveInfo $obResolveInfo) {
-            $this->extendResolveMethod($arArgumentList);
+            //Check client authorization
+            if (!$this->checkAuth()) {
+                return null;
+            }
 
             //Init collection class
             $sClassName = static::COLLECTION_CLASS;
-            $obList = $sClassName::make();
+            $this->obList = $sClassName::make();
             $iCount = 0;
 
             //Get method list from arguments
-            $arMethodList = Arr::get($arArgumentList, 'method');
-            if (!empty($arMethodList) && is_array($arMethodList)) {
-                foreach ($arMethodList as $sMethodName) {
+            $this->arMethodList = Arr::get($arArgumentList, 'method');
+            $this->extendResolveMethod($arArgumentList);
+
+            //Check client access
+            if (!$this->checkAccess($obResolveInfo->path, $this->obList, $this->arMethodList)) {
+                return null;
+            }
+
+            if (!empty( $this->arMethodList) && is_array( $this->arMethodList)) {
+                foreach ( $this->arMethodList as $sMethodName) {
                     // Save counter value before applying collection method
                     if (in_array($sMethodName, static::METHOD_LIST_BEFORE_COUNT)
-                        && $obList instanceof ElementCollection
+                        && $this->obList instanceof ElementCollection
                     ) {
-                        $iCount = $obList->count();
+                        $iCount = $this->obList->count();
                     }
 
                     $arParamList = [];
@@ -69,7 +85,7 @@ abstract class AbstractCollectionType extends AbstractApiType
                         }
                     }
 
-                    $obList = call_user_func_array([$obList, $sMethodName], $arParamList);
+                    $this->obList = call_user_func_array([$this->obList, $sMethodName], $arParamList);
                 }
             }
 
@@ -79,17 +95,17 @@ abstract class AbstractCollectionType extends AbstractApiType
                 'count' => $iCount,
             ];
 
-            if ($obList instanceof ElementItem) {
-                $arResult['item'] = $obList;
-            } elseif (is_string($obList)) {
-                $arResult['implode_string'] = $obList;
-            } elseif ($obList instanceof ElementCollection) {
-                $arResult['list'] = $obList->all();
+            if ($this->obList instanceof ElementItem) {
+                $arResult['item'] = $this->obList;
+            } elseif (is_string($this->obList)) {
+                $arResult['implode_string'] = $this->obList;
+            } elseif ($this->obList instanceof ElementCollection) {
+                $arResult['list'] = $this->obList->all();
                 if ($arResult['count'] == 0) {
-                    $arResult['count'] = $obList->count();
+                    $arResult['count'] = $this->obList->count();
                 }
             } else {
-                $arResult['list'] = $obList;
+                $arResult['list'] = $this->obList;
             }
 
             return $arResult;

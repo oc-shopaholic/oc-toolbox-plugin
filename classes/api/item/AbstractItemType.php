@@ -20,6 +20,11 @@ abstract class AbstractItemType extends AbstractApiType
 {
     const ITEM_CLASS = '';
 
+    protected $obItem = null;
+
+    /** @var array */
+    protected $arMethodList = [];
+
     /**
      * Get resolve method for type
      * @return callable|null
@@ -27,24 +32,24 @@ abstract class AbstractItemType extends AbstractApiType
     protected function getResolveMethod(): ?callable
     {
         return function ($obValue, $arArgumentList, $sContext, ResolveInfo $obResolveInfo) {
-            $iElementID = Arr::get($arArgumentList, 'id');
-
-            $obItem = $this->findElement($iElementID);
-
-            //Get method list from arguments
-            $arMethodList = Arr::get($arArgumentList, 'method');
-
-            //Check client access
-            if (!$this->checkAccess($obResolveInfo->path, $obItem, $arMethodList)) {
-                ApiDataResponse::instance()->setErrorMessage(
-                    ApiDataResponse::CODE_NOT_AUTHORIZED,
-                    Lang::get('lovata.toolbox::lang.message.'.ApiDataResponse::CODE_NOT_AUTHORIZED),
-                );
-
+            //Check client authorization
+            if (!$this->checkAuth()) {
                 return null;
             }
 
-            if (empty($obItem) || $obItem->isEmpty()) {
+            $iElementID = Arr::get($arArgumentList, 'id');
+            $this->obItem = $this->findElement($iElementID);
+
+            //Get method list from arguments
+            $this->arMethodList = Arr::get($arArgumentList, 'method');
+            $this->extendResolveMethod($arArgumentList);
+
+            //Check client access
+            if (!$this->checkAccess($obResolveInfo->path, $this->obItem, $this->arMethodList)) {
+                return null;
+            }
+
+            if (empty($this->obItem) || $this->obItem->isEmpty()) {
                 ApiDataResponse::instance()->setErrorMessage(
                     ApiDataResponse::CODE_NOT_FOUND,
                     Lang::get('lovata.toolbox::lang.message.'.ApiDataResponse::CODE_NOT_FOUND),
@@ -54,8 +59,8 @@ abstract class AbstractItemType extends AbstractApiType
             }
 
             //Apply methods to ElementItem
-            if (!empty($arMethodList) && is_array($arMethodList)) {
-                foreach ($arMethodList as $sMethodName) {
+            if (!empty($this->arMethodList) && is_array($this->arMethodList)) {
+                foreach ($this->arMethodList as $sMethodName) {
                     $arParamList = [];
                     $sParamMethodName = 'get'.Str::studly($sMethodName).'Param';
                     if ($this->methodExists($sParamMethodName)) {
@@ -67,11 +72,11 @@ abstract class AbstractItemType extends AbstractApiType
                         }
                     }
 
-                    $obItem = call_user_func_array([$obItem, $sMethodName], $arParamList);
+                    $this->obItem = call_user_func_array([$this->obItem, $sMethodName], $arParamList);
                 }
             }
 
-            return $obItem;
+            return $this->obItem;
         };
     }
 
@@ -172,5 +177,13 @@ abstract class AbstractItemType extends AbstractApiType
         }
 
         return $arFileList;
+    }
+
+    /**
+     * Extend logic in resolve method
+     * @param array $arArgumentList
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
     }
 }

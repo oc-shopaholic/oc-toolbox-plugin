@@ -1,5 +1,6 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Mutation;
 
+use GraphQL\Type\Definition\ResolveInfo;
 use Lovata\Toolbox\Classes\Api\Type\Custom\Type as CustomType;
 use Lovata\Toolbox\Classes\Api\Response\ApiDataResponse;
 use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
@@ -18,6 +19,9 @@ abstract class AbstractMutationType extends AbstractApiType
 {
     /** @var array */
     protected $arArgumentList = [];
+
+    /** @var ResolveInfo */
+    protected $obResolveInfo;
 
     /** @var bool Status of result (true|false) */
     protected $bStatus = false;
@@ -62,10 +66,17 @@ abstract class AbstractMutationType extends AbstractApiType
      */
     protected function getResolveMethod(): ?callable
     {
-        return function ($obValue, $arArgumentList) {
+        return function ($obValue, $arArgumentList, $sContext, $obResolveInfo) {
             $this->arArgumentList = $arArgumentList;
+            $this->obResolveInfo = $obResolveInfo;
 
             $this->initArgumentList();
+
+            //Check client access
+            if (!$this->checkAccess($obResolveInfo->path, $this->obModel, $arArgumentList)) {
+                return null;
+            }
+
             $this->runMutationLogic();
 
             return $this->result();
@@ -76,7 +87,7 @@ abstract class AbstractMutationType extends AbstractApiType
      * Get result array
      * @return array
      */
-    protected function result()
+    protected function result(): array
     {
         $arResult = [
             'status'  => $this->bStatus,
@@ -185,7 +196,7 @@ abstract class AbstractMutationType extends AbstractApiType
      * @param array       $arReplace
      * @return bool
      */
-    protected function setErrorMessage($iCode, $sMessage = null, $arReplace = [])
+    protected function setErrorMessage($iCode, $sMessage = null, $arReplace = []): bool
     {
         $this->bStatus = false;
         $this->iErrorCode = $iCode;
