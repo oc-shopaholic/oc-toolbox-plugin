@@ -11,8 +11,20 @@ return [
     |
      */
 
-    'route_name' => env('TOOLBOX_API_ROUTE', 'graphql'),
+    'api_route_name' => env('TOOLBOX_API_ROUTE', 'graphql'),
 
+    /*
+    |--------------------------------------------------------------------------
+    |  API route middlewares
+    |--------------------------------------------------------------------------
+    |
+    | List of middleware assigned to API route.
+    |
+     */
+
+    'api_route_middleware' => [
+        'api',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -25,9 +37,9 @@ return [
     |
      */
 
-//    'schema' => [
-//        'register' => plugins_path('lovata/toolbox/classes/api/schema.graphql'),
-//    ],
+    //'schema' => [
+    //    'register' => plugins_path('lovata/toolbox/classes/api/schema.graphql'),
+    //],
 
 
 ];
