@@ -1,12 +1,13 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Collection;
 
-use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
-
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
+use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
 use Lovata\Toolbox\Classes\Item\ElementItem;
+
+use Closure;
 use Illuminate\Support\Arr;
 use Str;
 
@@ -41,9 +42,9 @@ abstract class AbstractCollectionType extends AbstractApiType
 
     /**
      * Get resolve method for type
-     * @return callable|null
+     * @return Closure|null
      */
-    protected function getResolveMethod(): ?callable
+    protected function getResolveMethod(): ?Closure
     {
         return function ($obValue, $arArgumentList, $sContext, ResolveInfo $obResolveInfo) {
             //Check client authorization
