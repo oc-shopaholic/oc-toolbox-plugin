@@ -7,6 +7,7 @@ use Lovata\Toolbox\Classes\Api\Response\ApiDataResponse;
 use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
 use Lovata\Toolbox\Classes\Api\Type\Custom\Type as CustomType;
 
+use Closure;
 use Illuminate\Support\Arr;
 use Lang;
 use Str;
@@ -27,9 +28,9 @@ abstract class AbstractItemType extends AbstractApiType
 
     /**
      * Get resolve method for type
-     * @return callable|null
+     * @return Closure|null
      */
-    protected function getResolveMethod(): ?callable
+    protected function getResolveMethod(): ?Closure
     {
         return function ($obValue, $arArgumentList, $sContext, ResolveInfo $obResolveInfo) {
             //Check client authorization
