@@ -20,8 +20,16 @@ abstract class AbstractModelRelationHandler
         $sModelClass = $this->getModelClass();
 
         $sModelClass::extend(function ($obModel) {
+            if (class_exists('System')) {
+                $sAfterAttach = 'model.relation.attach';
+                $sAfterDetach = 'model.relation.detach';
+            }else {
+                $sAfterAttach = 'model.relation.afterAttach';
+                $sAfterDetach = 'model.relation.afterDetach';
+            }
+            
             /** @var \Model $obModel */
-            $obModel->bindEvent('model.relation.afterAttach', function ($sRelationName, $arAttachedIDList, $arInsertData) use ($obModel) {
+            $obModel->bindEvent($sAfterAttach, function ($sRelationName, $arAttachedIDList, $arInsertData) use ($obModel, $sAfterAttach) {
                 if (!$this->checkRelationName($sRelationName)) {
                     return;
                 }
@@ -30,7 +38,7 @@ abstract class AbstractModelRelationHandler
                 $this->afterAttach($obModel, $arAttachedIDList, $arInsertData);
             }, $this->iPriority);
 
-            $obModel->bindEvent('model.relation.afterDetach', function ($sRelationName, $arAttachedIDList) use ($obModel) {
+            $obModel->bindEvent($sAfterDetach, function ($sRelationName, $arAttachedIDList) use ($obModel, $sAfterDetach) {
                 if (!$this->checkRelationName($sRelationName)) {
                     return;
                 }
