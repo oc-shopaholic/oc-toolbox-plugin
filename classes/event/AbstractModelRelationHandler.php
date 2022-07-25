@@ -27,7 +27,7 @@ abstract class AbstractModelRelationHandler
                 $sAfterAttach = 'model.relation.afterAttach';
                 $sAfterDetach = 'model.relation.afterDetach';
             }
-            
+
             /** @var \Model $obModel */
             $obModel->bindEvent($sAfterAttach, function ($sRelationName, $arAttachedIDList, $arInsertData) use ($obModel, $sAfterAttach) {
                 if (!$this->checkRelationName($sRelationName)) {
@@ -41,6 +41,9 @@ abstract class AbstractModelRelationHandler
             $obModel->bindEvent($sAfterDetach, function ($sRelationName, $arAttachedIDList) use ($obModel, $sAfterDetach) {
                 if (!$this->checkRelationName($sRelationName)) {
                     return;
+                }
+                if (is_null($arAttachedIDList)) {
+                    $arAttachedIDList = $obModel->$sRelationName()->newPivotQuery()->lists($obModel->$sRelationName()->getRelatedPivotKeyName());
                 }
 
                 $this->sRelationName = $sRelationName;
