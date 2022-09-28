@@ -3,11 +3,10 @@
 use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
 
 /**
- * Class AbstractApiFieldHandler
+ * Class AbstractApiPermissionHandler
  * @package Lovata\Toolbox\Classes\Api\Event
- * @deprecated
  */
-abstract class AbstractApiFieldHandler
+abstract class AbstractApiPermissionHandler
 {
     protected $iPriority = 1000;
 
@@ -17,7 +16,7 @@ abstract class AbstractApiFieldHandler
      */
     public function subscribe($obEvent)
     {
-        $obEvent->listen(AbstractApiType::EVENT_EXTEND_FIELD_LIST, function ($obApiType) {
+        $obEvent->listen(AbstractApiType::EVENT_EXTEND_PERMISSION_LIST, function ($obApiType) {
 
             $sApiTypeClass = $this->getApiTypeClass();
 
@@ -26,7 +25,7 @@ abstract class AbstractApiFieldHandler
                 return;
             }
 
-            $this->extendFields($obApiType);
+            $this->extendPermissions($obApiType);
         }, $this->iPriority);
     }
 
@@ -34,7 +33,7 @@ abstract class AbstractApiFieldHandler
      * Extend api type fields
      * @param \Lovata\Toolbox\Classes\Api\Type\AbstractApiType $obApiType
      */
-    abstract protected function extendFields(AbstractApiType $obApiType);
+    abstract protected function extendPermissions(AbstractApiType $obApiType);
 
     /**
      * Get api type class name

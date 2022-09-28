@@ -9,14 +9,13 @@ use GraphQL\Type\Definition\ScalarType;
  */
 class Type
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     const ARRAY = 'Array';
 
-    /**
-     * @var array
-     */
+    /** @var string */
+    const EMAIL = 'Email';
+
+    /** @var array */
     protected static $arTypeList = [];
 
     /**
@@ -30,6 +29,19 @@ class Type
 
         return static::$arTypeList[self::ARRAY];
     }
+
+//    /**
+//     * @return ScalarType
+//     */
+//    public static function email(): ScalarType
+//    {
+//        if ((static::$arTypeList[self::EMAIL] ?? null) === null) {
+//            static::$arTypeList[self::EMAIL] = new EmailType();
+//        }
+//
+//        return static::$arTypeList[self::EMAIL];
+//    }
+
 
     /**
      * @return array

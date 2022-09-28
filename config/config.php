@@ -37,9 +37,4 @@ return [
     |
      */
 
-    //'schema' => [
-    //    'register' => plugins_path('lovata/toolbox/classes/api/schema.graphql'),
-    //],
-
-
 ];

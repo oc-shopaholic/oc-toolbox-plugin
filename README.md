@@ -15,18 +15,19 @@ Toolbox is a set of helpers for faster development for [October CMS](https://git
 ## Features
 
 * Components
-    * Pagination is used to get a list of pagination buttons and provides flexible settings.
+  * Pagination is used to get a list of pagination buttons and provides flexible settings.
 * Classes
-    * `ElementCollection` provides a flexible tool for working with cached lists of model elements.
-    * `ElementData` is an abstract class for components that returns object of `ElementItem` class for model.
-    * `ElementItem` provides a flexible tool for single element data caching.
-    * etc.
+  * `ElementCollection` provides a flexible tool for working with cached lists of model elements.
+  * `ElementData` is an abstract class for components that returns object of `ElementItem` class for model.
+  * `ElementItem` provides a flexible tool for single element data caching.
+  * etc.
 
 [Read more…](https://github.com/lovata/oc-toolbox-plugin/wiki)
 
 ## Get involved
 
 If you're interested in the improvement of this project you can help in the following ways:
+
 * bug reporting and new feature requesting by creating issues on plugin [GitHub page](https://github.com/lovata/oc-toolbox-plugin/issues);
 * contribution to a project following these [instructions](https://github.com/lovata/oc-toolbox-plugin/blob/master/CONTRIBUTING.md);
 * localization to your language using [Crowdin](https://crowdin.com/project/toolbox-plugin-for-october-cms) service.

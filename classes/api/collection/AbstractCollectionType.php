@@ -1,33 +1,109 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Collection;
 
-use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
-
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
-
-use Lovata\Toolbox\Classes\Collection\ElementCollection;
-use Lovata\Toolbox\Classes\Item\ElementItem;
 use Illuminate\Support\Arr;
-use Str;
+use Lovata\Toolbox\Classes\Api\Error\MethodNotFoundException;
+use Lovata\Toolbox\Classes\Api\Type\AbstractObjectType;
+use Lovata\Toolbox\Classes\Api\Type\Custom\PaginationInfoType;
+use Lovata\Toolbox\Classes\Api\Type\Input\FilterCollectionInputType;
+use Lovata\Toolbox\Classes\Api\Type\Input\PaginateInputType;
+use Lovata\Toolbox\Classes\Collection\ElementCollection;
 
 /**
  * Class AbstractCollectionType
  * @package Lovata\Toolbox\Classes\Api\Collection
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-abstract class AbstractCollectionType extends AbstractApiType
+abstract class AbstractCollectionType extends AbstractObjectType
 {
     const COLLECTION_CLASS = '';
-    const METHOD_LIST_BEFORE_COUNT = ['getIDList', 'find', 'all', 'take', 'page', 'first', 'last'];
+    const RELATED_ITEM_TYPE_CLASS     = '';
 
     /** @var ElementCollection|null */
     protected $obList = null;
 
     /** @var array */
-    protected $arMethodList = [];
+    protected $arPageInfo = [];
 
-    /** @var array $arArgumentList */
+    /** @var array */
     protected $arCustomArgumentList = [];
+
+    /** @var string */
+    protected $sFilterInputTypeClass = FilterCollectionInputType::class;
+
+    /** @var string */
+    protected $sSortEnumInputTypeClass = '';
+
+    /** @var string */
+    protected $sSortMethodName = 'sort';
+
+    /**
+     * getList
+     * @return ElementCollection|null
+     */
+    public function getList(): ?ElementCollection
+    {
+        return $this->obList;
+    }
+
+    /**
+     * setList
+     * @param $obList
+     * @return void
+     */
+    public function setList($obList)
+    {
+        $this->obList = $obList;
+    }
+
+    /**
+     * Get filter input type class
+     * @return string
+     */
+    public function getFilterInputTypeClass(): string
+    {
+        return $this->sFilterInputTypeClass;
+    }
+
+    /**
+     * Set filter input type class
+     * @param string $sClassName
+     * @return string
+     */
+    public function setFilterInputTypeClass(string $sClassName): string
+    {
+        return $this->sFilterInputTypeClass = $sClassName;
+    }
+
+    /**
+     * Get sort enum type class TYPE_ALIAS
+     * @return string
+     */
+    public function getSortEnumInputTypeClass(): string
+    {
+        return $this->sSortEnumInputTypeClass;
+    }
+
+    /**
+     * Set sort enum input type class
+     * @param string $sClassName
+     * @return string
+     */
+    public function setSortEnumInputTypeClass(string $sClassName): string
+    {
+        return $this->sSortEnumInputTypeClass = $sClassName;
+    }
+
+    /**
+     * Set sort method name
+     * @param string $sMethodName
+     * @return void
+     */
+    public function setSortMethodName(string $sMethodName)
+    {
+        $this->sSortMethodName = $sMethodName;
+    }
 
     /**
      * Add arguments
@@ -51,13 +127,13 @@ abstract class AbstractCollectionType extends AbstractApiType
                 return null;
             }
 
+            $this->arArgumentValueList = $arArgumentList;
+
             //Init collection class
             $sClassName = static::COLLECTION_CLASS;
             $this->obList = $sClassName::make();
-            $iCount = 0;
 
-            //Get method list from arguments
-            $this->arMethodList = Arr::get($arArgumentList, 'method');
+            //Extend resolve method before filtering
             $this->extendResolveMethod($arArgumentList);
 
             //Check client access
@@ -65,48 +141,19 @@ abstract class AbstractCollectionType extends AbstractApiType
                 return null;
             }
 
-            if (!empty( $this->arMethodList) && is_array( $this->arMethodList)) {
-                foreach ( $this->arMethodList as $sMethodName) {
-                    // Save counter value before applying collection method
-                    if (in_array($sMethodName, static::METHOD_LIST_BEFORE_COUNT)
-                        && $this->obList instanceof ElementCollection
-                    ) {
-                        $iCount = $this->obList->count();
-                    }
+            //Apply filters
+            $this->applyFilters($arArgumentList);
 
-                    $arParamList = [];
-                    $sParamMethodName = 'get'.Str::studly($sMethodName).'Param';
-                    if ($this->methodExists($sParamMethodName)) {
-                        $arParamList = $this->$sParamMethodName($arArgumentList);
-                    } else {
-                        $sValue = Arr::get($arArgumentList, $sMethodName);
-                        if (!empty($sValue)) {
-                            $arParamList[] = $sValue;
-                        }
-                    }
+            //Apply sorting
+            $this->applySorting($arArgumentList);
 
-                    $this->obList = call_user_func_array([$this->obList, $sMethodName], $arParamList);
-                }
-            }
+            //Get pagination info
+            $this->getPaginationInfo($arArgumentList);
 
             $arResult = [
-                'list'  => null,
-                'item'  => null,
-                'count' => $iCount,
+                'list'     => $this->obList,
+                'pageInfo' => $this->arPageInfo,
             ];
-
-            if ($this->obList instanceof ElementItem) {
-                $arResult['item'] = $this->obList;
-            } elseif (is_string($this->obList)) {
-                $arResult['implode_string'] = $this->obList;
-            } elseif ($this->obList instanceof ElementCollection) {
-                $arResult['list'] = $this->obList->all();
-                if ($arResult['count'] == 0) {
-                    $arResult['count'] = $this->obList->count();
-                }
-            } else {
-                $arResult['list'] = $this->obList;
-            }
 
             return $arResult;
         };
@@ -121,37 +168,97 @@ abstract class AbstractCollectionType extends AbstractApiType
     }
 
     /**
+     * Apply filters
+     * @param $arArgumentList
+     * @return void
+     * @throws MethodNotFoundException
+     */
+    protected function applyFilters($arArgumentList)
+    {
+        $arFilterInput = Arr::get($arArgumentList, 'filter', []);
+        foreach ($arFilterInput as $sMethodName => $mArguments) {
+            if (!$this->methodExists($sMethodName)) {
+                $sMessage = 'GraphQL: Method ' . $sMethodName . '() not implemented in ' . static::class . ' class';
+                throw new MethodNotFoundException($sMessage);
+            }
+
+            call_user_func_array([$this, $sMethodName], [$mArguments]);
+        }
+    }
+
+    /**
+     * Apply sorting
+     * @param $arArgumentList
+     * @return void
+     */
+    protected function applySorting($arArgumentList)
+    {
+        $sSortInput = Arr::get($arArgumentList, 'sort');
+        if (!isset($sSortInput)) {
+            return;
+        }
+
+        $this->obList = call_user_func([$this->obList, $this->sSortMethodName], $sSortInput);
+    }
+
+    /**
+     * Get pagination info
+     * @param $arArgumentList
+     */
+    protected function getPaginationInfo($arArgumentList)
+    {
+        $arPaginationInput = Arr::get($arArgumentList, 'paginate');
+        $iTotalItems = $this->obList->count();
+        $iPage = Arr::get($arPaginationInput, 'page', PaginateInputType::PAGE_DEFAULT_VALUE);
+        $iPerPage = Arr::get($arPaginationInput, 'perPage', PaginateInputType::PER_PAGE_DEFAULT_VALUE);
+        $iTotalPages = ceil($iTotalItems / $iPerPage);
+        $this->obList = $this->obList->page($iPage, $iPerPage);
+
+        $this->arPageInfo = [
+            'page' => $iPage,
+            'perPage' => $iPerPage,
+            'totalPages' => $iTotalPages,
+            'totalItems' => $iTotalItems,
+            'hasNextPage' => $iPage < $iTotalPages,
+            'hasPreviousPage' => ($iTotalPages > 1 && $iPage > 1),
+        ];
+
+        $this->extendPageInfo($arPaginationInput);
+    }
+
+    /**
+     * Extend pagination info data
+     * @param $arPaginationInput
+     * @return void
+     */
+    protected function extendPageInfo($arPaginationInput)
+    {
+    }
+
+    /**
      * Get config for "args" attribute
      * @return array|null
+     * @throws \GraphQL\Error\Error
      */
     protected function getArguments(): ?array
     {
         $arArgumentList = [
-            'method'            => Type::listOf(Type::string()),
-            'set'               => Type::listOf(Type::id()),
-            'intersect'         => Type::listOf(Type::id()),
-            'applySorting'      => Type::listOf(Type::id()),
-            'merge'             => Type::listOf(Type::id()),
-            'diff'              => Type::listOf(Type::id()),
-            'find'              => Type::id(),
-            'exclude'           => Type::id(),
-            'skip'              => Type::int(),
-            'take'              => Type::int(),
-            'random'            => Type::int(),
-            'currentPage'       => Type::int(),
-            'countPerPage'      => Type::int(),
-            'shiftCountPage'    => Type::int(),
-            'unshift'           => Type::int(),
-            'push'              => Type::int(),
-            'implodeField'      => Type::string(),
-            'implodeDelimiter'  => Type::string(),
-            'nearestNextID'     => Type::int(),
-            'nearestNextCount'  => Type::int(),
-            'nearestNextCyclic' => Type::boolean(),
-            'nearestPrevID'     => Type::int(),
-            'nearestPrevCount'  => Type::int(),
-            'nearestPrevCyclic' => Type::boolean(),
+            'filter' => [
+                'type' => $this->getRelationType($this->sFilterInputTypeClass::TYPE_ALIAS),
+                'description' => 'Apply list filtration',
+            ],
+            'paginate' => [
+                'type' => $this->getRelationType(PaginateInputType::TYPE_ALIAS),
+                'description' => 'Setting pagination data',
+            ],
         ];
+
+        if (!empty($this->sSortEnumInputTypeClass)) {
+            $arArgumentList['sort'] = [
+                'type' => $this->getRelationType($this->sSortEnumInputTypeClass::TYPE_ALIAS),
+                'description' => 'Sorting list',
+            ];
+        }
 
         $arArgumentList = array_merge($arArgumentList, $this->arCustomArgumentList);
 
@@ -161,97 +268,113 @@ abstract class AbstractCollectionType extends AbstractApiType
     /**
      * Get type fields
      * @return array
+     * @throws \GraphQL\Error\Error
      */
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'count'          => Type::int(),
-            'implode_string' => Type::string(),
+            'list'     => [
+                'type'        => Type::listOf($this->getRelationType(static::RELATED_ITEM_TYPE_CLASS::TYPE_ALIAS)),
+                'description' => static::getDescription(),
+            ],
+            'pageInfo' => [
+                'type'        => $this->getRelationType(PaginationInfoType::TYPE_ALIAS),
+                'description' => 'Pagination info',
+            ],
         ];
 
         return $arFieldList;
     }
 
+    //
+    // Filter methods
+    //
+
     /**
-     * Get params for page() collection method
-     * @param array $arArgumentList
-     * @return array
+     * Filter by sequence (applySorting method in ElementCollection).
+     * Method applies array_intersect() function to array of element IDs $arElementIDList and collection.
+     *
+     * This method is related to filter, not sorting, because it affects the number of elements as a result
+     * of its operation.
+     *
+     * @param $arResultIDList
+     * @return void
      */
-    protected function getPageParam($arArgumentList): array
+    protected function filterBySequence($arResultIDList)
     {
-        $arResult = [
-            Arr::get($arArgumentList, 'currentPage'),
-        ];
-
-        $iCountPerPage = Arr::get($arArgumentList, 'countPerPage');
-        if ($iCountPerPage > 0) {
-            $arResult[] = $iCountPerPage;
-        }
-
-        $iShiftCountPage = Arr::get($arArgumentList, 'shiftCountPage');
-        if ($iShiftCountPage > 0) {
-            $arResult[] = $iShiftCountPage;
-        }
-
-        return $arResult;
+        $this->obList->applySorting($arResultIDList);
     }
 
     /**
-     * Get params for implode() collection method
-     * @param array $arArgumentList
-     * @return array
+     * Method returns new collection with next nearest elements.
+     * @param $arInput
+     * @return void
      */
-    protected function getImplodeParam($arArgumentList): array
+    protected function getNearestNext($arInput)
     {
-        $arResult = [
-            Arr::get($arArgumentList, 'implodeField'),
-        ];
-
-        $sImplodeDelimiter = Arr::get($arArgumentList, 'implodeDelimiter');
-        if (!empty($sImplodeDelimiter)) {
-            $arResult[] = $sImplodeDelimiter;
-        }
-
-        return $arResult;
+        $iElementID = (int) Arr::get($arInput, 'elementId');
+        $iCount = Arr::get($arInput, 'count');
+        $bCyclic = Arr::get($arInput, 'cyclic');
+        $arResultIDList = $this->obList->getNearestNext($iElementID, $iCount, $bCyclic)->getIDList();
+        $this->obList->set($arResultIDList);
     }
 
     /**
-     * Get params for getNearestNext() collection method
-     * @param array $arArgumentList
-     * @return array
+     * Method returns new collection with previous nearest elements.
+     * @param $arInput
+     * @return void
      */
-    protected function getGetNearestNextParam($arArgumentList): array
+    protected function getNearestPrev($arInput)
     {
-        $arResult = [
-            Arr::get($arArgumentList, 'nearestNextID'),
-        ];
-
-        $iCount = Arr::get($arArgumentList, 'nearestNextCount');
-        if ($iCount > 0) {
-            $arResult[] = $iCount;
-            $arResult[] = Arr::get($arArgumentList, 'nearestNextCyclic');
-        }
-
-        return $arResult;
+        $iElementID = (int) Arr::get($arInput, 'elementId');
+        $iCount = Arr::get($arInput, 'count');
+        $bCyclic = Arr::get($arInput, 'cyclic');
+        $arResultIDList = $this->obList->getNearestPrev($iElementID, $iCount, $bCyclic)->getIDList();
+        $this->obList->set($arResultIDList);
     }
 
     /**
-     * Get params for getNearestPrev() collection method
-     * @param array $arArgumentList
-     * @return array
+     * Method applies array_intersect() function to collection and array of element IDs $arElementIDList.
+     * @param $arElementIDList
+     * @return void
      */
-    protected function getGetNearestPrevParam($arArgumentList): array
+    protected function intersect($arElementIDList)
     {
-        $arResult = [
-            Arr::get($arArgumentList, 'nearestPrevID'),
-        ];
+        $this->obList->intersect($arElementIDList);
+    }
 
-        $iCount = Arr::get($arArgumentList, 'nearestPrevCount');
-        if ($iCount > 0) {
-            $arResult[] = $iCount;
-            $arResult[] = Arr::get($arArgumentList, 'nearestPrevCyclic');
+    /**
+     * Method applies array_diff() function to collection and array of element IDs $arElementIDList
+     * @param $arElementIDList
+     * @return void
+     */
+    protected function diff($arElementIDList)
+    {
+        $this->obList->diff($arElementIDList);
+    }
+
+    /**
+     * Method excludes element with ID = $iElementID from collection.
+     * @param $iElementID
+     * @return void
+     */
+    protected function exclude($iElementID)
+    {
+        $this->obList->exclude($iElementID);
+    }
+
+    /**
+     * Method returns array of random ElementItem objects.
+     * @param $iCount
+     * @return void
+     */
+    protected function random($iCount)
+    {
+        if ($this->obList->isEmpty()) {
+            $this->obList->all();
         }
 
-        return $arResult;
+        $arElementIdList = array_keys($this->obList->random($iCount));
+        $this->obList->intersect($arElementIdList);
     }
 }
