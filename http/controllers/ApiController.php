@@ -1,14 +1,15 @@
 <?php namespace Lovata\Toolbox\Http\Controllers;
 
-use App;
-use Backend\Classes\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Log;
+use Response;
+use Illuminate\Http\Request;
+use Backend\Classes\Controller;
 
-use Lovata\Toolbox\Classes\Api\Response\ApiDataResponse;
-use Lovata\Toolbox\Classes\Api\Type\FrontendTypeFactory;
+use GraphQL\Error\Error;
+use Lovata\Toolbox\Classes\Api\Error\MethodNotFoundException;
+
 use Lovata\Toolbox\Classes\Api\QueryProcessor;
+use Lovata\Toolbox\Classes\Api\Type\FrontendTypeFactory;
 
 /**
  * Class ApiController
@@ -28,24 +29,29 @@ class ApiController extends Controller
         $arResult = $obResult->toArray();
 
         if (!empty($obResult->errors)) {
-            $sMessage = App::isProduction() ? Arr::get($arResult, 'errors.0.message') : $obResult->errors[0]->getMessage();
-            $arErrors = App::isProduction() ? $obResult->toArray() : $obResult->errors;
-            ApiDataResponse::instance()->setErrorMessage(
-                ApiDataResponse::CODE_ERROR,
-                $sMessage,
-                $arErrors
-            );
+            foreach ($obResult->errors as $obError) {
+                //Exclude user errors from the logs (for example, an error in the field name)
+                if (!in_array(
+                    $obError->getCategory(),
+                    [Error::CATEGORY_INTERNAL,
+                    MethodNotFoundException::CATEGORY_BUSINESS_LOGIC]
+                )) {
+                    continue;
+                }
 
-            $obPrevious = $obResult->errors[0]->getPrevious();
-            Log::error('Query: '.$obQueryProcessor->getQuery());
-            Log::error('Error: '.$obResult->errors[0]->getMessage());
-            if (!empty($obPrevious)) {
-                Log::error(sprintf('Line: %d, File: %s, Message: %s', $obPrevious->getLine(), $obPrevious->getFile(), $obPrevious->getMessage()));
+                Log::error(
+                    $obError->getMessage() . PHP_EOL . PHP_EOL
+                    . 'Query:' . PHP_EOL
+                    . $sQuery . PHP_EOL
+                    . 'Exception in ' . $obError->getFile() . ':' . $obError->getLine() . PHP_EOL
+                    . 'Stack trace:' . PHP_EOL
+                    . $obError->getTraceAsString()
+                );
             }
-        } else {
-            ApiDataResponse::instance()->setData(Arr::get($arResult, 'data'));
+
+            return Response::json($arResult['errors']);
         }
 
-        return ApiDataResponse::instance()->response();
+        return Response::json($arResult);
     }
 }

@@ -4,8 +4,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
 use Lovata\Toolbox\Classes\Api\Response\ApiDataResponse;
-use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
-use Lovata\Toolbox\Classes\Api\Type\Custom\Type as CustomType;
+use Lovata\Toolbox\Classes\Api\Type\AbstractObjectType;
 
 use Illuminate\Support\Arr;
 use Lang;
@@ -16,7 +15,7 @@ use Str;
  * @package Lovata\Toolbox\Classes\Api\Item
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-abstract class AbstractItemType extends AbstractApiType
+abstract class AbstractItemType extends AbstractObjectType
 {
     const ITEM_CLASS = '';
 
@@ -110,73 +109,6 @@ abstract class AbstractItemType extends AbstractApiType
         ];
 
         return $arArgumentList;
-    }
-
-    /**
-     * Get attachOne file fields
-     * @param $sFieldName
-     * @return array[]
-     */
-    protected function getAttachOneFileFields($sFieldName): array
-    {
-        return [
-            $sFieldName => [
-                'type'    => CustomType::array(),
-                'resolve' => function ($obItem) use ($sFieldName) {
-                    return [
-                        'url'         => ($obItem->$sFieldName) ? $obItem->$sFieldName->getPath() : null,
-                        'title'       => Arr::get($obItem->$sFieldName, 'title'),
-                        'description' => Arr::get($obItem->$sFieldName, 'description'),
-                        'file_name'   => Arr::get($obItem->$sFieldName, 'file_name'),
-                    ];
-                }
-            ]
-        ];
-    }
-
-    /**
-     * Get attachMany file fields
-     * @return array[]
-     */
-    protected function getAttachManyFileFields($sFieldName): array
-    {
-        return [
-            $sFieldName => [
-                'type'    => CustomType::array(),
-                'resolve' => function ($obItem) use ($sFieldName) {
-                    return $this->getFileListData($obItem, $sFieldName);
-                },
-            ],
-        ];
-    }
-
-    /**
-     * Get file list data
-     * @param $obItem
-     * @param $sFieldName
-     * @return array
-     */
-    protected function getFileListData($obItem, $sFieldName): array
-    {
-        $obFileList = $obItem->{$sFieldName};
-        $arFileList = [];
-
-        if (empty($obFileList)) {
-            return $arFileList;
-        }
-
-        foreach ($obFileList as $obFile) {
-            $arFileData = [
-                'url'         => $obFile->getPath(),
-                'title'       => Arr::get($obFile->attributes, 'title'),
-                'description' => Arr::get($obFile->attributes, 'description'),
-                'file_name'   => Arr::get($obFile->attributes, 'file_name'),
-            ];
-
-            $arFileList[] = $arFileData;
-        }
-
-        return $arFileList;
     }
 
     /**

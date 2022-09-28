@@ -1,11 +1,11 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Mutation;
 
-use GraphQL\Type\Definition\ResolveInfo;
+use Lovata\Toolbox\Classes\Api\Type\AbstractObjectType;
 use Lovata\Toolbox\Classes\Api\Type\Custom\Type as CustomType;
 use Lovata\Toolbox\Classes\Api\Response\ApiDataResponse;
-use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
 
 use Illuminate\Validation\ValidationException;
+use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Lang;
 use DB;
@@ -15,7 +15,7 @@ use DB;
  * @package Lovata\Toolbox\Classes\Api\Mutation
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-abstract class AbstractMutationType extends AbstractApiType
+abstract class AbstractMutationType extends AbstractObjectType
 {
     /** @var array */
     protected $arArgumentList = [];

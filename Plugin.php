@@ -22,6 +22,7 @@ use Lovata\Toolbox\Classes\Console\CreateStore;
 use Lovata\Toolbox\Classes\Console\CreateExtendBackendMenuHandler;
 use Lovata\Toolbox\Classes\Console\CreateExtendModelFieldsHandler;
 use Lovata\Toolbox\Classes\Console\CreateExtendModelColumnsHandler;
+use Lovata\Toolbox\Traits\Api\SubscribeApiEventsTrait;
 
 /**
  * Class Plugin
@@ -30,6 +31,8 @@ use Lovata\Toolbox\Classes\Console\CreateExtendModelColumnsHandler;
  */
 class Plugin extends PluginBase
 {
+    use SubscribeApiEventsTrait;
+
     /**
      * @return array
      */
@@ -86,6 +89,13 @@ class Plugin extends PluginBase
             $this->app->bind(\Lovata\Toolbox\Classes\Item\TestItem::class, \Lovata\Toolbox\Classes\Item\TestItem::class);
             $this->app->bind(\Lovata\Toolbox\Classes\Collection\TestCollection::class, \Lovata\Toolbox\Classes\Collection\TestCollection::class);
         }
+
+        if ($this->isApiRouteRequest()) {
+            $this->app->singleton(
+                \Lovata\Toolbox\Classes\Api\Contracts\ImageResizer::class,
+                \Lovata\Toolbox\Classes\Api\Helper\DefaultImageResizer::class
+            );
+        }
     }
 
     /**
@@ -129,7 +139,8 @@ class Plugin extends PluginBase
      * @param $sValue
      * @return string
      */
-    public function applyPhoneFilter($sValue) {
+    public function applyPhoneFilter($sValue)
+    {
         return preg_replace("%[^\d\+]%", '', $sValue);
     }
 }

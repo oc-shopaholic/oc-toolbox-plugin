@@ -1,19 +1,32 @@
 <?php namespace Lovata\Toolbox\Classes\Api\Type;
 
+use Lang;
 use Event;
 use Closure;
 use Illuminate\Support\Arr;
 
+use GraphQL\Type\Definition\EnumType;
 use GraphQL\Type\Definition\InputObjectType;
+use GraphQL\Type\Definition\InterfaceType;
 use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\UnionType;
 
-use Lang;
 use Lovata\Toolbox\Classes\Api\PermissionContainer;
 use Lovata\Toolbox\Classes\Api\Response\ApiDataResponse;
+use Lovata\Toolbox\Classes\Api\Type\Custom\PaginationInfoType;
+use Lovata\Toolbox\Classes\Api\Type\Enum\ResizeImageModeEnumType;
+use Lovata\Toolbox\Classes\Api\Type\Input\FilterCollectionInputType;
+use Lovata\Toolbox\Classes\Api\Type\Input\GetNearestElementCollectionInputType;
+use Lovata\Toolbox\Classes\Api\Type\Input\PaginateInputType;
+use Lovata\Toolbox\Classes\Api\Type\Input\ResizeImageInputType;
+use Lovata\Toolbox\Classes\Api\Type\Interfaces\FileInterfaceType;
+use Lovata\Toolbox\Classes\Api\Type\Custom\FileType;
+use Lovata\Toolbox\Classes\Api\Type\Custom\ImageFileType;
 use Lovata\Toolbox\Classes\Helper\UserHelper;
 
 use October\Rain\Extension\ExtendableTrait;
 use October\Rain\Support\Traits\Singleton;
+use SystemException;
 
 /**
  * Class AbstractApiType
@@ -26,9 +39,7 @@ abstract class AbstractApiType
     use Singleton;
 
     const TYPE_ALIAS                   = '';
-    const IS_INPUT_TYPE                = false;
     const PERMISSION                   = PermissionContainer::PERMISSION_CODE_GUEST;
-    const EVENT_EXTEND_FIELD_LIST      = 'lovata.api.extend.fields';
     const EVENT_EXTEND_PERMISSION_LIST = 'lovata.api.extend.permissions';
     const EVENT_EXTEND_ACCESS_LOGIC    = 'lovata.api.extend.access_logic';
 
@@ -43,8 +54,8 @@ abstract class AbstractApiType
     /** @var \Lovata\Buddies\Models\User|\RainLab\User\Models\User|null */
     protected $obClient = null;
 
-    /** @var array $arFieldList */
-    protected $arFieldList = [];
+    /** @var int|null */
+    protected $iUserId = null;
 
     /** @var string $sDescription */
     protected $sDescription = '';
@@ -54,26 +65,22 @@ abstract class AbstractApiType
      */
     protected function init()
     {
-        $this->arFieldList  = $this->getFieldList();
-        $this->sDescription = $this->getDescription();
+        $this->sDescription    = $this->getDescription();
         $this->extendableConstruct();
-        $this->fireEventExtendFields();
         $this->initClient();
         $this->initClientPermissions();
+        $this->extendFrontendTypeFactory();
     }
 
     /**
      * Return new object type
      * @return ObjectType
+     * @throws SystemException
      */
     public function getTypeObject()
     {
         if (empty($this->obTypeObject)) {
-            if (static::IS_INPUT_TYPE) {
-                $this->obTypeObject = new InputObjectType($this->getTypeConfig());
-            } else {
-                $this->obTypeObject = new ObjectType($this->getTypeConfig());
-            }
+            return $this->createType();
         }
 
         return $this->obTypeObject;
@@ -88,12 +95,29 @@ abstract class AbstractApiType
     }
 
     /**
+     * @throws SystemException
+     * @return ObjectType|EnumType|InputObjectType|InterfaceType|UnionType
+     */
+    protected function createType()
+    {
+        if (!TypeList::isValidValue(static::TYPE)) {
+            throw new SystemException(static::TYPE . ' is not valid type');
+        }
+
+        $TypeClass = '\\GraphQL\\Type\\Definition\\' . static::TYPE;
+        $this->obTypeObject = new $TypeClass($this->getTypeConfig());
+
+        return $this->obTypeObject;
+    }
+
+    /**
      * Init client
-     * @return \Lovata\Buddies\Models\User|\RainLab\User\Models\User|null
+     * @return void
      */
     protected function initClient()
     {
-        return $this->obClient = UserHelper::instance()->getUser();
+        $this->obClient = UserHelper::instance()->getUser();
+        $this->iUserId = UserHelper::instance()->getUserID();
     }
 
     /**
@@ -154,38 +178,6 @@ abstract class AbstractApiType
     }
 
     /**
-     * Add fields
-     * @param array $arFieldList
-     * @return void
-     */
-    public function addFields(array $arFieldList)
-    {
-        $this->arFieldList = array_merge($this->arFieldList, $arFieldList);
-    }
-
-    /**
-     * Remove fields
-     * @param array $arFieldList
-     * @return void
-     */
-    public function removeFields(array $arFieldList)
-    {
-        if (empty($arFieldList)) {
-            return;
-        }
-
-        foreach ($arFieldList as $sKey) {
-            unset($this->arFieldList[$sKey]);
-        }
-    }
-
-    /**
-     * Get type fields
-     * @return array
-     */
-    abstract protected function getFieldList(): array;
-
-    /**
      * Get type description
      * @return string
      */
@@ -198,43 +190,7 @@ abstract class AbstractApiType
      * Get type config
      * @return array
      */
-    protected function getTypeConfig(): array
-    {
-        $arTypeConfig = [
-            'name'        => static::TYPE_ALIAS,
-            'fields'      => $this->arFieldList,
-            'description' => $this->sDescription,
-        ];
-
-        return $arTypeConfig;
-    }
-
-    /**
-     * Get resolve method for type
-     * @return callable|null
-     */
-    protected function getResolveMethod(): ?callable
-    {
-        return null;
-    }
-
-    /**
-     * Get config for "args" attribute
-     * @return array|null
-     */
-    protected function getArguments(): ?array
-    {
-        return null;
-    }
-
-    /**
-     * Fire event extend fields
-     * @return void
-     */
-    protected function fireEventExtendFields()
-    {
-        Event::fire(self::EVENT_EXTEND_FIELD_LIST, [$this]);
-    }
+    abstract protected function getTypeConfig(): array;
 
     /**
      * @param string $sTypeAlias
@@ -262,6 +218,25 @@ abstract class AbstractApiType
                 PermissionContainer::instance()->addUserPermissions([static::TYPE_ALIAS => 1]);
                 break;
         }
+    }
+
+    /**
+     * Extend frontend type factory
+     * @return void
+     */
+    protected function extendFrontendTypeFactory()
+    {
+        FrontendTypeFactory::instance()->addTypeClass([
+            FileInterfaceType::class,
+            FileType::class,
+            FilterCollectionInputType::class,
+            GetNearestElementCollectionInputType::class,
+            ImageFileType::class,
+            ResizeImageInputType::class,
+            ResizeImageModeEnumType::class,
+            PaginateInputType::class,
+            PaginationInfoType::class,
+        ]);
     }
 
     /**

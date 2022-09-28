@@ -6,7 +6,7 @@ use Lovata\Toolbox\Classes\Api\Mutation\AbstractMutationType;
  * Class MutationType
  * @package Lovata\Toolbox\Classes\Api\Type
  */
-class MutationType extends AbstractApiType
+class MutationType extends AbstractObjectType
 {
     const TYPE_ALIAS = 'Mutation';
 

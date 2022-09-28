@@ -1,13 +1,14 @@
-<?php namespace Lovata\Toolbox\Classes\Api\Type;
+<?php namespace Lovata\Toolbox\Classes\Api\Type\Payload;
 
 use GraphQL\Type\Definition\Type;
+use Lovata\Toolbox\Classes\Api\Type\AbstractObjectType;
 
 /**
  * Class AbstractMutationPayloadType
  * @package Lovata\Toolbox\Classes\Api\Type
  * @author  Igor Tverdokhleb, i.tverdokhleb@lovata.com, LOVATA Group
  */
-class AbstractMutationPayloadType extends AbstractApiType
+class AbstractMutationPayloadType extends AbstractObjectType
 {
     const TYPE_ALIAS = '';
     const RELATED_TYPE_ALIAS = '';

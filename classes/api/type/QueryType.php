@@ -7,7 +7,7 @@ use Lovata\Toolbox\Classes\Api\Mutation\AbstractMutationType;
  * @package Lovata\Toolbox\Classes\Api\Type
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class QueryType extends AbstractApiType
+class QueryType extends AbstractObjectType
 {
     const TYPE_ALIAS = 'Query';
 
