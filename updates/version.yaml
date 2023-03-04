@@ -114,3 +114,5 @@
     - 'Fixed name of model.relation.* events. Thanks for contribution Assmay.'
 1.34.3:
     - 'Added condition for after.detach event, if entity IDs has null value. Thanks for contribution Assmay.'
+1.34.4:
+    - 'Added integration with RainLab.Translate plugin v2'

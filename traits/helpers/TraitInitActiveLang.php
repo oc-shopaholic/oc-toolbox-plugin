@@ -30,7 +30,13 @@ trait TraitInitActiveLang
             return self::$arActiveLangList;
         }
 
-        self::$arActiveLangList = \RainLab\Translate\Models\Locale::isEnabled()->pluck('code')->all();
+        if (class_exists('RainLab\Translate\Classes\Locale')) {
+            $arEnabledLAngList = \RainLab\Translate\Classes\Locale::listEnabled();
+            self::$arActiveLangList = array_keys((array) $arEnabledLAngList);
+        } else {
+            self::$arActiveLangList = \RainLab\Translate\Models\Locale::isEnabled()->pluck('code')->all();
+        }
+
         if (empty(self::$arActiveLangList)) {
             return self::$arActiveLangList;
         }
