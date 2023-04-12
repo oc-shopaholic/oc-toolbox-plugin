@@ -138,13 +138,12 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
         }
 
         foreach ($this->arImageList as $iKey => $sPath) {
-            $sPath = $this->checkForRemoteFile(trim($sPath));
-            if (empty($sPath)) {
+            $sFilePath = $this->checkForRemoteFile(trim($sPath));
+            if (empty($sFilePath)) {
                 unset($this->arImageList[$iKey]);
                 continue;
             }
 
-            $sFilePath = storage_path($sPath);
             if (!file_exists($sFilePath)) {
                 unset($this->arImageList[$iKey]);
             } else {
@@ -171,7 +170,6 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
             return;
         }
 
-        $this->sPreviewImage = storage_path($this->sPreviewImage);
         if (!file_exists($this->sPreviewImage)) {
             $this->sPreviewImage = null;
         }
@@ -190,8 +188,7 @@ abstract class AbstractImportModelFromCSV extends AbstractImportModel
             $obFile = new File;
             $obFile->fromUrl($sPotentialUrl);
             $obFile->save();
-
-            $sValue = 'app/' . $obFile->getDiskPath();
+            $sValue = $obFile->getLocalPath();
 
             return $sValue;
         } catch(Exception $obException) {
