@@ -116,3 +116,5 @@
     - 'Added condition for after.detach event, if entity IDs has null value. Thanks for contribution Assmay.'
 1.34.4:
     - 'Added integration with RainLab.Translate plugin v2'
+2.0.0:
+    - 'Added CallsAnyMethod interface to ElementCollection and MainItem items. Objects of cache items and collections can be used in Twig templates. Requires OctoberCMS version >=3.1'
