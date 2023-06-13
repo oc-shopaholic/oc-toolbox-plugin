@@ -74,6 +74,7 @@
         'height'                   => 'Height',
         'length'                   => 'Length',
         'width'                    => 'Width',
+        'site_list'                => 'Site list',
 
         'sort_order' => 'Sorting',
         'created_at' => 'Created',
