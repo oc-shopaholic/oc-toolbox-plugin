@@ -226,7 +226,7 @@ class CommonProperty extends ImportModel
         ];
 
         if ($this->isTranslatable()) {
-            $arResult['type'] = 'mltext';
+            $arResult = $this->addTranslatable($arResult);
         }
 
         return $arResult;
@@ -257,7 +257,7 @@ class CommonProperty extends ImportModel
         ];
 
         if ($this->isTranslatable()) {
-            $arResult['type'] = 'mltextarea';
+            $arResult = $this->addTranslatable($arResult);
         }
 
         return $arResult;
@@ -275,7 +275,7 @@ class CommonProperty extends ImportModel
         ];
 
         if ($this->isTranslatable()) {
-            $arResult['type'] = 'mlricheditor';
+            $arResult = $this->addTranslatable($arResult);
         }
 
         return $arResult;
@@ -493,5 +493,17 @@ class CommonProperty extends ImportModel
         }
 
         return $arSettings[$sKey];
+    }
+
+    /**
+     * Add translatable parameter to field config
+     * @param $arConfig
+     * @return array
+     */
+    protected function addTranslatable($arConfig) : array
+    {
+        $arConfig['translatable'] = true;
+
+        return $arConfig;
     }
 }
