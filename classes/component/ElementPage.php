@@ -1,5 +1,6 @@
 <?php namespace Lovata\Toolbox\Classes\Component;
 
+use Site;
 use System\Classes\PluginManager;
 use Cms\Classes\ComponentBase;
 use Lovata\Toolbox\Models\Settings;
@@ -161,5 +162,36 @@ abstract class ElementPage extends ComponentBase
     protected function isSlugTranslatable()
     {
         return (bool) Settings::getValue('slug_is_translatable') && PluginManager::instance()->hasPlugin('RainLab.Translate');
+    }
+
+    /**
+     * Returns true, if entity has relation with site
+     * @param mixed|\Lovata\Toolbox\Traits\Models\MultisiteHelperTrait $obEntity
+     * @return bool
+     */
+    protected function hasRelationWithSite($obEntity): bool
+    {
+        if (empty($obEntity)) {
+            return false;
+        }
+
+        $iSiteID = Site::getSiteIdFromContext();
+        if (empty($iSiteID)) {
+            return true;
+        }
+
+        /** @var \October\Rain\Database\Collection|\System\Models\SiteDefinition $obSiteList */
+        $obSiteList = $obEntity->site;
+        if (empty($obSiteList) || $obSiteList->isEmpty()) {
+            return true;
+        }
+
+        foreach ($obSiteList as $obSite) {
+            if ($iSiteID == $obSite->id) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
