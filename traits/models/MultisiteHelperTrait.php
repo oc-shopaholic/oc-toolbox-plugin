@@ -8,9 +8,10 @@ use Site;
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  *
- * @property array $site_list
+ * @property array                                                             $site_list
  *
- * @method static $this getBySite($iSiteID = null)
+ * @property \October\Rain\Database\Collection|\System\Models\SiteDefinition[] $site
+ * @method \October\Rain\Database\Relations\MorphToMany|\System\Models\SiteDefinition site()
  */
 trait MultisiteHelperTrait
 {
@@ -36,26 +37,14 @@ trait MultisiteHelperTrait
     protected function setSiteListAttribute($arValue)
     {
         $arValue = empty($arValue) ? [] : $arValue;
-        $this->attributes['site_list'] = json_encode($arValue);
+        $this->site()->sync($arValue);
     }
 
     /**
-     * Get not active elements
-     * @param \Illuminate\Database\Eloquent\Builder|\October\Rain\Database\Builder $obQuery
-     * @param int|null                                                             $iSiteID
-     * @return \Illuminate\Database\Eloquent\Builder|\October\Rain\Database\Builder;
+     * @return array
      */
-    public function scopeGetBySite($obQuery, $iSiteID = null)
+    protected function getSiteListAttribute(): array
     {
-        $iSiteID = empty($iSiteID) ? Site::getSiteIdFromContext() : $iSiteID;
-
-        return $obQuery->where(function ($obQuery) use ($iSiteID) {
-            if (!empty($iSiteID)) {
-                $obQuery->whereJsonContains('site_list', (string) $iSiteID);
-            }
-
-            /** @var \Illuminate\Database\Eloquent\Builder|\October\Rain\Database\Builder $obQuery */
-            return $obQuery->orWhereNull('site_list')->orWhereJsonLength('site_list', 0);
-        });
+        return $this->site->pluck('id')->toArray();
     }
 }
