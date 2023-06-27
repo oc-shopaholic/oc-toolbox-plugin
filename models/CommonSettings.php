@@ -1,6 +1,7 @@
 <?php namespace Lovata\Toolbox\Models;
 
 use October\Rain\Database\Model;
+use October\Rain\Database\Traits\Multisite;
 
 /**
  * Class CommonSettings
@@ -9,6 +10,8 @@ use October\Rain\Database\Model;
  */
 class CommonSettings extends Model
 {
+    use Multisite;
+
     const SETTINGS_CODE = '';
 
     public static $arCacheValue = [];
@@ -24,6 +27,8 @@ class CommonSettings extends Model
 
     public $attachOne = [];
     public $attachMany = [];
+
+    protected $propagatable = [];
 
     /**
      * Get setting value
