@@ -1,14 +1,13 @@
 <?php namespace Lovata\Toolbox\Models;
 
-use October\Rain\Database\Model;
-use October\Rain\Database\Traits\Multisite;
+use System\Models\SettingModel;
 
 /**
  * Class CommonSettings
  * @package Lovata\Toolbox\Models
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class CommonSettings extends Model
+class CommonSettings extends SettingModel
 {
     use Multisite;
 
@@ -17,7 +16,6 @@ class CommonSettings extends Model
     public static $arCacheValue = [];
 
     public $implement = [
-        'System.Behaviors.SettingsModel',
         '@RainLab.Translate.Behaviors.TranslatableModel',
     ];
 
