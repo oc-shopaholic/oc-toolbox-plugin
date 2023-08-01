@@ -1,5 +1,6 @@
 <?php namespace Lovata\Toolbox\Models;
 
+use October\Rain\Database\Traits\Multisite;
 use System\Models\SettingModel;
 
 /**
