@@ -120,3 +120,5 @@
     - 'Added CallsAnyMethod interface to ElementCollection and MainItem items. Objects of cache items and collections can be used in Twig templates. Requires OctoberCMS version >=3.1'
 2.1.0:
     - 'Added MultisiteHelperTrait'
+2.1.1:
+    - 'Fixed CommonSettings class.'
