@@ -122,3 +122,5 @@
     - 'Added MultisiteHelperTrait'
 2.1.1:
     - 'Fixed CommonSettings class.'
+2.1.2:
+    - 'Fixed PageHelper class.'
