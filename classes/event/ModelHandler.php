@@ -209,11 +209,11 @@ abstract class ModelHandler
 
         $obListStore->clear($this->obElement->$sField);
         $obListStore->clear($this->obElement->$sField, $this->obElement->$sAdditionalField);
-        $obListStore->clear($this->obElement->$sField, $this->obElement->getOriginal($sField));
+        $obListStore->clear($this->obElement->$sField, $this->obElement->getOriginal($sAdditionalField));
 
         $obListStore->clear($this->obElement->getOriginal($sField));
         $obListStore->clear($this->obElement->getOriginal($sField), $this->obElement->$sAdditionalField);
-        $obListStore->clear($this->obElement->getOriginal($sField), $this->obElement->getOriginal($sField));
+        $obListStore->clear($this->obElement->getOriginal($sField), $this->obElement->getOriginal($sAdditionalField));
     }
 
     /**
