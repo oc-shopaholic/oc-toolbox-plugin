@@ -107,7 +107,7 @@ class PageHelper
 
         //Process page list
         foreach ($obPageList as $obPage) {
-            $arResult[$obPage->baseFileName] = $obPage->title;
+            $arResult[$obPage->id] = $obPage->title;
         }
 
         $this->arPageNameList = $arResult;

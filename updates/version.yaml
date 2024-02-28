@@ -124,3 +124,5 @@
     - 'Fixed CommonSettings class.'
 2.1.2:
     - 'Fixed PageHelper class.'
+2.1.3:
+    - 'Revert fix of PageHelper class.'
