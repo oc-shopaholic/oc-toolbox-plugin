@@ -37,29 +37,6 @@ class CommonSettings extends SettingModel
      */
     public static function getValue($sCode, $sDefaultValue = null)
     {
-        if (empty($sCode)) {
-            return $sDefaultValue;
-        }
-
-        if (isset(static::$arCacheValue[$sCode])) {
-            return static::$arCacheValue[$sCode];
-        }
-
-        //Get settings object
-        $obSettings = static::where('item', static::SETTINGS_CODE)->first();
-        if (empty($obSettings)) {
-            static::$arCacheValue[$sCode] = static::get($sCode, $sDefaultValue);
-
-            return static::$arCacheValue[$sCode];
-        }
-
-        $sValue = $obSettings->$sCode;
-        if ($sValue === null) {
-            return $sDefaultValue;
-        }
-
-        static::$arCacheValue[$sCode] = $sValue;
-
-        return $sValue;
+        return static::instance()->$sCode ?? $sDefaultValue;
     }
 }

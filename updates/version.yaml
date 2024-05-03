@@ -126,3 +126,5 @@
     - 'Fixed PageHelper class.'
 2.1.3:
     - 'Revert fix of PageHelper class.'
+2.1.4:
+    - 'Fixed looping of requests to settings. Thanks to dblackCat and Nikita Khaetsky.'
