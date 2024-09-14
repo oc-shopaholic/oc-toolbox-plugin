@@ -46,6 +46,6 @@ class RainLabUserHelper extends AbstractUserHelper
      */
     public function getAuthFacade()
     {
-        return \RainLab\User\Facades\Auth::class;
+        return \October\Rain\Support\Facades\Auth::class;
     }
 }
