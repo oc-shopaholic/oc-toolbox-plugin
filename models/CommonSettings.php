@@ -14,8 +14,6 @@ class CommonSettings extends SettingModel
 
     const SETTINGS_CODE = '';
 
-    public static $arCacheValue = [];
-
     public $implement = [
         '@RainLab.Translate.Behaviors.TranslatableModel',
     ];
@@ -31,35 +29,13 @@ class CommonSettings extends SettingModel
 
     /**
      * Get setting value
+     * @deprecated
      * @param string $sCode
      * @param string $sDefaultValue
      * @return null|string
      */
     public static function getValue($sCode, $sDefaultValue = null)
     {
-        if (empty($sCode)) {
-            return $sDefaultValue;
-        }
-
-        if (isset(static::$arCacheValue[$sCode])) {
-            return static::$arCacheValue[$sCode];
-        }
-
-        //Get settings object
-        $obSettings = static::where('item', static::SETTINGS_CODE)->first();
-        if (empty($obSettings)) {
-            static::$arCacheValue[$sCode] = static::get($sCode, $sDefaultValue);
-
-            return static::$arCacheValue[$sCode];
-        }
-
-        $sValue = $obSettings->$sCode;
-        if ($sValue === null) {
-            return $sDefaultValue;
-        }
-
-        static::$arCacheValue[$sCode] = $sValue;
-
-        return $sValue;
+        return static::get($sCode, $sDefaultValue);
     }
 }

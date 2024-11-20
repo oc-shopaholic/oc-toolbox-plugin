@@ -224,13 +224,24 @@ abstract class AbstractImportModel
             foreach ($obImageList as $obImage) {
                 $sFilePath = array_shift($this->arImageList);
 
+                $sFileHash = null;
+                try {
+                    $sFileHash = md5_file($sFilePath);
+                } catch (\Exception $obException) {}
+
                 //Check image
-                if (!empty($sFilePath) && (!file_exists($obImage->getLocalPath()) || md5_file($sFilePath) != md5_file($obImage->getLocalPath()))) {
+                if (!empty($sFilePath) && (!file_exists($obImage->getLocalPath()) || $sFileHash != md5_file($obImage->getLocalPath()))) {
                     try {
                         $obImage->deleteThumbs();
                     } catch (\Exception $obException) {}
-                    $obImage->fromFile($sFilePath);
-                    $obImage->save();
+
+                    $obNewImage = $this->createFileEntity($sFilePath, $obImage);
+                    if (empty($obNewImage)) {
+                        $obImage->delete();
+                    } else {
+                        $obImage = $obNewImage;
+                        $obImage->save();
+                    }
                 } elseif (empty($sFilePath)) {
                     try {
                         $obImage->deleteThumbs();
@@ -243,10 +254,10 @@ abstract class AbstractImportModel
         //Create new images
         if (!empty($this->arImageList)) {
             foreach ($this->arImageList as $sFilePath) {
-                $obImage = new File();
-                $obImage->fromFile($sFilePath);
-
-                $this->obModel->images()->add($obImage);
+                $obImage = $this->createFileEntity($sFilePath);
+                if (!empty($obImage)) {
+                    $this->obModel->images()->add($obImage);
+                }
             }
         }
     }
@@ -267,27 +278,66 @@ abstract class AbstractImportModel
 
         if (empty($obPreviewImage) && !empty($this->sPreviewImage)) {
             //Create new preview
-            $obPreviewImage = new File();
-            $obPreviewImage->fromFile($this->sPreviewImage);
-            $this->obModel->preview_image()->add($obPreviewImage);
+            $obPreviewImage = $this->createFileEntity($this->sPreviewImage);
+            if (!empty($obPreviewImage)) {
+                $this->obModel->preview_image()->add($obPreviewImage);
+            }
 
             return;
         }
 
+        $sFileHash = null;
+        try {
+            $sFileHash = md5_file($this->sPreviewImage);
+        } catch (\Exception $obException) {}
+
         if (!file_exists($obPreviewImage->getLocalPath())) {
-            $obPreviewImage->fromFile($this->sPreviewImage);
-            $obPreviewImage->save();
-        } elseif (!empty($this->sPreviewImage) && file_exists($obPreviewImage->getLocalPath()) && md5_file($this->sPreviewImage) != md5_file($obPreviewImage->getLocalPath())) {
+            $obPreviewImage = $this->createFileEntity($this->sPreviewImage, $obPreviewImage);
+            if (!empty($obPreviewImage)) {
+                $obPreviewImage->save();
+            }
+        } elseif (!empty($this->sPreviewImage) && file_exists($obPreviewImage->getLocalPath()) && $sFileHash != md5_file($obPreviewImage->getLocalPath())) {
             //Update preview image
             $obPreviewImage->deleteThumbs();
-            $obPreviewImage->fromFile($this->sPreviewImage);
-            $obPreviewImage->save();
+            $obNewPreviewImage = $this->createFileEntity($this->sPreviewImage, $obPreviewImage);
+            if (empty($obNewPreviewImage)) {
+                $obPreviewImage->delete();
+            } else {
+                $obPreviewImage = $obNewPreviewImage;
+                $obPreviewImage->save();
+            }
         } elseif (!empty($obPreviewImage) && empty($this->sPreviewImage)) {
             try {
                 $obPreviewImage->deleteThumbs();
                 $obPreviewImage->delete();
             } catch (\Exception $obException) {}
         }
+    }
+
+    /**
+     * Create new file object from URL or file
+     * @param string|null $sPath
+     * @param File|null   $obFile
+     * @return File|null
+     * @throws \Exception
+     */
+    protected function createFileEntity(?string $sPath, ?File $obFile = null)
+    {
+        if (empty($obFile)) {
+            $obFile = new File();
+        }
+
+        if (preg_match('/https?:\/\//', $sPath)) {
+            try {
+                $obFile->fromUrl($sPath);
+            } catch (\Exception $obException) {
+                return null;
+            }
+        } else {
+            $obFile->fromFile($sPath);
+        }
+
+        return $obFile;
     }
 
     /**

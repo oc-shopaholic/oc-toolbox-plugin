@@ -1,5 +1,6 @@
 <?php namespace Lovata\Toolbox\Classes\Helper;
 
+use Arr;
 use Log;
 use Lang;
 use Event;
@@ -247,6 +248,10 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
                 continue;
             }
 
+            if (preg_match('%https?:\/\/%', $sPath)) {
+                continue;
+            }
+
             $sFilePath = storage_path(trim($this->sImageFolderPath.'/'.$sPath, '/'));
             if (!file_exists($sFilePath)) {
                 unset($this->arImageList[$iKey]);
@@ -277,6 +282,10 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
         $this->sPreviewImage = trim($this->sPreviewImage, '/');
         array_forget($this->arImportData, 'preview_image');
         if (empty($this->sPreviewImage)) {
+            return;
+        }
+
+        if (preg_match('%https?:\/\/%', $this->sPreviewImage)) {
             return;
         }
 
@@ -353,7 +362,7 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
     protected function initLangFields($arFieldList)
     {
         $arActiveLangList = $this->getActiveLangList();
-        if (empty($arActiveLangList)) {
+        if (empty($arActiveLangList) || empty($arFieldList)) {
             return $arFieldList;
         }
 
@@ -365,7 +374,11 @@ abstract class AbstractImportModelFromXML extends AbstractImportModel
         }
 
         foreach ($arLangFieldList as $sFieldName) {
-            if (!array_key_exists($sFieldName, $arFieldList)) {
+            if (is_array($sFieldName)) {
+                $sFieldName = Arr::get($sFieldName, 0);
+            }
+
+            if (empty($sFieldName) || !array_key_exists($sFieldName, $arFieldList)) {
                 continue;
             }
 
