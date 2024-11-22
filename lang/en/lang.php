@@ -178,6 +178,18 @@
         'force_file'          => 'File :file already exists. Create forced?',
         'add_side_menu'       => 'Add side menu to plugin.yaml?',
         'version_up'          => 'Add new version to version.yaml?',
+
+        '400' => 'Bad Request',
+        '401' => 'Unauthorized',
+        '403' => 'Forbidden',
+        '404' => 'Not Found',
+        '500' => 'Internal Server Error',
+        '503' => 'Service Unavailable',
+        '504' => 'Gateway Timeout',
+        '520' => 'Unknown Error',
+        '523' => 'Origin Is Unreachable',
+
+        'client_not_logged_in' => 'Client not logged in',
     ],
     'settings'   => [
         'count_per_page'                => 'Count elements per page',
