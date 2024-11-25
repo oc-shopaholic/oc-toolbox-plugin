@@ -128,3 +128,5 @@
     - 'Revert fix of PageHelper class.'
 2.2.0:
     - 'Added logic to import images from URL. Fixed path to Auth facade for RainLab.User plugin.'
+2.2.1:
+    - 'Added trim function for string keys in ElementItem class.'

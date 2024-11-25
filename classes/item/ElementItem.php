@@ -43,6 +43,10 @@ abstract class ElementItem extends MainItem
      */
     public function __construct($iElementID, $obElement)
     {
+        if (is_string($iElementID)) {
+            $iElementID = trim($iElementID);
+        }
+
         $this->iElementID = $iElementID;
         $this->obElement = $obElement;
 
@@ -142,6 +146,10 @@ abstract class ElementItem extends MainItem
      */
     public static function make($iElementID, $obElement = null)
     {
+        if (is_string($iElementID)) {
+            $iElementID = trim($iElementID);
+        }
+
         $arParamList = [
             'iElementID' => $iElementID,
             'obElement'  => $obElement,
