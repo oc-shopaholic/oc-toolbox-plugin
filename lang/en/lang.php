@@ -204,10 +204,12 @@
         'slug_is_translatable'          => 'URL is translatable',
     ],
     'button'     => [
+        'import_export'      => 'Import / Export',
         'add_property_value' => 'Add property value',
         'import_from_csv'    => 'Import from CSV',
         'export_in_csv'      => 'Export in CSV',
         'import_button'      => 'Import records',
+        'export_button'      => 'Export records',
         'import_from_xml'    => 'Import from XML',
     ],
     'type'       => [
