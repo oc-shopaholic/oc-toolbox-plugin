@@ -30,8 +30,8 @@ use Lovata\Toolbox\Classes\Helper\PageHelper;
  * @property array $children_id_list
  * @property {{studly_model}} $parent
  * @property \October\Rain\Database\Collection|{{studly_model}}[] $children
-[[nested_tree]] * @property \October\Rain\Argon\Argon $created_at
- * @property \October\Rain\Argon\Argon $updated_at
+[[nested_tree]] * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
 [[file]] * @property \System\Models\File $file
 [[file]][[preview_image]] * @property \System\Models\File $preview_image
 [[preview_image]][[images]] * @property \October\Rain\Database\Collection|\System\Models\File[] $images

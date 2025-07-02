@@ -158,7 +158,7 @@ abstract class ElementCollection extends Extendable implements CallsAnyMethod, \
      * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#count
      * @see  \Lovata\Toolbox\Tests\Unit\CollectionTest::testCountMethod()
      */
-    public function count()
+    public function count(): int
     {
         if ($this->isEmpty()) {
             return 0;
@@ -727,9 +727,9 @@ abstract class ElementCollection extends Extendable implements CallsAnyMethod, \
 
     /**
      * Get an iterator for the items.
-     * @return \ArrayIterator
+     * @return \ArrayIterator<int, \Lovata\Toolbox\Classes\Item\ElementItem>
      */
-    public function getIterator()
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->all());
     }
