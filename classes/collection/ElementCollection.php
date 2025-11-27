@@ -92,6 +92,21 @@ abstract class ElementCollection extends Extendable implements CallsAnyMethod, \
     }
 
     /**
+     * Get element ID list as keys
+     * @link https://github.com/lovata/oc-toolbox-plugin/wiki/ElementCollection#getidlist
+     * @return array
+     */
+    public function getKeyList(): array
+    {
+        $arResult = [];
+        foreach ($this->arElementIDList as $iElementID) {
+            $arResult[$iElementID] = true;
+        }
+
+        return $arResult;
+    }
+
+    /**
      * Set new
      * @param array $arElementIDList
      * @return $this

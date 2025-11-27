@@ -132,3 +132,5 @@
     - 'Added trim function for string keys in ElementItem class.'
 2.2.2:
     - 'Fixed October v4 compatibility'
+2.3.0:
+    - 'Add getKeyList method to ElementCollection class.'
