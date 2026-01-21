@@ -147,7 +147,9 @@ abstract class AbstractImportModel
             if (is_string($sValue)) {
                 $sValue = trim($sValue);
             } elseif (is_array($sValue)) {
-                $sValue = array_filter($sValue);
+                $sValue = array_filter($sValue, function($sValue) {
+                    return !($sValue === null || $sValue === '');
+                }, ARRAY_FILTER_USE_BOTH);
             }
 
             array_set($arResult, $sKey, $sValue);
