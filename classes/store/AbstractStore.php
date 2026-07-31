@@ -37,6 +37,11 @@ abstract class AbstractStore
             return $arElementIDList;
         }
 
+        //An empty cached list is a valid value, do not query the database again
+        if ($this->hasCachedEmptyIDList()) {
+            return [];
+        }
+
         $arElementIDList = $this->getIDListFromDB();
         $this->saveIDList($arElementIDList);
 
@@ -55,6 +60,22 @@ abstract class AbstractStore
         $arElementIDList  = (array) CCache::get($arCacheTags, $sCacheKey);
 
         return $arElementIDList;
+    }
+
+    /**
+     * Check if cache contains a valid empty ID list.
+     * Only the raw cached value === [] counts as a hit. Child classes that
+     * override getIDListFromCache() with "empty result = force rebuild"
+     * semantics (for example time based invalidation) can override this
+     * method and return false to keep the old behavior.
+     * @return bool
+     */
+    protected function hasCachedEmptyIDList() : bool
+    {
+        $arCacheTags = $this->getCacheTagList();
+        $sCacheKey = $this->getCacheKey();
+
+        return CCache::get($arCacheTags, $sCacheKey) === [];
     }
 
     /**
