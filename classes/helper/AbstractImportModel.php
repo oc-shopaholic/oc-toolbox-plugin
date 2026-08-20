@@ -203,6 +203,34 @@ abstract class AbstractImportModel
     }
 
     /**
+     * File attachments live on System\Models\File, so replacing an image
+     * never dirties the parent model - and ModelHandler::afterSave now skips
+     * the item cache clear for unchanged saves. Compare the attachment state
+     * around the image import and touch() the model on a real change so its
+     * item cache still clears.
+     * @return string
+     */
+    protected function getAttachmentFingerprint()
+    {
+        if (empty($this->obModel)
+            || !method_exists($this->obModel, 'hasRelation')
+            || !$this->obModel->hasRelation('images')
+            || !$this->obModel->hasRelation('preview_image')
+        ) {
+            return '';
+        }
+
+        $arImageList = $this->obModel->images()->orderBy('id')->pluck('disk_name', 'id')->all();
+        $obPreviewImage = $this->obModel->preview_image()->first();
+
+        return md5(json_encode([
+            $arImageList,
+            $obPreviewImage ? $obPreviewImage->id : null,
+            $obPreviewImage ? $obPreviewImage->disk_name : null,
+        ]));
+    }
+
+    /**
      * Import obProductModel images
      */
     protected function importImageList()
@@ -210,6 +238,19 @@ abstract class AbstractImportModel
         if (!$this->bNeedUpdateImageList) {
             return;
         }
+
+        $sAttachmentStateBefore = $this->getAttachmentFingerprint();
+        $this->importImageListInner();
+        if ($this->getAttachmentFingerprint() !== $sAttachmentStateBefore) {
+            $this->obModel->touch();
+        }
+    }
+
+    /**
+     * Image list import body, wrapped by the fingerprint check above
+     */
+    protected function importImageListInner()
+    {
 
         if (empty($this->arImageList)) {
             $this->removeAllImages();
@@ -270,6 +311,19 @@ abstract class AbstractImportModel
         if (!$this->bNeedUpdatePreviewImage) {
             return;
         }
+
+        $sAttachmentStateBefore = $this->getAttachmentFingerprint();
+        $this->importPreviewImageInner();
+        if ($this->getAttachmentFingerprint() !== $sAttachmentStateBefore) {
+            $this->obModel->touch();
+        }
+    }
+
+    /**
+     * Preview image import body, wrapped by the fingerprint check above
+     */
+    protected function importPreviewImageInner()
+    {
 
         $obPreviewImage = $this->obModel->preview_image;
         if (empty($obPreviewImage) && empty($this->sPreviewImage)) {

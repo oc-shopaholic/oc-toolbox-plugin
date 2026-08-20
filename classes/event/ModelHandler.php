@@ -92,6 +92,14 @@ abstract class ModelHandler
      */
     protected function afterSave()
     {
+        //A save with no real changes (an import re-saving an unchanged model)
+        //must not wipe the item cache. wasChanged() covers base attributes
+        //and translated attribute writes; attachment-only changes clear the
+        //cache through the touch() in AbstractImportModel image import.
+        if (!$this->obElement->wasChanged()) {
+            return;
+        }
+
         $this->clearItemCache();
     }
 
