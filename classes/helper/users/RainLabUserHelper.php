@@ -19,7 +19,7 @@ class RainLabUserHelper extends AbstractUserHelper
             return null;
         }
 
-        return \RainLab\User\Models\User::findByEmail($sEmail);
+        return \RainLab\User\Models\User::where('email', $sEmail)->first();
     }
 
     /**
