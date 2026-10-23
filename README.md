@@ -24,6 +24,63 @@ Toolbox is a set of helpers for faster development for [October CMS](https://git
 
 [Read more…](https://github.com/lovata/oc-toolbox-plugin/wiki)
 
+## Image sets for different screen widths
+
+A model can store extra image sets for different screen widths, for example a close-up photo for phones.
+
+1. Enable image sets in Settings → "Application settings" → "Images" and choose the approach: `desktop_first` (default) or `mobile_first`.
+2. Add screen types in Settings → "Image profiles": name and screen width in px. A width of 768 gives `(width < 768px)` for desktop-first and `(width >= 768px)` for mobile-first.
+
+Connect image sets to a model:
+
+```php
+public $morphMany = [
+    'image_sets' => [\Lovata\Toolbox\Models\ImageSet::class, 'name' => 'imageable', 'delete' => true],
+];
+
+public $cached = [
+    // ...
+    'image_sets',
+];
+```
+
+Add `image_sets.images` and `image_sets.profile` to `$arQueryWith` of the model's Item class. The Item cache is cleared automatically for models that have a `ModelHandler` with an Item class and the `id` identifier.
+
+Add the field to the backend form with a subclass of `AbstractImageSetsFieldHandler`:
+
+```php
+class ExtendProductImageSetsHandler extends \Lovata\Toolbox\Classes\Event\AbstractImageSetsFieldHandler
+{
+    protected function getTabName() : string
+    {
+        return 'lovata.toolbox::lang.tab.images';
+    }
+
+    protected function getModelClass() : string
+    {
+        return Product::class;
+    }
+
+    protected function getControllerClass() : string
+    {
+        return Products::class;
+    }
+}
+```
+
+The field is shown only when image sets are enabled and at least one active profile exists.
+
+`image_sets` of the Item returns sets of active profiles, already ordered for `<picture>`: each set has `profile` (`id`, `name`, `width`, `media`) and `images` (array of `System\Models\File` objects).
+
+```twig
+<picture>
+    {% for obSet in obElement.image_sets %}
+        <source media="{{ obSet.profile.media }}" srcset="{{ (obSet.images|first).path }}">
+    {% endfor %}
+    <img src="{{ obElement.preview_image.path }}" alt="{{ obElement.preview_image.description }}">
+</picture>
+```
+
 ## Get involved
 
 If you're interested in the improvement of this project you can help in the following ways:

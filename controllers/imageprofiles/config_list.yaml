@@ -1,0 +1,16 @@
+title: 'lovata.toolbox::lang.image_profile.list_title'
+modelClass: Lovata\Toolbox\Models\ImageProfile
+list: $/lovata/toolbox/models/imageprofile/columns.yaml
+recordUrl: 'lovata/toolbox/imageprofiles/update/:id'
+noRecordsMessage: 'backend::lang.list.no_records'
+recordsPerPage: '20'
+showSetup: true
+showCheckboxes: true
+showSorting: 1
+defaultSort:
+    column: width
+    direction: asc
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'

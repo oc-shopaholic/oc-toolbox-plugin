@@ -9,3 +9,7 @@ permissions:
         tab: 'lovata.toolbox::lang.tab.permissions'
         label: 'lovata.toolbox::lang.permission.settings'
         order: 100
+    toolbox-image-profiles:
+        tab: 'lovata.toolbox::lang.tab.permissions'
+        label: 'lovata.toolbox::lang.permission.image_profiles'
+        order: 200

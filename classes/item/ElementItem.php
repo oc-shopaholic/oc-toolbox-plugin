@@ -5,6 +5,9 @@ use October\Rain\Extension\ExtendableTrait;
 
 use Kharanenka\Helper\CCache;
 
+use Lovata\Toolbox\Models\ImageSet;
+use Lovata\Toolbox\Models\ImageProfile;
+
 /**
  * Class ElementItem
  * @package Lovata\Toolbox\Classes\Item
@@ -362,10 +365,75 @@ abstract class ElementItem extends MainItem
 
                 $sFieldName = 'attachMany|'.$sField;
                 $this->setAttribute($sFieldName, $arFileList);
+            } elseif ($this->isImageSetsField($sField)) {
+                $sFieldName = 'imageSets|'.$sField;
+                $this->setAttribute($sFieldName, $this->getImageSetsData($this->obElement->$sField));
             } else {
                 $this->setAttribute($sField, $this->obElement->$sField);
             }
         }
+    }
+
+    /**
+     * Check, field is "morphMany" relation with ImageSet model
+     * @param string $sField
+     * @return bool
+     */
+    protected function isImageSetsField($sField) : bool
+    {
+        $arRelation = array_get((array) $this->obElement->morphMany, $sField);
+        if (empty($arRelation)) {
+            return false;
+        }
+
+        $sRelationClass = is_array($arRelation) ? array_get($arRelation, 0) : $arRelation;
+
+        return !empty($sRelationClass) && is_string($sRelationClass) && is_a($sRelationClass, ImageSet::class, true);
+    }
+
+    /**
+     * Get image sets data for cache: sets of inactive profiles are skipped,
+     * sets are sorted by profile width (ascending for "desktop_first", descending for "mobile_first")
+     * @param \October\Rain\Database\Collection|ImageSet[] $obImageSetList
+     * @return array
+     */
+    protected function getImageSetsData($obImageSetList) : array
+    {
+        $arResult = [];
+        if (empty($obImageSetList)) {
+            return $arResult;
+        }
+
+        foreach ($obImageSetList as $obImageSet) {
+            $obProfile = $obImageSet->profile;
+            if (empty($obProfile) || !$obProfile->active) {
+                continue;
+            }
+
+            $arFileList = [];
+            foreach ($obImageSet->images as $obFile) {
+                $arFileList[] = $this->getUploadFileData($obFile);
+            }
+
+            $arResult[] = [
+                'profile' => [
+                    'id'    => $obProfile->id,
+                    'name'  => $obProfile->name,
+                    'width' => (int) $obProfile->width,
+                    'media' => $obProfile->media,
+                ],
+                'images'  => $arFileList,
+            ];
+        }
+
+        $bMobileFirst = ImageProfile::getApproach() == ImageProfile::APPROACH_MOBILE_FIRST;
+        usort($arResult, function ($arFirstSet, $arSecondSet) use ($bMobileFirst) {
+            $iResult = $arFirstSet['profile']['width'] <=> $arSecondSet['profile']['width'];
+
+            return $bMobileFirst ? -$iResult : $iResult;
+        });
+
+        return $arResult;
     }
 
     /**

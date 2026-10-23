@@ -38,12 +38,13 @@ abstract class CommonTest extends PluginTestCase
 
     public function tearDown(): void
     {
-        parent::tearDown();
-
         // Get the plugin manager
         $obManager = PluginManager::instance();
 
         // Ensure that plugins are registered again for the next test
         $obManager->unregisterAll();
+
+        // Application is destroyed in parent method, so it is called last
+        parent::tearDown();
     }
 }

@@ -1,0 +1,15 @@
+name: 'lovata.toolbox::lang.image_profile.name'
+modelClass: Lovata\Toolbox\Models\ImageProfile
+form: $/lovata/toolbox/models/imageprofile/fields.yaml
+defaultRedirect: lovata/toolbox/imageprofiles
+create:
+    title: 'backend::lang.form.create_title'
+    redirect: 'lovata/toolbox/imageprofiles/update/:id'
+    redirectClose: lovata/toolbox/imageprofiles
+    flashSave: 'lovata.toolbox::lang.message.create_success'
+update:
+    title: 'backend::lang.form.update_title'
+    redirect: lovata/toolbox/imageprofiles
+    redirectClose: lovata/toolbox/imageprofiles
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
