@@ -45,3 +45,19 @@ tabs:
             span: left
             label: lovata.toolbox::lang.field.import_queue_name
             type: text
+        image_sets_enabled:
+            tab: lovata.toolbox::lang.tab.images
+            span: left
+            label: lovata.toolbox::lang.field.image_sets_enabled
+            type: switch
+            default: 0
+        image_profiles_approach:
+            tab: lovata.toolbox::lang.tab.images
+            span: left
+            label: lovata.toolbox::lang.field.image_profiles_approach
+            comment: lovata.toolbox::lang.field.image_profiles_approach_comment
+            type: balloon-selector
+            default: desktop_first
+            options:
+                mobile_first: lovata.toolbox::lang.field.mobile_first
+                desktop_first: lovata.toolbox::lang.field.desktop_first

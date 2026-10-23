@@ -1,0 +1,18 @@
+fields:
+    active:
+        label: 'lovata.toolbox::lang.field.active'
+        span: left
+        type: switch
+        default: 1
+    name:
+        label: 'lovata.toolbox::lang.field.name'
+        span: left
+        required: true
+        type: text
+    width:
+        label: 'lovata.toolbox::lang.field.screen_width'
+        span: left
+        required: true
+        type: number
+        min: 1
+        step: 1

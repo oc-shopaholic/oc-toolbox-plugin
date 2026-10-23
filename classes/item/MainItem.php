@@ -50,6 +50,11 @@ abstract class MainItem implements CallsAnyMethod
             return $this->getUploadFileListField($sName, $sAttachManyField);
         }
 
+        $sImageSetsField = 'imageSets|'.$sName;
+        if (isset($this->arModelData[$sImageSetsField])) {
+            return $this->getImageSetListField($sName, $sImageSetsField);
+        }
+
         if (!empty(self::$sActiveLang)) {
             return $this->getLangAttribute($sName);
         }
@@ -238,6 +243,44 @@ abstract class MainItem implements CallsAnyMethod
         $this->setAttribute($sField, $arFileList);
 
         return $arFileList;
+    }
+
+    /**
+     * Get image set list from cached array: "images" of each set is array of File objects
+     * @param string $sField
+     * @param string $sFakeField
+     * @return array
+     */
+    protected function getImageSetListField($sField, $sFakeField)
+    {
+        $arImageSetList = $this->getAttribute($sField);
+        if (!empty($arImageSetList)) {
+            return $arImageSetList;
+        }
+
+        $arImageSetList = [];
+
+        $arCachedImageSetList = (array) $this->getAttribute($sFakeField);
+        foreach ($arCachedImageSetList as $arImageSetData) {
+            $arFileList = [];
+            foreach ((array) array_get($arImageSetData, 'images') as $arFileData) {
+                $obFile = $this->initUploadFileObject($arFileData);
+                if (empty($obFile)) {
+                    continue;
+                }
+
+                $arFileList[] = $obFile;
+            }
+
+            $arImageSetList[] = [
+                'profile' => (array) array_get($arImageSetData, 'profile'),
+                'images'  => $arFileList,
+            ];
+        }
+
+        $this->setAttribute($sField, $arImageSetList);
+
+        return $arImageSetList;
     }
 
     /**

@@ -117,6 +117,15 @@
         'import_field_list'            => 'Список полей',
         'import_path_to_field'         => 'Путь к узлу поля',
         'import_path_to_field_example' => 'fields/field[@code="active"]',
+
+        'image_sets_enabled'              => 'Включить наборы изображений для разных ширин экрана',
+        'image_profiles_approach'         => 'Подход к медиа-условиям',
+        'image_profiles_approach_comment' => 'Ширина 768 даёт (width >= 768px) для mobile-first и (width < 768px) для desktop-first.',
+        'mobile_first'                    => 'Mobile-first',
+        'desktop_first'                   => 'Desktop-first',
+        'screen_width'                    => 'Ширина экрана, px',
+        'image_profile'                   => 'Профиль',
+        'image_sets'                      => 'Изображения по экранам',
     ],
     'tab'        => [
         'preview_content' => 'Превью-контент',
@@ -165,6 +174,17 @@
         'import_images_field_info'        => 'Путь к файлам изображениЙ должен быть указан относительно директории хранилища в вашем проекте. Например: "app/media/image.jpg". Пути к файлам должны быть указаны через запятую.',
         'import_from_xml_confirm'         => 'Начать импорт из XML файла?',
         'import_from_xml_report'          => 'Результаты импорта: создано - :created, обновлено - :updated, пропущено - :skipped, обработано - :processed.',
+
+        'e_image_profile_name_exists'  => 'Профиль с названием ":name" уже существует. Введите другое название.',
+        'e_image_profile_width_exists' => 'Профиль с шириной :input px уже существует. Введите другую ширину.',
+        'e_image_profile_has_sets'     => 'У профиля ":name" есть наборы изображений, его нельзя удалить. Деактивируйте профиль.',
+        'e_image_set_profile_exists'   => 'У элемента уже есть набор изображений для профиля ":name". Выберите другой профиль.',
+    ],
+    'image_profile' => [
+        'name'             => 'профиль изображений',
+        'list_title'       => 'Профили изображений',
+        'description'      => 'Типы экранов для наборов изображений',
+        'profile_disabled' => 'Профиль отключён',
     ],
     'settings'   => [
         'count_per_page'                => 'Количество элементов на странице',
@@ -214,6 +234,7 @@
         'mediafinder'      => 'Файл',
     ],
     'permission' => [
-        'settings' => 'Управление настройками',
+        'settings'       => 'Управление настройками',
+        'image_profiles' => 'Управление профилями изображений',
     ],
 ];

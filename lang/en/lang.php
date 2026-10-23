@@ -117,6 +117,15 @@
         'import_field_list'            => 'Field list',
         'import_path_to_field'         => 'Path to field node',
         'import_path_to_field_example' => 'fields/field[@code="active"]',
+
+        'image_sets_enabled'              => 'Enable image sets for different screen widths',
+        'image_profiles_approach'         => 'Media condition approach',
+        'image_profiles_approach_comment' => 'Width 768 gives (width >= 768px) for mobile-first and (width < 768px) for desktop-first.',
+        'mobile_first'                    => 'Mobile-first',
+        'desktop_first'                   => 'Desktop-first',
+        'screen_width'                    => 'Screen width, px',
+        'image_profile'                   => 'Profile',
+        'image_sets'                      => 'Images by screen',
     ],
     'tab'        => [
         'preview_content' => 'Preview content',
@@ -178,6 +187,17 @@
         'force_file'          => 'File :file already exists. Create forced?',
         'add_side_menu'       => 'Add side menu to plugin.yaml?',
         'version_up'          => 'Add new version to version.yaml?',
+
+        'e_image_profile_name_exists'  => 'A profile named ":name" already exists. Enter a different name.',
+        'e_image_profile_width_exists' => 'A profile with width :input px already exists. Enter a different width.',
+        'e_image_profile_has_sets'     => 'Profile ":name" has image sets and cannot be deleted. Deactivate the profile instead.',
+        'e_image_set_profile_exists'   => 'The element already has an image set for profile ":name". Choose a different profile.',
+    ],
+    'image_profile' => [
+        'name'             => 'image profile',
+        'list_title'       => 'Image profiles',
+        'description'      => 'Screen types for image sets',
+        'profile_disabled' => 'Profile is disabled',
     ],
     'settings'   => [
         'count_per_page'                => 'Count elements per page',
@@ -227,6 +247,7 @@
         'mediafinder'      => 'File',
     ],
     'permission' => [
-        'settings' => 'Manage settings',
+        'settings'       => 'Manage settings',
+        'image_profiles' => 'Manage image profiles',
     ],
 ];

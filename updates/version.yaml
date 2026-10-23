@@ -134,3 +134,7 @@
     - 'Fixed October v4 compatibility'
 2.3.0:
     - 'Add getKeyList method to ElementCollection class.'
+2.4.0:
+    - 'Added image profiles and image sets for different screen widths.'
+    - create_table_image_profiles.php
+    - create_table_image_sets.php

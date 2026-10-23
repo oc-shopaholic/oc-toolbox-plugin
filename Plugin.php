@@ -1,6 +1,7 @@
 <?php namespace Lovata\Toolbox;
 
 use Lang;
+use Backend;
 use System\Classes\PluginBase;
 use Lovata\Toolbox\Components\Pagination;
 
@@ -54,6 +55,16 @@ class Plugin extends PluginBase
                 'order'       => 300,
                 'permissions' => [
                     'toolbox-menu-settings',
+                ],
+            ],
+            'image-profiles' => [
+                'label'       => 'lovata.toolbox::lang.image_profile.list_title',
+                'icon'        => 'icon-picture-o',
+                'description' => 'lovata.toolbox::lang.image_profile.description',
+                'url'         => Backend::url('lovata/toolbox/imageprofiles'),
+                'order'       => 301,
+                'permissions' => [
+                    'toolbox-image-profiles',
                 ],
             ],
         ];

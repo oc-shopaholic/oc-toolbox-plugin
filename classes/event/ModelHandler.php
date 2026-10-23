@@ -3,6 +3,7 @@
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithoutParam;
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithParam;
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithTwoParam;
+use Lovata\Toolbox\Classes\Item\ItemRegistry;
 
 /**
  * Class ModelHandler
@@ -27,6 +28,12 @@ abstract class ModelHandler
     public function subscribe($obEvent)
     {
         $sModelClass = $this->getModelClass();
+
+        //Item cache is cleared by model "id", so only handlers with "id" identifier are registered
+        if ($this->sIdentifierField === 'id') {
+            ItemRegistry::register($sModelClass, $this->getItemClass());
+        }
+
         $sModelClass::extend(function ($obElement) {
 
             /** @var \Model $obElement */

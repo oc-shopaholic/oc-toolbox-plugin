@@ -1,0 +1,15 @@
+fields:
+    profile:
+        label: 'lovata.toolbox::lang.field.image_profile'
+        span: full
+        required: true
+        type: dropdown
+    images:
+        label: 'lovata.toolbox::lang.field.images'
+        span: full
+        type: fileupload
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
